@@ -41,6 +41,7 @@ gen
 *.ap_
 *.dex
 *.idea
+*.iml
 
 # logs
 *.log
