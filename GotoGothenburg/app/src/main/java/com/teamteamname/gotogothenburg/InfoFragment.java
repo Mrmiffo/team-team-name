@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 public class InfoFragment extends Fragment {
 
     public InfoFragment() {
-        // Required empty public constructor
+        super();
     }
 
     @Override

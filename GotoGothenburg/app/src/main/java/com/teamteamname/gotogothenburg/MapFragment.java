@@ -12,7 +12,7 @@ import android.view.ViewGroup;
  */
 public class MapFragment extends Fragment {
     public MapFragment() {
-        // Required empty public constructor
+        super();
     }
 
     @Override

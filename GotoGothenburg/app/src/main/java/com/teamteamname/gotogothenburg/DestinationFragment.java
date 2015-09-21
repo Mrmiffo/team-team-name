@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  */
 public class DestinationFragment extends Fragment {
     public DestinationFragment() {
-        // Required empty public constructor
+        super();
     }
 
     @Override
