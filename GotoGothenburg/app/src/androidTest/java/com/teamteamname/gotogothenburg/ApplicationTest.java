@@ -1,4 +1,4 @@
-package com.team_team_name.electricityapp;
+package com.teamteamname.gotogothenburg;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
