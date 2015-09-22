@@ -2,10 +2,8 @@ package com.teamteamname.gotogothenburg.sound;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
 
 import com.teamteamname.gotogothenburg.GPSLocation;
-import com.teamteamname.gotogothenburg.R;
 
 /**
  * Created by kakan on 2015-09-22.
@@ -26,6 +24,5 @@ public abstract class AbstractInformationSound implements Audible {
     public void playSound(Context context) {
         MediaPlayer mediaPlayer = MediaPlayer.create(context, resID);
         mediaPlayer.start();
-
     }
 }
