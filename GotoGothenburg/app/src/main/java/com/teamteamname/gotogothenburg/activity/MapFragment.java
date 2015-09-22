@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.teamteamname.gotogothenburg.R;
 
 
@@ -14,30 +16,18 @@ import com.teamteamname.gotogothenburg.R;
  * The fragment used to display the map in the application.
  * Created by Anton on 2015-09-21.
  */
-public class MapFragment extends Fragment {
-    public MapFragment() {
-        super();
-    }
+public class MapFragment extends com.google.android.gms.maps.MapFragment implements OnMapReadyCallback {
 
-    /**
-     * A method ues in order to set parameters on the object after creation. The FragmentAdapter
-     * will call this method instead of the constructor to create the object.
-     * @return a new instance of the object.
-     */
-    public static MapFragment newInstance(){
-        MapFragment toReturn = new MapFragment();
-        return toReturn;
-    }
+    GoogleMap map;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getMapAsync(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
     }
 }

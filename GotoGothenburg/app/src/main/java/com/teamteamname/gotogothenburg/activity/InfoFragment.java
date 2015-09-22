@@ -19,11 +19,8 @@ public class InfoFragment extends Fragment {
 
     public InfoFragment() {}
 
-    public static InfoFragment newInstance(int position){
+    public static InfoFragment newInstance(){
         InfoFragment toReturn = new InfoFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_POS, position);
-        toReturn.setArguments(args);
         return toReturn;
     }
 
