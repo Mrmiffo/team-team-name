@@ -5,22 +5,22 @@ import android.media.MediaPlayer;
 
 import com.teamteamname.gotogothenburg.GPSLocation;
 
-import java.io.Serializable;
-
 /**
  * Created by kakan on 2015-09-22.
  */
-public abstract class AbstractInformationSound implements Audible, Serializable {
+public abstract class AudioNode implements Audible {
 
     private GPSLocation location;
     private float radius;
     private int resID;
 
 
-    public AbstractInformationSound(GPSLocation location, float radius, int resID) {
+    public AudioNode(GPSLocation location, float radius, int resID) {
         this.location = location.clone();
         this.radius = radius;
         this.resID = resID;
+
+        AudioHandler.addAudioNode(this);
     }
 
     @Override
