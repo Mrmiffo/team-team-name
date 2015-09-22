@@ -5,11 +5,4 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New RadioButton"
-        android:id="@+id/radioButton"
-        android:layout_gravity="center"
-        android:checked="false" />
 </FrameLayout>
