@@ -1,7 +1,8 @@
 package com.teamteamname.gotogothenburg.activity;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,18 @@ import com.teamteamname.gotogothenburg.R;
  */
 public class InfoFragment extends Fragment {
 
+    public static final String ARG_POS = "ARG_POS";
+
     public InfoFragment() {
         super();
+    }
+
+    public static InfoFragment newInstance(int position){
+        InfoFragment toReturn = new InfoFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_POS, position);
+        toReturn.setArguments(args);
+        return toReturn;
     }
 
     @Override

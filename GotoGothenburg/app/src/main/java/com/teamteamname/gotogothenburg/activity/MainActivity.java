@@ -1,7 +1,9 @@
 package com.teamteamname.gotogothenburg.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,11 +20,11 @@ public class MainActivity extends FragmentActivity {
 
         // Initialize the ViewPager and set an adapter
         ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
-        pager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
+        pager.setAdapter(new FragmentAdapter(getFragmentManager()));
 
         // Bind the tabs to the ViewPager
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabs.setViewPager(pager);
+        PagerSlidingTabStrip pager_title_strip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        pager_title_strip.setViewPager(pager);
 
     }
 

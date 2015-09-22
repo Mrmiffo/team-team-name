@@ -1,7 +1,8 @@
 package com.teamteamname.gotogothenburg.activity;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,6 @@ import com.teamteamname.gotogothenburg.R;
 public class DestinationFragment extends Fragment {
 
     public static final String ARG_POS = "ARG_POS";
-
-    private int mPage;
 
     public DestinationFragment() {
         super();
@@ -32,7 +31,6 @@ public class DestinationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(ARG_POS);
 
     }
 
@@ -40,6 +38,6 @@ public class DestinationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        return inflater.inflate(R.layout.fragment_destination, container, false);
     }
 }
