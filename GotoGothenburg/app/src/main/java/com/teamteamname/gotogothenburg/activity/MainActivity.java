@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg;
+package com.teamteamname.gotogothenburg.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.teamteamname.gotogothenburg.R;
 
 public class MainActivity extends FragmentActivity {
 

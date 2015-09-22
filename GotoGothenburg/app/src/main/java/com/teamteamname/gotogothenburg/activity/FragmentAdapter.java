@@ -1,14 +1,17 @@
-package com.teamteamname.gotogothenburg;
+package com.teamteamname.gotogothenburg.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
+ * The FragmentAdapter class is used by the PagerSlider to manage the fragments for displaying in
+ * the application.
  * Created by Anton on 2015-09-21.
  */
 public class FragmentAdapter extends FragmentPagerAdapter {
@@ -32,6 +35,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Log.d("getItem", "Position: " + position);
         return fragmentList.get(position);
     }
 
