@@ -12,10 +12,10 @@ import java.io.Serializable;
  */
 public abstract class AbstractInformationSound implements Audible, Serializable {
 
-    private static final long serialVersionUID = -3849515683521293056L;
     private GPSLocation location;
     private float radius;
     private int resID;
+
 
     public AbstractInformationSound(GPSLocation location, float radius, int resID) {
         this.location = location.clone();
