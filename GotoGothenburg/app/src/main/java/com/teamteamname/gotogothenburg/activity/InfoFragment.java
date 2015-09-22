@@ -11,21 +11,17 @@ import com.teamteamname.gotogothenburg.R;
 
 
 /**
+ * The fragment used to display the Information screen in the application.
  * Created by Anton on 2015-09-21.
  */
 public class InfoFragment extends Fragment {
-
-    public static final String ARG_POS = "ARG_POS";
 
     public InfoFragment() {
         super();
     }
 
-    public static InfoFragment newInstance(int position){
+    public static InfoFragment newInstance(){
         InfoFragment toReturn = new InfoFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_POS, position);
-        toReturn.setArguments(args);
         return toReturn;
     }
 

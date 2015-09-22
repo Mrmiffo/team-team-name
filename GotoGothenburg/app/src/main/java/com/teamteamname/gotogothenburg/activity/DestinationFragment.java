@@ -10,21 +10,22 @@ import android.view.ViewGroup;
 import com.teamteamname.gotogothenburg.R;
 
 /**
+ * THe fragment used to display the Destination screen in the application.
  * Created by Anton on 2015-09-21.
  */
 public class DestinationFragment extends Fragment {
-
-    public static final String ARG_POS = "ARG_POS";
 
     public DestinationFragment() {
         super();
     }
 
-    public static DestinationFragment newInstance(int position){
+    /**
+     * A method ues in order to set parameters on the object after creation. The FragmentAdapter
+     * will call this method instead of the constructor to create the object.
+     * @return a new instance of the object.
+     */
+    public static DestinationFragment newInstance(){
         DestinationFragment toReturn = new DestinationFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_POS, position);
-        toReturn.setArguments(args);
         return toReturn;
     }
 
