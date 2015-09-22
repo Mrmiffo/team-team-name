@@ -25,7 +25,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         super(fm);
         fragmentList = new ArrayList<>();
         fragmentList.add(new DestinationFragment());
-        fragmentList.add(new MapFragment());
+        fragmentList.add(MapFragment.newInstance());
         fragmentList.add(new InfoFragment());
 
     }
