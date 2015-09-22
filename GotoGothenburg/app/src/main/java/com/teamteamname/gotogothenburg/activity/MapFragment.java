@@ -7,15 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.teamteamname.gotogothenburg.R;
 
 
 /**
  * Created by Anton on 2015-09-21.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends com.google.android.gms.maps.MapFragment implements OnMapReadyCallback {
 
     public static final String ARG_POS = "ARG_POS";
+    GoogleMap map;
 
     public MapFragment() {
         super();
@@ -32,6 +35,7 @@ public class MapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getMapAsync(this);
     }
 
     @Override
@@ -39,5 +43,10 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_map, container, false);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
     }
 }
