@@ -1,9 +1,12 @@
+package com.teamteamname.gotogothenburg;
+
+
 import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by Olof on 22/09/2015.
  */
-public interface GPSCoordReciever {
+public interface GPSCoordReceiver {
 
     public void sendGPSCoord(LatLng gpsCoord);
 }
