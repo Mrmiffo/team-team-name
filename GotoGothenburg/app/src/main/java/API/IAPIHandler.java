@@ -1,10 +1,11 @@
 package API;
-import GPSCoordReciever;
+import com.teamteamname.gotogothenburg.GPSCoordReceiver;
 
 /**
  * Created by Olof on 21/09/2015.
  */
 public interface IAPIHandler {
-    public void getGPSPosition(GPSCoordReciever callback);
+
+    public void getGPSPosition(GPSCoordReceiver callback);
 
 }
