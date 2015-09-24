@@ -5,7 +5,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 /**
- * The AndriodDeviceAPI is intended for any android phone with a GPS signal.
+ * The AndriodDeviceAPI is intended for any android device with a WiFi signal.
  * Created by Anton on 2015-09-23.
  */
 public class AndroidDeviceAPI implements IDeviceAPI {
