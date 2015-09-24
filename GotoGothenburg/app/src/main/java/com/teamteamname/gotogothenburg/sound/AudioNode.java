@@ -1,11 +1,12 @@
 package com.teamteamname.gotogothenburg.sound;
 
+import com.teamteamname.gotogothenburg.API.APIHandler;
+import com.teamteamname.gotogothenburg.API.IAPIHandler;
 import com.teamteamname.gotogothenburg.GPSCoord;
 
 import java.io.File;
 
-import API.APIHandler;
-import API.IAPIHandler;
+
 
 /**
  * A class for associating a sound file with a physical location.
