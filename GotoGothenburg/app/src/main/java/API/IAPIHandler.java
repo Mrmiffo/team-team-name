@@ -6,6 +6,7 @@ import com.teamteamname.gotogothenburg.GPSCoordReceiver;
  */
 public interface IAPIHandler {
 
-    public void getGPSPosition(GPSCoordReceiver callback);
+    // Needs a callback and the dgw for the buss you want.
+    public void getGPSPosition(GPSCoordReceiver callback, String dgw);
 
 }

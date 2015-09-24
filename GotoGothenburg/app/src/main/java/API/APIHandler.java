@@ -74,7 +74,7 @@ public class APIHandler implements IAPIHandler {
     }
 
     @Override
-    public void getGPSPosition(GPSCoordReceiver callback) {
+    public void getGPSPosition(GPSCoordReceiver callback, String dgw) {
         //Requests data since 5 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 5);
@@ -83,8 +83,8 @@ public class APIHandler implements IAPIHandler {
         StringBuilder sb = new StringBuilder();
         sb.append(baseUrl);
         sb.append("?");
+        sb.append(this.dgw);
         sb.append(dgw);
-        sb.append("Ericsson$Vin_Num_001");
         sb.append("&");
         sb.append(sensorSpec);
         sb.append("Ericsson$GPS");
