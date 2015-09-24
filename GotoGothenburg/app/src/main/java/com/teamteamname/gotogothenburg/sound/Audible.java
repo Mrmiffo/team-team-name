@@ -1,10 +1,10 @@
 package com.teamteamname.gotogothenburg.sound;
 
-import android.content.Context;
+import API.IAPIHandler;
 
 /**
  * Created by kakan on 2015-09-22.
  */
 public interface Audible {
-    public void playSound();
+    void playSound(IAPIHandler apiHandler);
 }
