@@ -7,6 +7,10 @@ import android.media.MediaPlayer;
 
 import com.teamteamname.gotogothenburg.GPSLocation;
 
+import java.io.File;
+
+import API.APIHandler;
+
 /**
  * Created by kakan on 2015-09-22.
  */
@@ -15,15 +19,13 @@ public abstract class AudioNode implements Audible, UnpluggedHandsfreeDialog.IDi
     //AudioNode does not extend GPSLocation, since it does not have a "is a" relation.
     private GPSLocation location;
     private float radius;
-    private Context context;
-    private int resID;
+    private File sound;
 
 
-    public AudioNode(GPSLocation location, float radius, Context context, int resID) {
+    public AudioNode(GPSLocation location, float radius, File sound) {
         this.location = location.clone();
         this.radius = radius;
-        this.context = context;
-        this.resID = resID;
+        this.sound = sound;
 
         AudioHandler.addAudioNode(this);
     }
@@ -32,19 +34,18 @@ public abstract class AudioNode implements Audible, UnpluggedHandsfreeDialog.IDi
     public void playSound() {
         //Checks if a headset is plugged in.
         if (AudioManager.ACTION_HEADSET_PLUG.equals("1")) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, resID);
-            mediaPlayer.start();
+            APIHandler apiHandler = APIHandler.getInstance();
+            apiHandler.playSound(sound);
         } else {
-            UnpluggedHandsfreeDialog dialog = new UnpluggedHandsfreeDialog();
+            /*UnpluggedHandsfreeDialog dialog = new UnpluggedHandsfreeDialog();
             dialog.registerListener(this);
-            dialog.show(((Activity) context).getFragmentManager(), null);
+            dialog.show(((Activity) context).getFragmentManager(), null);*/
         }
     }
 
     @Override
     public void okPressed(boolean value) {
-
-        //playSound();
+        playSound();
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.teamteamname.gotogothenburg.API;
 
+import java.io.File;
+
 /**
  * The interface DeviceAPI is used to abstract the model of the program from the device it's
  * implemented on. Each operating system and sometimes operating system version or device type may
@@ -9,5 +11,5 @@ package com.teamteamname.gotogothenburg.API;
  */
 public interface IDeviceAPI {
     String getWiFiRouterMAC();
-
+    void playSound(File sound);
 }

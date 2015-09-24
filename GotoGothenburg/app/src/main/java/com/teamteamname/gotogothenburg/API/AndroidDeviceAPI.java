@@ -1,8 +1,13 @@
 package com.teamteamname.gotogothenburg.API;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+
+import com.teamteamname.gotogothenburg.R;
+
+import java.io.File;
 
 /**
  * The AndriodDeviceAPI is intended for any android device with a WiFi signal.
@@ -10,14 +15,14 @@ import android.net.wifi.WifiManager;
  */
 public class AndroidDeviceAPI implements IDeviceAPI {
     private WifiInfo wifiInfo;
+    private Context context;
 
     /**
      * Constructor require a context in order to connect the API to the device.
      * @param context the main activity context
      */
     public AndroidDeviceAPI(Context context){
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        wifiInfo = wifiManager.getConnectionInfo();
+        this.context = context;
     }
 
     /**
@@ -26,10 +31,17 @@ public class AndroidDeviceAPI implements IDeviceAPI {
      */
     @Override
     public String getWiFiRouterMAC(){
-        if (wifiInfo == null){
-            return null;
-        } else {
-            return wifiInfo.getBSSID();
+        if (wifiInfo == null) {
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            wifiInfo = wifiManager.getConnectionInfo();
         }
+        return wifiInfo.getBSSID();
+    }
+
+    @Override
+    public void playSound(File sound) {
+        int resourceID = context.getResources().getIdentifier(sound.getName(), null, null);
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
+        mediaPlayer.start();
     }
 }

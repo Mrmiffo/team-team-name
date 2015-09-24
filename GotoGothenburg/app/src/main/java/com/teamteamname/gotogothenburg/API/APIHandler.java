@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -179,6 +180,11 @@ public class APIHandler implements IAPIHandler {
     @Override
     public String getWiFiRouterMAC() {
         return deviceAPI.getWiFiRouterMAC();
+    }
+
+    @Override
+    public void playSound(File sound) {
+        deviceAPI.playSound(sound);
     }
 }
 
