@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.teamteamname.gotogothenburg.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.R;
 
 public class MainActivity extends FragmentActivity {
