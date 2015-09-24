@@ -51,5 +51,8 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="ARG_POS">\@String ARG_POS</string>
+    <string name="unplugged_handsfree">Please plug in handsfree.</string>
+    <string name="ok">Ok!</string>
+    <string name="cancel">Cancel!</string>
+>>>>>>> added pop up window if handsfree are not plugged in
 </resources>
