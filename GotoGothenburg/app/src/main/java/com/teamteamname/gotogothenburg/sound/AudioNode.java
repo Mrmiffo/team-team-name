@@ -20,6 +20,7 @@ public abstract class AudioNode implements Audible, UnpluggedHandsfreeDialog.IDi
     private GPSLocation location;
     private float radius;
     private File sound;
+    APIHandler apiHandler = APIHandler.getInstance();
 
 
     public AudioNode(GPSLocation location, float radius, File sound) {
@@ -27,14 +28,15 @@ public abstract class AudioNode implements Audible, UnpluggedHandsfreeDialog.IDi
         this.radius = radius;
         this.sound = sound;
 
+
         AudioHandler.addAudioNode(this);
+
     }
 
     @Override
     public void playSound() {
         //Checks if a headset is plugged in.
-        if (AudioManager.ACTION_HEADSET_PLUG.equals("1")) {
-            APIHandler apiHandler = APIHandler.getInstance();
+        if (apiHandler.iSHandsfreePluggedIn()) {
             apiHandler.playSound(sound);
         } else {
             /*UnpluggedHandsfreeDialog dialog = new UnpluggedHandsfreeDialog();

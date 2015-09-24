@@ -186,6 +186,11 @@ public class APIHandler implements IAPIHandler {
     public void playSound(File sound) {
         deviceAPI.playSound(sound);
     }
+
+    @Override
+    public boolean iSHandsfreePluggedIn() {
+        return deviceAPI.iSHandsfreePluggedIn();
+    }
 }
 
 

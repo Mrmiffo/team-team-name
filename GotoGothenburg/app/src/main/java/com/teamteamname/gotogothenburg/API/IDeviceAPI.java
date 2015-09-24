@@ -12,4 +12,5 @@ import java.io.File;
 public interface IDeviceAPI {
     String getWiFiRouterMAC();
     void playSound(File sound);
+    boolean iSHandsfreePluggedIn();
 }

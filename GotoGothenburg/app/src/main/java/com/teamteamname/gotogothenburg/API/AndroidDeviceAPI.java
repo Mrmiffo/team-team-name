@@ -1,6 +1,7 @@
 package com.teamteamname.gotogothenburg.API;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -43,5 +44,10 @@ public class AndroidDeviceAPI implements IDeviceAPI {
         int resourceID = context.getResources().getIdentifier(sound.getName(), null, null);
         MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
         mediaPlayer.start();
+    }
+
+    @Override
+    public boolean iSHandsfreePluggedIn() {
+        return AudioManager.ACTION_HEADSET_PLUG.equals("1");
     }
 }
