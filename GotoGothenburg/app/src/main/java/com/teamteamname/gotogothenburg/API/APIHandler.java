@@ -191,6 +191,11 @@ public class APIHandler implements IAPIHandler {
     public boolean iSHandsfreePluggedIn() {
         return deviceAPI.iSHandsfreePluggedIn();
     }
+
+    @Override
+    public void handsfreeNotPluggedInPopUp() {
+        deviceAPI.handsfreeNotPluggedInPopUp();
+    }
 }
 
 

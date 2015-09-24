@@ -13,4 +13,5 @@ public interface IDeviceAPI {
     String getWiFiRouterMAC();
     void playSound(File sound);
     boolean iSHandsfreePluggedIn();
+    void handsfreeNotPluggedInPopUp();
 }

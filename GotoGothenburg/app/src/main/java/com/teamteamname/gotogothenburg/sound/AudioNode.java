@@ -1,10 +1,5 @@
 package com.teamteamname.gotogothenburg.sound;
 
-import android.app.Activity;
-import android.content.Context;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-
 import com.teamteamname.gotogothenburg.GPSLocation;
 
 import java.io.File;
@@ -27,10 +22,8 @@ public abstract class AudioNode implements Audible, UnpluggedHandsfreeDialog.IDi
         this.location = location.clone();
         this.radius = radius;
         this.sound = sound;
-
-
+        
         AudioHandler.addAudioNode(this);
-
     }
 
     @Override
@@ -39,9 +32,7 @@ public abstract class AudioNode implements Audible, UnpluggedHandsfreeDialog.IDi
         if (apiHandler.iSHandsfreePluggedIn()) {
             apiHandler.playSound(sound);
         } else {
-            /*UnpluggedHandsfreeDialog dialog = new UnpluggedHandsfreeDialog();
-            dialog.registerListener(this);
-            dialog.show(((Activity) context).getFragmentManager(), null);*/
+            apiHandler.handsfreeNotPluggedInPopUp();
         }
     }
 
