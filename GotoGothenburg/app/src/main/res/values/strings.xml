@@ -4,6 +4,51 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Preference start -->
+    <string-array name="min_transfer_time_entries">
+        <item>1 min</item>
+        <item>2 min</item>
+        <item>3 min</item>
+        <item>4 min</item>
+        <item>5 min</item>
+        <item>6 min</item>
+        <item>7 min</item>
+        <item>8 min</item>
+        <item>9 min</item>
+        <item>10 min</item>
+    </string-array>
+    <string-array name="min_transfer_time_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="spoken_language_values">
+        <item>english</item>
+        <item>svenska</item>
+    </string-array>
+    <string-array name="spoken_language_entries">
+        <item>English</item>
+        <item>Svenska</item>
+    </string-array>
+
+    <string-array name="text_language_values">
+        <item>english</item>
+        <item>svenska</item>
+    </string-array>
+    <string-array name="text_language_entries">
+        <item>English</item>
+        <item>Svenska</item>
+    </string-array>
+    <!-- Preference end-->
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ARG_POS">\@String ARG_POS</string>

@@ -14,7 +14,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 public class FragmentAdapter extends FragmentPagerAdapter {
 
     //The names of the Fragments as displayed in the application.
-    private final String[] TITLES = { "Destinations", "Map", "Info" };
+    private final String[] TITLES = { "Destinations", "Map", "Info", "Settings" };
 
     public FragmentAdapter(FragmentManager fm){
         super(fm);
@@ -32,6 +32,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             toReturn = MapFragment.newInstance();
         } else if (position == 2){
             toReturn = InfoFragment.newInstance();
+        } else if (position == 3){
+            toReturn = new SettingsFragment();
         }
         return toReturn;
 
