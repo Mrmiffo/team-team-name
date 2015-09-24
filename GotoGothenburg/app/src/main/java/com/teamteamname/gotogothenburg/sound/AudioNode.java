@@ -1,6 +1,8 @@
 package com.teamteamname.gotogothenburg.sound;
 
+import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 
 import com.teamteamname.gotogothenburg.GPSLocation;
@@ -8,8 +10,9 @@ import com.teamteamname.gotogothenburg.GPSLocation;
 /**
  * Created by kakan on 2015-09-22.
  */
-public abstract class AudioNode implements Audible {
+public abstract class AudioNode implements Audible, UnpluggedHandsfreeDialog.IDialogListener {
 
+    //AudioNode does not extend GPSLocation, since it does not have a "is a" relation.
     private GPSLocation location;
     private float radius;
     private int resID;
@@ -25,8 +28,21 @@ public abstract class AudioNode implements Audible {
 
     @Override
     public void playSound(Context context) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(context, resID);
-        mediaPlayer.start();
+        //Checks if a headset is plugged in.
+        if (AudioManager.ACTION_HEADSET_PLUG.equals("1")) {
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, resID);
+            mediaPlayer.start();
+        } else {
+            UnpluggedHandsfreeDialog dialog = new UnpluggedHandsfreeDialog();
+            dialog.registerListener(this);
+            dialog.show(((Activity) context).getFragmentManager(), null);
+        }
+    }
+
+    @Override
+    public void okPressed(boolean value) {
+
+        //playSound();
     }
 
     /**
