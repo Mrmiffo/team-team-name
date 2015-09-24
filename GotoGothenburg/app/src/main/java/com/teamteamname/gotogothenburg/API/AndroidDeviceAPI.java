@@ -1,17 +1,10 @@
 package com.teamteamname.gotogothenburg.API;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Bundle;
-
-import com.teamteamname.gotogothenburg.R;
 
 import java.io.File;
 
@@ -56,22 +49,4 @@ public class AndroidDeviceAPI implements IDeviceAPI {
         return AudioManager.ACTION_HEADSET_PLUG.equals("1");
     }
 
-    @Override
-    public void handsfreeNotPluggedInPopUp() {
-        new DialogFragment() {
-
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                // Use the Builder class for convenient dialog construction
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(R.string.unplugged_handsfree)
-                        .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-                // Create the AlertDialog object and return it
-                return builder.create();
-            }
-        };
-    }
 }

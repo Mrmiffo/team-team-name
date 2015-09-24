@@ -10,8 +10,18 @@ import java.io.File;
  * Created by Anton on 2015-09-23.
  */
 public interface IDeviceAPI {
+
     String getWiFiRouterMAC();
+
+    /**
+     * Plays a given sound through the default sound output port.
+     * @param sound the file containing the sound.
+     */
     void playSound(File sound);
+
+    /**
+     * Checks whether handsfree are plugged into the standard sound I/O port.
+     * @return true if handsfree are plugged in, false otherwise.
+     */
     boolean iSHandsfreePluggedIn();
-    void handsfreeNotPluggedInPopUp();
 }
