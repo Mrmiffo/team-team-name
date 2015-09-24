@@ -11,8 +11,6 @@ import java.io.File;
  */
 public interface IDeviceAPI {
 
-    String getWiFiRouterMAC();
-
     /**
      * Plays a given sound through the default sound output port.
      * @param sound the file containing the sound.
@@ -24,4 +22,24 @@ public interface IDeviceAPI {
      * @return true if handsfree are plugged in, false otherwise.
      */
     boolean iSHandsfreePluggedIn();
+
+    /**
+     *
+     * @return the MAC adress of the router which the device is connected to.
+     */
+    String getWiFiRouterMAC();
+
+    /**
+     *
+     * @return the SSID of the Wifi the device is currently connected to.
+     */
+    String getConnectedWifiSSID();
+
+    /**
+     * Returns if the device is currently connected to the specified wifi.
+     * @param ssid
+     * @return
+     */
+    boolean connectedToWifi(String ssid);
+
 }

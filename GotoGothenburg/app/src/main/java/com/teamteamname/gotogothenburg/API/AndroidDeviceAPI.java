@@ -30,11 +30,23 @@ public class AndroidDeviceAPI implements IDeviceAPI {
      */
     @Override
     public String getWiFiRouterMAC(){
-        if (wifiInfo == null) {
+        if (wifiInfo == null){
             WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             wifiInfo = wifiManager.getConnectionInfo();
         }
+
         return wifiInfo.getBSSID();
+
+    }
+
+    @Override
+    public String getConnectedWifiSSID() {
+        if (wifiInfo == null){
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            wifiInfo = wifiManager.getConnectionInfo();
+        }
+
+        return wifiInfo.getSSID();
     }
 
     @Override
@@ -47,6 +59,11 @@ public class AndroidDeviceAPI implements IDeviceAPI {
     @Override
     public boolean iSHandsfreePluggedIn() {
         return AudioManager.ACTION_HEADSET_PLUG.equals("1");
+    }
+
+    @Override
+    public boolean connectedToWifi(String ssid) {
+        return ssid.equals(getConnectedWifiSSID());
     }
 
 }

@@ -58,6 +58,12 @@ public class APIHandler implements IAPIHandler {
     public boolean iSHandsfreePluggedIn() {
         return deviceAPI.iSHandsfreePluggedIn();
     }
+
+    //Connect to the selected SSID
+    @Override
+    public void connectToOpenWifi(String ssid) {
+        deviceAPI.connectToOpenWifi(ssid);
+    }
 }
 
 
