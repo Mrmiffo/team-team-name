@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg;
+package com.teamteamname.gotogothenburg.API;
 
 
 import com.google.android.gms.maps.model.LatLng;

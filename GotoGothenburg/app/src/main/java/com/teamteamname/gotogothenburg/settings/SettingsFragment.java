@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.activity;
+package com.teamteamname.gotogothenburg.settings;
 
 
 import android.content.SharedPreferences;

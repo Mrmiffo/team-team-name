@@ -1,4 +1,4 @@
-package API;
+package com.teamteamname.gotogothenburg.API;
 
 import android.content.Context;
 import android.net.wifi.WifiInfo;
@@ -22,7 +22,7 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     /**
      * Method used to get the MAC adress of the router. This is used to identify which bus the user is on.
-     * @return null if the API has been created incorrectly or if the device is not connected to a Wifi.
+     * @return null if the com.teamteamname.gotogothenburg.API has been created incorrectly or if the device is not connected to a Wifi.
      */
     @Override
     public String getWiFiRouterMAC(){

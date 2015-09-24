@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.activity;
+package com.teamteamname.gotogothenburg.information;
 
 import android.app.Fragment;
 import android.os.Bundle;

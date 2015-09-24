@@ -5,6 +5,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
+import com.teamteamname.gotogothenburg.destination.DestinationFragment;
+import com.teamteamname.gotogothenburg.information.InfoFragment;
+import com.teamteamname.gotogothenburg.map.MapFragment;
+import com.teamteamname.gotogothenburg.settings.SettingsFragment;
+
 
 /**
  * The FragmentAdapter class is used by the ViewPager to manage the fragments displayed in

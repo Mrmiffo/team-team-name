@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg;
+package com.teamteamname.gotogothenburg.map;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package API;
+package com.teamteamname.gotogothenburg.API;
 
 import android.content.Context;
 import android.util.Base64;
@@ -14,9 +14,7 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
-import com.teamteamname.gotogothenburg.GPSCoordReceiver;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -177,7 +175,7 @@ public class APIHandler implements IAPIHandler {
         }
     }
 
-    //Device API implementations.
+    //Device com.teamteamname.gotogothenburg.API implementations.
     @Override
     public String getWiFiRouterMAC() {
         return deviceAPI.getWiFiRouterMAC();

@@ -1,4 +1,4 @@
-package API;
+package com.teamteamname.gotogothenburg.API;
 
 import android.app.Activity;
 import android.test.ActivityUnitTestCase;
