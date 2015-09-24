@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg;
+package API;
 
 /**
  * The interface DeviceAPI is used to abstract the model of the program from the device it's

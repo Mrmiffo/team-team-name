@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg;
+package API;
 
 import android.content.Context;
 import android.net.wifi.WifiInfo;

@@ -46,6 +46,8 @@ public class APIHandler implements IAPIHandler {
     private String t1 = "t1=";
     private String t2 = "t2=";
 
+    private IDeviceAPI deviceAPI;
+
     private APIHandler(Context context){
 
         // Instantiate the cache
@@ -58,6 +60,8 @@ public class APIHandler implements IAPIHandler {
 
         queue.start();
 
+        //Setup the DeviceAPI
+        deviceAPI = new AndroidDeviceAPI(context);
         /*
         ub.scheme("https");
         ub.authority(baseUrl);
@@ -171,6 +175,12 @@ public class APIHandler implements IAPIHandler {
             Log.e("ErrorResponse",error.getCause().toString());
             callback.sendGPSCoord(new LatLng(0.0,0.0));
         }
+    }
+
+    //Device API implementations.
+    @Override
+    public String getWiFiRouterMAC() {
+        return deviceAPI.getWiFiRouterMAC();
     }
 }
 
