@@ -54,15 +54,20 @@ public class APIHandler implements IAPIHandler {
         deviceAPI.playSound(sound);
     }
 
+    //Device API implementations.
     @Override
     public boolean iSHandsfreePluggedIn() {
         return deviceAPI.iSHandsfreePluggedIn();
     }
 
-    //Connect to the selected SSID
     @Override
-    public void connectToOpenWifi(String ssid) {
-        deviceAPI.connectToOpenWifi(ssid);
+    public String getConnectedWifiSSID() {
+        return deviceAPI.getConnectedWifiSSID();
+    }
+
+    @Override
+    public boolean connectedToWifi(String ssid) {
+        return deviceAPI.connectedToWifi(ssid);
     }
 }
 

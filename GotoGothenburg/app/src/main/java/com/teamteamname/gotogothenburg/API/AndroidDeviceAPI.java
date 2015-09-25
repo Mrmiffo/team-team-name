@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import java.io.File;
 
@@ -34,7 +35,7 @@ public class AndroidDeviceAPI implements IDeviceAPI {
             WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             wifiInfo = wifiManager.getConnectionInfo();
         }
-
+        Log.v("WiFiSSID", wifiInfo.getBSSID());
         return wifiInfo.getBSSID();
 
     }
