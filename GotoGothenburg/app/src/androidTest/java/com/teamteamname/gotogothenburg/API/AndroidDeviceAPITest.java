@@ -1,23 +1,52 @@
 package com.teamteamname.gotogothenburg.API;
 
-import android.app.Activity;
-import android.test.ActivityUnitTestCase;
+import android.test.ActivityInstrumentationTestCase2;
+
+import com.teamteamname.gotogothenburg.activity.MainActivity;
+
 
 /**
- * Created by Anton on 2015-09-24.
+ * Created by Anton on 2015-09-25.
  */
-public class AndroidDeviceAPITest extends ActivityUnitTestCase {
+public class AndroidDeviceAPITest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-    public AndroidDeviceAPITest(Class activityClass) {
-        super(activityClass);
+
+
+    private MainActivity mActivity;
+    private AndroidDeviceAPI androidDeviceAPI;
+
+    public AndroidDeviceAPITest() {
+        super(MainActivity.class);
     }
 
-    //Tests if the wifiRouter mac function "works" note that the emulator can't handle wifi, thus tests for wifi returns only null.
-    public void testGetWiFiRouterMAC() throws Exception {
-        Activity mActivity = getActivity();
-        AndroidDeviceAPI androidDeviceAPI = new AndroidDeviceAPI(mActivity);
+    @Override
+    protected void setUp(){
+        mActivity = getActivity();
+        androidDeviceAPI = new AndroidDeviceAPI(mActivity);
+    }
 
-        assertTrue(androidDeviceAPI.getWiFiRouterMAC() == null);
+    public void testPreconditions(){
+        assertNotNull("Activity is null", mActivity);
+        assertNotNull("DeviceAPI is null", androidDeviceAPI);
+    }
+
+    // As we can't anticipate if the test will run on simulator (which doesn't have wifi) or on a
+    // phone (on which we can't know the wifi it's connected to) this will only be tested with unit
+    // test and has been tested manually.
+    public void testGetWiFiRouterMAC() throws Exception {
+        assertNull("WiFimac is: " + androidDeviceAPI.getWiFiRouterMAC(), androidDeviceAPI.getWiFiRouterMAC());
+
+    }
+
+    public void testGetConnectedWifiSSID() throws Exception {
+        assertNull("WifiSSID is: " + androidDeviceAPI.getConnectedWifiSSID(), androidDeviceAPI.getConnectedWifiSSID());
+    }
+
+    public void testConnectToOpenWifi() throws Exception {
+
+    }
+
+    public void testConnectedToWifi() throws Exception {
 
     }
 }
