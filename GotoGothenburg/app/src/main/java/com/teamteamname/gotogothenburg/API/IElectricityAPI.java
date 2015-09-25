@@ -5,5 +5,6 @@ package com.teamteamname.gotogothenburg.API;
  */
 public interface IElectricityAPI {
 
+    public void getBusLocation(String dgw, ElectricityHandler callback);
 
 }
