@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Go to Gothenburg</string>
+    <string name="action_settings">Action Settings</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <!-- API Keys -->
+    <string name="vasttrafik_api_key">7f50c6a5-90e0-4e10-9015-baeddd1637e6</string>
+
+    <!--  Base Urls -->
+    <string name="vasttrafik_base_url">"http://api.vasttrafik.se/bin/rest.exe/"</string>
 
     <!-- Preference start -->
     <string-array name="min_transfer_time_entries">
@@ -49,10 +53,7 @@
     </string-array>
     <!-- Preference end-->
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="unplugged_handsfree">This sound will not be played while handsfree are not plugged in.</string>
     <string name="ok">Ok!</string>
     <string name="cancel">Cancel!</string>
->>>>>>> added pop up window if handsfree are not plugged in
 </resources>

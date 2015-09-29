@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
+import com.teamteamname.gotogothenburg.API.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 
@@ -26,6 +32,12 @@ public class MainActivity extends FragmentActivity {
         PagerSlidingTabStrip pager_title_strip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager_title_strip.setViewPager(pager);
 
+        // Initialize the APIs
+        Cache cache = new DiskBasedCache(getCacheDir(),1024*1024);
+        Network network = new BasicNetwork(new HurlStack());
+        RequestQueue queue = new RequestQueue(cache,network);
+        VasttrafikAPI.init(this, queue);
+        queue.start();
     }
 
     @Override
