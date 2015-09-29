@@ -1,5 +1,6 @@
 package com.teamteamname.gotogothenburg.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.map.MapFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -39,5 +41,13 @@ public class MainActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
+        if (requestCode == MapFragment.REQUEST_RESOLVE_ERROR) {
+            mapFragment.resolutionResult(resultCode, data);
+        }
     }
 }
