@@ -11,6 +11,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -51,6 +52,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         if(!mResolvingError) {
             locationsAPI.connect();
         }
+
     }
 
     @Override
@@ -58,7 +60,9 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         super.onResume();
         if (locationsAPI.isConnected()) {
             LocationServices.FusedLocationApi.requestLocationUpdates(locationsAPI, LocationRequest.getLocationRequest(), this);
+
         }
+
     }
 
     @Override
@@ -80,11 +84,14 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         map = googleMap;
         map.setMyLocationEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
+        map.setBuildingsEnabled(true);
+
+
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        lastLocation = LocationServices.FusedLocationApi.getLastLocation(locationsAPI);
+        //lastLocation = LocationServices.FusedLocationApi.getLastLocation(locationsAPI);
         LocationServices.FusedLocationApi.requestLocationUpdates(locationsAPI, LocationRequest.getLocationRequest(), this);
     }
 
@@ -143,9 +150,19 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         }
     }
 
+    boolean onLocationChangedHasRun;
     @Override
     public void onLocationChanged(Location location) {
         markCurrentPosition(location);
+        if (!onLocationChangedHasRun) {
+            zoomToLocation(location, 15);
+            onLocationChangedHasRun = true;
+        }
+    }
+
+    private void zoomToLocation(Location location, float zoom){
+        LatLng myloc = new LatLng(location.getLatitude(), location.getLongitude());
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc, zoom));
     }
 
     // Place marker on devices' current position
