@@ -8,6 +8,8 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * The AndriodDeviceAPI is intended for any android device with a WiFi signal.
@@ -53,8 +55,17 @@ public class AndroidDeviceAPI implements IDeviceAPI {
     @Override
     public void playSound(File sound) {
         int resourceID = context.getResources().getIdentifier(sound.getName(), null, null);
-        MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
         mediaPlayer.start();
+        Timer mediaStopper = new Timer();
+        mediaStopper.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            }
+        }, mediaPlayer.getDuration());
+
     }
 
     @Override
