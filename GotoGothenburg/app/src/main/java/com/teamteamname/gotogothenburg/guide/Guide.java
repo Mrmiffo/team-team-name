@@ -5,44 +5,112 @@ import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.GPSListener;
 import com.teamteamname.gotogothenburg.Lines;
 import com.teamteamname.gotogothenburg.Stops;
+import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.sound.AudioNode;
 import com.teamteamname.gotogothenburg.sound.AudioNodeList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A class representing a guided tour as a list of AudioNodes.
  * Created by kakan on 2015-09-25.
  */
-public class Guide implements GPSListener {
+public class Guide {
 
+    //Lista spelade ljud
+    //Fråga api efter nästa hållplats --> få tag i alla noder associerade med hållplatsen --> spela upp de som inte är i listan --> lägg till i listan.
+
+    private Bus bus;
+    private List<AudioNode> playedNodes;
+    private List<AudioNode> playQueue;
+    private Timer getNextStop;
+    private Stops lastStop;
+
+    public Guide (Bus bus) {
+        this.bus = bus;
+        playedNodes = new ArrayList<>();
+        playQueue = new ArrayList<>();
+        getNextStop = new Timer();
+        getNextStop.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                checkNextStop();
+
+            }
+        }, 0, 5000);
+    }
+
+    private void checkNextStop() {
+        if (!lastStop.equals(null)) {//Fråga ElectriCity efter nextStop() för bussen och adapter))
+            lastStop = null; //tilldela med nextStop() och adapter
+            playQueue.clear();
+            playQueue.addAll(AudioNodeList.getListofNodes(lastStop));
+            playQueue();
+        }
+    }
+
+    private synchronized void playQueue() {
+        if (playQueue.size() < 1) {
+            AudioNode toBePlayed = playQueue.get(0);
+            if (!playedNodes.contains(toBePlayed)) {
+                playedNodes.add(toBePlayed);
+                //be api spela upp
+                //api borde bara kunna spela upp en sak åt gången.
+            }
+            playQueue.remove(toBePlayed);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     private APIHandler apiHandler;
     private List<AudioNode> guidePoints = new ArrayList<>();
     private Integer indexOfUpcomingAudioNode;
 
 
-    public Guide(APIHandler apiHandler, Lines line) {
+    public Guide(APIHandler apiHandler, Bus bus, Lines line) {
         this.apiHandler = apiHandler;
-        switch (line) {
-            case BUS_55:
-                guidePoints.add(AudioNodeList.getNode(Stops.Sven_Hultings_Gata));
-                guidePoints.add(AudioNodeList.getNode(Stops.Chalmersplatsen));
-                guidePoints.add(AudioNodeList.getNode(Stops.Kapellplatsen));
-                guidePoints.add(AudioNodeList.getNode(Stops.Götaplatsen));
-                guidePoints.add(AudioNodeList.getNode(Stops.Valand));
-                guidePoints.add(AudioNodeList.getNode(Stops.Kungsportsplatsen));
-                guidePoints.add(AudioNodeList.getNode(Stops.Brunnsparken));
-                guidePoints.add(AudioNodeList.getNode(Stops.Lilla_Bommen));
-                guidePoints.add(AudioNodeList.getNode(Stops.Frihamnsporten));
-                guidePoints.add(AudioNodeList.getNode(Stops.Pumpgatan));
-                guidePoints.add(AudioNodeList.getNode(Stops.Regnbågsgatan));
-                guidePoints.add(AudioNodeList.getNode(Stops.Lindholmen));
-                guidePoints.add(AudioNodeList.getNode(Stops.Teknikgatan));
-                guidePoints.add(AudioNodeList.getNode(Stops.Lindholmsplatsen));
-                break;
-        }
+        guidePoints.addAll(AudioNodeList.getListOfNodes(line));
     }
+
+
+
+
+
+
+
 
     @Override
     public void updatedLocation(GPSCoord newLocation) {
@@ -92,4 +160,6 @@ public class Guide implements GPSListener {
             closestNode.playSound(apiHandler);
         }
     }
+
+    */
 }
