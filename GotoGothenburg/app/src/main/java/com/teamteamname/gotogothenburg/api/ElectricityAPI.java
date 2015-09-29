@@ -17,8 +17,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 /**
  * Created by Olof on 25/09/2015.
@@ -85,23 +88,77 @@ public class ElectricityAPI implements IElectricityAPI{
 
     @Override
     public void getAmbientTemperature(Bus bus, ElectricityHandler callback) {
+        //Requests data since 10 sec earlier.
+        long t2 = System.currentTimeMillis();
+        long t1 = t2 - (1000 * 10);
 
+        // Builds the URI
+        String uri = buildURI(bus.getDgw(),"Ericsson$Ambient_Temperature",null,t1,t2);
+
+        Log.i("URI", uri);
+
+        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        AmbientTempParser parser = new AmbientTempParser(callback);
+
+        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        queue.add(request);
     }
 
     @Override
     public void getCabinTemperature(Bus bus, ElectricityHandler callback) {
+        //Requests data since 2,5 min earlier.
+        long t2 = System.currentTimeMillis();
+        long t1 = t2 - (1000 * 150);
 
+        // Builds the URI
+        String uri = buildURI(bus.getDgw(),"Ericsson$Driver_Cabin_Temperature",null,t1,t2);
+
+        Log.i("URI", uri);
+
+        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        CabinTempParser parser = new CabinTempParser(callback);
+
+        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        queue.add(request);
     }
 
     @Override
     public void getStopPressed(Bus bus, ElectricityHandler callback) {
+        //Requests data since 2,5 min earlier.
+        long t2 = System.currentTimeMillis();
+        long t1 = t2 - (1000 * 150);
 
+        // Builds the URI
+        String uri = buildURI(bus.getDgw(),"Ericsson$Stop_Pressed",null,t1,t2);
+
+        Log.i("URI", uri);
+
+        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        StopPressedParser parser = new StopPressedParser(callback);
+
+        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        queue.add(request);
     }
 
     @Override
     public void getNbrOfWifiUsers(Bus bus, ElectricityHandler callback) {
+        //Requests data since 12 sec earlier.
+        long t2 = System.currentTimeMillis();
+        long t1 = t2 - (1000 * 12);
 
+        // Builds the URI
+        String uri = buildURI(bus.getDgw(),"Ericsson$Online_Users",null,t1,t2);
+
+        Log.i("URI", uri);
+
+        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        WifiUsersParser parser = new WifiUsersParser(callback);
+
+        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        queue.add(request);
     }
+
+    // Help methods:
 
     // sensorSpec and resourceSpec can't be given at the same time.
     private String buildURI(String dgw, String sensorSpec, String resourceSpec, long t1, long t2){
@@ -129,6 +186,46 @@ public class ElectricityAPI implements IElectricityAPI{
         sb.append(t2);
 
         return sb.toString();
+    }
+
+    // Returns the JSONObject with latest value (according to the timestamps) for a specific resource out of a array which could contain other resources.
+    private JSONObject getLatestJSONValue(String resourceName, JSONArray array){
+
+        PriorityQueue<JSONObject> objectsWithResourceName = new PriorityQueue<JSONObject>(2,new Comparator<JSONObject>(){
+
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+                try {
+                    if (lhs.getInt("timestamp") > rhs.getInt("timestamp")) {
+                        return -1;
+                    } else if (lhs.getInt("timestamp") < rhs.getInt("timestamp")) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }catch (JSONException e){
+                    Log.e("ParsingError","No timestamp in Object");
+                }
+                return 0;
+            }
+        });
+        try{
+            for(int i = 0; i < array.length(); i++){
+                JSONObject object = array.getJSONObject(i);
+                if(object.has(resourceName)){
+                    objectsWithResourceName.add(object);
+                }
+
+            }
+
+            return objectsWithResourceName.poll();
+
+        }catch(JSONException e){
+            Log.e("ParsingError", "Not able to find resource in array.");
+        }
+
+        //Should only return if there was an parsing error.
+        return new JSONObject();
     }
 
     private Map<String,String> createBasicAuth(String username, String password){
@@ -170,24 +267,19 @@ public class ElectricityAPI implements IElectricityAPI{
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            Log.e("ErrorResponse",error.toString());
+            Log.e("GPSCoordParser",error.toString());
             callback.electricityRequestError(error.toString());
         }
 
         @Override
         public void onResponse(JSONArray response) {
             Log.i("Response",response.toString());
-            JSONObject lat = null;
-            JSONObject lng = null;
-            try {
-                lat = response.getJSONObject(1);
-                lng = response.getJSONObject(3);
-            }catch(JSONException e){
-                Log.e("JSONException","Error getting JSONObjects from response");
-            }
+
+            JSONObject lat = getLatestJSONValue("Latitude2_Value",response);
+            JSONObject lng = getLatestJSONValue("Longitude2_Value",response);
 
             try {
-                callback.electricityRequestDone(new GPSCoord((float) lat.getDouble("value"), (float) lng.getDouble("value")));
+                callback.electricityGPSResponse(new GPSCoord((float) lat.getDouble("value"), (float) lng.getDouble("value")));
             }catch(JSONException e){
                 Log.e("JSONException","Error getting values from JSONObject-response");
             }catch(NullPointerException e){
@@ -206,24 +298,130 @@ public class ElectricityAPI implements IElectricityAPI{
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            Log.e("ErrorResponse",error.toString());
+            Log.e("NextStopParser",error.toString());
             callback.electricityRequestError(error.toString());
         }
 
         @Override
         public void onResponse(JSONArray response) {
             Log.i("Response",response.toString());
-            JSONObject lat = null;
-            JSONObject lng = null;
-            try {
-                lat = response.getJSONObject(1);
-                lng = response.getJSONObject(3);
-            }catch(JSONException e){
-                Log.e("JSONException","Error getting JSONObjects from response");
-            }
+
+            JSONObject nextStop = getLatestJSONValue("Bus_Stop_Name_Value",response);
 
             try {
-                callback.electricityRequestDone(new GPSCoord((float) lat.getDouble("value"), (float) lng.getDouble("value")));
+                callback.electricityNextStopResponse(nextStop.getString("value"));
+            }catch(JSONException e){
+                Log.e("JSONException","Error getting values from JSONObject-response");
+            }catch(NullPointerException e){
+                Log.e("NullPointer","Error reading JSONObjects");
+            }
+        }
+    }
+
+    private class AmbientTempParser implements Response.Listener<JSONArray>, Response.ErrorListener{
+
+        ElectricityHandler callback;
+
+        public AmbientTempParser(ElectricityHandler callback){ this.callback = callback; }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e("AmbientTempParser", error.toString());
+            callback.electricityRequestError(error.toString());
+        }
+
+        @Override
+        public void onResponse(JSONArray response) {
+            Log.i("Response",response.toString());
+
+            JSONObject temperature = getLatestJSONValue("Ambient_Temperature_Value",response);
+
+            try {
+                callback.electricityAmbientTemperatureResponse(temperature.getDouble("value"));
+            }catch(JSONException e){
+                Log.e("JSONException","Error getting values from JSONObject-response");
+            }catch(NullPointerException e){
+                Log.e("NullPointer","Error reading JSONObjects");
+            }
+        }
+    }
+
+    private class CabinTempParser implements Response.Listener<JSONArray>, Response.ErrorListener{
+
+        ElectricityHandler callback;
+
+        public CabinTempParser(ElectricityHandler callback){ this.callback = callback; }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e("CabinTempParser", error.toString());
+            callback.electricityRequestError(error.toString());
+        }
+
+        @Override
+        public void onResponse(JSONArray response) {
+            Log.i("Response",response.toString());
+
+            JSONObject temperature = getLatestJSONValue("Driver_Cabin_Temperature_Value",response);
+
+            try {
+                callback.electricityCabinTemperature(temperature.getDouble("value"));
+            }catch(JSONException e){
+                Log.e("JSONException","Error getting values from JSONObject-response");
+            }catch(NullPointerException e){
+                Log.e("NullPointer","Error reading JSONObjects");
+            }
+        }
+    }
+
+    private class StopPressedParser implements Response.Listener<JSONArray>, Response.ErrorListener{
+
+        ElectricityHandler callback;
+
+        public StopPressedParser(ElectricityHandler callback){ this.callback = callback; }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e("StopPressedParser", error.toString());
+            callback.electricityRequestError(error.toString());
+        }
+
+        @Override
+        public void onResponse(JSONArray response) {
+            Log.i("Response",response.toString());
+
+            JSONObject stopPressed = getLatestJSONValue("Stop_Pressed_Value",response);
+
+            try {
+                callback.electricityStopPressedResponse(stopPressed.getBoolean("value"));
+            }catch(JSONException e){
+                Log.e("JSONException","Error getting values from JSONObject-response");
+            }catch(NullPointerException e){
+                Log.e("NullPointer","Error reading JSONObjects");
+            }
+        }
+    }
+
+    private class WifiUsersParser implements Response.Listener<JSONArray>, Response.ErrorListener{
+
+        ElectricityHandler callback;
+
+        public WifiUsersParser(ElectricityHandler callback){ this.callback = callback; }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e("WifiUsersParser", error.toString());
+            callback.electricityRequestError(error.toString());
+        }
+
+        @Override
+        public void onResponse(JSONArray response) {
+            Log.i("Response",response.toString());
+
+            JSONObject wifiUsers = getLatestJSONValue("Total_Online_Users_Value",response);
+
+            try {
+                callback.electricityWifiUsersResponse(wifiUsers.getInt("value"));
             }catch(JSONException e){
                 Log.e("JSONException","Error getting values from JSONObject-response");
             }catch(NullPointerException e){
