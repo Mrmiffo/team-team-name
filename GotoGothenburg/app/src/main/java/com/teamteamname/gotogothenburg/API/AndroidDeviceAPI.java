@@ -16,15 +16,34 @@ import java.util.TimerTask;
  * Created by Anton on 2015-09-23.
  */
 public class AndroidDeviceAPI implements IDeviceAPI {
+    private static IDeviceAPI instance;
     private WifiInfo wifiInfo;
     private Context context;
 
     /**
      * Constructor require a context in order to connect the API to the device.
-     * @param context the main activity context
      */
-    public AndroidDeviceAPI(Context context){
+    private AndroidDeviceAPI(){
+
+    }
+
+    public static synchronized IDeviceAPI getInstance(){
+        if (instance == null){
+            instance = new AndroidDeviceAPI();
+        }
+        return instance;
+    }
+
+    /**
+     * A method to initialize the singleton instance of AndroidDeviceAPI. Require and android context
+     * to setup the instance. All methods will throw nullpointer exception unless this method has
+     * been run.
+     * @param context
+     */
+    public void initialize(Context context){
         this.context = context;
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiInfo = wifiManager.getConnectionInfo();
     }
 
     /**
@@ -33,22 +52,12 @@ public class AndroidDeviceAPI implements IDeviceAPI {
      */
     @Override
     public String getWiFiRouterMAC(){
-        if (wifiInfo == null){
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            wifiInfo = wifiManager.getConnectionInfo();
-        }
-        Log.v("WiFiSSID", wifiInfo.getBSSID());
         return wifiInfo.getBSSID();
 
     }
 
     @Override
     public String getConnectedWifiSSID() {
-        if (wifiInfo == null){
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            wifiInfo = wifiManager.getConnectionInfo();
-        }
-
         return wifiInfo.getSSID();
     }
 

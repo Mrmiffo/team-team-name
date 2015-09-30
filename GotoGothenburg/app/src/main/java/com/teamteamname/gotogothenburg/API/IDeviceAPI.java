@@ -42,4 +42,5 @@ public interface IDeviceAPI {
      */
     boolean connectedToWifi(String ssid);
 
+
 }
