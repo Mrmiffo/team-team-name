@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 import com.teamteamname.gotogothenburg.R;
 
@@ -16,7 +18,8 @@ import com.teamteamname.gotogothenburg.R;
  */
 public class DestinationFragment extends Fragment {
 
-    ScrollView destinationListView;
+    private ListView destinationListView;
+    private SavedDestinations savedDestinations;
 
     public DestinationFragment() {
         super();
@@ -35,7 +38,6 @@ public class DestinationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        destinationListView = (ScrollView) getActivity().findViewById(R.id.destinationsView);
 
     }
 
@@ -43,6 +45,51 @@ public class DestinationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_destination, container, false);
+        View toReturn = inflater.inflate(R.layout.fragment_destination, container, false);
+
+        //Setup the destinations view
+        //TODO REMOVE TESTCODE
+        //TEST CODE//
+        savedDestinations = new SavedDestinations();
+        savedDestinations.addDestination(new Destination("Testination", 1,2));
+        savedDestinations.addDestination(new Destination("Testination2", 1,2));
+        savedDestinations.addDestination(new Destination("Testination3", 1,2));
+        savedDestinations.addDestination(new Destination("Testination4", 1,2));
+        savedDestinations.addDestination(new Destination("Testination", 1,2));
+
+        Destination visited = new Destination("Visitation", 3,4);
+        visited.setVisited(true);
+        savedDestinations.addDestination(visited);
+
+        savedDestinations.addDestination(new Destination("Testination2", 1,2));
+        savedDestinations.addDestination(new Destination("Testination3", 1,2));
+        savedDestinations.addDestination(new Destination("Testination4", 1,2));
+        savedDestinations.addDestination(new Destination("Testination", 1,2));
+        savedDestinations.addDestination(new Destination("Testination2", 1,2));
+        savedDestinations.addDestination(new Destination("Testination3", 1,2));
+        savedDestinations.addDestination(new Destination("Testination4", 1,2));
+        savedDestinations.addDestination(new Destination("Testination", 1,2));
+        savedDestinations.addDestination(new Destination("Testination2", 1,2));
+        savedDestinations.addDestination(new Destination("Testination3", 1,2));
+        savedDestinations.addDestination(new Destination("Testination4", 1,2));
+
+
+        //TEST CODE//
+
+        destinationListView = (ListView) toReturn.findViewById(R.id.destinationListView);
+        DestinationListAdapter adapter = new DestinationListAdapter(savedDestinations, getActivity());
+        destinationListView.setAdapter(adapter);
+        destinationListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO implement on click action, such as generate a guide or give directions.
+            }
+        });
+        return toReturn;
     }
+
+    public void displayDestination(Destination destToDisplay){
+
+    }
+
 }
