@@ -50,7 +50,7 @@ public class SavedDestinationsTest extends TestCase {
 
     public void testRemoveDestination() throws Exception {
         savedDests1 = new SavedDestinations(testDests);
-        savedDests1.removeDestination(testDests.get(1));
+        savedDests1.removeDestination(testDests.get(0));
         assertFalse("Saved destinations still contain all items", savedDests1.getSavedDestinations().containsAll(testDests));
         assertFalse("Saved destinations still contain the removed item", savedDests1.getSavedDestinations().contains(testDests.get(0)));
         assertTrue("Saved destinations has removed Test item 2", savedDests1.getSavedDestinations().contains(testDests.get(1)));
