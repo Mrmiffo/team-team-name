@@ -91,7 +91,6 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
     @Override
     public void onConnected(Bundle bundle) {
-        //lastLocation = LocationServices.FusedLocationApi.getLastLocation(locationsAPI);
         LocationServices.FusedLocationApi.requestLocationUpdates(locationsAPI, LocationRequest.getLocationRequest(), this);
     }
 
