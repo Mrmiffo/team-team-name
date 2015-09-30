@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="black">#000</color>
     <color name="white">#ffffff</color>
+
+    <!-- Shades of blue -->
+    <color name="lightestBlue">#4DADCF</color>
+    <color name="lighterBlue">#5BCDF6</color>
+    <color name="mainBlue">#56C2E9</color>
+    <color name="darkerBlue">#3E8DA9</color>
+    <color name="darkestBlue">#275869</color>
+
+
     <style name="G2GBG_theme" parent="android:Theme.Holo.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
