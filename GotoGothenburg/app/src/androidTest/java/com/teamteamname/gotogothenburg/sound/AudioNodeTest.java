@@ -19,7 +19,7 @@ public class AudioNodeTest extends ActivityInstrumentationTestCase2<MainActivity
     }
 
     public void setUp(){
-        androidDeviceAPI = new AndroidDeviceAPI(getActivity());
+
 
     }
 }

@@ -22,7 +22,8 @@ public class AndroidDeviceAPITest extends ActivityInstrumentationTestCase2<MainA
     @Override
     protected void setUp(){
         mActivity = getActivity();
-        androidDeviceAPI = new AndroidDeviceAPI(mActivity);
+        AndroidDeviceAPI.getInstance().initialize(mActivity);
+        androidDeviceAPI = AndroidDeviceAPI.getInstance();
     }
 
     public void testPreconditions(){

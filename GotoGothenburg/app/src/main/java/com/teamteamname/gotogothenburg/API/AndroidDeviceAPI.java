@@ -16,18 +16,19 @@ import java.util.TimerTask;
  * Created by Anton on 2015-09-23.
  */
 public class AndroidDeviceAPI implements IDeviceAPI {
-    private static IDeviceAPI instance;
+    private static AndroidDeviceAPI instance;
     private WifiInfo wifiInfo;
     private Context context;
+    private boolean initialized;
 
     /**
      * Constructor require a context in order to connect the API to the device.
      */
     private AndroidDeviceAPI(){
-
+        initialized = false;
     }
 
-    public static synchronized IDeviceAPI getInstance(){
+    public static synchronized AndroidDeviceAPI getInstance(){
         if (instance == null){
             instance = new AndroidDeviceAPI();
         }
@@ -40,10 +41,12 @@ public class AndroidDeviceAPI implements IDeviceAPI {
      * been run.
      * @param context
      */
-    public void initialize(Context context){
-        this.context = context;
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        wifiInfo = wifiManager.getConnectionInfo();
+    public void initialize(Context context) {
+        if (!initialized) {
+            this.context = context;
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            wifiInfo = wifiManager.getConnectionInfo();
+        }
     }
 
     /**
