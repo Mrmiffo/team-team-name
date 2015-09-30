@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import com.teamteamname.gotogothenburg.R;
 
@@ -14,6 +15,8 @@ import com.teamteamname.gotogothenburg.R;
  * Created by Anton on 2015-09-21.
  */
 public class DestinationFragment extends Fragment {
+
+    ScrollView destinationListView;
 
     public DestinationFragment() {
         super();
@@ -32,6 +35,7 @@ public class DestinationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        destinationListView = (ScrollView) getActivity().findViewById(R.id.destinationsView);
 
     }
 
