@@ -17,7 +17,10 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:checkboxStyle">@style/checkboxStyle</item>
+        <item name="android:listSeparatorTextViewStyle">@style/PreferenceListHeader</item>
+        <item name="android:listViewStyle">@style/listViewStyle</item>
     </style>
+
     <style name="checkboxStyle">
         <item name="android:button">@drawable/check_box</item>
     </style>
@@ -31,4 +34,10 @@
         <item name="android:paddingTop">6dp</item>
         <item name="android:paddingBottom">-10dp</item>
     </style>
+    <style name="listViewStyle" parent="Widget.AppCompat.ListView">
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:divider">@color/white</item>
+    </style>
+
+
 </resources>
