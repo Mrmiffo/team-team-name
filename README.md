@@ -1,1 +1,4 @@
-This is the README File for the project made by "Team "Team name""
+# Go to Gothenburg
+### Generating reports
+- gradle checkAll
+- gradlew checkAll
