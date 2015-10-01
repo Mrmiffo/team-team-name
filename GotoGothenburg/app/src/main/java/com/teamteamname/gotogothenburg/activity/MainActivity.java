@@ -1,10 +1,12 @@
 package com.teamteamname.gotogothenburg.activity;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -38,6 +40,14 @@ public class MainActivity extends FragmentActivity {
         RequestQueue queue = new RequestQueue(cache,network);
         VasttrafikAPI.init(this, queue);
         queue.start();
+
+        // Adding listeners to searchbar
+        SearchView searchBar = (SearchView)findViewById(R.id.searchBar);
+        AutocompleteListener listener = new AutocompleteListener(this, searchBar);
+        searchBar.setOnQueryTextListener(listener);
+        searchBar.setOnSuggestionListener(listener);
+        SearchManager manager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
+        searchBar.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
     }
 
     @Override
