@@ -8,6 +8,13 @@ import com.google.android.gms.maps.model.LatLng;
 public interface IVasttrafikAPI {
     void getCoordinates(VasttrafikHandler callback, LatLng origin, LatLng dest);
     void getCoordinates(VasttrafikHandler callback, String originStop, String destStop);
+
+    /**
+     * Sends a list fo autocomplete suggestions to the callback.
+     * The suggestions are based on the string "input" which is supplied.
+     * @param callback  The interface which is to be supplied with the result
+     * @param input     The input which is the base for the autocomplete suggestions
+     */
     void getAutocomplete(VasttrafikHandler callback, String input);
     void getNearbyStops(VasttrafikHandler callback, LatLng origin, int maxDist);
     void setWalkSpeed(int walkSpeed);
