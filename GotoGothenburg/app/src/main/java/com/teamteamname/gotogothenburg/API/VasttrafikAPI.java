@@ -1,21 +1,21 @@
 package com.teamteamname.gotogothenburg.API;
 
 import android.content.Context;
+import android.util.Log;
 
-import com.android.volley.Cache;
-import com.android.volley.Network;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Setter;
 
@@ -32,6 +32,7 @@ public class VasttrafikAPI implements IVasttrafikAPI{
     private String autocomplete = "location.name";
     private String nearbyStops = "location.nearbystops";
     private String trip = "trip";
+    private String format = "format=json";
 
     @Setter private int walkSpeed;
     @Setter private int maxWalkDist;
@@ -73,16 +74,19 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
     @Override
     public void getAutocomplete(VasttrafikHandler callback, String input) {
+
+        String sanitizedInput = sanitize(input);
+
         StringBuilder sb = new StringBuilder();
         sb.append(baseURL);
         sb.append(autocomplete + "?");
         sb.append("authKey=" + apiKey + "&");
-        sb.append("input=" + input);
+        sb.append(format + "&");
+        sb.append("input=" + sanitizedInput);
         String uri = sb.toString();
 
         AutocompleteParser parser = new AutocompleteParser(callback);
-
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, uri, parser, parser);
+        JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
         queue.add(request);
     }
 
@@ -91,7 +95,15 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
     }
 
-    private class AutocompleteParser implements Response.Listener<JSONArray>, Response.ErrorListener{
+    private String sanitize(String input){
+        input = input.replace('ö', 'o');
+        input = input.replace('å', 'a');
+        input = input.replace('ä', 'a');
+        input = input.replace('%', '\0');
+        return input;
+    }
+
+    private class AutocompleteParser implements Response.Listener<JSONObject>, Response.ErrorListener{
 
         private VasttrafikHandler callback;
 
@@ -105,8 +117,39 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         }
 
         @Override
-        public void onResponse(JSONArray response) {
+        public void onResponse(JSONObject response) {
+            List<String> suggestions = new ArrayList<String>();
+            JSONObject locationList;
+            JSONObject temp;
+            JSONArray stopLocation;
+            JSONArray coordLocation;
+            try{
+                if(response.has("LocationList")) {
+                    locationList = (JSONObject) response.get("LocationList");
+                    if (locationList.has("StopLocation")) {
+                        stopLocation = (JSONArray) locationList.get("StopLocation");
+                        for (int i = 0; i < 2; i++) {
+                            temp = stopLocation.getJSONObject(i);
+                            if(temp.has("name")) {
+                                suggestions.add((String) temp.get("name"));
+                            }
+                        }
+                    }
 
+                    if (locationList.has("CoordLocation")) {
+                        coordLocation = (JSONArray) locationList.get("CoordLocation");
+                        for (int i = 0; i < 2; i++) {
+                            temp = coordLocation.getJSONObject(i);
+                            if(temp.has("name")) {
+                                suggestions.add((String) temp.get("name"));
+                            }
+                        }
+                    }
+                }
+            } catch (JSONException e){
+                Log.e("JSONException", e.toString());
+            }
+            callback.vasttrafikRequestDone(suggestions);
         }
     }
 }
