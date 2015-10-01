@@ -2,6 +2,7 @@ package com.teamteamname.gotogothenburg.api;
 
 import android.app.Activity;
 import android.test.ActivityUnitTestCase;
+import android.util.Log;
 
 import com.android.volley.Response;
 import com.teamteamname.gotogothenburg.API.mock.MockElectricityHandler;
@@ -73,13 +74,16 @@ public class ElectricityAPITest extends ActivityUnitTestCase {
         //Tests response on empty response
         parser.onResponse(testEmptyResponse);
 
-        //Tests
+        //Tests if it returns the latest one of 2 GPSCoords in a response.
+        JSONArray testGPSCoord = new JSONArray();
         try{
-            JSONArray testGPSCoord = new JSONArray("[{\"resourceSpec\":\"Authenticated_Users_Value\",\"timestamp\":\"1442391279000\",\"value\":\"5\",\"gatewayId\":\"Vin_Num_001\"}]");
-
+            testGPSCoord = new JSONArray("[{\"resourceSpec\":\"Latitude2_Value\",\"timestamp\":\"1\",\"value\":\"11.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Latitude2_Value\",\"timestamp\":\"2\",\"value\":\"5.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Longitude2_Value\",\"timestamp\":\"1\",\"value\":\"11.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Longitude2_Value\",\"timestamp\":\"2\",\"value\":\"5.0\",\"gatewayId\":\"Vin_Num_001\"}]");
         }catch (JSONException e){
-
+            Log.e("TestError","Could not create a test JSONArray.");
         }
+        parser.onResponse(testGPSCoord);
+        GPSCoord correctGPSCoord = new GPSCoord((float)5.0,(float)5.0);
+        assertTrue(mHandler.getGpsResponse().equals(correctGPSCoord));
 
     }
 
