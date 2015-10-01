@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.Stops;
 import com.teamteamname.gotogothenburg.map.Bus;
 
 import org.json.JSONArray;
@@ -307,9 +308,19 @@ public class ElectricityAPI implements IElectricityAPI{
             Log.i("Response",response.toString());
 
             JSONObject nextStop = getLatestJSONValue("Bus_Stop_Name_Value",response);
+            boolean stopExists = false;
 
             try {
-                callback.electricityNextStopResponse(nextStop.getString("value"));
+                for(Stops stop:Stops.values()){
+                    //Checks caps to match
+                    if(nextStop.getString("value").toUpperCase().equals(stop.toString())){
+                        callback.electricityNextStopResponse(stop.name());
+                        stopExists = true;
+                    }
+                }
+                if(!stopExists){
+                    throw new IllegalArgumentException("No stop" + nextStop.getString("value") + "exists");
+                }
             }catch(JSONException e){
                 Log.e("JSONException","Error getting values from JSONObject-response");
             }catch(NullPointerException e){
