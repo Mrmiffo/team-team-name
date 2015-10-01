@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.MatrixCursor;
 import android.widget.SearchView;
 
-import com.teamteamname.gotogothenburg.API.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.API.VasttrafikHandler;
+import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.VasttrafikHandler;
 
 import java.util.List;
 
