@@ -1,15 +1,17 @@
 package com.teamteamname.gotogothenburg.map;
 
-import com.teamteamname.gotogothenburg.API.AndroidDeviceAPI;
+import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
+
 /**
  * A class that identifies which ElectriCity bus which the user is connected to.
  * Created by Anton on 2015-09-24.
  */
 /*
-class onWhichBusIdentifier {
+
+class OnWhichBusIdentifier {
     private static final String ELECTRICITY_WIFI_SSID = "ElectriCity";
 
-    protected onWhichBusIdentifier() {
+    protected OnWhichBusIdentifier(){
 
     }
 

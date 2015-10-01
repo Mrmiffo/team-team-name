@@ -15,7 +15,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
-import com.teamteamname.gotogothenburg.API.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 

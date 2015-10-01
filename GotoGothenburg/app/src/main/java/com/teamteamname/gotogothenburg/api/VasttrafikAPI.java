@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.API;
+package com.teamteamname.gotogothenburg.api;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,7 +8,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
-import com.teamteamname.gotogothenburg.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,6 +1,4 @@
-package com.teamteamname.gotogothenburg.API;
-
-import com.google.android.gms.maps.model.LatLng;
+package com.teamteamname.gotogothenburg.api;
 
 import java.util.List;
 

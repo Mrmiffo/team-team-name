@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.API;
+package com.teamteamname.gotogothenburg.api;
 
 /**
  * Created by Olof on 25/09/2015.

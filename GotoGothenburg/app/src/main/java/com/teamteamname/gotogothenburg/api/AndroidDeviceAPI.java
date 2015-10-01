@@ -1,11 +1,10 @@
-package com.teamteamname.gotogothenburg.API;
+package com.teamteamname.gotogothenburg.api;
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.util.Log;
 
 import java.io.File;
 import java.util.Timer;

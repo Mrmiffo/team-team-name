@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.API;
+package com.teamteamname.gotogothenburg.api;
 
 
 import com.teamteamname.gotogothenburg.GPSCoord;
