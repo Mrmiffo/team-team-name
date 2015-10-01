@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-import com.teamteamname.gotogothenburg.API.BusStatusAPI;
-import com.teamteamname.gotogothenburg.API.IBusStatusHandler;
+import com.teamteamname.gotogothenburg.api.BusStatusAPI;
+import com.teamteamname.gotogothenburg.api.IBusStatusHandler;
 import com.teamteamname.gotogothenburg.R;
 
 /**
