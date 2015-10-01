@@ -39,11 +39,10 @@ public class ElectricityAPI implements IElectricityAPI{
     }
 
     public static void init(Context context, RequestQueue queue){
-        if(instance == null){
-            instance = new ElectricityAPI(queue);
 
-            //TODO: Fetch api username and password from values.strings
-        }
+        instance = new ElectricityAPI(queue);
+
+        //TODO: Fetch api username and password from values.strings
     }
 
     public static ElectricityAPI getInstance(){
@@ -251,6 +250,7 @@ public class ElectricityAPI implements IElectricityAPI{
         public Map<String,String> getHeaders() throws AuthFailureError{
             return createBasicAuth(username,password);
         }
+
     }
 
     // The following listeners parses the JSONArray response from the api into the appropriate format.
