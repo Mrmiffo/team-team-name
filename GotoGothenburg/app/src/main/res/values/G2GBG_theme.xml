@@ -19,6 +19,7 @@
         <item name="android:checkboxStyle">@style/checkboxStyle</item>
         <item name="android:listSeparatorTextViewStyle">@style/PreferenceListHeader</item>
         <item name="android:listViewStyle">@style/listViewStyle</item>
+        <item name="android:buttonStyle">@style/buttonStyle</item>
     </style>
 
     <style name="checkboxStyle">
@@ -37,6 +38,9 @@
     <style name="listViewStyle" parent="Widget.AppCompat.ListView">
         <item name="android:dividerHeight">0dp</item>
         <item name="android:divider">@color/white</item>
+    </style>
+    <style name="buttonStyle" parent="Widget.AppCompat.Button">
+
     </style>
 
 
