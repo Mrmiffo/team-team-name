@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.API;
+package com.teamteamname.gotogothenburg.api;
 
 import android.util.Log;
 
@@ -66,7 +66,7 @@ public class BusStatusAPI implements IBusStatusAPI{
             Log.e("MalformedURLException", e.toString());
             handler.getConnectedBusSystemIDCallback(null);
         } catch (ParserConfigurationException e) {
-            Log.e("ParserConfigurationException", e.toString());
+            Log.e("ParserConfigurationExc", e.toString());
             handler.getConnectedBusSystemIDCallback(null);
         } catch (SAXException e) {
             Log.e("SAXException", e.toString());

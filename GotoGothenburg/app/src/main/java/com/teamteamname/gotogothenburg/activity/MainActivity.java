@@ -15,6 +15,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
+import com.teamteamname.gotogothenburg.api.BusStatusAPI;
 import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.map.MapFragment;
@@ -39,6 +40,7 @@ public class MainActivity extends FragmentActivity {
         Network network = new BasicNetwork(new HurlStack());
         RequestQueue queue = new RequestQueue(cache,network);
         VasttrafikAPI.init(this, queue);
+        BusStatusAPI.getInstance();
         queue.start();
 
         // Adding listeners to searchbar

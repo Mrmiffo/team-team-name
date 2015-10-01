@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.API;
+package com.teamteamname.gotogothenburg.api;
 
 /**
  * An interface implemented by the class which will receive the response from the IBusStatus API.

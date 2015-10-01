@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.API;
+package com.teamteamname.gotogothenburg.api;
 
 /**
  * An API which will read information from the wifi it's connected to and identify the wifi router details.
