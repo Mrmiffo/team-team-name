@@ -13,16 +13,16 @@ public class Bus {
     @Getter private String dgw;
     @Getter private String vin;
     @Getter private String regNr;
-    @Getter private String mac;
+    @Getter private String sysId;
     @Getter private Boolean active;
     private static List<Bus> busses = new ArrayList<Bus>();
     private static Boolean initiated;
 
-    private Bus(String dgw, String vin, String regNr, String mac, Boolean active){
+    private Bus(String dgw, String vin, String regNr, String sysId, Boolean active){
         this.dgw = dgw;
         this.vin = vin;
         this.regNr = regNr;
-        this.mac = mac;
+        this.sysId = sysId;
         this.active = active;
     }
 
@@ -42,16 +42,16 @@ public class Bus {
 
     public static void init(){
         if(initiated == false) {
-            addBus("Ericsson$100020", "YV3U0V222FA100020", "EPO 131", "0013951349f5", false);
-            addBus("Ericsson$100021", "YV3U0V222FA100021", "EPO 136", "001395134bbe", true);
-            addBus("Ericsson$100022", "YV3U0V222FA100022", "EPO 143", "001395143bf0", false);
-            addBus("Ericsson$171164", "YV3T1U22XF1171164", "EOG 604", "00139514698a", false);
-            addBus("Ericsson$171234", "YV3T1U225F1171234", "EOG 606", "0013951349f7", false);
-            addBus("Ericsson$171235", "YV3T1U227F1171235", "EOG 616", "0013950f92a4", false);
-            addBus("Ericsson$171327", "YV3T1U221F1171327", "EOG 622", "001395136296", false);
-            addBus("Ericsson$171328", "YV3T1U223F1171328", "EOG 627", "001395134bbc", false);
-            addBus("Ericsson$171329", "YV3T1U225F1171329", "EOG 631", "001395143bf2", false);
-            addBus("Ericsson$171330", "YV3T1U223F1171330", "EOG 634", "001395135f20", false);
+            addBus("Ericsson$100020", "YV3U0V222FA100020", "EPO 131", "2501069301", false);
+            addBus("Ericsson$100021", "YV3U0V222FA100021", "EPO 136", "2501069758", true);
+            addBus("Ericsson$100022", "YV3U0V222FA100022", "EPO 143", "2501131248", false);
+            addBus("Ericsson$171164", "YV3T1U22XF1171164", "EOG 604", "2501142922", false);
+            addBus("Ericsson$171234", "YV3T1U225F1171234", "EOG 606", "2501069303", false);
+            addBus("Ericsson$171235", "YV3T1U227F1171235", "EOG 616", "2500825764", false);
+            addBus("Ericsson$171327", "YV3T1U221F1171327", "EOG 622", "2501075606", false);
+            addBus("Ericsson$171328", "YV3T1U223F1171328", "EOG 627", "2501069756", false);
+            addBus("Ericsson$171329", "YV3T1U225F1171329", "EOG 631", "2501131250", false);
+            addBus("Ericsson$171330", "YV3T1U223F1171330", "EOG 634", "2501074720", false);
             initiated = true;
         }
     }
@@ -63,7 +63,7 @@ public class Bus {
     public static Bus getBusByDgw(String dgw){
         for(Bus b : busses){
             if(b.getDgw().equals(dgw)){
-                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getMac(), b.getActive());
+                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.getActive());
             }
         }
         return null;
@@ -76,7 +76,7 @@ public class Bus {
     public static Bus getBusByVin(String vin){
         for(Bus b : busses){
             if(b.getVin().equals(vin)){
-                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getMac(), b.getActive());
+                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.getActive());
             }
         }
         return null;
@@ -89,20 +89,20 @@ public class Bus {
     public static Bus getBusByRegNr(String regNr){
         for(Bus b : busses){
             if(b.getRegNr().equals(regNr)){
-                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getMac(), b.getActive());
+                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.getActive());
             }
         }
         return null;
     }
 
     /**
-     * @param mac   The MAC-address of the router of the required bus
+     * @param sysId   The MAC-address of the router of the required bus
      * @return      A copy of the bus with the router with the given MAC-address
      */
-    public static Bus getBusByMac(String mac){
+    public static Bus getBusBySysId(String sysId){
         for(Bus b : busses){
-            if(b.getMac().equals(mac)){
-                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getMac(), b.getActive());
+            if(b.getSysId().equals(sysId)){
+                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.getActive());
             }
         }
         return null;
