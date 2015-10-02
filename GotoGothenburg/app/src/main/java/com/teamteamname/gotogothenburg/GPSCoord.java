@@ -1,6 +1,5 @@
 package com.teamteamname.gotogothenburg;
 
-import java.util.Objects;
 
 /**
  * Created by kakan on 2015-09-22.
@@ -30,15 +29,25 @@ public class GPSCoord {
     }
 
     public boolean equals(Object other){
-        if(other == this){
+        if(other == null){
+            return false;
+        }else if(other == this){
             return true;
         }else if(!other.getClass().equals(this.getClass())){
             return false;
         }
+        float epsilon = 0.00000001f;
         GPSCoord otherGPSCoord = (GPSCoord)other;
-        if(otherGPSCoord.getLatitude()==this.getLatitude() && otherGPSCoord.getLongitude()==this.getLongitude()){
+        if(Math.abs(otherGPSCoord.getLatitude()-this.getLatitude())<epsilon && otherGPSCoord.getLongitude()-this.getLongitude()<epsilon){
             return true;
         }
         return false;
+    }
+
+    public int hashCode(){
+        int hash = 1;
+        hash = hash*17 + Math.round(latitude);
+        hash = hash*31 + Math.round(longitude);
+        return hash;
     }
 }
