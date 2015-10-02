@@ -2,8 +2,6 @@ package com.teamteamname.gotogothenburg.api;
 
 import android.util.Log;
 
-import com.android.volley.RequestQueue;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -24,9 +22,7 @@ import javax.xml.parsers.SAXParserFactory;
  */
 public class BusStatusAPI implements IBusStatusAPI{
     private static BusStatusAPI instance;
-    private static final String TARGET_URL= "ombord.info/api/XML/system/";
-
-    private RequestQueue queue;
+    private static final String TARGET_URL= "http://www.ombord.info/api/xml/system/";
 
     private BusStatusAPI(){
 
@@ -43,24 +39,23 @@ public class BusStatusAPI implements IBusStatusAPI{
 
     }
 
-
     @Override
     public void getConnectedBusSystemID(IBusStatusHandler handler) {
         try {
-        URL url = new URL(TARGET_URL);
-        /* Get a SAXParser from the SAXPArserFactory. */
-        SAXParserFactory spf = SAXParserFactory.newInstance();
-        SAXParser sp = spf.newSAXParser();
+            URL url = new URL(TARGET_URL);
+            /* Get a SAXParser from the SAXPArserFactory. */
+            SAXParserFactory spf = SAXParserFactory.newInstance();
+            SAXParser sp = spf.newSAXParser();
 
-        /* Get the XMLReader of the SAXParser we created. */
-        XMLReader xmlReader = sp.getXMLReader();
-        /* Create a new ContentHandler and apply it to the XML-Reader*/
-        SystemIDParser myHandler = new SystemIDParser(handler);
-        xmlReader.setContentHandler(myHandler);
+            /* Get the XMLReader of the SAXParser we created. */
+            XMLReader xmlReader = sp.getXMLReader();
+            /* Create a new ContentHandler and apply it to the XML-Reader*/
+            SystemIDParser myHandler = new SystemIDParser(handler);
+            xmlReader.setContentHandler(myHandler);
 
-        /* Parse the xml-data from our URL. */
-        xmlReader.parse(new InputSource(url.openStream()));
-        /* Parsing has finished. */
+            /* Parse the xml-data from our URL. */
+            xmlReader.parse(new InputSource(url.openStream()));
+            /* Parsing has finished. */
 
         } catch (MalformedURLException e) {
             Log.e("MalformedURLException", e.toString());
@@ -89,8 +84,8 @@ public class BusStatusAPI implements IBusStatusAPI{
         @Override
         public void characters(char ch[], int start, int length) {
             String xmlText = new String(ch, start, length);
-            Log.e("XML:", xmlText);
-            //handler.getConnectedBusSystemIDCallback(xmlText);
+            handler.getConnectedBusSystemIDCallback(xmlText);
+
         }
     }
 }
