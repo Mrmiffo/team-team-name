@@ -3,6 +3,7 @@ package com.teamteamname.gotogothenburg.information;
 import android.app.Fragment;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,10 @@ import android.widget.Button;
 import com.teamteamname.gotogothenburg.api.BusStatusAPI;
 import com.teamteamname.gotogothenburg.api.IBusStatusHandler;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.map.Bus;
+import com.teamteamname.gotogothenburg.map.IOnWhichBusListener;
+import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
+
 
 /**
  * Created by Anton on 2015-09-21.
@@ -36,12 +41,12 @@ public class InfoFragment extends Fragment {
 
         //TODO Remove test code
         //--TEST CODE START--
-
+        OnWhichBusIdentifier.getInstance().registerListener(new BusStatusAPIListener());
         Button testButton = (Button) toReturn.findViewById(R.id.systemIdTestButton);
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BusStatusAPI.getInstance().getConnectedBusSystemID(new BusStatusAPIListener());
+                OnWhichBusIdentifier.getInstance().start();
             }
         });
 
@@ -50,11 +55,12 @@ public class InfoFragment extends Fragment {
     }
     //TODO remove test code
     //--TEST CODE START--
-    private class BusStatusAPIListener implements IBusStatusHandler{
+    private class BusStatusAPIListener implements IOnWhichBusListener{
+
 
         @Override
-        public void getConnectedBusSystemIDCallback(String returnValue) {
-
+        public void whichBussCallBack(Bus busUserIsOn) {
+            Log.e("User is on bus: ", busUserIsOn.getRegNr());
         }
     }
     //--TEST CODE END--
