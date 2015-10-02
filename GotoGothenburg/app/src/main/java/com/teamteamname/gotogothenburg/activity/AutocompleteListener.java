@@ -16,12 +16,12 @@ public class AutocompleteListener implements SearchView.OnQueryTextListener, Sea
 
     private long lastCall;
     private Context context;
-    private SearchView searchBar;
+    private SearchView searchbar;
 
-    public AutocompleteListener(Context context, SearchView searchBar){
+    public AutocompleteListener(Context context, SearchView searchbar){
         this.lastCall = 0;
         this.context = context;
-        this.searchBar = searchBar;
+        this.searchbar = searchbar;
     }
 
     @Override
@@ -54,8 +54,8 @@ public class AutocompleteListener implements SearchView.OnQueryTextListener, Sea
         for(int i = 0; i < autocomplete.size(); i++){
             cursor.addRow(new Object[]{i, autocomplete.get(i)});
         }
-        AutocompleteAdapter autocompleteAdapter = new AutocompleteAdapter(context, cursor, 0, autocomplete);
-        searchBar.setSuggestionsAdapter(autocompleteAdapter);
+        AutocompleteAdapter autocompleteAdapter = new AutocompleteAdapter(context, cursor, 0, autocomplete, searchbar);
+        this.searchbar.setSuggestionsAdapter(autocompleteAdapter);
     }
 
     @Override
