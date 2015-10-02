@@ -1,6 +1,6 @@
-package com.teamteamname.gotogothenburg.API.mock;
+package com.teamteamname.gotogothenburg.api.mock;
 
-import com.teamteamname.gotogothenburg.API.ElectricityHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityHandler;
 import com.teamteamname.gotogothenburg.GPSCoord;
 
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.API.mock;
+package com.teamteamname.gotogothenburg.api.mock;
 
 import com.android.volley.Network;
 import com.android.volley.NetworkResponse;

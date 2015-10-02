@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.API.mock;
+package com.teamteamname.gotogothenburg.api.mock;
 
 import android.util.Log;
 
@@ -28,7 +28,7 @@ public class MockRequestQueue extends RequestQueue {
 
 
     public MockRequestQueue(){
-        super(new NoCache(), new MockNetwork());
+        super(new NoCache(), new com.teamteamname.gotogothenburg.api.mock.MockNetwork());
     }
 
     // Used to check if the request is produced in the right way.

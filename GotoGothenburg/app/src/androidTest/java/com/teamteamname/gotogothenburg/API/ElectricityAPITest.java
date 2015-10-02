@@ -5,8 +5,8 @@ import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
 import com.android.volley.Response;
-import com.teamteamname.gotogothenburg.API.mock.MockElectricityHandler;
-import com.teamteamname.gotogothenburg.API.mock.MockRequestQueue;
+import com.teamteamname.gotogothenburg.api.mock.MockElectricityHandler;
+import com.teamteamname.gotogothenburg.api.mock.MockRequestQueue;
 import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.map.Bus;
 
