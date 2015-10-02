@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.Getter;
 
+
 /**
  * Created by Mattias Ahlstedt on 2015-09-22.
  */
@@ -14,9 +15,9 @@ public class Bus {
     @Getter private String vin;
     @Getter private String regNr;
     @Getter private String sysId;
-    @Getter private Boolean active;
+    @Getter private boolean active;
     private static List<Bus> busses = new ArrayList<Bus>();
-    private static Boolean initiated;
+    private static boolean initiated;
 
     private Bus(String dgw, String vin, String regNr, String sysId, Boolean active){
         this.dgw = dgw;
@@ -63,7 +64,7 @@ public class Bus {
     public static Bus getBusByDgw(String dgw){
         for(Bus b : busses){
             if(b.getDgw().equals(dgw)){
-                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.getActive());
+                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.isActive());
             }
         }
         return null;
@@ -76,7 +77,7 @@ public class Bus {
     public static Bus getBusByVin(String vin){
         for(Bus b : busses){
             if(b.getVin().equals(vin)){
-                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.getActive());
+                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.isActive());
             }
         }
         return null;
@@ -89,7 +90,7 @@ public class Bus {
     public static Bus getBusByRegNr(String regNr){
         for(Bus b : busses){
             if(b.getRegNr().equals(regNr)){
-                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.getActive());
+                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.isActive());
             }
         }
         return null;
@@ -102,7 +103,7 @@ public class Bus {
     public static Bus getBusBySysId(String sysId){
         for(Bus b : busses){
             if(b.getSysId().equals(sysId)){
-                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.getActive());
+                return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.isActive());
             }
         }
         return null;
