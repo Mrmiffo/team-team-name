@@ -18,19 +18,17 @@ public class AndroidDeviceAPI implements IDeviceAPI {
     private static AndroidDeviceAPI instance;
     private WifiInfo wifiInfo;
     private Context context;
-    private boolean initialized;
 
     /**
      * Constructor require a context in order to connect the API to the device.
      */
-    private AndroidDeviceAPI(){
-        initialized = false;
+    private AndroidDeviceAPI(Context context){
+        this.context = context;
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiInfo = wifiManager.getConnectionInfo();
     }
 
     public static synchronized AndroidDeviceAPI getInstance(){
-        if (instance == null){
-            instance = new AndroidDeviceAPI();
-        }
         return instance;
     }
 
@@ -40,11 +38,9 @@ public class AndroidDeviceAPI implements IDeviceAPI {
      * been run.
      * @param context
      */
-    public void initialize(Context context) {
-        if (!initialized) {
-            this.context = context;
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            wifiInfo = wifiManager.getConnectionInfo();
+    public static void initialize(Context context) {
+        if (instance == null) {
+            instance = new AndroidDeviceAPI(context);
         }
     }
 
@@ -86,7 +82,8 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public boolean connectedToWifi(String ssid) {
-        return ssid.equals(getConnectedWifiSSID());
+        return true;
+        //return ssid.equals(getConnectedWifiSSID());
     }
 
 }
