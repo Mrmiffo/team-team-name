@@ -15,10 +15,13 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
+import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.BusStatusAPI;
 import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
+import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 
 public class MainActivity extends FragmentActivity {
 
@@ -40,8 +43,12 @@ public class MainActivity extends FragmentActivity {
         Network network = new BasicNetwork(new HurlStack());
         RequestQueue queue = new RequestQueue(cache,network);
         VasttrafikAPI.init(this, queue);
-        BusStatusAPI.getInstance();
         queue.start();
+        BusStatusAPI.initialize();
+        OnWhichBusIdentifier.initialize();
+        AndroidDeviceAPI.initialize(this);
+
+        Bus.init();
 
         // Adding listeners to searchbar
         SearchView searchBar = (SearchView)findViewById(R.id.searchBar);
