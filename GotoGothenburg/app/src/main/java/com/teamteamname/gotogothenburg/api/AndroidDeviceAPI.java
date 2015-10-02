@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+import com.teamteamname.gotogothenburg.utils.AndroidConverter;
+
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -65,7 +67,7 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public void playSound(File sound) {
-        int resourceID = context.getResources().getIdentifier(sound.getName(), null, null);
+        int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
         final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
         mediaPlayer.start();
         Timer mediaStopper = new Timer();
@@ -76,12 +78,14 @@ public class AndroidDeviceAPI implements IDeviceAPI {
                 mediaPlayer.release();
             }
         }, mediaPlayer.getDuration());
-
     }
 
     @Override
-    public boolean iSHandsfreePluggedIn() {
-        return AudioManager.ACTION_HEADSET_PLUG.equals("1");
+    public boolean isHandsfreePluggedIn() {
+        AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        //Check both wired and wireless handsfree
+        //Only other parts of the deprecated method is deprecated.
+        return audioManager.isWiredHeadsetOn() || audioManager.isBluetoothA2dpOn(); 
     }
 
     @Override

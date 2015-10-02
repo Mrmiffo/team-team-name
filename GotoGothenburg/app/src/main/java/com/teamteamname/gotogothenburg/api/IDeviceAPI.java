@@ -21,7 +21,7 @@ public interface IDeviceAPI {
      * Checks whether handsfree are plugged into the standard sound I/O port.
      * @return true if handsfree are plugged in, false otherwise.
      */
-    boolean iSHandsfreePluggedIn();
+    boolean isHandsfreePluggedIn();
 
     /**
      *
