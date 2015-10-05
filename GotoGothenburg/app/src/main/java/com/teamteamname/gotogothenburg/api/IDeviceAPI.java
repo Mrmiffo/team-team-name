@@ -13,9 +13,10 @@ public interface IDeviceAPI {
 
     /**
      * Plays a given sound through the default sound output port.
+     * @param callback the interface to call when the sound finished playing.
      * @param sound the file containing the sound.
      */
-    void playSound(File sound);
+    void playSound(ISoundDoneCallback callback,File sound);
 
     /**
      * Checks whether handsfree are plugged into the standard sound I/O port.

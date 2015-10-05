@@ -68,8 +68,8 @@ public class AndroidDeviceAPI implements IDeviceAPI {
     }
 
     @Override
-    public void playSound(File sound) {
-        int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
+    public void playSound(ISoundDoneCallback callback, File sound) {
+        int resourceID = context.getResources().getIdentifier(sound.getName(), null, null);
         final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
         mediaPlayer.start();
         Timer mediaStopper = new Timer();
@@ -80,6 +80,7 @@ public class AndroidDeviceAPI implements IDeviceAPI {
                 mediaPlayer.release();
             }
         }, mediaPlayer.getDuration());
+        callback.soundFinishedPlaying();
     }
 
     @Override
@@ -97,5 +98,4 @@ public class AndroidDeviceAPI implements IDeviceAPI {
         }
         return ssid.equals(getConnectedWifiSSID());
     }
-
 }
