@@ -1,7 +1,6 @@
 package com.teamteamname.gotogothenburg.api;
 
-import android.app.Activity;
-import android.test.ActivityUnitTestCase;
+import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -16,27 +15,32 @@ import org.json.JSONException;
 /**
  * Created by Olof on 28/09/2015.
  */
-public class ElectricityAPITest extends ActivityUnitTestCase {
+public class ElectricityAPITest extends AndroidTestCase {
     private ElectricityAPI mElevtricityAPI;
-    private Activity mActivity;
     private MockRequestQueue mQueue;
 
-    // Mock JSONArrays that is used to test the API's parsing of responses.
-    private JSONArray testEmptyResponse = new JSONArray();
-    private JSONArray testTemp = new JSONArray();
-    private JSONArray testWifiUsers = new JSONArray();
+    private final String dgw = "Ericsson$100021";
+    private Bus bus;
+    private MockElectricityHandler mHandler;
 
-    public ElectricityAPITest(Class activityClass) { super(activityClass); }
+
+    // Mock JSONArrays that is used to test the API's parsing of responses.
+    //TODO: Make tests for empty responses.
+    private JSONArray testEmptyResponse = new JSONArray();
+
 
     @Override
     protected void setUp() throws Exception{
         super.setUp();
 
-        mActivity = getActivity();
+        Bus.init();
+        bus = Bus.getBusByDgw(dgw);
+
+        mHandler = new MockElectricityHandler();
 
         mQueue = new MockRequestQueue();
 
-        ElectricityAPI.init(this.getActivity().getApplicationContext(), mQueue);
+        ElectricityAPI.init(this.getContext(), mQueue);
 
         mElevtricityAPI = ElectricityAPI.getInstance();
 
@@ -44,37 +48,35 @@ public class ElectricityAPITest extends ActivityUnitTestCase {
 
     @Override
     protected void tearDown() throws Exception{
+        bus = null;
+        mHandler = null;
 
     }
 
+    //Test so that ElectricityAPI creates a correct Request(correct URL, correct method, correct Auth header)
     public void testGPSRequest(){
-        Bus bus = Bus.getBusByDgw("Ericsson$100020");
-        MockElectricityHandler mHandler = new MockElectricityHandler();
-
         mElevtricityAPI.getBusLocation(bus, mHandler);
 
-        String mockURI = "https://ece01.ericsson.net:4443/ecity?dgw=" + bus.getDgw() + "&" + "sensorSpec=Ericsson$GPS2";
-        mQueue.getUri().substring(0,mockURI.length());
+        final String mockURI = "https://ece01.ericsson.net:4443/ecity?dgw=" + bus.getDgw() + "&" + "sensorSpec=Ericsson$GPS2";
+        //Removes the times, which is inpossible to predict.
+        final String createdURI = mQueue.getUri().substring(0, mockURI.length());
 
         assertTrue(mQueue.getMethod() == 0);
-        assertTrue(mQueue.getUri().equals(mockURI));
+        assertTrue(createdURI.equals(mockURI));
         assertTrue(mQueue.getHeader().get("Authorization").equals("Basic Z3JwMjc6QkNjUmwtOFVsSQ=="));
 
     }
 
     public void testGPSResponse(){
-        Bus bus = Bus.getBusByDgw("Ericsson$100020");
-        MockElectricityHandler mHandler = new MockElectricityHandler();
-
         mElevtricityAPI.getBusLocation(bus, mHandler);
 
         Response.ErrorListener errorListener = mQueue.getErrorListener();
         Response.Listener parser = mQueue.getParser();
 
-        //Tests response on empty response
+        //Tests parse on empty response
         parser.onResponse(testEmptyResponse);
 
-        //Tests if it returns the latest one of 2 GPSCoords in a response.
+        //Tests if it returns in a correct format the latest one of 2 GPSCoords in a response.
         JSONArray testGPSCoord = new JSONArray();
         try{
             testGPSCoord = new JSONArray("[{\"resourceSpec\":\"Latitude2_Value\",\"timestamp\":\"1\",\"value\":\"11.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Latitude2_Value\",\"timestamp\":\"2\",\"value\":\"5.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Longitude2_Value\",\"timestamp\":\"1\",\"value\":\"11.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Longitude2_Value\",\"timestamp\":\"2\",\"value\":\"5.0\",\"gatewayId\":\"Vin_Num_001\"}]");
@@ -83,37 +85,97 @@ public class ElectricityAPITest extends ActivityUnitTestCase {
         }
         parser.onResponse(testGPSCoord);
         GPSCoord correctGPSCoord = new GPSCoord((float)5.0,(float)5.0);
-        assertTrue(mHandler.getGpsResponse().equals(correctGPSCoord));
+        assertTrue(correctGPSCoord.equals(mHandler.getGpsResponse()));
 
     }
 
     public void testStopPressedResponse(){
-        Bus bus = Bus.getBusByDgw("Ericsson$100020");
-        MockElectricityHandler mHandler = new MockElectricityHandler();
-
         mElevtricityAPI.getStopPressed(bus, mHandler);
 
         Response.ErrorListener errorListener = mQueue.getErrorListener();
         Response.Listener parser = mQueue.getParser();
 
+        //Tests parse on empty respponse
+        parser.onResponse(testEmptyResponse);
 
-
+        //Test if it returns in a correct format the latest of 2 StopPressed events.
         JSONArray testStopPressedCorrect = new JSONArray();
-        JSONArray testStopPressedNoAnswer = new JSONArray();
+        try {
+            testStopPressedCorrect = new JSONArray("[{\"resourceSpec\":\"Stop_Pressed_Value\",\"timestamp\":\"1\",\"value\":\"true\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Stop_Pressed_Value\",\"timestamp\":\"2\",\"value\":\"false\",\"gatewayId\":\"Vin_Num_001\"}]");
+        }catch(JSONException e){
+            Log.e("TestError","Could not create a test JSONArray.");
 
-        //[{"resourceSpec":"Authenticated_Users_Value","timestamp":"1442391279000","value":"5","gatewayId":"Vin_Num_001"}]
+        }
+        parser.onResponse(testStopPressedCorrect);
+        boolean correctStopPressed = false;
+        assertTrue(mHandler.isPressedResponse()==correctStopPressed);
     }
 
     public void testCabinTempResponse(){
+        mElevtricityAPI.getCabinTemperature(bus, mHandler);
 
+        Response.ErrorListener errorListener = mQueue.getErrorListener();
+        Response.Listener parser = mQueue.getParser();
+
+        //Tests parse on empty respponse
+        parser.onResponse(testEmptyResponse);
+
+        //Test if it returns in a correct format the latest of 2 logged temperatures.
+        JSONArray testCabinTempCorrect = new JSONArray();
+        try {
+            testCabinTempCorrect = new JSONArray("[{\"resourceSpec\":\"Driver_Cabin_Temperature_Value\",\"timestamp\":\"1\",\"value\":\"0.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Driver_Cabin_Temperature_Value\",\"timestamp\":\"2\",\"value\":\"100.0\",\"gatewayId\":\"Vin_Num_001\"}]");
+        }catch(JSONException e){
+            Log.e("TestError","Could not create a test JSONArray.");
+
+        }
+        parser.onResponse(testCabinTempCorrect);
+        double correctTemp = 100.0;
+        assertTrue(mHandler.getCabinTempResponse()==correctTemp);
     }
 
     public void testAmbientTempResponse(){
+        mElevtricityAPI.getAmbientTemperature(bus, mHandler);
 
+        Response.ErrorListener errorListener = mQueue.getErrorListener();
+        Response.Listener parser = mQueue.getParser();
+
+        //Tests parse on empty respponse
+        parser.onResponse(testEmptyResponse);
+
+        //Test if it returns in a correct format the latest of 2 logged temperatures.
+        JSONArray testAmbientTempCorrect = new JSONArray();
+        try {
+            testAmbientTempCorrect = new JSONArray("[{\"resourceSpec\":\"Ambient_Temperature_Value\",\"timestamp\":\"1\",\"value\":\"0.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Ambient_Temperature_Value\",\"timestamp\":\"2\",\"value\":\"100.0\",\"gatewayId\":\"Vin_Num_001\"}]");
+        }catch(JSONException e){
+            Log.e("TestError","Could not create a test JSONArray.");
+
+        }
+        parser.onResponse(testAmbientTempCorrect);
+        double correctTemp = 100.0;
+        assertTrue(mHandler.getAmbientTempResponse()==correctTemp);
     }
 
     public void testWifiUsersResponse(){
+        mElevtricityAPI.getNbrOfWifiUsers(bus, mHandler);
 
+        Response.ErrorListener errorListener = mQueue.getErrorListener();
+        Response.Listener parser = mQueue.getParser();
+
+        //Tests parse on empty respponse
+        //parser.onResponse(testEmptyResponse);
+
+        //Test if it returns in a correct format the latest of 2 logged temperatures.
+        JSONArray testWifiUsersCorrect = new JSONArray();
+        try {
+            testWifiUsersCorrect = new JSONArray("[{\"resourceSpec\":\"Total_Online_Users_Value\",\"timestamp\":\"1\",\"value\":\"1\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Total_Online_Users_Value\",\"timestamp\":\"2\",\"value\":\"100\",\"gatewayId\":\"Vin_Num_001\"}]");
+        }catch(JSONException e){
+            Log.e("TestError","Could not create a test JSONArray.");
+
+        }
+        parser.onResponse(testWifiUsersCorrect);
+        int correctNbrOfUsers = 100;
+        int response = mHandler.getNbrOfUsersResponse();
+        assertTrue(response==correctNbrOfUsers);
     }
 
 }
