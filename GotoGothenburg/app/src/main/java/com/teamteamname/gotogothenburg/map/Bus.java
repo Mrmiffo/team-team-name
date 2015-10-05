@@ -32,11 +32,11 @@ public class Bus {
      * @param dgw       The DomainGateWay of the bus
      * @param vin       The VehicleIdentificationNumber of the bus
      * @param regNr     The RegistrationNumber of the bus
-     * @param mac       The MAC-address of the router on the bus
+     * @param sysId     The systemID of the router on the bus
      * @param active    True if the bus is sending data
      */
-    private static void addBus(String dgw, String vin, String regNr, String mac, boolean active){
-        Bus bus = new Bus(dgw, vin, regNr, mac, active);
+    private static void addBus(String dgw, String vin, String regNr, String sysId, boolean active){
+        Bus bus = new Bus(dgw, vin, regNr, sysId, active);
         buses.add(bus);
     }
 
