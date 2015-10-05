@@ -4,6 +4,7 @@
 
     <!-- API Keys -->
     <string name="vasttrafik_api_key">7f50c6a5-90e0-4e10-9015-baeddd1637e6</string>
+    <string name="electricity_api_key">Z3JwMjc6QkNjUmwtOFVsSQ==</string>
 
     <!--  Base Urls -->
     <string name="vasttrafik_base_url">"http://api.vasttrafik.se/bin/rest.exe/"</string>

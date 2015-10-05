@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.Stops;
 import com.teamteamname.gotogothenburg.map.Bus;
 
@@ -32,8 +33,7 @@ public class ElectricityAPI implements IElectricityAPI{
     private RequestQueue queue;
     private static IElectricityAPI instance;
 
-    private String username = "grp27";
-    private String password = "BCcRl-8UlI";
+    private static String apiKey;
 
     private ElectricityAPI(RequestQueue queue){
         this.queue = queue;
@@ -42,9 +42,8 @@ public class ElectricityAPI implements IElectricityAPI{
     public static void init(Context context, RequestQueue queue){
         if(instance == null) {
             instance = new ElectricityAPI(queue);
-
+            apiKey = context.getResources().getString(R.string.electricity_api_key);
         }
-        //TODO: Fetch api username and password from values.strings
     }
 
     public static IElectricityAPI getInstance(){
@@ -215,14 +214,11 @@ public class ElectricityAPI implements IElectricityAPI{
         return new JSONObject();
     }
 
-    private Map<String,String> createBasicAuth(String username, String password){
+    private Map<String,String> createBasicAuth(String auth){
         Map<String,String> headerMap = new HashMap<String,String>();
 
-        String credentials = username + ":" + password;
-        String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-
-        Log.i("Auth", "Authorization: Basic " + credentials);
-        headerMap.put("Authorization", "Basic " + base64EncodedCredentials);
+        Log.i("Auth", "Authorization: Basic " + auth);
+        headerMap.put("Authorization", "Basic " + auth);
 
         return headerMap;
     }
@@ -236,7 +232,7 @@ public class ElectricityAPI implements IElectricityAPI{
 
         @Override
         public Map<String,String> getHeaders() throws AuthFailureError{
-            return createBasicAuth(username,password);
+            return createBasicAuth(apiKey);
         }
 
     }
