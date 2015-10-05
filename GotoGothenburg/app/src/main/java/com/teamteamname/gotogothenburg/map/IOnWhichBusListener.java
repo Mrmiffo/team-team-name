@@ -13,4 +13,5 @@ public interface IOnWhichBusListener {
      * @param busUserIsOn
      */
     void whichBussCallBack(Bus busUserIsOn);
+    void notConnectedToElectriCityWifiError();
 }

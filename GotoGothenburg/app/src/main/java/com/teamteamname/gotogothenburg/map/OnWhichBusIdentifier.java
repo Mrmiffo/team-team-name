@@ -1,10 +1,9 @@
 package com.teamteamname.gotogothenburg.map;
 
-import android.util.Log;
 
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
-import com.teamteamname.gotogothenburg.api.BusStatusAPI;
-import com.teamteamname.gotogothenburg.api.IBusStatusHandler;
+import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
+import com.teamteamname.gotogothenburg.api.IElectriCityWiFiSystemIDAPIHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +16,18 @@ import java.util.TimerTask;
  */
 
 
-public class OnWhichBusIdentifier implements IBusStatusHandler {
+public class OnWhichBusIdentifier{
     private static OnWhichBusIdentifier instance;
     private static final String ELECTRICITY_WIFI_SSID = "ElectriCity";
     private List<IOnWhichBusListener> listeners;
-    private boolean isRunning;
+
+    private Timer queryTimer;
+    private static final int QUERY_TIMER_DELAY = 5;
+    private boolean queryTimerRunning;
 
     private OnWhichBusIdentifier(){
         listeners = new ArrayList<>();
+        queryTimer = new Timer();
     }
 
     /**
@@ -33,6 +36,7 @@ public class OnWhichBusIdentifier implements IBusStatusHandler {
     public static void initialize(){
         if (instance == null){
             instance = new OnWhichBusIdentifier();
+
         }
     }
     public static OnWhichBusIdentifier getInstance(){
@@ -54,19 +58,10 @@ public class OnWhichBusIdentifier implements IBusStatusHandler {
      * If it's already running nothing will happen.
      */
     public void start(){
-        //if (!isRunning()){
-            isRunning = true;
-            Timer test = new Timer();
-            TimerTask testTask = new TimerTask() {
-                @Override
-                public void run() {
-                    startQuery();
-                }
-            };
-            test.schedule(testTask, 1);
-
-
-        //}
+        if (!queryTimerRunning){
+            queryTimer.scheduleAtFixedRate(new QueryExecutor(), 0, 1000 * QUERY_TIMER_DELAY);
+            queryTimerRunning = true;
+        }
     }
 
     /**
@@ -75,8 +70,10 @@ public class OnWhichBusIdentifier implements IBusStatusHandler {
      * If it's not running, nothing will happen.
      */
     public void stop(){
-        if (isRunning()){
-            isRunning = false;
+        if (queryTimerRunning){
+            queryTimer.cancel();
+            queryTimer.purge();
+            queryTimerRunning = false;
         }
     }
 
@@ -85,36 +82,50 @@ public class OnWhichBusIdentifier implements IBusStatusHandler {
      * @return
      */
     public boolean isRunning(){
-        return isRunning;
+        return queryTimerRunning;
     }
 
-    private void startQuery(){
-        if (AndroidDeviceAPI.getInstance().connectedToWifi(ELECTRICITY_WIFI_SSID)){
-            BusStatusAPI.getInstance().getConnectedBusSystemID(this);
-        } else {
-            Log.e("startQuery: ", "Not connected to Electricity wifi. Connected to:" + AndroidDeviceAPI.getInstance().getConnectedWifiSSID());
+
+    /**
+     * QueryExecutor is a local helper class for the OnWhichBussIdentifier which is used to
+     * run the query for which bus the user is on in a seperate thread.
+     */
+    private class QueryExecutor extends TimerTask  implements IElectriCityWiFiSystemIDAPIHandler {
+        @Override
+        public void run() {
+            startQuery();
         }
 
-
-    }
-
-    @Override
-    public void getConnectedBusSystemIDCallback(String returnValue) {
-        if (returnValue != null) {
-            Log.e("SystemIDCallback: ", "<"+returnValue+">");
-        }
-
-       // if (isRunning()){
-            Bus identifiedBus = Bus.getBusBySysId(returnValue);
-
-            if (identifiedBus != null){
+        private void startQuery() {
+            //First check if the user is on an Electricity wifi
+            if (AndroidDeviceAPI.getInstance().connectedToWifi(ELECTRICITY_WIFI_SSID)) {
+                //If so, query the Wifi for the system id. Call back will come through the
+                // getConnectedBusSystemIDCallback method, or the getConnectedBusError method.
+                ElectriCityWiFiSystemIDAPI.getInstance().getConnectedBusSystemID(this);
+            } else {
                 for (IOnWhichBusListener listener: listeners){
-                    listener.whichBussCallBack(identifiedBus);
+                    listener.notConnectedToElectriCityWifiError();
                 }
             }
+        }
 
-      //  }
+        @Override
+        public void getConnectedBusSystemIDCallback(String returnValue) {
+            if (isRunning() && returnValue != null){
+                Bus identifiedBus = Bus.getBusBySysId(returnValue);
+                if (identifiedBus != null){
+                    for (IOnWhichBusListener listener: listeners){
+                        listener.whichBussCallBack(identifiedBus);
+                    }
+                }
 
+            }
+        }
+
+        @Override
+        public void getConnectedBusError(Exception e) {
+
+        }
     }
 }
 
