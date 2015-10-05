@@ -28,7 +28,6 @@ public class ElectricityAPITest extends AndroidTestCase {
     //TODO: Make tests for empty responses.
     private JSONArray testEmptyResponse = new JSONArray();
 
-
     @Override
     protected void setUp() throws Exception{
         super.setUp();
@@ -43,7 +42,6 @@ public class ElectricityAPITest extends AndroidTestCase {
         ElectricityAPI.init(this.getContext(), mQueue);
 
         mElevtricityAPI = ElectricityAPI.getInstance();
-
     }
 
     @Override
@@ -52,6 +50,7 @@ public class ElectricityAPITest extends AndroidTestCase {
         mHandler = null;
 
         mQueue.reset();
+        ElectricityAPI.resetState();
 
     }
 

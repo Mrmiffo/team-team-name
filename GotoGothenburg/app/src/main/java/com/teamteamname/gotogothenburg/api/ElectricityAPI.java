@@ -19,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -156,6 +155,11 @@ public class ElectricityAPI implements IElectricityAPI{
 
         RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);
+    }
+
+    //Only used in testing
+    public static void resetState(){
+        instance = null;
     }
 
     // Help methods:
