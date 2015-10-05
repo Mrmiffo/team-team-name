@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-import com.teamteamname.gotogothenburg.api.BusStatusAPI;
-import com.teamteamname.gotogothenburg.api.IBusStatusHandler;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.map.IOnWhichBusListener;
@@ -35,8 +33,7 @@ public class InfoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View toReturn = inflater.inflate(R.layout.fragment_info, container, false);
 
         //TODO Remove test code
@@ -61,6 +58,11 @@ public class InfoFragment extends Fragment {
         @Override
         public void whichBussCallBack(Bus busUserIsOn) {
             Log.e("User is on bus: ", busUserIsOn.getRegNr());
+        }
+
+        @Override
+        public void notConnectedToElectriCityWifiError() {
+            Log.e("Not connected to Wifi", "The user was not connected to the wifi.");
         }
     }
     //--TEST CODE END--

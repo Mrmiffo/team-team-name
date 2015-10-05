@@ -20,27 +20,27 @@ import javax.xml.parsers.SAXParserFactory;
  * An API for reading bus data.
  * Created by Anton on 2015-10-01.
  */
-public class BusStatusAPI implements IBusStatusAPI{
-    private static BusStatusAPI instance;
+public class ElectriCityWiFiSystemIDAPI implements IElectriCityWiFiSystemIDAPI {
+    private static ElectriCityWiFiSystemIDAPI instance;
     private static final String TARGET_URL= "http://www.ombord.info/api/xml/system/";
 
-    private BusStatusAPI(){
+    private ElectriCityWiFiSystemIDAPI(){
 
     }
 
-    public synchronized static BusStatusAPI getInstance(){
+    public synchronized static ElectriCityWiFiSystemIDAPI getInstance(){
         return instance;
     }
 
     public static void initialize(){
         if (instance == null){
-            instance = new BusStatusAPI();
+            instance = new ElectriCityWiFiSystemIDAPI();
         }
 
     }
 
     @Override
-    public void getConnectedBusSystemID(IBusStatusHandler handler) {
+    public void getConnectedBusSystemID(IElectriCityWiFiSystemIDAPIHandler handler) {
         try {
             URL url = new URL(TARGET_URL);
             /* Get a SAXParser from the SAXPArserFactory. */
@@ -57,24 +57,27 @@ public class BusStatusAPI implements IBusStatusAPI{
             xmlReader.parse(new InputSource(url.openStream()));
             /* Parsing has finished. */
 
+            //TODO Make better handlers for exceptions -Anton 151005
         } catch (MalformedURLException e) {
+            //This error is swallowed as it should only occur if the URL is incorrect, and the URL
+            //is hard coded into this class and should not change.
             Log.e("MalformedURLException", e.toString());
-            handler.getConnectedBusSystemIDCallback(null);
+            handler.getConnectedBusError(e);
         } catch (ParserConfigurationException e) {
             Log.e("ParserConfigurationExc", e.toString());
-            handler.getConnectedBusSystemIDCallback(null);
+            handler.getConnectedBusError(e);
         } catch (SAXException e) {
             Log.e("SAXException", e.toString());
-            handler.getConnectedBusSystemIDCallback(null);
+            handler.getConnectedBusError(e);
         } catch (IOException e) {
             Log.e("IOException", e.toString());
-            handler.getConnectedBusSystemIDCallback(null);
+            handler.getConnectedBusError(e);
         }
     }
 
     private class SystemIDParser extends DefaultHandler{
-        private IBusStatusHandler handler;
-        SystemIDParser(IBusStatusHandler handler){
+        private IElectriCityWiFiSystemIDAPIHandler handler;
+        SystemIDParser(IElectriCityWiFiSystemIDAPIHandler handler){
             this.handler = handler;
         }
 
@@ -84,7 +87,10 @@ public class BusStatusAPI implements IBusStatusAPI{
         @Override
         public void characters(char ch[], int start, int length) {
             String xmlText = new String(ch, start, length);
+            //TODO Make XML cleaner. Maybe check SAX for alternative methods to report XML content to identify which part of it is the SystemID -Anton 151005
             handler.getConnectedBusSystemIDCallback(xmlText);
+
+
 
         }
     }
