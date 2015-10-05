@@ -49,6 +49,13 @@ public enum PointOfInterest {
     @Getter private File picture;
 
     PointOfInterest(final GPSCoord location, File textGuide, File soundGuide, File picture) {
+        if (textGuide == null) {
+            textGuide = new File("src/main/res/raw/nullText.txt");
+        }
+
+        if (picture == null) {
+            picture = new File("src/main/res/raw/nullPicture.jpg");
+        }
         this.location = location;
         this.textGuide = textGuide;
         this.soundGuide = soundGuide;
