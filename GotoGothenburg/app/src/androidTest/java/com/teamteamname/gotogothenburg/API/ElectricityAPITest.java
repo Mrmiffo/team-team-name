@@ -16,7 +16,7 @@ import org.json.JSONException;
  * Created by Olof on 28/09/2015.
  */
 public class ElectricityAPITest extends AndroidTestCase {
-    private ElectricityAPI mElevtricityAPI;
+    private IElectricityAPI mElevtricityAPI;
     private MockRequestQueue mQueue;
 
     private final String dgw = "Ericsson$100021";
@@ -50,6 +50,8 @@ public class ElectricityAPITest extends AndroidTestCase {
     protected void tearDown() throws Exception{
         bus = null;
         mHandler = null;
+
+        mQueue.reset();
 
     }
 

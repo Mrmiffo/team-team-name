@@ -31,6 +31,14 @@ public class MockRequestQueue extends RequestQueue {
         super(new NoCache(), new com.teamteamname.gotogothenburg.api.mock.MockNetwork());
     }
 
+    public void reset(){
+        uri = null;
+        header = null;
+        errorListener = null;
+        parser = null;
+        method = 0;
+    }
+
     // Used to check if the request is produced in the right way.
     // Also calls the
     @Override

@@ -30,7 +30,7 @@ import java.util.PriorityQueue;
 public class ElectricityAPI implements IElectricityAPI{
 
     private RequestQueue queue;
-    private static ElectricityAPI instance;
+    private static IElectricityAPI instance;
 
     private String username = "grp27";
     private String password = "BCcRl-8UlI";
@@ -40,13 +40,14 @@ public class ElectricityAPI implements IElectricityAPI{
     }
 
     public static void init(Context context, RequestQueue queue){
+        if(instance == null) {
+            instance = new ElectricityAPI(queue);
 
-        instance = new ElectricityAPI(queue);
-
+        }
         //TODO: Fetch api username and password from values.strings
     }
 
-    public static ElectricityAPI getInstance(){
+    public static IElectricityAPI getInstance(){
         return instance;
     }
 
