@@ -162,28 +162,18 @@ public class ElectricityAPI implements IElectricityAPI{
 
     // sensorSpec and resourceSpec can't be given at the same time.
     private String buildURI(String dgw, String sensorSpec, String resourceSpec, long t1, long t2){
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(47);
 
         sb.append("https://ece01.ericsson.net:4443/ecity?");
         if(dgw != null){
-            sb.append("dgw=");
-            sb.append(dgw);
-            sb.append("&");
+            sb.append("dgw=").append(dgw).append('&');
         }
         if(sensorSpec != null){
-            sb.append("sensorSpec=");
-            sb.append(sensorSpec);
-            sb.append("&");
+            sb.append("sensorSpec=").append(sensorSpec).append('&');
         }else if(resourceSpec != null){
-            sb.append("resourceSpec=");
-            sb.append(resourceSpec);
-            sb.append("&");
+            sb.append("resourceSpec=").append(resourceSpec).append('&');
         }
-        sb.append("t1=");
-        sb.append(t1);
-        sb.append("&");
-        sb.append("t2=");
-        sb.append(t2);
+        sb.append("t1=").append(t1).append("&t2=").append(t2);
 
         return sb.toString();
     }
@@ -195,14 +185,10 @@ public class ElectricityAPI implements IElectricityAPI{
 
             @Override
             public int compare(JSONObject lhs, JSONObject rhs) {
+                Log.i("ParseLatest",lhs.toString());
+                Log.i("ParseLatest",rhs.toString());
                 try {
-                    if (lhs.getInt("timestamp") > rhs.getInt("timestamp")) {
-                        return -1;
-                    } else if (lhs.getInt("timestamp") < rhs.getInt("timestamp")) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
+                    return rhs.getInt("timestamp")-lhs.getInt("timestamp");
                 }catch (JSONException e){
                     Log.e("ParsingError","No timestamp in Object");
                 }
@@ -212,7 +198,7 @@ public class ElectricityAPI implements IElectricityAPI{
         try{
             for(int i = 0; i < array.length(); i++){
                 JSONObject object = array.getJSONObject(i);
-                if(object.has(resourceName)){
+                if(object.getString("resourceSpec").equals(resourceName)){
                     objectsWithResourceName.add(object);
                 }
 
@@ -427,10 +413,10 @@ public class ElectricityAPI implements IElectricityAPI{
 
         @Override
         public void onResponse(JSONArray response) {
-            Log.i("Response",response.toString());
+            Log.i("Response", response.toString());
 
             JSONObject wifiUsers = getLatestJSONValue("Total_Online_Users_Value",response);
-
+            callback.electricityWifiUsersResponse(30);
             try {
                 callback.electricityWifiUsersResponse(wifiUsers.getInt("value"));
             }catch(JSONException e){
