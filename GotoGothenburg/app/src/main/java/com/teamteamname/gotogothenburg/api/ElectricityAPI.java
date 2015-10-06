@@ -49,7 +49,7 @@ public class ElectricityAPI implements IElectricityAPI{
         return instance;
     }
 
-    public void getBusLocation(Bus bus, ElectricityHandler callback){
+    public void getBusLocation(Bus bus, ElectricityGPSHandler callback){
         //Requests data since 5 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 5);
@@ -68,7 +68,7 @@ public class ElectricityAPI implements IElectricityAPI{
     }
 
     @Override
-    public void getNextStop(Bus bus, ElectricityHandler callback) {
+    public void getNextStop(Bus bus, ElectricityNextStopHandler callback) {
         //Requests data since 10 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 10);
@@ -86,7 +86,7 @@ public class ElectricityAPI implements IElectricityAPI{
     }
 
     @Override
-    public void getAmbientTemperature(Bus bus, ElectricityHandler callback) {
+    public void getAmbientTemperature(Bus bus, ElectricityTempHandler callback) {
         //Requests data since 10 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 10);
@@ -104,7 +104,7 @@ public class ElectricityAPI implements IElectricityAPI{
     }
 
     @Override
-    public void getCabinTemperature(Bus bus, ElectricityHandler callback) {
+    public void getCabinTemperature(Bus bus, ElectricityTempHandler callback) {
         //Requests data since 2,5 min earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 150);
@@ -122,7 +122,7 @@ public class ElectricityAPI implements IElectricityAPI{
     }
 
     @Override
-    public void getStopPressed(Bus bus, ElectricityHandler callback) {
+    public void getStopPressed(Bus bus, ElectricityStopButtonHandler callback) {
         //Requests data since 2,5 min earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 150);
@@ -140,7 +140,7 @@ public class ElectricityAPI implements IElectricityAPI{
     }
 
     @Override
-    public void getNbrOfWifiUsers(Bus bus, ElectricityHandler callback) {
+    public void getNbrOfWifiUsers(Bus bus, ElectricityWifiHandler callback) {
         //Requests data since 12 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 12);
@@ -247,9 +247,9 @@ public class ElectricityAPI implements IElectricityAPI{
     // Parses a response into a GPSCoord.
     private class GPSCoordParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-        private ElectricityHandler callback;
+        private ElectricityGPSHandler callback;
 
-        public GPSCoordParser(ElectricityHandler callback){
+        public GPSCoordParser(ElectricityGPSHandler callback){
             this.callback = callback;
         }
 
@@ -278,9 +278,9 @@ public class ElectricityAPI implements IElectricityAPI{
 
     private class NextStopParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-        ElectricityHandler callback;
+        ElectricityNextStopHandler callback;
 
-        public NextStopParser(ElectricityHandler callback){
+        public NextStopParser(ElectricityNextStopHandler callback){
             this.callback = callback;
         }
 
@@ -318,9 +318,9 @@ public class ElectricityAPI implements IElectricityAPI{
 
     private class AmbientTempParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-        ElectricityHandler callback;
+        ElectricityTempHandler callback;
 
-        public AmbientTempParser(ElectricityHandler callback){ this.callback = callback; }
+        public AmbientTempParser(ElectricityTempHandler callback){ this.callback = callback; }
 
         @Override
         public void onErrorResponse(VolleyError error) {
@@ -346,9 +346,9 @@ public class ElectricityAPI implements IElectricityAPI{
 
     private class CabinTempParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-        ElectricityHandler callback;
+        ElectricityTempHandler callback;
 
-        public CabinTempParser(ElectricityHandler callback){ this.callback = callback; }
+        public CabinTempParser(ElectricityTempHandler callback){ this.callback = callback; }
 
         @Override
         public void onErrorResponse(VolleyError error) {
@@ -374,9 +374,9 @@ public class ElectricityAPI implements IElectricityAPI{
 
     private class StopPressedParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-        ElectricityHandler callback;
+        ElectricityStopButtonHandler callback;
 
-        public StopPressedParser(ElectricityHandler callback){ this.callback = callback; }
+        public StopPressedParser(ElectricityStopButtonHandler callback){ this.callback = callback; }
 
         @Override
         public void onErrorResponse(VolleyError error) {
@@ -402,9 +402,9 @@ public class ElectricityAPI implements IElectricityAPI{
 
     private class WifiUsersParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-        ElectricityHandler callback;
+        ElectricityWifiHandler callback;
 
-        public WifiUsersParser(ElectricityHandler callback){ this.callback = callback; }
+        public WifiUsersParser(ElectricityWifiHandler callback){ this.callback = callback; }
 
         @Override
         public void onErrorResponse(VolleyError error) {
