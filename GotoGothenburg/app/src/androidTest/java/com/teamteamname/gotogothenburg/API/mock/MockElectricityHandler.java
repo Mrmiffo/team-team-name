@@ -1,9 +1,7 @@
 package com.teamteamname.gotogothenburg.api.mock;
 
 import com.teamteamname.gotogothenburg.Stops;
-import com.teamteamname.gotogothenburg.api.ElectricityErrorHandler;
 import com.teamteamname.gotogothenburg.api.ElectricityGPSHandler;
-import com.teamteamname.gotogothenburg.api.ElectricityHandler;
 import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.api.ElectricityNextStopHandler;
 import com.teamteamname.gotogothenburg.api.ElectricityStopButtonHandler;
