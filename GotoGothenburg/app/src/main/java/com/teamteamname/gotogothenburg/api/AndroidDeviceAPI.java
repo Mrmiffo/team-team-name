@@ -92,8 +92,6 @@ public class AndroidDeviceAPI implements IDeviceAPI {
         if (ssid == null){
             return false;
         }
-        Log.e("ConnectedToWifi", "Received SSID: " + ssid);
-        Log.e("ConnectedToWifi", "Device connected to SSID:" + getConnectedWifiSSID());
         return ssid.equals(getConnectedWifiSSID());
     }
 
