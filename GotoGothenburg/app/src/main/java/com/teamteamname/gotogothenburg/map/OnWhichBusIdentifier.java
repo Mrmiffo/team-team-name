@@ -11,11 +11,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A class that identifies which ElectriCity bus which the user is connected to.
+ * A class that identifies which ElectriCity bus which the user is connected to. This class is a
+ * singleton and provides functionality for identifying which bus the user is on.
+ * This class has been tested through user tests only. JUnit tests has not been created as the
+ * extensive use of singleton classas and reliance of specific Wifi networks makes this all but
+ * practically impossible without extensive work.
  * Created by Anton on 2015-09-24.
  */
-
-
 public class OnWhichBusIdentifier{
     private static OnWhichBusIdentifier instance;
     private static final String ELECTRICITY_WIFI_SSID = "ElectriCity";
@@ -27,18 +29,18 @@ public class OnWhichBusIdentifier{
 
     private OnWhichBusIdentifier(){
         listeners = new ArrayList<>();
-        queryTimer = new Timer();
     }
 
     /**
-     * Initialize method of the singleton class used to
+     * Initialize method of the singleton class. This method should be run once only when the
+     * application is launched.
      */
     public static void initialize(){
         if (instance == null){
             instance = new OnWhichBusIdentifier();
-
         }
     }
+
     public static OnWhichBusIdentifier getInstance(){
         return instance;
     }
@@ -59,6 +61,8 @@ public class OnWhichBusIdentifier{
      */
     public void start(){
         if (!queryTimerRunning){
+            //Create a new timer each time the query is started as it's not possible to relaunch a canceld timer.
+            queryTimer = new Timer();
             queryTimer.scheduleAtFixedRate(new QueryExecutor(), 0, 1000 * QUERY_TIMER_DELAY);
             queryTimerRunning = true;
         }
@@ -73,6 +77,7 @@ public class OnWhichBusIdentifier{
         if (queryTimerRunning){
             queryTimer.cancel();
             queryTimer.purge();
+            queryTimer = null;
             queryTimerRunning = false;
         }
     }
