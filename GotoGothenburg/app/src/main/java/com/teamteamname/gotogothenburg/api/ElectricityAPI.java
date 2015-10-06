@@ -301,7 +301,7 @@ public class ElectricityAPI implements IElectricityAPI{
                 for(Stops stop:Stops.values()){
                     //Checks caps to match
                     if(nextStop.getString("value").toUpperCase().equals(stop.toString())){
-                        callback.electricityNextStopResponse(stop.name());
+                        callback.electricityNextStopResponse(stop);
                         stopExists = true;
                     }
                 }
