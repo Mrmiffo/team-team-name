@@ -20,6 +20,7 @@ public class DestinationFragment extends Fragment {
 
     private ListView destinationListView;
     private SavedDestinations savedDestinations;
+    private DestinationListAdapter adapter;
 
     public DestinationFragment() {
         super();
@@ -47,6 +48,8 @@ public class DestinationFragment extends Fragment {
         // Inflate the layout for this fragment
         View toReturn = inflater.inflate(R.layout.fragment_destination, container, false);
 
+
+
         //Setup the destinations view
         //TODO REMOVE TESTCODE
         //TEST CODE//
@@ -54,7 +57,7 @@ public class DestinationFragment extends Fragment {
         savedDestinations.addDestination(new Destination("Testination", 1,2));
         savedDestinations.addDestination(new Destination("Testination2", 1,2));
         savedDestinations.addDestination(new Destination("Testination3", 1,2));
-        savedDestinations.addDestination(new Destination("Testination4", 1,2));
+        savedDestinations.addDestination(new Destination("Testination4", 1, 2));
         savedDestinations.addDestination(new Destination("Testination", 1,2));
 
         Destination visited = new Destination("Visitation", 3,4);
@@ -71,13 +74,13 @@ public class DestinationFragment extends Fragment {
         savedDestinations.addDestination(new Destination("Testination", 1,2));
         savedDestinations.addDestination(new Destination("Testination2", 1,2));
         savedDestinations.addDestination(new Destination("Testination3", 1,2));
-        savedDestinations.addDestination(new Destination("Testination4", 1,2));
+        savedDestinations.addDestination(new Destination("Testination4", 1, 2));
 
 
         //TEST CODE//
 
         destinationListView = (ListView) toReturn.findViewById(R.id.destinationListView);
-        DestinationListAdapter adapter = new DestinationListAdapter(savedDestinations, getActivity());
+        adapter = new DestinationListAdapter(savedDestinations, getActivity());
         destinationListView.setAdapter(adapter);
         destinationListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -89,7 +92,17 @@ public class DestinationFragment extends Fragment {
     }
 
     public void displayDestination(Destination destToDisplay){
+    }
 
+    /**
+     * Creates a new Destination, adds it to the internal list and displays it.
+     *
+     * @param destinationName The name of the Destination
+     * @param destinationPos The position of the Destination
+     */
+    public void addDestination(String destinationName, LatLng destinationPos){
+        savedDestinations.addDestination(new Destination(destinationName,destinationPos.latitude,destinationPos.longitude));
+        adapter.notifyDataSetChanged();
     }
 
 }
