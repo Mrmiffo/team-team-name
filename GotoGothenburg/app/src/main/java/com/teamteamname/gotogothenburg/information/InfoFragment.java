@@ -35,41 +35,9 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View toReturn = inflater.inflate(R.layout.fragment_info, container, false);
-
-        //TODO Remove test code
-        //--TEST CODE START--
-        OnWhichBusIdentifier.getInstance().registerListener(new BusStatusAPIListener());
-        Button testButton = (Button) toReturn.findViewById(R.id.systemIdTestButton);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            if (OnWhichBusIdentifier.getInstance().isRunning()){
-                OnWhichBusIdentifier.getInstance().stop();
-            } else {
-                OnWhichBusIdentifier.getInstance().start();
-            }
-            }
-        });
-
-        //--TEST CODE END--
         return toReturn;
     }
-    //TODO remove test code
-    //--TEST CODE START--
-    private class BusStatusAPIListener implements IOnWhichBusListener{
 
-
-        @Override
-        public void whichBussCallBack(Bus busUserIsOn) {
-            Log.e("User is on bus: ", busUserIsOn.getRegNr());
-        }
-
-        @Override
-        public void notConnectedToElectriCityWifiError() {
-            Log.e("Not connected to Wifi", "The user was not connected to the wifi.");
-        }
-    }
-    //--TEST CODE END--
 
 
 }
