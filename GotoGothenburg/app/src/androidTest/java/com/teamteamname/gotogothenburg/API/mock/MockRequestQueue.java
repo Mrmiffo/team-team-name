@@ -16,7 +16,8 @@ import java.util.Map;
 import lombok.Getter;
 
 /**
- * Created by Olof on 29/09/2015.
+ * A mockclass of a RequestQueue that catches added requests aswell as sending mockresponses
+ * to be parsed. Used to test requests and responses.
  */
 public class MockRequestQueue extends RequestQueue {
 
@@ -39,8 +40,13 @@ public class MockRequestQueue extends RequestQueue {
         method = 0;
     }
 
-    // Used to check if the request is produced in the right way.
-    // Also calls the
+    /**
+     * Catches a request and reads it's variables. To be used to test whether the request was correctly created.
+     * Overrides the add method of a traditional RequestQueue.
+     * @param request
+     * @param <T>
+     * @return
+     */
     @Override
     public <T> Request<T> add(Request<T> request){
         JsonArrayRequest jsonArrayRequest = (JsonArrayRequest)request;

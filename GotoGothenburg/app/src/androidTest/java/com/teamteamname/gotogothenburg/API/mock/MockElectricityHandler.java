@@ -11,7 +11,7 @@ import com.teamteamname.gotogothenburg.api.ElectricityWifiHandler;
 import lombok.Getter;
 
 /**
- * Created by Olof on 30/09/2015.
+ * A mockclass of respoonsehandlers for ElectricityAPI. Catches responses. Used to test whether the response is correct.
  */
 public class MockElectricityHandler implements ElectricityWifiHandler, ElectricityStopButtonHandler, ElectricityTempHandler, ElectricityNextStopHandler, ElectricityGPSHandler {
 

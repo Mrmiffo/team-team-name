@@ -1,8 +1,13 @@
 package com.teamteamname.gotogothenburg.api;
 
 /**
- * Created by Olof on 06/10/2015.
+ * A interface for recieving the callback response from Electricity's REST API.
  */
 public interface ElectricityStopButtonHandler extends ElectricityErrorHandler {
+    /**
+     * Callback method for the Electricity API.
+     * @param isPressed
+     * Tells whether the stop button is pressed or not on a bus.
+     */
     public void electricityStopPressedResponse(boolean isPressed);
 }

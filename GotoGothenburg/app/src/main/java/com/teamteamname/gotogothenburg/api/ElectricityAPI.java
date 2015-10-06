@@ -49,6 +49,7 @@ public class ElectricityAPI implements IElectricityAPI{
         return instance;
     }
 
+    @Override
     public void getBusLocation(Bus bus, ElectricityGPSHandler callback){
         //Requests data since 5 sec earlier.
         long t2 = System.currentTimeMillis();
@@ -157,7 +158,9 @@ public class ElectricityAPI implements IElectricityAPI{
         queue.add(request);
     }
 
-    //Only used in testing
+    /**
+     * Method only used in testing, to be able to initialize the RequestQueue for each test. 
+     */
     public static void resetState(){
         instance = null;
     }

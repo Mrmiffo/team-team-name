@@ -3,8 +3,13 @@ package com.teamteamname.gotogothenburg.api;
 import com.teamteamname.gotogothenburg.Stops;
 
 /**
- * Created by Olof on 06/10/2015.
+ * A interface for recieving the callback response from Electricity's REST API.
  */
 public interface ElectricityNextStopHandler extends ElectricityErrorHandler {
+    /**
+     * Callback method for the Electricity API.
+     * @param nextStop
+     * The next stop for a bus.
+     */
     public void electricityNextStopResponse(Stops nextStop);
 }

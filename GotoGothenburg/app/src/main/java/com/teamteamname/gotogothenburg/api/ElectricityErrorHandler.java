@@ -1,8 +1,12 @@
 package com.teamteamname.gotogothenburg.api;
 
 /**
- * Created by Olof on 06/10/2015.
+ * A interface for recieving error messages from Electricity's REST API.
  */
 public interface ElectricityErrorHandler {
+    /**
+     * Method for recieving a errormessage.
+     * @param error
+     */
     public void electricityRequestError(String error);
 }

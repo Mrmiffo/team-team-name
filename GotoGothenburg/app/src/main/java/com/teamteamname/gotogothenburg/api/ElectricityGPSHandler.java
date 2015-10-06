@@ -3,8 +3,13 @@ package com.teamteamname.gotogothenburg.api;
 import com.teamteamname.gotogothenburg.GPSCoord;
 
 /**
- * Created by Olof on 06/10/2015.
+ * A interface for recieving the callback response from Electricity's REST API.
  */
 public interface ElectricityGPSHandler extends ElectricityErrorHandler {
+    /**
+     * Callback method for the Electricity API.
+     * @param coord
+     * The GPS location of a bus.
+     */
     public void electricityGPSResponse(GPSCoord coord);
 }

@@ -3,7 +3,8 @@ package com.teamteamname.gotogothenburg.api;
 import com.teamteamname.gotogothenburg.map.Bus;
 
 /**
- * Created by Olof on 25/09/2015.
+ * A interface for requesting information from Electricity's REST API.
+ *
  */
 public interface IElectricityAPI {
 
@@ -16,7 +17,7 @@ public interface IElectricityAPI {
      * @param bus
      * Specifies the bus.
      * @param callback
-     * A interface for recieving the response. 
+     * A interface for recieving the response.
      */
     public void getBusLocation(Bus bus, ElectricityGPSHandler callback);
 
