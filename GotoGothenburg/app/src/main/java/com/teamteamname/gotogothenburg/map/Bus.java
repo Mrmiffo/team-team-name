@@ -16,10 +16,10 @@ public class Bus {
     @Getter private String regNr;
     @Getter private String sysId;
     @Getter private boolean active;
-    private static List<Bus> busses = new ArrayList<Bus>();
+    private static List<Bus> buses = new ArrayList<>();
     private static boolean initiated;
 
-    private Bus(String dgw, String vin, String regNr, String sysId, Boolean active){
+    private Bus(String dgw, String vin, String regNr, String sysId, boolean active){
         this.dgw = dgw;
         this.vin = vin;
         this.regNr = regNr;
@@ -28,17 +28,17 @@ public class Bus {
     }
 
     /**
-     * Creates a new bus with the given parameters as properties and then adds it to the list of busses
+     * Creates a new bus with the given parameters as properties and then adds it to the list of buses
      *
      * @param dgw       The DomainGateWay of the bus
      * @param vin       The VehicleIdentificationNumber of the bus
      * @param regNr     The RegistrationNumber of the bus
-     * @param mac       The MAC-address of the router on the bus
+     * @param sysId     The systemID of the router on the bus
      * @param active    True if the bus is sending data
      */
-    private static void addBus(String dgw, String vin, String regNr, String mac, Boolean active){
-        Bus bus = new Bus(dgw, vin, regNr, mac, active);
-        busses.add(bus);
+    private static void addBus(String dgw, String vin, String regNr, String sysId, boolean active){
+        Bus bus = new Bus(dgw, vin, regNr, sysId, active);
+        buses.add(bus);
     }
 
     public static void init(){
@@ -62,7 +62,7 @@ public class Bus {
      * @return      A copy of the bus with the given DomainGateWay
      */
     public static Bus getBusByDgw(String dgw){
-        for(Bus b : busses){
+        for(Bus b : buses){
             if(b.getDgw().equals(dgw)){
                 return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.isActive());
             }
@@ -75,7 +75,7 @@ public class Bus {
      * @return      A copy of the bus with the given VehicleIdentificationNumber
      */
     public static Bus getBusByVin(String vin){
-        for(Bus b : busses){
+        for(Bus b : buses){
             if(b.getVin().equals(vin)){
                 return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.isActive());
             }
@@ -88,7 +88,7 @@ public class Bus {
      * @return      A copy of the bus with the given RegistrationNumber
      */
     public static Bus getBusByRegNr(String regNr){
-        for(Bus b : busses){
+        for(Bus b : buses){
             if(b.getRegNr().equals(regNr)){
                 return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.isActive());
             }
@@ -101,11 +101,13 @@ public class Bus {
      * @return      A copy of the bus with the router with the given MAC-address
      */
     public static Bus getBusBySysId(String sysId){
-        for(Bus b : busses){
+        for(Bus b : buses){
             if(b.getSysId().equals(sysId)){
                 return new Bus(b.getDgw(), b.getVin(), b.getRegNr(), b.getSysId(), b.isActive());
             }
         }
         return null;
     }
+
+
 }

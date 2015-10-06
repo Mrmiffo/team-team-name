@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import com.teamteamname.gotogothenburg.utils.AndroidConverter;
 
@@ -20,19 +21,17 @@ public class AndroidDeviceAPI implements IDeviceAPI {
     private static AndroidDeviceAPI instance;
     private WifiInfo wifiInfo;
     private Context context;
-    private boolean initialized;
 
     /**
      * Constructor require a context in order to connect the API to the device.
      */
-    private AndroidDeviceAPI(){
-        initialized = false;
+    private AndroidDeviceAPI(Context context){
+        this.context = context;
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiInfo = wifiManager.getConnectionInfo();
     }
 
     public static synchronized AndroidDeviceAPI getInstance(){
-        if (instance == null){
-            instance = new AndroidDeviceAPI();
-        }
         return instance;
     }
 
@@ -42,11 +41,9 @@ public class AndroidDeviceAPI implements IDeviceAPI {
      * been run.
      * @param context
      */
-    public void initialize(Context context) {
-        if (!initialized) {
-            this.context = context;
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            wifiInfo = wifiManager.getConnectionInfo();
+    public static void initialize(Context context) {
+        if (instance == null) {
+            instance = new AndroidDeviceAPI(context);
         }
     }
 
@@ -62,7 +59,13 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public String getConnectedWifiSSID() {
-        return wifiInfo.getSSID();
+        String toReturn = wifiInfo.getSSID();
+        //getSSID method returns the SSID in the format of "<SSID>" with "" included.
+        // If an ssid is returned this cleaner will remove the " before and after the SSID.
+        if (toReturn != null && toReturn.length() > 1){
+            toReturn = toReturn.substring(1,toReturn.length()-1);
+        }
+        return toReturn;
     }
 
     @Override
@@ -90,6 +93,9 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public boolean connectedToWifi(String ssid) {
+        if (ssid == null){
+            return false;
+        }
         return ssid.equals(getConnectedWifiSSID());
     }
 
