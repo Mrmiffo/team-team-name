@@ -1,17 +1,24 @@
 package com.teamteamname.gotogothenburg.api.mock;
 
+import com.teamteamname.gotogothenburg.Stops;
+import com.teamteamname.gotogothenburg.api.ElectricityErrorHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityGPSHandler;
 import com.teamteamname.gotogothenburg.api.ElectricityHandler;
 import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.api.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityStopButtonHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityTempHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityWifiHandler;
 
 import lombok.Getter;
 
 /**
  * Created by Olof on 30/09/2015.
  */
-public class MockElectricityHandler implements ElectricityHandler {
+public class MockElectricityHandler implements ElectricityWifiHandler, ElectricityStopButtonHandler, ElectricityTempHandler, ElectricityNextStopHandler, ElectricityGPSHandler {
 
     @Getter private GPSCoord gpsResponse;
-    @Getter private String nextStopResponse;
+    @Getter private Stops nextStopResponse;
     @Getter private double ambientTempResponse;
     @Getter private double cabinTempResponse;
     @Getter private boolean isPressedResponse;
@@ -24,7 +31,7 @@ public class MockElectricityHandler implements ElectricityHandler {
     }
 
     @Override
-    public void electricityNextStopResponse(String nextStop) {
+    public void electricityNextStopResponse(Stops nextStop) {
         nextStopResponse = nextStop;
     }
 
