@@ -13,5 +13,15 @@ public interface IOnWhichBusListener {
      * @param busUserIsOn
      */
     void whichBussCallBack(Bus busUserIsOn);
+
+    /**
+     * Will be called if the user is not connected to an electricity network.
+     */
     void notConnectedToElectriCityWifiError();
+
+    /**
+     * WIll be called if the system was unable to identify a bus from the wifi. This could be due to
+     * a read error or that no buss with the system id exists.
+     */
+    void unableToIdentifyBusError();
 }
