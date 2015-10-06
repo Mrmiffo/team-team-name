@@ -7,28 +7,83 @@ import com.teamteamname.gotogothenburg.map.Bus;
  */
 public interface IElectricityAPI {
 
-    // Returns the location of the given bus.
-    // Sensor updates each 5 sec.
+    /**
+     * Requests the GPS location of a specific bus. The response is sent back to a requester using the
+     * callback parameter in the form of a GPSCoord.
+     *
+     * Sensor updates each 5 sec.
+     *
+     * @param bus
+     * Specifies the bus.
+     * @param callback
+     * A interface for recieving the response. 
+     */
     public void getBusLocation(Bus bus, ElectricityGPSHandler callback);
 
-    // Returns the next stop for the given bus.
-    // Sensor updates each 10 sec.
+    /**
+     * Requests the next stop for a specific bus. The response is sent back to a requester using the
+     * callback parameter in the form of a Stops enum.
+     *
+     * Sensor updates each 10 sec.
+     *
+     * @param bus
+     * Specifies the bus.
+     * @param callback
+     * A interface for recieving the response.
+     */
     public void getNextStop(Bus bus, ElectricityNextStopHandler callback);
 
-    // Returns the temperature outside of the given bus.
-    // Sensor updates each 10 sec.
+    /**
+     * Requests the temperature outside of a specific bus. The response is sent back to a requester using the
+     * callback parameter in the form of a double.
+     *
+     * Sensor updates each 10 sec.
+     *
+     * @param bus
+     * Specifies the bus.
+     * @param callback
+     * A interface for recieving the response.
+     */
     public void getAmbientTemperature(Bus bus, ElectricityTempHandler callback);
 
-    // Returns the temperature inside the DRIVER'S cabin of the given bus.
-    // Sensor updates each 2,5 min.
+    /**
+     * Requests the temperature inside the DRIVER'S cabin of a specific bus. The response is sent back to the
+     * requester using the callback parameter in the form of a double.
+     *
+     * Sensor updates each 2,5 min.
+     *
+     * @param bus
+     * Specifies the bus.
+     * @param callback
+     * A interface for recieving the response.
+     */
     public void getCabinTemperature(Bus bus, ElectricityTempHandler callback);
 
-    // Returns whether the stop button is pressed for the given bus.
-    // Sensor updates each time someone presses the stop button.
+    /**
+     * Requests information about whether the stop button is pressed or not on a specific bus. The response is sent
+     * back to the requester using the callback parameter in the form of a boolean.
+     *
+     * Sensor updates event-vise (each time someone presses the button).
+     *
+     * @param bus
+     * Specifies the bus.
+     * @param callback
+     * A interface for recieving the response.
+     */
     public void getStopPressed(Bus bus, ElectricityStopButtonHandler callback);
 
-    // Returns the total number of users connected to the Wifi on the given bus.
-    // Sensor updates each 12 sec.
+    /**
+     * Requests the number of devices connected to the Wifi of a specific bus. The users does not need to be
+     * authenticated (does not have to have accepted the Terms of Use). The response is sent back to the
+     * requester using the callback parameter in the form of a integer.
+     *
+     * Sensor updates each 12 sec.
+     *
+     * @param bus
+     * Specifies the bus.
+     * @param callback
+     * A interface for recieving the response.
+     */
     public void  getNbrOfWifiUsers(Bus bus, ElectricityWifiHandler callback);
 
 }
