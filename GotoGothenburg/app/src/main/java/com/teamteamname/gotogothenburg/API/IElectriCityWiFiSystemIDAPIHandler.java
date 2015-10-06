@@ -11,7 +11,7 @@ public interface IElectriCityWiFiSystemIDAPIHandler {
      * @param returnValue the SystemID of the wifi on the bus which the user is connected to.
      *                    Returns null if an error occur, such as an invalid wifi.
      */
-    void getConnectedBusSystemIDCallback(String returnValue);
+    void connectedBusSystemIDCallback(String returnValue);
 
     /**
      * Return an error to the handler that occured when executing the HTTP requst and parsing.
@@ -19,5 +19,5 @@ public interface IElectriCityWiFiSystemIDAPIHandler {
      * should inform users that system was unable to read from the bus wifi and they should try again.
      * @param e instance of MalformedURLException, ParserConfigurationExc, SAXException or IOException.
      */
-    void getConnectedBusError(Exception e);
+    void connectedBusErrorCallback(Exception e);
 }
