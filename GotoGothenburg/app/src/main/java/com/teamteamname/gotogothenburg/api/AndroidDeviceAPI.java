@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import java.io.File;
 import java.util.Timer;
@@ -56,7 +57,13 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public String getConnectedWifiSSID() {
-        return wifiInfo.getSSID();
+        String toReturn = wifiInfo.getSSID();
+        //getSSID method returns the SSID in the format of "<SSID>" with "" included.
+        // If an ssid is returned this cleaner will remove the " before and after the SSID.
+        if (toReturn != null && toReturn.length() > 1){
+            toReturn = toReturn.substring(1,toReturn.length()-1);
+        }
+        return toReturn;
     }
 
     @Override
@@ -82,8 +89,12 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public boolean connectedToWifi(String ssid) {
-        return true;
-        //return ssid.equals(getConnectedWifiSSID());
+        if (ssid == null){
+            return false;
+        }
+        Log.e("ConnectedToWifi", "Received SSID: " + ssid);
+        Log.e("ConnectedToWifi", "Device connected to SSID:" + getConnectedWifiSSID());
+        return ssid.equals(getConnectedWifiSSID());
     }
 
 }
