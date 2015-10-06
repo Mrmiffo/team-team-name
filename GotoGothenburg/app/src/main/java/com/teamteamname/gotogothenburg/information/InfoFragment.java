@@ -43,7 +43,11 @@ public class InfoFragment extends Fragment {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            if (OnWhichBusIdentifier.getInstance().isRunning()){
+                OnWhichBusIdentifier.getInstance().stop();
+            } else {
                 OnWhichBusIdentifier.getInstance().start();
+            }
             }
         });
 
