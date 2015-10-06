@@ -12,10 +12,11 @@
     <color name="darkestBlue">#275869</color>
 
 
-    <style name="G2GBG_theme" parent="android:Theme.Holo.Light">
+    <style name="G2GBG_theme" parent="Theme.AppCompat.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/white</item>
+
         <item name="android:checkboxStyle">@style/checkboxStyle</item>
         <item name="android:listSeparatorTextViewStyle">@style/PreferenceListHeader</item>
         <item name="android:listViewStyle">@style/listViewStyle</item>

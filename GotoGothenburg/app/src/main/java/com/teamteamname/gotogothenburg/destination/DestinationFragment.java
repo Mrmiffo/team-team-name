@@ -1,8 +1,11 @@
 package com.teamteamname.gotogothenburg.destination;
 
 import android.app.Fragment;
+import android.location.Location;
 import android.os.Bundle;
 
+import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +13,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
+
+import java.util.Timer;
 
 /**
  * THe fragment used to display the Destination screen in the application.
@@ -88,6 +95,9 @@ public class DestinationFragment extends Fragment {
                 //TODO implement on click action, such as generate a guide or give directions.
             }
         });
+
+        toReturn.findViewById(R.id.newDestinationButton).setOnClickListener(createDestinationListener);
+
         return toReturn;
     }
 
@@ -104,5 +114,19 @@ public class DestinationFragment extends Fragment {
         savedDestinations.addDestination(new Destination(destinationName,destinationPos.latitude,destinationPos.longitude));
         adapter.notifyDataSetChanged();
     }
+
+    /*
+    Listener which displays the CreateNewDestinationFragment but disallows double clicks
+     */
+    private View.OnClickListener createDestinationListener = new View.OnClickListener() {
+        private long time = 0;
+        @Override
+        public void onClick(View v) {
+            if (time + 500 < System.currentTimeMillis()) {
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_out_down).add(android.R.id.content, CreateNewDestinationFragment.newInstance(DestinationFragment.this)).commit();
+                time = System.currentTimeMillis();
+            }
+        }
+    };
 
 }
