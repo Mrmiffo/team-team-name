@@ -18,6 +18,7 @@ public class SavedDestinations {
     public SavedDestinations(List<Destination> savedDestinations){
         this.savedDestinations = new ArrayList<>();
         this.savedDestinations.addAll(savedDestinations);
+        sort();
     }
 
     public List<Destination> getSavedDestinations(){
@@ -28,7 +29,9 @@ public class SavedDestinations {
 
     public void addDestination(Destination toAdd){
         savedDestinations.add(toAdd);
+        sort();
     }
+
     public void removeDestination(Destination toRemove) {
         if (savedDestinations.contains(toRemove)) {
             savedDestinations.remove(toRemove);
@@ -43,5 +46,12 @@ public class SavedDestinations {
             }
         }
         return toReturn;
+    }
+
+    private void sort() {
+        ArrayList<Destination> newSorting = new ArrayList<>();
+        newSorting.addAll(getVisited(false));
+        newSorting.addAll(getVisited(true));
+        savedDestinations = newSorting;
     }
 }
