@@ -53,7 +53,8 @@ public enum Stops {
     TEKNIKGATAN(new PointOfInterest[] {
             PointOfInterest.INOMHUSHÅLLPLATSEN
     }),
-    LINDHOLMSPLATSEN(new PointOfInterest[] {});
+    LINDHOLMSPLATSEN(new PointOfInterest[] {}),
+    DEFAULT(null);
 
 
     private PointOfInterest[] POIs;
