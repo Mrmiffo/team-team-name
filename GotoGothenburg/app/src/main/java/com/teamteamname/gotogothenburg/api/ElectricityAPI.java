@@ -159,7 +159,7 @@ public class ElectricityAPI implements IElectricityAPI{
     }
 
     /**
-     * Method only used in testing, to be able to initialize the RequestQueue for each test. 
+     * Method only used in testing, to be able to initialize the RequestQueue for each test.
      */
     public static void resetState(){
         instance = null;

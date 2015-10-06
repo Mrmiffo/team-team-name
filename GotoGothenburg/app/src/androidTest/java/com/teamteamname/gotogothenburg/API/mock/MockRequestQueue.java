@@ -32,13 +32,6 @@ public class MockRequestQueue extends RequestQueue {
         super(new NoCache(), new com.teamteamname.gotogothenburg.api.mock.MockNetwork());
     }
 
-    public void reset(){
-        uri = null;
-        header = null;
-        errorListener = null;
-        parser = null;
-        method = 0;
-    }
 
     /**
      * Catches a request and reads it's variables. To be used to test whether the request was correctly created.

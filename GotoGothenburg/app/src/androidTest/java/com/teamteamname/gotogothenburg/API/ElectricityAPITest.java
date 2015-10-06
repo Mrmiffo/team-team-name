@@ -48,8 +48,7 @@ public class ElectricityAPITest extends AndroidTestCase {
     protected void tearDown() throws Exception{
         bus = null;
         mHandler = null;
-
-        mQueue.reset();
+        
         ElectricityAPI.resetState();
 
     }
