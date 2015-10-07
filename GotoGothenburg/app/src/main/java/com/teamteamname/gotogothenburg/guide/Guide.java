@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class Guide implements ElectricityNextStopHandler{
 
-    private Bus bus;
-    private List<PointOfInterest> visitedPOIs;
-    private List<PointOfInterest> poiQueue;
+    private final Bus bus;
+    private final List<PointOfInterest> visitedPOIs;
+    private final List<PointOfInterest> poiQueue;
     private Stops lastStop = Stops.DEFAULT;
     private boolean secondTry;
 
@@ -26,7 +26,7 @@ public class Guide implements ElectricityNextStopHandler{
      * Creates a guide for the given bus.
      * @param bus the bus to be guided.
      */
-    public Guide(Bus bus) {
+    public Guide(final Bus bus) {
         this.bus = bus;
         visitedPOIs = new ArrayList<>();
         poiQueue = new ArrayList<>();
@@ -58,7 +58,7 @@ public class Guide implements ElectricityNextStopHandler{
     public PointOfInterest getNextPOI() {
         checkNextStop();
         if (poiQueue.size() > 1) {
-            PointOfInterest next = poiQueue.get(0);
+            final PointOfInterest next = poiQueue.get(0);
             if (!visitedPOIs.contains(next)) {
                 visitedPOIs.add(next);
                 poiQueue.remove(0);
@@ -76,10 +76,10 @@ public class Guide implements ElectricityNextStopHandler{
 
     @Override
     public void electricityRequestError(String error) {
-        if(!secondTry) {
-            checkNextStop();
-        } else {
+        if(secondTry) {
             evaluateStop(Stops.DEFAULT);
+        } else {
+            checkNextStop();
         }
     }
 }
