@@ -15,20 +15,16 @@ public class GuideDialog extends DialogFragment {
 
     private PointOfInterest pointToGuide;
 
-    public GuideDialog() {
-        super();
-    }
-
     public static GuideDialog createInstance(PointOfInterest pointToGuide) { //Android does not want constructors
-        GuideDialog guideDialog = new GuideDialog();
+        final GuideDialog guideDialog = new GuideDialog();
         guideDialog.pointToGuide = pointToGuide;
         guideDialog.createGUI();
         return guideDialog;
     }
 
     private void createGUI() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        String title = pointToGuide.toString();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final String title = pointToGuide.toString();
         builder.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1).toLowerCase()); //Capitalise first letter
         builder.setIcon(AndroidConverter.fileToRawResourceID(getActivity(), pointToGuide.getPicture()));
         builder.setMessage(AndroidConverter.fileToRawResourceID(getActivity(), pointToGuide.getTextGuide()))
