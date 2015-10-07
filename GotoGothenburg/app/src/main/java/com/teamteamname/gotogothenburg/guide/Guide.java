@@ -47,7 +47,7 @@ public class Guide implements ElectricityNextStopHandler{
         if (!lastStop.equals(stop)) {
             lastStop = stop;
             poiQueue.clear();
-            poiQueue.addAll(Arrays.asList(lastStop.getPOIs()));
+            poiQueue.addAll(Arrays.asList(lastStop.getPointOfInterests()));
         }
     }
 

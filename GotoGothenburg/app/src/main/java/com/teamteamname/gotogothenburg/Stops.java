@@ -57,13 +57,13 @@ public enum Stops {
     DEFAULT(null);
 
 
-    private PointOfInterest[] POIs;
+    private PointOfInterest[] pointOfInterests;
 
     Stops(PointOfInterest[] POIs) {
-        this.POIs = POIs;
+        this.pointOfInterests = POIs;
     }
 
-    public PointOfInterest[] getPOIs() {
-        return POIs.clone();
+    public PointOfInterest[] getPointOfInterests() {
+        return pointOfInterests.clone();
     }
 }
