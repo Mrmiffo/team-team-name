@@ -60,8 +60,8 @@ public enum Stops {
 
     private PointOfInterest[] pointOfInterests;
 
-    Stops(PointOfInterest... POIs) {
-        this.pointOfInterests = POIs;
+    Stops(PointOfInterest... pointOfInterests) {
+        this.pointOfInterests = pointOfInterests.clone();
     }
 
     public PointOfInterest[] getPointOfInterests() {
