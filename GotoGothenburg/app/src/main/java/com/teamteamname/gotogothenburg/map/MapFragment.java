@@ -105,26 +105,26 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
      * Starts listening for which bus the user is on
      */
     private void identifyBus() {
-        OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
+        final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
         identifier.registerListener(this);
         identifier.start();
     }
 
     private void doGuide(Bus bus) {
-        Guide g = new Guide(bus);
-        PointOfInterest nextPOI = g.getNextPOI();
+        final Guide guide = new Guide(bus);
+        final PointOfInterest nextPOI = guide.getNextPOI();
 
         if (nextPOI != null) {
             AndroidDeviceAPI.getInstance().playSound(this, nextPOI.getSoundGuide());
 
-            GuideDialog guideDialog = GuideDialog.createInstance(nextPOI);
+            final GuideDialog guideDialog = GuideDialog.createInstance(nextPOI);
             guideDialog.show(getFragmentManager(), "guide");
         }
     }
 
     @Override
     public void whichBussCallBack(Bus busUserIsOn) {
-        OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
+        final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
         identifier.removeListener(this);
         identifier.stop();
         doGuide(busUserIsOn);
