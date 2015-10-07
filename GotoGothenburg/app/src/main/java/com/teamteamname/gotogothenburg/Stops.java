@@ -6,60 +6,61 @@ package com.teamteamname.gotogothenburg;
  */
 public enum Stops {
     //Note that only stops located along line 55 are included in the prototype.
-    SVEN_HULTINGS_GATA(new PointOfInterest[] {
+    SVEN_HULTINGS_GATA(
             PointOfInterest.JOHANNEBERG_SCIENCE_PARK
-    }),
-    CHALMERSPLATSEN(new PointOfInterest[] {
+    ),
+    CHALMERSPLATSEN(
             PointOfInterest.CHALMERS_CAMPUS_JOHANNEBERG
-    }),
-    KAPELLPLATSEN(new PointOfInterest[] {
+    ),
+    KAPELLPLATSEN(
             PointOfInterest.LANDALA,
             PointOfInterest.LANDSHÖVDINGEHUS,
             PointOfInterest.MILJONPROGRAMMET
-    }),
-    GÖTAPLATSEN(new PointOfInterest[] {
+    ),
+    GÖTAPLATSEN(
             PointOfInterest.POSEIDON,
             PointOfInterest.GÖTEBORGS_KONSTMUSEUM,
             PointOfInterest.STADSTEATERN,
             PointOfInterest.GÖTEBORGS_KONSERTHUS
-    }),
-    VALAND(new PointOfInterest[] {}),
-    KUNGSPORTSPLATSEN(new PointOfInterest[] {
+    ),
+    VALAND(),
+    KUNGSPORTSPLATSEN(
             PointOfInterest.KOPPARMÄRRA,
             PointOfInterest.SALUHALLEN,
             PointOfInterest.TURISTBYRÅN_KUNGSPORTSPLATSEN
-    }),
-    BRUNNSPARKEN(new PointOfInterest[] {PointOfInterest.BRUNNSPARKEN,
+    ),
+    BRUNNSPARKEN(
+            PointOfInterest.BRUNNSPARKEN,
             PointOfInterest.SÅNINGSKVINNAN,
             PointOfInterest.NORDSTAN,
             PointOfInterest.TURISTBYRÅN_NORDSTAND,
             PointOfInterest.ARKADEN,
             PointOfInterest.NK,
             PointOfInterest.DOMSTOLEN
-    }),
-    LILLA_BOMMEN(new PointOfInterest[] {
+    ),
+    LILLA_BOMMEN(
             PointOfInterest.LÄPPSTIFTET
-    }),
-    FRIHAMNSPORTEN(new PointOfInterest[] {
+    ),
+    FRIHAMNSPORTEN(
             PointOfInterest.NEW_DEVELOPMENT
-    }),
-    PUMPGATAN(new PointOfInterest[] {}),
-    REGNBÅGSGATAN(new PointOfInterest[] {}),
-    LINDHOLMEN(new PointOfInterest[] {
+    ),
+    PUMPGATAN(),
+    REGNBÅGSGATAN(),
+    LINDHOLMEN(
             PointOfInterest.CHALMERS_CAMPUS_LINDHOLMEN,
             PointOfInterest.KUGGEN,
             PointOfInterest.LINDHOLMEN_SCIENCE_PARK
-    }),
-    TEKNIKGATAN(new PointOfInterest[] {
+    ),
+    TEKNIKGATAN(
             PointOfInterest.INOMHUSHÅLLPLATSEN
-    }),
-    LINDHOLMSPLATSEN(new PointOfInterest[] {}),
-    DEFAULT(null);
+    ),
+    LINDHOLMSPLATSEN(),
+    DEFAULT();
 
 
     private PointOfInterest[] pointOfInterests;
 
-    Stops(PointOfInterest[] POIs) {
+    Stops(PointOfInterest... POIs) {
         this.pointOfInterests = POIs;
     }
 
