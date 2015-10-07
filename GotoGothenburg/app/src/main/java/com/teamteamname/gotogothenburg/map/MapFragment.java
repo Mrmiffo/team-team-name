@@ -10,15 +10,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.teamteamname.gotogothenburg.PointOfInterest;
+import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
+import com.teamteamname.gotogothenburg.api.ISoundDoneCallback;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
+import com.teamteamname.gotogothenburg.guide.Guide;
 
 
 /**
  * The fragment used to display the map in the application.
  * Created by Anton on 2015-09-21.
  */
-public class MapFragment extends com.google.android.gms.maps.MapFragment implements OnMapReadyCallback, LocationListener {
 
+public class MapFragment extends com.google.android.gms.maps.MapFragment implements OnMapReadyCallback, LocationListener, IOnWhichBusListener, ISoundDoneCallback {
     private GoogleMap map;
     private Marker myPosition;
     private boolean onLocationChangedHasRun;
@@ -33,7 +37,6 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         // Let google maps know we want the handle the map and connect to locations api
         getMapAsync(this);
         LocationServicesAPI.getInstance().registerLocationUpdateListener(this);
-
     }
 
     @Override
@@ -89,5 +92,56 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         myPosition = map.addMarker( new MarkerOptions()
                 .position(new LatLng(location.getLatitude(), location.getLongitude()))
                 .title("I am here"));
+    }
+
+    /**
+     * Used by other classes to start a guide for the user
+     */
+    public void guideUser() {
+        identifyBus();
+    }
+
+    /**
+     * Starts listening for which bus the user is on
+     */
+    private void identifyBus() {
+        OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
+        identifier.registerListener(this);
+        identifier.start();
+    }
+
+    private void doGuide(Bus bus) {
+        Guide g = new Guide(bus);
+        PointOfInterest nextPOI = g.getNextPOI();
+
+        if (nextPOI != null) {
+            AndroidDeviceAPI.getInstance().playSound(this, nextPOI.getSoundGuide());
+
+            GuideDialog guideDialog = GuideDialog.createInstance(nextPOI);
+            guideDialog.show(getFragmentManager(), "guide");
+        }
+    }
+
+    @Override
+    public void whichBussCallBack(Bus busUserIsOn) {
+        OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
+        identifier.removeListener(this);
+        identifier.stop();
+        doGuide(busUserIsOn);
+    }
+
+    @Override
+    public void notConnectedToElectriCityWifiError() {
+
+    }
+
+    @Override
+    public void unableToIdentifyBusError() {
+
+    }
+
+    @Override
+    public void soundFinishedPlaying() {
+        identifyBus();
     }
 }

@@ -2,15 +2,11 @@ package com.teamteamname.gotogothenburg.map;
 
 import android.app.AlertDialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 
 import com.teamteamname.gotogothenburg.PointOfInterest;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.utils.AndroidConverter;
-import com.teamteamname.gotogothenburg.utils.FileToStringConverter;
-
-import java.io.File;
 
 /**
  * Created by kakan on 2015-10-05.

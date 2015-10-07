@@ -2,61 +2,84 @@ package com.teamteamname.gotogothenburg.guide;
 
 import com.teamteamname.gotogothenburg.PointOfInterest;
 import com.teamteamname.gotogothenburg.Stops;
+import com.teamteamname.gotogothenburg.api.ElectricityAPI;
+import com.teamteamname.gotogothenburg.api.ElectricityNextStopHandler;
 import com.teamteamname.gotogothenburg.map.Bus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
- * A class representing a guided tour as a list of AudioNodes.
+ * A class representing a guided tour.
  * Created by kakan on 2015-09-25.
  */
-public class Guide {
-
-    //Lista spelade ljud
-    //Fråga api efter nästa hållplats --> få tag i alla noder associerade med hållplatsen --> spela upp de som inte är i listan --> lägg till i listan.
+public class Guide implements ElectricityNextStopHandler{
 
     private Bus bus;
     private List<PointOfInterest> visitedPOIs;
-    private List<PointOfInterest> playQueue;
-    private Timer getNextStop;
-    private Stops lastStop;
+    private List<PointOfInterest> poiQueue;
+    private Stops lastStop = Stops.DEFAULT;
+    private boolean secondTry;
 
-    public Guide (Bus bus) {
+    /**
+     * Creates a guide for the given bus.
+     * @param bus the bus to be guided.
+     */
+    public Guide(Bus bus) {
         this.bus = bus;
         visitedPOIs = new ArrayList<>();
-        playQueue = new ArrayList<>();
-        getNextStop = new Timer();
-        getNextStop.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                checkNextStop();
-
-            }
-        }, 0, 5000);
+        poiQueue = new ArrayList<>();
     }
 
+    /**
+     * Makes an request via the API to get the next stop for the given bus.
+     */
     private void checkNextStop() {
-        if (!lastStop.equals(null)) {//Fråga ElectriCity efter nextStop() för bussen och adapter))
-            lastStop = null; //tilldela med nextStop() och adapter
-            playQueue.clear();
-            playQueue.addAll(Arrays.asList(lastStop.getPOIs()));
-            playQueue();
+        ElectricityAPI.getInstance().getNextStop(bus, this);
+    }
+
+    /**
+     * Evaluates whether the given stop is equal to the last stop and takes appropriate actions.
+     * @param stop the stop to be evaluated.
+     */
+    private void evaluateStop(Stops stop) {
+        if (!lastStop.equals(stop)) {
+            lastStop = stop;
+            poiQueue.clear();
+            poiQueue.addAll(Arrays.asList(lastStop.getPOIs()));
         }
     }
 
-    private synchronized void playQueue() {
-        if (playQueue.isEmpty()) {
-            final PointOfInterest toBePlayed = playQueue.get(0);
-            if (!visitedPOIs.contains(toBePlayed)) {
-                visitedPOIs.add(toBePlayed);
-                //be api spela upp     toBePlayed
-                //api borde bara kunna spela upp en sak åt gången.
+    /**
+     * Used to access the next Point of Interest.
+     * @return the next Point of Interest associated with the current stop. Null if no such exists.
+     */
+    public PointOfInterest getNextPOI() {
+        checkNextStop();
+        if (poiQueue.size() > 1) {
+            PointOfInterest next = poiQueue.get(0);
+            if (!visitedPOIs.contains(next)) {
+                visitedPOIs.add(next);
+                poiQueue.remove(0);
+                return next;
             }
-            playQueue.remove(toBePlayed);
+        }
+        return null;
+    }
+
+    @Override
+    public void electricityNextStopResponse(Stops nextStop) {
+        secondTry = false;
+        evaluateStop(nextStop);
+    }
+
+    @Override
+    public void electricityRequestError(String error) {
+        if(!secondTry) {
+            checkNextStop();
+        } else {
+            evaluateStop(Stops.DEFAULT);
         }
     }
 }
