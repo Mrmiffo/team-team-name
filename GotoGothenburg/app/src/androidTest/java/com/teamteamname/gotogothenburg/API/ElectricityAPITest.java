@@ -19,14 +19,14 @@ public class ElectricityAPITest extends AndroidTestCase {
     private IElectricityAPI mElevtricityAPI;
     private MockRequestQueue mQueue;
 
-    private final String dgw = "Ericsson$100021";
+    private static final String dgw = "Ericsson$100021";
     private Bus bus;
     private MockElectricityHandler mHandler;
 
 
     // Mock JSONArrays that is used to test the API's parsing of responses.
     //TODO: Make tests for empty responses.
-    private JSONArray testEmptyResponse = new JSONArray();
+    private final JSONArray testEmptyResponse = new JSONArray();
 
     @Override
     protected void setUp() throws Exception{
@@ -70,13 +70,13 @@ public class ElectricityAPITest extends AndroidTestCase {
     public void testGPSResponse(){
         mElevtricityAPI.getBusLocation(bus, mHandler);
 
-        Response.ErrorListener errorListener = mQueue.getErrorListener();
-        Response.Listener parser = mQueue.getParser();
+        final Response.ErrorListener errorListener = mQueue.getErrorListener();
+        final Response.Listener parser = mQueue.getParser();
 
         //Tests parse on empty response
         parser.onResponse(testEmptyResponse);
 
-        //Tests if it returns in a correct format the latest one of 2 GPSCoords in a response.
+        //Tests if it returns, in a correct format, the latest one of 2 GPSCoords in a response.
         JSONArray testGPSCoord = new JSONArray();
         try{
             testGPSCoord = new JSONArray("[{\"resourceSpec\":\"Latitude2_Value\",\"timestamp\":\"1\",\"value\":\"11.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Latitude2_Value\",\"timestamp\":\"2\",\"value\":\"5.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Longitude2_Value\",\"timestamp\":\"1\",\"value\":\"11.0\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Longitude2_Value\",\"timestamp\":\"2\",\"value\":\"5.0\",\"gatewayId\":\"Vin_Num_001\"}]");
@@ -84,7 +84,7 @@ public class ElectricityAPITest extends AndroidTestCase {
             Log.e("TestError","Could not create a test JSONArray.");
         }
         parser.onResponse(testGPSCoord);
-        GPSCoord correctGPSCoord = new GPSCoord((float)5.0,(float)5.0);
+        final GPSCoord correctGPSCoord = new GPSCoord((float)5.0,(float)5.0);
         assertTrue(correctGPSCoord.equals(mHandler.getGpsResponse()));
 
     }
@@ -92,8 +92,8 @@ public class ElectricityAPITest extends AndroidTestCase {
     public void testStopPressedResponse(){
         mElevtricityAPI.getStopPressed(bus, mHandler);
 
-        Response.ErrorListener errorListener = mQueue.getErrorListener();
-        Response.Listener parser = mQueue.getParser();
+        final Response.ErrorListener errorListener = mQueue.getErrorListener();
+        final Response.Listener parser = mQueue.getParser();
 
         //Tests parse on empty respponse
         parser.onResponse(testEmptyResponse);
@@ -107,15 +107,15 @@ public class ElectricityAPITest extends AndroidTestCase {
 
         }
         parser.onResponse(testStopPressedCorrect);
-        boolean correctStopPressed = false;
+        final boolean correctStopPressed = false;
         assertTrue(mHandler.isPressedResponse()==correctStopPressed);
     }
 
     public void testCabinTempResponse(){
         mElevtricityAPI.getCabinTemperature(bus, mHandler);
 
-        Response.ErrorListener errorListener = mQueue.getErrorListener();
-        Response.Listener parser = mQueue.getParser();
+        final Response.ErrorListener errorListener = mQueue.getErrorListener();
+        final Response.Listener parser = mQueue.getParser();
 
         //Tests parse on empty respponse
         parser.onResponse(testEmptyResponse);
@@ -129,15 +129,15 @@ public class ElectricityAPITest extends AndroidTestCase {
 
         }
         parser.onResponse(testCabinTempCorrect);
-        double correctTemp = 100.0;
+        final double correctTemp = 100.0;
         assertTrue(mHandler.getCabinTempResponse()==correctTemp);
     }
 
     public void testAmbientTempResponse(){
         mElevtricityAPI.getAmbientTemperature(bus, mHandler);
 
-        Response.ErrorListener errorListener = mQueue.getErrorListener();
-        Response.Listener parser = mQueue.getParser();
+        final Response.ErrorListener errorListener = mQueue.getErrorListener();
+        final Response.Listener parser = mQueue.getParser();
 
         //Tests parse on empty respponse
         parser.onResponse(testEmptyResponse);
@@ -151,15 +151,15 @@ public class ElectricityAPITest extends AndroidTestCase {
 
         }
         parser.onResponse(testAmbientTempCorrect);
-        double correctTemp = 100.0;
+        final double correctTemp = 100.0;
         assertTrue(mHandler.getAmbientTempResponse()==correctTemp);
     }
 
     public void testWifiUsersResponse(){
         mElevtricityAPI.getNbrOfWifiUsers(bus, mHandler);
 
-        Response.ErrorListener errorListener = mQueue.getErrorListener();
-        Response.Listener parser = mQueue.getParser();
+        final Response.ErrorListener errorListener = mQueue.getErrorListener();
+        final Response.Listener parser = mQueue.getParser();
 
         //Tests parse on empty respponse
         //parser.onResponse(testEmptyResponse);
@@ -173,8 +173,8 @@ public class ElectricityAPITest extends AndroidTestCase {
 
         }
         parser.onResponse(testWifiUsersCorrect);
-        int correctNbrOfUsers = 100;
-        int response = mHandler.getNbrOfUsersResponse();
+        final int correctNbrOfUsers = 100;
+        final int response = mHandler.getNbrOfUsersResponse();
         assertTrue(response==correctNbrOfUsers);
     }
 
