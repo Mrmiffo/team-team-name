@@ -19,11 +19,12 @@ import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
 import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class MainActivity extends FragmentActivity {
         ElectriCityWiFiSystemIDAPI.initialize();
         OnWhichBusIdentifier.initialize();
         AndroidDeviceAPI.initialize(this);
+        LocationServicesAPI.init(this);
 
         Bus.init();
 
@@ -57,6 +59,12 @@ public class MainActivity extends FragmentActivity {
         searchBar.setOnSuggestionListener(listener);
         SearchManager manager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
         searchBar.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        LocationServicesAPI.getInstance().disconnect();
     }
 
     @Override
@@ -77,8 +85,8 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
-        if (requestCode == MapFragment.REQUEST_RESOLVE_ERROR) {
-            mapFragment.resolutionResult(resultCode, data);
+        if (requestCode == LocationServicesAPI.REQUEST_RESOLVE_ERROR) {
+            LocationServicesAPI.getInstance().resolutionResult(resultCode, data);
         }
     }
 }
