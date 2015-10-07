@@ -12,9 +12,9 @@ public enum PointOfInterest {
     JOHANNEBERG_SCIENCE_PARK(new GPSCoord(57.684747f, 11.977967f), null, null, null),
 
     CHALMERS_CAMPUS_JOHANNEBERG(new GPSCoord(57.689167f, 11.973611f),
-            new File("src/main/res/raw/" + "chalmers_campus_johanneberg_text_test.txt"),
-            new File("src/main/res/raw/" +  "chalmers_campus_johanneberg_sound_test.mp3"),
-            new File("src/main/res/raw/" + "chalmers_campus_johanneberg_picture_test.jpg")),
+            new File(getDir() + "chalmers_campus_johanneberg_text_test.txt"),
+            new File(getDir() +  "chalmers_campus_johanneberg_sound_test.mp3"),
+            new File(getDir() + "chalmers_campus_johanneberg_picture_test.jpg")),
 
     LANDALA(new GPSCoord(57.693319f, 11.970892f), null, null, null),
     LANDSHÖVDINGEHUS(new GPSCoord(), null, null, null),                     //OBS
@@ -41,7 +41,9 @@ public enum PointOfInterest {
     INOMHUSHÅLLPLATSEN(new GPSCoord(57.706911f, 11.93721f), null, null, null);
 
 
-    private static String guideDir = "src/main/res/raw/";
+    private static String getDir() {
+        return "src/main/res/raw/";
+    }
 
     @Getter private final GPSCoord location;
     @Getter private File textGuide;
@@ -50,11 +52,11 @@ public enum PointOfInterest {
 
     PointOfInterest(final GPSCoord location, File textGuide, File soundGuide, File picture) {
         if (textGuide == null) {
-            textGuide = new File("src/main/res/raw/nullText.txt");
+            textGuide = new File(getDir() + "null_text.txt");
         }
 
         if (picture == null) {
-            picture = new File("src/main/res/raw/nullPicture.jpg");
+            picture = new File(getDir() + "null_picture.jpg");
         }
         this.location = location;
         this.textGuide = textGuide;
