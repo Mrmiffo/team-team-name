@@ -9,5 +9,5 @@ public interface ElectricityStopButtonHandler extends ElectricityErrorHandler {
      * @param isPressed
      * Tells whether the stop button is pressed or not on a bus.
      */
-    public void electricityStopPressedResponse(boolean isPressed);
+    void electricityStopPressedResponse(boolean isPressed);
 }

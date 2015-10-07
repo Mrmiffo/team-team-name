@@ -1,7 +1,5 @@
 package com.teamteamname.gotogothenburg;
 
-import lombok.Getter;
-
 /**
  * An enum containing all valid stops for buses, tram etc.
  * Created by kakan on 2015-09-25.

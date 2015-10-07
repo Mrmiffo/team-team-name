@@ -11,5 +11,5 @@ public interface ElectricityGPSHandler extends ElectricityErrorHandler {
      * @param coord
      * The GPS location of a bus.
      */
-    public void electricityGPSResponse(GPSCoord coord);
+    void electricityGPSResponse(GPSCoord coord);
 }

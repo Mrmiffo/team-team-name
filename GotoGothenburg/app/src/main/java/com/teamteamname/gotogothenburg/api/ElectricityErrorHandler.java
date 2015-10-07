@@ -8,5 +8,5 @@ public interface ElectricityErrorHandler {
      * Method for recieving a errormessage.
      * @param error
      */
-    public void electricityRequestError(String error);
+    void electricityRequestError(String error);
 }

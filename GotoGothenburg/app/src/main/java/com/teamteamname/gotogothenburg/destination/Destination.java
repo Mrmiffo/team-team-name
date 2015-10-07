@@ -19,6 +19,8 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class Destination implements Serializable{
 
+    public static final long serialVersionUID = 2894;
+
     @Getter @Setter
     private String name;
     @Getter @Setter

@@ -19,9 +19,9 @@ import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
  */
 public class MapFragment extends com.google.android.gms.maps.MapFragment implements OnMapReadyCallback, LocationListener {
 
-
     private GoogleMap map;
     private Marker myPosition;
+    private boolean onLocationChangedHasRun;
 
     public static MapFragment newInstance(){
         return new MapFragment();
@@ -64,7 +64,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     }
 
 
-    boolean onLocationChangedHasRun;
+
     @Override
     public void onLocationChanged(Location location) {
         if(map == null) {

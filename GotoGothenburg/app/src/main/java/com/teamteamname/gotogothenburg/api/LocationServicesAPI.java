@@ -27,13 +27,13 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     // The singleton instance
     private static LocationServicesAPI instance;
     // The activity which is responsible for this api
-    private Activity activity;
+    private final Activity activity;
     // Request code to use when launching the resolution activity
     public static final int REQUEST_RESOLVE_ERROR = 1001;
     // Unique tag for the error dialog fragment
     public static final String DIALOG_ERROR = "dialog_error";
     // Bool to track whether the app is already resolving an error
-    private boolean mResolvingError = false;
+    private boolean mResolvingError;
     // Reference to the api
     private GoogleApiClient api;
 
@@ -140,8 +140,8 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     }
 
     private void showErrorDialog(int errorCode) {
-        ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
-        Bundle bundle = new Bundle();
+        final ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(DIALOG_ERROR, errorCode);
         dialogFragment.setArguments(bundle);
         dialogFragment.show(activity.getFragmentManager(), "errordialog");
@@ -163,9 +163,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     public void resolutionResult (int resultCode, Intent data) {
         mResolvingError = false;
         if (resultCode == Activity.RESULT_OK) {
-            if (!api.isConnecting() && !api.isConnected()) {
                 api.connect();
-            }
         }
     }
 
@@ -175,6 +173,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
      * Since it is used for marking the devices location on a map, a high priority and a low interval is used.
      */
     private static class LocationRequest {
+        private LocationRequest(){}
         // Consider setFastestInterval if updates happen to regularly
         /**
          * Gets the project specific LocationRequest.
@@ -198,7 +197,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            int errorCode = this.getArguments().getInt(DIALOG_ERROR);
+            final int errorCode = this.getArguments().getInt(DIALOG_ERROR);
             return GoogleApiAvailability.getInstance().getErrorDialog(
                     this.getActivity(), errorCode, REQUEST_RESOLVE_ERROR);
         }

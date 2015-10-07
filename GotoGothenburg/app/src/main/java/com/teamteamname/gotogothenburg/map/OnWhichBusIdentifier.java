@@ -98,7 +98,6 @@ public class OnWhichBusIdentifier{
         if (queryTimerRunning){
             queryTimer.cancel();
             queryTimer.purge();
-            queryTimer = null;
             queryTimerRunning = false;
         }
     }
@@ -130,7 +129,7 @@ public class OnWhichBusIdentifier{
                 // connectedBusSystemIDCallback method, or the connectedBusErrorCallback method.
                 ElectriCityWiFiSystemIDAPI.getInstance().getConnectedBusSystemID(this);
             } else {
-                for (IOnWhichBusListener listener: listeners){
+                for (final IOnWhichBusListener listener: listeners){
                     listener.notConnectedToElectriCityWifiError();
                 }
             }
@@ -141,14 +140,14 @@ public class OnWhichBusIdentifier{
             //Check if the response contains data and if the identifier is still running.
             if (isRunning() && returnValue != null){
                 //Identify the buss, if no bus was found, report to listeners.
-                Bus identifiedBus = Bus.getBusBySysId(returnValue);
-                if (identifiedBus != null){
-                    for (IOnWhichBusListener listener: listeners){
-                        listener.whichBussCallBack(identifiedBus);
+                final Bus identifiedBus = Bus.getBusBySysId(returnValue);
+                if (identifiedBus == null){
+                    for (final IOnWhichBusListener listener: listeners){
+                        listener.unableToIdentifyBusError();
                     }
                 } else {
-                    for (IOnWhichBusListener listener: listeners){
-                        listener.unableToIdentifyBusError();
+                    for (final IOnWhichBusListener listener: listeners){
+                        listener.whichBussCallBack(identifiedBus);
                     }
                 }
             }
@@ -157,7 +156,7 @@ public class OnWhichBusIdentifier{
         @Override
         public void connectedBusErrorCallback(Exception e) {
             if (e instanceof IOException) {
-                for (IOnWhichBusListener listener : listeners) {
+                for (final IOnWhichBusListener listener : listeners) {
                     listener.unableToIdentifyBusError();
                 }
             }

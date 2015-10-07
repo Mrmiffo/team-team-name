@@ -11,11 +11,11 @@ public interface VasttrafikHandler {
      * Called with the list of autocomplete suggestions which are to be displayed
      * @param autocomplete  The list of suggestions
      */
-    public void vasttrafikRequestDone(List<String> autocomplete);
+    void vasttrafikRequestDone(List<String> autocomplete);
 
     /**
      * Called if any unsuspected error occurs
      * @param e The error message
      */
-    public void vasttrafikRequestError(String e);
+    void vasttrafikRequestError(String e);
 }

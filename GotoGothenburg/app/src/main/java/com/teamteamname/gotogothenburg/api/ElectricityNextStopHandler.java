@@ -11,5 +11,5 @@ public interface ElectricityNextStopHandler extends ElectricityErrorHandler {
      * @param nextStop
      * The next stop for a bus.
      */
-    public void electricityNextStopResponse(Stops nextStop);
+    void electricityNextStopResponse(Stops nextStop);
 }

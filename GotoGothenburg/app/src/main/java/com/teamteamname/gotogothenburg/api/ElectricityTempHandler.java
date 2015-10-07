@@ -9,12 +9,12 @@ public interface ElectricityTempHandler extends ElectricityErrorHandler {
      * @param temp
      * Temperature outside of a bus.
      */
-    public void electricityAmbientTemperatureResponse(double temp);
+    void electricityAmbientTemperatureResponse(double temp);
 
     /**
      * Callback method for the Electricity API.
      * @param temp
      * Temperature inside the driver's cabin of a bus.
      */
-    public void electricityCabinTemperature(double temp);
+    void electricityCabinTemperature(double temp);
 }

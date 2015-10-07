@@ -3,19 +3,13 @@ package com.teamteamname.gotogothenburg.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.teamteamname.gotogothenburg.R;
-
-import java.util.prefs.Preferences;
 
 /**
  * The settings tab fragment.
@@ -24,9 +18,7 @@ import java.util.prefs.Preferences;
  */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
+    public SettingsFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +32,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     // PreferenceScreen is a tree structure
     private void initSummaries(Preference p) {
         if (p instanceof PreferenceGroup) {
-            PreferenceGroup pGrp = (PreferenceGroup) p;
+            final PreferenceGroup pGrp = (PreferenceGroup) p;
             for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
                 initSummaries(pGrp.getPreference(i));
             }
@@ -67,7 +59,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     private void updateListSummary(Preference p) {
         if ( p instanceof ListPreference) {
-            ListPreference listPref = (ListPreference) p;
+            final ListPreference listPref = (ListPreference) p;
             listPref.setSummary(listPref.getEntry());
         }
     }

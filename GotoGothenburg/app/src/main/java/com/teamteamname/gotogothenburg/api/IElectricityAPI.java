@@ -19,7 +19,7 @@ public interface IElectricityAPI {
      * @param callback
      * A interface for recieving the response.
      */
-    public void getBusLocation(Bus bus, ElectricityGPSHandler callback);
+     void getBusLocation(Bus bus, ElectricityGPSHandler callback);
 
     /**
      * Requests the next stop for a specific bus. The response is sent back to a requester using the
@@ -32,7 +32,7 @@ public interface IElectricityAPI {
      * @param callback
      * A interface for recieving the response.
      */
-    public void getNextStop(Bus bus, ElectricityNextStopHandler callback);
+     void getNextStop(Bus bus, ElectricityNextStopHandler callback);
 
     /**
      * Requests the temperature outside of a specific bus. The response is sent back to a requester using the
@@ -45,7 +45,7 @@ public interface IElectricityAPI {
      * @param callback
      * A interface for recieving the response.
      */
-    public void getAmbientTemperature(Bus bus, ElectricityTempHandler callback);
+     void getAmbientTemperature(Bus bus, ElectricityTempHandler callback);
 
     /**
      * Requests the temperature inside the DRIVER'S cabin of a specific bus. The response is sent back to the
@@ -58,7 +58,7 @@ public interface IElectricityAPI {
      * @param callback
      * A interface for recieving the response.
      */
-    public void getCabinTemperature(Bus bus, ElectricityTempHandler callback);
+     void getCabinTemperature(Bus bus, ElectricityTempHandler callback);
 
     /**
      * Requests information about whether the stop button is pressed or not on a specific bus. The response is sent
@@ -71,7 +71,7 @@ public interface IElectricityAPI {
      * @param callback
      * A interface for recieving the response.
      */
-    public void getStopPressed(Bus bus, ElectricityStopButtonHandler callback);
+     void getStopPressed(Bus bus, ElectricityStopButtonHandler callback);
 
     /**
      * Requests the number of devices connected to the Wifi of a specific bus. The users does not need to be
@@ -85,6 +85,6 @@ public interface IElectricityAPI {
      * @param callback
      * A interface for recieving the response.
      */
-    public void  getNbrOfWifiUsers(Bus bus, ElectricityWifiHandler callback);
+     void  getNbrOfWifiUsers(Bus bus, ElectricityWifiHandler callback);
 
 }

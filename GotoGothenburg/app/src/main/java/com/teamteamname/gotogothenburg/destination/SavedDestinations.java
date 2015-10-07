@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Anton on 2015-09-30.
  */
 public class SavedDestinations {
-    private List<Destination> savedDestinations;
+    final private List<Destination> savedDestinations;
 
     public SavedDestinations(){
         savedDestinations = new ArrayList<>();
@@ -21,7 +21,7 @@ public class SavedDestinations {
     }
 
     public List<Destination> getSavedDestinations(){
-        List<Destination> toReturn = new ArrayList<>();
+        final List<Destination> toReturn = new ArrayList<>();
         toReturn.addAll(savedDestinations);
         return toReturn;
     }
@@ -36,8 +36,8 @@ public class SavedDestinations {
     }
 
     public List<Destination> getVisited(boolean isVisited){
-        List<Destination> toReturn = new ArrayList<>();
-        for (Destination dest: savedDestinations){
+        final List<Destination> toReturn = new ArrayList<>();
+        for (final Destination dest: savedDestinations){
             if (dest.isVisited() == isVisited){
                 toReturn.add(dest);
             }

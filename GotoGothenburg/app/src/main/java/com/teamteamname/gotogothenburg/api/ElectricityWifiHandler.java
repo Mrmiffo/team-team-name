@@ -9,5 +9,5 @@ public interface ElectricityWifiHandler extends ElectricityErrorHandler {
      * @param nbrOfUsers
      * The number of (non-authenticated) users connetcted to the Wifi of a bus.
      */
-    public void electricityWifiUsersResponse(int nbrOfUsers);
+    void electricityWifiUsersResponse(int nbrOfUsers);
 }

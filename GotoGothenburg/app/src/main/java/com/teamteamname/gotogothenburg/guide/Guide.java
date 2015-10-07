@@ -49,8 +49,8 @@ public class Guide {
     }
 
     private synchronized void playQueue() {
-        if (playQueue.size() < 1) {
-            PointOfInterest toBePlayed = playQueue.get(0);
+        if (playQueue.isEmpty()) {
+            final PointOfInterest toBePlayed = playQueue.get(0);
             if (!visitedPOIs.contains(toBePlayed)) {
                 visitedPOIs.add(toBePlayed);
                 //be api spela upp     toBePlayed

@@ -18,9 +18,9 @@ import java.util.List;
  * Created by Anton on 2015-09-30.
  */
 public class DestinationListAdapter extends BaseAdapter{
-    private SavedDestinations destinations;
-    private List<Destination> currentSorting;
-    private Activity activity;
+    final private SavedDestinations destinations;
+    final private List<Destination> currentSorting;
+    final private Activity activity;
 
     public DestinationListAdapter(SavedDestinations destinations, Activity activity){
         this.destinations = destinations;
@@ -47,9 +47,10 @@ public class DestinationListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //Setup
-        LayoutInflater inflater = activity.getLayoutInflater();
-        View row = inflater.inflate(R.layout.destination_list_component, parent, false);
-        TextView firstLine, secondLine;
+        final LayoutInflater inflater = activity.getLayoutInflater();
+        final View row = inflater.inflate(R.layout.destination_list_component, parent, false);
+        TextView firstLine;
+        TextView secondLine;
 
         firstLine = (TextView) row.findViewById(R.id.firstLine);
         secondLine = (TextView) row.findViewById(R.id.secondLine);
