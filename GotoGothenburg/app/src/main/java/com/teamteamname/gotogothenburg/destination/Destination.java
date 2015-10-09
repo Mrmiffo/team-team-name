@@ -17,17 +17,15 @@ import lombok.Setter;
  * Created by Anton on 2015-09-30.
  */
 @EqualsAndHashCode
-public class Destination implements Serializable{
+public final class Destination{
 
-    @Getter @Setter
+    @Getter
     private String name;
-    @Getter @Setter
+    @Getter
     private double latitude;
-    @Getter @Setter
+    @Getter
     private double longitude;
     @Getter
-    private Date dateCreated;
-    @Getter @Setter
     private boolean visited;
 
     public Destination(String name, double latitude, double longitude){
@@ -44,7 +42,8 @@ public class Destination implements Serializable{
 
     @Override
     public String toString(){
-        return getName() + "At: " + latitude + ", " + longitude + "Visited: " + visited + "Created: " + dateCreated;
+        return getName() + "At: " + latitude + ", " + longitude + "Visited: " + visited;
     }
+
 
 }
