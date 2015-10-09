@@ -66,8 +66,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             public void onClick(View v) {
                 if (isDisplaying) {
                     resalePoints.removeResalePoints();
+                    v.setAlpha(0.5f);
                 } else {
                     resalePoints.drawResalePoints();
+                    v.setAlpha(1f);
                 }
                 isDisplaying = !isDisplaying;
             }
