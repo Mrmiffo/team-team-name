@@ -6,8 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by Mattias Ahlstedt on 2015-09-25.
  */
 public interface IVasttrafikAPI {
-    void getCoordinates(VasttrafikHandler callback, LatLng origin, LatLng dest);
-    void getCoordinates(VasttrafikHandler callback, String originStop, String destStop);
+    void getCoordinates(VasttrafikHandler callback, VasttrafikLocation originLocation, VasttrafikLocation destLocation);
 
     /**
      * Sends a list fo autocomplete suggestions to the callback.
