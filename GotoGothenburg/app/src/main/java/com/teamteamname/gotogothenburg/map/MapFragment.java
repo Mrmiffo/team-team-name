@@ -148,6 +148,13 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         identifyBus();
     }
 
+    /**
+     * Draws a polyline on the map with the color rgb
+     * @param r color
+     * @param g color
+     * @param b color
+     * @param coords List of coordinates to connect with a line
+     */
     public void drawPolyLine(int r, int g, int b, LatLng... coords){
         PolylineOptions polyline = new PolylineOptions();
         polyline.color(Color.argb(255, r, g, b));
