@@ -32,7 +32,8 @@ public class InfoFragment extends Fragment {
         view.findViewById(R.id.display_resale_points).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).changeTab(1);
+                ResalePoints r = new ResalePoints(getActivity());
+                //((MainActivity) getActivity()).changeTab(1);
             }
         });
         return view;

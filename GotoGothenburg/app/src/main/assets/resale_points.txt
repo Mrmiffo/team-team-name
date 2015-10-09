@@ -1,0 +1,317 @@
+Xpressenmhult Resecentrum i Torslanda, Gothenburg|57.723152|11.767669
+Willys, Strandgatan 32, Gothenburg|57.70887|11.97456
+Willys Sisjön, Datavägen 1-17, Gothenburg|57.70887|11.97456
+Willys Henån, Strandvägen 5, Gothenburg|57.66312|11.860974
+Vistas Tobak och godis, Friggagatan 25 B, Gothenburg|57.712068|11.98966
+Videostation, Stationsvägen 1B, Floda, Gothenburg|57.70887|11.97456
+Västtrafikbutik, Stationsgatan 9, Gothenburg|57.70887|11.97456
+Västtrafikbutik, Södra Torget, Gothenburg|57.698043|11.982626
+Västtrafikbutik, Nils Ericson Terminalen, Gothenburg|57.70887|11.97456
+Västtrafikbutik, Kampenhof, Gothenburg|57.70887|11.97456
+Västtrafikbutik, Frölunda Resecentrum, Gothenburg|57.70887|11.97456
+Västtrafikbutik, Drottningtorget, Gothenburg|57.708287|11.973128
+Västtrafikbutik Brunnsparken, Norra Hamngatan 18, Gothenburg|57.707098|11.968182
+Västtrafikbutik, Bergslagstorget 1 (järnvägsstationen) , Gothenburg|57.70887|11.97456
+Västtrafikbutik Allum Köpcentrum, Partille C, Gothenburg|57.70887|11.97456
+Värmlands Livs, Värmlandsgatan 16, Gothenburg|57.699205|11.946502
+Vargöns Spelbutik, Nybrovägen 1, Gothenburg|57.70887|11.97456
+Vallhamra Video, Vallhamra Torg, Gothenburg|57.70887|11.97456
+Uno-X Svanesund, Färjevägen 2, Gothenburg|57.70887|11.97456
+Uddevalla Sjukhus, Informationsdisken, Gothenburg|57.70887|11.97456
+Tuve Spel och Tobak, Tuve torg 12, Gothenburg|57.755167|11.92707
+Turistbyrån, Järnvägsbacken 1C, Järnvägsstationen, Gothenburg|57.70887|11.97456
+Tre Kungar, Torggatan 4-6, Gothenburg|57.709126|11.965002
+Träffpunkt Jönköping, Järnvägsstationen, Gothenburg|57.70887|11.97456
+Torpa Tips &amp; Trav, Tegelbruksvägen 2, Gothenburg|57.70887|11.97456
+Time, Hisingsgatan 30, Gothenburg|57.719566|11.944914
+Time Häggvall, Häggvalledamm, Gothenburg|57.70887|11.97456
+Tempo Skepplanda, Albotorget 1, Gothenburg|57.70887|11.97456
+Tempo Skatås, Olbergsgatan 2, Gothenburg|57.70887|11.97456
+Tempo Skaftöhallen, Fiskebäckskil, Gothenburg|57.70887|11.97456
+Tempo Nol, Alevägen 39, Gothenburg|57.712546|11.898833
+Tempo Fjärås, Rajgräsvägen 3, Gothenburg|57.70887|11.97456
+Tempo Eriksberg, Eriksbergstorget 1, Gothenburg|57.70887|11.97456
+Taxi Åmål, Bondegatan 2, Gothenburg|57.715542|11.998138
+Tappen i Björsared, Björsaråsvägen 2, Gothenburg|57.797933|12.14562
+Styrsöbolaget, Saltholmen, Gothenburg|57.70887|11.97456
+Stenkullens servicebutik, Stenkullevägen 7, Gothenburg|57.70887|11.97456
+Statoil, Stora Höga, Gothenburg|57.70887|11.97456
+Statoil Kode, Jörlandavägen 2, Gothenburg|57.70887|11.97456
+Statoil Kållekärr, Skåpelundsvägen 1, Gothenburg|57.70887|11.97456
+Statoil Askim, Askims Stationsväg, Gothenburg|57.635089|11.936842
+Stampgatans Tobak och Konfektyr, Stampgatan 38, Gothenburg|57.707778|11.985611
+ST1, Göteborgsvägen, Gothenburg|57.674801|12.00829
+Spelmagasinet, Sjöbo Torg 1, Gothenburg|57.70887|11.97456
+Spelhugget, Masthuggstorget 3 A, Gothenburg|57.698473|11.943102
+Spaldings Livs, Spaldingsgatan 1, Gothenburg|57.68936|11.983314
+Södra Torgkiosken, Södra Torget, Gothenburg|57.698043|11.982626
+Snus Boa, Gärdesvägen 2-4, Gothenburg|57.622532|11.937242
+Shell/7-eleven, Stadstjänaregatan 3, Gothenburg|57.711797|11.971436
+Shell/7-Eleven, Särö, Gothenburg|57.70887|11.97456
+Shell/7-Eleven, Mölndalsvägen 75, Gothenburg|57.684061|11.999588
+Shell/7-eleven, Metallvägen 1, Gothenburg|57.70887|11.97456
+Shell/7-Eleven, Lergöksgatan 2, Gothenburg|57.652533|11.906418
+Shell/7-Eleven, Läckögatan, Gothenburg|57.70887|11.97456
+Shell/7-Eleven, Kolborydsvägen 2, Gothenburg|57.70887|11.97456
+Shell/7-eleven, Karl Johansgatan 77, Gothenburg|57.69462|11.92033
+Shell/7-eleven, Härkeshultsvägen 2, Gothenburg|57.70887|11.97456
+Shell/7-Eleven, Gropbrovägen 2, Gothenburg|57.70887|11.97456
+Shell/7-Eleven, Gamla Kronvägen E20, Gothenburg|57.702356|11.994748
+Shell/7-Eleven, Fjärås, Gothenburg|57.70887|11.97456
+Shell/7-Eleven, Falköpingsvägen 1, Skövde, Gothenburg|57.70887|11.97456
+Shell/7-eleven, Djurgårdsplatsen, Gothenburg|57.70887|11.97456
+Shell/7-Eleven, Askim, Gothenburg|57.615844|11.945608
+Shell 7-Eleven, Gärdhemsvägen 25, Trollhättan, Gothenburg|57.70887|11.97456
+Service Kiosken, Resecentrum Kinna, Gothenburg|57.70887|11.97456
+RM Tobak, Mölndalsvägen 1, Gothenburg|57.69109|11.992013
+Pressbyrån, Vasagatan, Valand, Gothenburg|57.70887|11.97456
+Pressbyrån, Torps Köpcentrum, Gothenburg|57.70887|11.97456
+Pressbyrån, Sven Erikssonsplatsen 15/Resecentrum, Gothenburg|57.70887|11.97456
+Pressbyrån, Storgatan 20, Kungsbacka station, Gothenburg|57.70887|11.97456
+Pressbyrån, Stora Torget, Gothenburg|57.669461|11.655868
+Pressbyrån, Södra Hamngatan 45, Gothenburg|57.706705|11.970247
+Pressbyrån, Södra Hamngatan 3, Strömstad, Gothenburg|57.70887|11.97456
+Pressbyrån, Sandtorget, Gothenburg|57.70887|11.97456
+Pressbyrån, Sahlgrenska sjukhuset, Stora Ingången, Gothenburg|57.70887|11.97456
+Pressbyrån, Sahlgrenska sjukhuset, Centralhuset, Gothenburg|57.70887|11.97456
+Pressbyrån, Resecentrum (Stationsg 9), Gothenburg|57.70887|11.97456
+Pressbyrån, Redbergsplatsen, Gothenburg|57.70887|11.97456
+Pressbyrån, Partille C, Gamla Kronvägen 7, Gothenburg|57.70887|11.97456
+Pressbyrån, Östra Sjukhuset, Gothenburg|57.70887|11.97456
+Pressbyrån, Österrådaplan, Gothenburg|57.70887|11.97456
+Pressbyrån, Österlånggatan 52, Gothenburg|57.70887|11.97456
+Pressbyrån, Norra Hamngatan 24 , Gothenburg|57.707255|11.969331
+Pressbyrån, Nordstadstorget, Nya Gatan, Gothenburg|57.700974|11.967931
+Pressbyrån, Nils Ericsonsgatan 17 (Nordstan), Gothenburg|57.70887|11.97456
+Pressbyrån, Nils Ericson Terminalen 17, Gothenburg|57.70887|11.97456
+Pressbyrån, Mölndalsbro 9, Gothenburg|57.699828|11.95274
+Pressbyrån, Mölndals sjukhus, Gothenburg|57.70887|11.97456
+Pressbyrån, Marklandsgatan, Gothenburg|57.671272|11.935279
+Pressbyrån, Lindholmspiren 5, Gothenburg|57.707126|11.939796
+Pressbyrån, Lindholmsallén 30, Gothenburg|57.70785|11.937812
+Pressbyrån Lidköpings resecentrum, Gothenburg|57.70887|11.97456
+Pressbyrån, Landvetter Resecentrum, Gothenburg|57.70887|11.97456
+Pressbyrån, Landvetter flygplats, utrikes, Gothenburg|57.70887|11.97456
+Pressbyrån Kungsmässan, Borgmästaregatan 5, Gothenburg|57.7193|12.020006
+Pressbyrån, Kungsgatan 28, Gothenburg|57.703761|11.961765
+Pressbyrån, Korsvägen, Gothenburg|57.696434|11.986425
+Pressbyrån, Kärnsjukhuset, Gothenburg|57.70887|11.97456
+Pressbyrån, Kampenhof, Gothenburg|57.70887|11.97456
+Pressbyrån, Järnvägsstationen (Skaraborgsg 56), Gothenburg|57.70887|11.97456
+Pressbyrån, Järnvägsstationen Mariestad, Gothenburg|57.70887|11.97456
+Pressbyrån, Järnvägsstationen Falköping, Gothenburg|57.70887|11.97456
+Pressbyrån, Järnvägsstationen Alingsås, Gothenburg|57.70887|11.97456
+Pressbyrån, Järnvägsgatan 6, Gothenburg|57.70887|11.97456
+Pressbyrån, Järntorget, Gothenburg|57.699828|11.95274
+Pressbyrån, Inne på Frölunda Torg, Gothenburg|57.651642|11.910496
+Pressbyrån, Hjalmar Brantingsplatsen, Gothenburg|57.70887|11.97456
+Pressbyrån, Heden, Gothenburg|57.699828|11.95274
+Pressbyrån, Götgatan 11, Gothenburg|57.70887|11.97456
+Pressbyrån, Götaplatsen 9, Gothenburg|57.697396|11.978626
+Pressbyrån, Frölunda resecentrum, Gothenburg|57.70887|11.97456
+Pressbyrån, Eketrägatan, Gothenburg|57.712564|11.90818
+Pressbyrån, Drottningtorget, Gothenburg|57.708287|11.973128
+Pressbyrån, Centralstationen Uddevalla, Gothenburg|57.70887|11.97456
+Pressbyrån, Centralstationen spår 7-8, Gothenburg|57.70887|11.97456
+Pressbyrån, Centralstationen spår 1, Gothenburg|57.70887|11.97456
+Pressbyrån, Centralstationen Entrehallen, Gothenburg|57.70887|11.97456
+Pressbyrån Borås Centralstationen, Järnvägsgatan 16, Gothenburg|57.70887|11.97456
+Pressbyrån, Bergslenagatan 9/Knalleland, Gothenburg|57.70887|11.97456
+Pressbyrån, Bäckevikstorg, Gothenburg|57.70887|11.97456
+Pressbyrån, Angereds Centrum Entrè, Gothenburg|57.70887|11.97456
+Pressbyrån, Angered Centrum, Gothenburg|57.70887|11.97456
+Press Stop, Drottninggatan 58, Gothenburg|57.706404|11.971722
+Press Stop, Centralhuset/Nils Ericsonplasten 7, Gothenburg|57.70887|11.97456
+Pj:s Spelhall, Timmervägen 1A, Gothenburg|57.70887|11.97456
+Pars Cafe, Järnvägsplatsen 1, Gothenburg|57.70887|11.97456
+Nöjesbutiken i Munkedal, Stationsvägen 5, Gothenburg|57.70887|11.97456
+Nära Dig Jonsered, Jonseredsvägen 19, Gothenburg|57.70887|11.97456
+NÄL (Norra Älvsborgs Länssjukhus), Informationen, Gothenburg|57.70887|11.97456
+MyWay Vårgårda, Stationsgatan 2, Gothenburg|57.70887|11.97456
+My Way Kronogårdskiosken, Gothenburg|57.70887|11.97456
+My Way Expressbyrån, Trollhättevägen 10, Gothenburg|57.70887|11.97456
+My Way Bubblan, Stationsvägen 4, Gothenburg|57.70887|11.97456
+My Way Brogatan, Brogatan 2, Gothenburg|57.701357|11.955209
+Mitt i Prick, Vällebergsvägen 15, Gothenburg|57.70887|11.97456
+Minilivs, Ekedalsgatan 15, Gothenburg|57.690979|11.935262
+Medborgarkontoret, Tjörns Kommun, Kroksdalsvägen 1, Gothenburg|57.70887|11.97456
+Medborgarkontoret, Timmervägen 12, Gothenburg|57.70887|11.97456
+MB Livs, Väderilsgatan 46, Gothenburg|57.726126|11.89422
+Marstrands Kiosk, Ringplan, Gothenburg|57.70887|11.97456
+Majornas Livs, Älvsborgsgatan 28, Gothenburg|57.68805|11.915234
+Lygnern Café &amp; Restaurang, Gothenburg|57.70887|11.97456
+Lundgrens Tobak, Drottninggatan 2, Gothenburg|57.704797|11.961487
+Lollipop, Åsa Stationsväg 15 B, Gothenburg|57.70887|11.97456
+Lenthas, Göteborgsvägen 4, Sandared, Gothenburg|57.70887|11.97456
+Lemona, Chapmans Torg 2, Gothenburg|57.693749|11.920131
+Lasarettkiosken, Lasarettsgatan 1, Gothenburg|57.703305|11.958562
+Kupolen Lisebergs station, Fabriksgatan 60, Gothenburg|57.698398|11.99491
+Kungsfrukt, Kungsportsplatsen 2, Gothenburg|57.704181|11.969993
+Krokslätts Servicebutik, Krokslätts Parkgata 59, Gothenburg|57.67601|11.992324
+Krokens Livs Kiosk, Olskrokstorget, Gothenburg|57.715156|11.999502
+Kortedala City Tobak, Förstamajgatan 3, Gothenburg|57.757287|12.03639
+Konsum Rosviksgatan, Rosviksgatan 3, Gothenburg|57.70887|11.97456
+Konfekthuset, Kortedala Torg 7B, Gothenburg|57.751351|12.031261
+KJA Tobakscenter AB, Linnégatan 28 B, Gothenburg|57.69697|11.951445
+Kevins Spelbutik, Friskväderstorget 3, Gothenburg|57.723896|11.89248
+Käringötrafiken, Hus 199, Käringön, Gothenburg|57.70887|11.97456
+Karamellbyrån i Bohuslän, Linnéplatsen, Gothenburg|57.690446|11.951964
+Kållered Servicebutik, Gamla Riksvägen 48, Gothenburg|57.70887|11.97456
+Kå-Pe Frukt Gråbo, Mjörnbotorget, Gothenburg|57.70887|11.97456
+Jörlandaboden, Kyrkbyn, Gothenburg|57.714646|11.902302
+Ja butiken TK Par Kraft, Nordmannatorget, Gothenburg|57.70887|11.97456
+Ja Butik Rondo, Smörslottsgatan 64, Gothenburg|57.714939|12.056532
+ICA Supermarket, Vasagatan 1, Gothenburg|57.697348|11.961458
+ICA Supermarket Vallda, Gothenburg|57.70887|11.97456
+ICA Supermarket, Storgatan 18, Gothenburg|57.700309|11.969617
+Ica Supermarket Servett, Almekärrsvägen 1, Gothenburg|57.70887|11.97456
+ICA Supermarket, Magasinsgatan 6, Gothenburg|57.704956|11.961821
+Ica Supermarket Lysekil, Landsvägsgatan 17, Gothenburg|57.698047|11.952749
+Ica Supermarket, Lökholmsvägen 2, Hönö, Gothenburg|57.70887|11.97456
+ICA Supermarket Kärra, Kärra Centrum 25, Gothenburg|57.794297|11.990566
+ICA Supermarket Hjällbo, Hjällbo Centrum, Gothenburg|57.70887|11.97456
+Ica Supermarket Hedemyrs, Gothenburg|57.70887|11.97456
+ICA Supermarket, Göteborgsvägen 20, Älvängen, Gothenburg|57.70887|11.97456
+ICA Supermarket, Centrumvägen 7, Gothenburg|57.70887|11.97456
+ICA Supermarket Boström, Gothenburg|57.70887|11.97456
+ICA Supermarket Åmål, Mellanbrogatan 10, Gothenburg|57.70887|11.97456
+ICA Supermarket Almö Livs, Centrumhuset, Gothenburg|57.70887|11.97456
+ICA Nära Yngves, Donsö Backe 3, Gothenburg|57.599828|11.795242
+Ica Nära Skultorp, Gothenburg|57.70887|11.97456
+ICA Nära Rorsman, Rönnäng, Gothenburg|57.70887|11.97456
+ICA Nära Mathyttan, Gothenburg|57.70887|11.97456
+ICA Nära Lunden, Sankt Pauligatan 42, Gothenburg|57.70896|12.002198
+ICA Nära Lödöse, Gothenburg|57.70887|11.97456
+ICA Nära, Kungsladugårdsgatan 15, Gothenburg|57.685137|11.925049
+ICA Nära Hindås, Hindås, Gothenburg|57.70887|11.97456
+Ica Nära Floby, Köpmansgatan 2, Gothenburg|57.706862|11.963017
+ICA Nära Dyröboden, Hamnvägen, Gothenburg|57.70887|11.97456
+ICA Nära Arwidssons, Norra Bohusvägen 1, Gothenburg|57.70887|11.97456
+ICA Maxi, Lona Knapes gata 1, Gothenburg|57.650491|11.945746
+ICA Maxi Kungsbacka, Hedebrovägen 50, Gothenburg|57.70887|11.97456
+ICA Maxi, Kungälv, Gothenburg|57.70887|11.97456
+Ica Maxi, Hemvägen 19, Gothenburg|57.70887|11.97456
+Ica Maxi, Grafiska vägen 16, Gothenburg|57.680189|12.004016
+ICA Maxi, Gamla Flygplatsvägen 60, Gothenburg|57.709931|11.771728
+ICA Maxi Borås, Trandögatan 20, Gothenburg|57.70887|11.97456
+ICA Maxi, Angered Centrum, Gothenburg|57.70887|11.97456
+ICA Kvantum Svenljunga, Gothenburg|57.70887|11.97456
+ICA Kvantum, Storgatan 32, Gothenburg|57.701979|11.973664
+ICA Kvantum Sannegården, Vintergatan 4, Gothenburg|57.709835|11.928558
+ICA Kvantum, Nödingevägen 7, Nödinge, Gothenburg|57.70887|11.97456
+ICA Kvantum, Landvetter Centrum, Gothenburg|57.70887|11.97456
+ICA Kvantum, Järnvägsgatan 3, Gothenburg|57.70887|11.97456
+ICA Kvantum, Hulans Torg, Gothenburg|57.70887|11.97456
+Ica Kvantum Hovås, Billdalsvägen 2, Gothenburg|57.598243|11.95231
+ICA Kvantum Hjertberg, Framnäsvägen 1, Gothenburg|57.70887|11.97456
+Ica Focus, Åvägen 42, Gothenburg|57.698143|11.993185
+Hydro Kungsbacka, Varbergsvägen 91, Gothenburg|57.70887|11.97456
+Hova Spel och Tobak,, Gothenburg|57.70887|11.97456
+Hemmakväll, Kungsgatan 51B, Trollhättan, Gothenburg|57.70887|11.97456
+Hemmakväll, Gymnasiegatan 4, Gothenburg|57.70887|11.97456
+Hemköp Torslanda, Torslanda Torg, Gothenburg|57.723985|11.767148
+Hemköp Stigbergstorget, Stigbergstorget 6, Gothenburg|57.698755|11.934843
+Hemköp, Selma Lagerlöfs Torg, Gothenburg|57.749759|11.982467
+Hemköp Onsala, Onsala Kyrkby, Gothenburg|57.70887|11.97456
+Hemköp Nossebro, Södra vägen 1, Gothenburg|57.702256|11.973926
+Hemköp Nordstan Förbutiken, Nordstadstorget, Gothenburg|57.70887|11.97456
+Hemköp Mölnlycke, Ekdalavägen 3, Gothenburg|57.70887|11.97456
+Hemköp Mölndal City, Brogatan 21, Gothenburg|57.701054|11.955667
+Hemköp Mölndal, Bifrost, Pinnharvsgatan 11, Gothenburg|57.70887|11.97456
+Hemköp Kullavik, Kullaviks Centrum, Gothenburg|57.70887|11.97456
+Hemköp Kortedala Torg, Kortedala Torg 9, Gothenburg|57.752373|12.031739
+Hemköp Kinna, Stationsgatan 1, Gothenburg|57.70887|11.97456
+Hemköp Högsbohöjd, Fyrktorget 1, Gothenburg|57.673002|11.912783
+Hemköp Grästorp, Södergatan 27, Gothenburg|57.70887|11.97456
+Hemköp Frölunda Torg, Frölunda Torg, Gothenburg|57.651642|11.910496
+Hemköp Ellös, Rosenlundsvägen 51, Gothenburg|57.70887|11.97456
+Hemköp, Dr Fries Torg, Gothenburg|57.683655|11.971614
+Hemköp Bolle, Stationsvägen 7, Gothenburg|57.70887|11.97456
+Hemköp Billdal, Kungsporten 6 B, Gothenburg|57.70887|11.97456
+Hedes Gatukök, Gothenburg|57.70887|11.97456
+Hängmattans Tur &amp; Konfektyr , Karl Johansgatan 38 B, Gothenburg|57.696924|11.926964
+Handlar´n Eklanda, Eklanda Gård 2, Gothenburg|57.70887|11.97456
+Hammarkullens Spårvagnshållplats,, Gothenburg|57.70887|11.97456
+Hallandstrafikens Kundservice, Varbergs järnvägsstation, Gothenburg|57.70887|11.97456
+Gule Knut, Kungsportsplatsen 1, Gothenburg|57.703905|11.969354
+Grundsunds Handel, Löndalsvägen 45, Gothenburg|57.70887|11.97456
+Gösta M Hansson, Sillgatan 2, Gothenburg|57.70887|11.97456
+Godis Riket, Opaltorget 79, Gothenburg|57.641259|11.901118
+Gillbergs, Sundsgatan 14, Gothenburg|57.70887|11.97456
+Gatuköket Lilla Varholmen, Vedskärsvägen 21, Gothenburg|57.70887|11.97456
+Gårdstens Servicebutik, Muskotgatan 5, Gothenburg|57.803745|12.031701
+Galinas Spelombud, Vårväderstorget 6, Gothenburg|57.70887|11.97456
+Furulunds Kiosk, Furulunds Centrum, Gothenburg|57.70887|11.97456
+Framsidan i Fritsla, Gärdebovägen 3, Fritsla, Gothenburg|57.70887|11.97456
+Fjällgatans Livs, Fjällgatan 26, Gothenburg|57.695831|11.942793
+Farahs Tips och Tobak, Jungfruplatsen 1, Gothenburg|57.70887|11.97456
+Entrébutiken, Kungsgatan 30, Gothenburg|57.703794|11.961974
+Ensi Spelbutik, Daggdroppegatan 2, Gothenburg|57.733944|11.894343
+Duetten Kiosk, Gustav Larssons väg, PV-Porten, Göteborg, Gothenburg|57.70887|11.97456
+Donia Tobak, Stabbetorget 6, Gothenburg|57.70887|11.97456
+Dockside Kiosk, Volvo Arendal, Gothenburg|57.698086|11.828306
+Direkten Hasselboden, Hasselbackevägen 17, Gothenburg|57.70887|11.97456
+Direkten, Almåsgången 2, Lindome, Gothenburg|57.70887|11.97456
+Coop Konsum Surte, Göteborgsvägen 68, Gothenburg|57.826178|12.014986
+Coop Konsum Styrsö, Halsviksvägen 6, Gothenburg|57.61571|11.781411
+Coop Konsum, Strandgatan 77, Gothenburg|57.70887|11.97456
+Coop Konsum, Storgatan 9, Gothenburg|57.69916|11.964574
+Coop Konsum, Storgatan 28, Dalsjöfors, Gothenburg|57.70887|11.97456
+Coop Konsum Skogslyckan, Sunnanvindsvägen 10, Gothenburg|57.70887|11.97456
+Coop Konsum Sjuntorp, Trollhättevägen 52, Gothenburg|57.70887|11.97456
+Coop Konsum, Oslovägen 1, Gothenburg|57.70887|11.97456
+Coop Konsum, Örbyvägen 1, Skene, Gothenburg|57.70887|11.97456
+Coop Konsum, Nedre Långgatan 4, Gothenburg|57.671786|11.995309
+Coop Konsum Mustadsfors, Dals Långed, Gothenburg|57.70887|11.97456
+Coop Konsum Munkebäck, Munkebäckstorg 1, Gothenburg|57.719244|12.025718
+Coop Konsum Mölnlycke, Råda Torg 3, Gothenburg|57.70887|11.97456
+Coop Konsum Lundby, Wieselgrensplatsen 8, Gothenburg|57.721191|11.934958
+Coop Konsum Lindome, G:a Riksvägen 202, Gothenburg|57.70887|11.97456
+Coop Konsum Landala, Kapellplatsen 4, Gothenburg|57.693274|11.970974
+Coop Konsum, Karl Johans väg 10, Frillesås, Gothenburg|57.70887|11.97456
+Coop Konsum Käringberget, Långedragsvägen 134, Gothenburg|57.670743|11.871858
+Coop Konsum, Hunnebostrand, Gothenburg|57.70887|11.97456
+Coop Konsum Gamlestaden, Treriksgatan 2, Gothenburg|57.730128|12.014402
+Coop Konsum, Friggagatan 10A, Gothenburg|57.710802|11.986771
+Coop Konsum Fjällbacka, Jasminvägen 2, Gothenburg|57.70887|11.97456
+Coop Konsum, Delesgatan 7, Ed, Gothenburg|57.70887|11.97456
+Coop Konsum Brastad, Lysekilsvägen 3, Gothenburg|57.70887|11.97456
+Coop Konsum Avenyn, Kungsportsavenyn 26-28, Gothenburg|57.699606|11.976516
+Coop Forum Trollhättan, Överby Köpcentrum, Gothenburg|57.70887|11.97456
+Coop Forum Sisjön, Hantverksvägen 2, Gothenburg|57.70887|11.97456
+Coop Forum, Nolhagavägen 1, Gothenburg|57.70887|11.97456
+Coop Forum Kållered, Ekenleden 4, Gothenburg|57.70887|11.97456
+Coop Forum, Enedalsgatan 10, Gothenburg|57.70887|11.97456
+Coop Forum Bäckebol, Transportgatan, Gothenburg|57.77091|11.997219
+Coop Extra Stenungsund, Stenungs Torg, Gothenburg|57.70887|11.97456
+Coop Extra Lysekil, Ekgatan 1, Gothenburg|57.70887|11.97456
+Coop Extra Eriksberg köpcentrum, Kolhamnsgatan 7, Gothenburg|57.708761|11.919683
+Coop Extra, Brehogsvägen 5 Tanum Shoppingcenter., Gothenburg|57.70887|11.97456
+CityGross, Torsbyvägen 12 Ytterby, Gothenburg|57.70887|11.97456
+City Gross Borås, Göteborgsvägen 181, Gothenburg|57.676475|12.006433
+Chalmers Kiosken K.W.A, Chalmers Tvärgata 8-10, Gothenburg|57.689308|11.975978
+Brunnsbo Spel och Tobak, Brunnsbotorget 3, Gothenburg|57.72838|11.970527
+Brännö Handel, Hus 225, Gothenburg|57.70887|11.97456
+Bö Servicebutik, Bögatan 47, Gothenburg|57.701347|12.015279
+BK:s Gotte Tips, Rymdtorget 9, Gothenburg|57.756584|12.071901
+Bjurslätts Spel och Tobak, Bjurslätts Torg 1, Gothenburg|57.70887|11.97456
+Bilisten, Göteborgsvägen 1, Brålanda, Gothenburg|57.70887|11.97456
+Be Happy Kiosk, Åvägen 2, Gothenburg|57.706676|11.990652
+Älvängens Spel och Biljetter, Göteborgsvägen 78, Gothenburg|57.672284|12.010055
+Alice`s kiosk, Hamngatan 17, Gothenburg|57.70887|11.97456
+Ahlséns Tobak AB, Solkattens köpcentrum, Gothenburg|57.70887|11.97456
+7-Eleven, Västra Hamngatan 23, Gothenburg|57.702884|11.964138
+7-Eleven, Vasagatan 5, Gothenburg|57.697852|11.96381
+7-Eleven, Vasagatan 36, Gothenburg|57.698792|11.969241
+7-Eleven, Ullevigatan 17-19, Gothenburg|57.706715|11.983792
+7-Eleven, Slottskogsgatan 46, Gothenburg|57.687376|11.921696
+7-Eleven, Postgatan 26-32, Gothenburg|57.708605|11.970473
+7-Eleven, Övre Husargatan 13, Gothenburg|57.693939|11.95685
+7-Eleven, Nils Ericsonplatsen 2-8, Gothenburg|57.708732|11.97237
+7-Eleven, Linnégatan 26, Gothenburg|57.697324|11.951274
+7-Eleven, Linnégatan 1, Gothenburg|57.699229|11.95185
+7-Eleven, Kungsportsavenyn 34, Gothenburg|57.699064|11.977342
+7-Eleven, Kungsportsavenyn 14, Gothenburg|57.701036|11.974516
+7-Eleven, Kungsgatan 20, Gothenburg|57.703588|11.960868
+7-Eleven, Frölunda Torg, Gothenburg|57.651757|11.912231
+7-Eleven, Berzeliigatan 19|57.699077|11.983985
