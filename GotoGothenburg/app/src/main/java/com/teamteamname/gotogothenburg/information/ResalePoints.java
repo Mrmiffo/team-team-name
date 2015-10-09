@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.teamteamname.gotogothenburg.activity.MainActivity;
+import com.teamteamname.gotogothenburg.map.MapFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.Scanner;
 public class ResalePoints {
 
     private ArrayList<MarkerOptions> markers = new ArrayList<>();
+    Context context;
 
     /**
      * Loads resale points from resale_points.txt and stores them as MarkerOptions
@@ -27,6 +30,7 @@ public class ResalePoints {
      * @param context Context for loading the text file
      */
     public ResalePoints(Context context) {
+        this.context = context;
         AssetManager assetManager = context.getAssets();
         try {
 
@@ -42,8 +46,15 @@ public class ResalePoints {
             Log.e(e.toString(),e.getMessage());
         }
 
-
-
+        drawResalePoints();
     }
+
+    private void drawResalePoints(){
+        ((MainActivity) context).changeTab(1);
+        for (MarkerOptions marker : markers) {
+            ((MapFragment)((MainActivity)context).getCurrentTab()).placeMarker(marker);
+        }
+    }
+
 
 }

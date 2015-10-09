@@ -33,7 +33,6 @@ public class InfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ResalePoints r = new ResalePoints(getActivity());
-                //((MainActivity) getActivity()).changeTab(1);
             }
         });
         return view;

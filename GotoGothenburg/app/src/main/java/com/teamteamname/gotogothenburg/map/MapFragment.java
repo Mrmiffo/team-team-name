@@ -64,6 +64,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     public void onMapReady(GoogleMap googleMap) {
         LocationServicesAPI.getInstance().removeLocationUpdateListener(this);
         map = googleMap;
+        map.getUiSettings().setMapToolbarEnabled(false);
         map.setMyLocationEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
@@ -85,6 +86,16 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
     private void zoomToLocation(Location location, float zoom){
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoom));
+    }
+
+    /**
+     * Adds the MarkerOptions Marker to the map and returns the referene to the added object
+     *
+     * @param marker Marker to add
+     * @return Reference to created marker
+     */
+    public Marker placeMarker(MarkerOptions marker){
+        return map.addMarker(marker);
     }
 
     // Place marker on devices' current position
