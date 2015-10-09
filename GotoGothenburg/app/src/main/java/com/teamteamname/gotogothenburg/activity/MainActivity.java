@@ -1,5 +1,6 @@
 package com.teamteamname.gotogothenburg.activity;
 
+import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 
 public class MainActivity extends FragmentActivity{
 
+    private ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,7 @@ public class MainActivity extends FragmentActivity{
         // Initialize the ViewPager and set an adapter
         ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
         pager.setAdapter(new FragmentAdapter(getFragmentManager()));
+        this.viewPager = pager;
 
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip pager_title_strip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -56,9 +60,7 @@ public class MainActivity extends FragmentActivity{
 
         // Adding listeners to searchbar
         SearchView searchBar = (SearchView)findViewById(R.id.searchBar);
-        AutocompleteListener listener = new AutocompleteListener(this, searchBar);
-        searchBar.setOnQueryTextListener(listener);
-        searchBar.setOnSuggestionListener(listener);
+        searchBar.setOnQueryTextListener(new SearchbarListener(this, searchBar));
         SearchManager manager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
         searchBar.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
     }
@@ -90,5 +92,20 @@ public class MainActivity extends FragmentActivity{
         if (requestCode == LocationServicesAPI.REQUEST_RESOLVE_ERROR) {
             LocationServicesAPI.getInstance().resolutionResult(resultCode, data);
         }
+    }
+
+    /**
+     * Sets the current tab to the one with the given index
+     * @param index the index of the tab
+     */
+    public void changeTab(int index){
+        viewPager.setCurrentItem(index, true);
+    }
+
+    /**
+     * @return The currently active tab
+     */
+    public Fragment getCurrentTab(){
+        return ((FragmentAdapter)viewPager.getAdapter()).getRegisteredFragment(viewPager.getCurrentItem());
     }
 }

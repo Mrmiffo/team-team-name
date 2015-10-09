@@ -1,5 +1,7 @@
 package com.teamteamname.gotogothenburg.api;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 /**
@@ -11,7 +13,13 @@ public interface VasttrafikHandler {
      * Called with the list of autocomplete suggestions which are to be displayed
      * @param autocomplete  The list of suggestions
      */
-    void vasttrafikRequestDone(List<String> autocomplete);
+    public void vasttrafikRequestDone(VasttrafikLocation... autocomplete);
+
+    /**
+     * Called with the list of coords for a route
+     * @param polyline The list of coords
+     */
+    public void vasttrafikRequestDone(int r, int g, int b, LatLng... polyline);
 
     /**
      * Called if any unsuspected error occurs

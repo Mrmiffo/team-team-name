@@ -62,14 +62,35 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         return instance;
     }
 
-    @Override
-    public void getCoordinates(VasttrafikHandler callback, LatLng origin, LatLng dest) {
-
+    /**
+     * Setups the first part of the url which is always needed
+     * @param service the service which is to be called
+     * @return a stringbuilder containing the base of the url
+     */
+    private StringBuilder setupRequest(String service){
+        StringBuilder sb = new StringBuilder();
+        sb.append(baseURL);
+        sb.append(service + "?");
+        sb.append("authKey=" + apiKey + "&");
+        sb.append(format + "&");
+        return sb;
     }
 
     @Override
-    public void getCoordinates(VasttrafikHandler callback, String originStop, String destStop) {
+    public void getCoordinates(VasttrafikHandler callback, VasttrafikLocation originLocation, VasttrafikLocation destLocation) {
+        StringBuilder sb = setupRequest(trip);
+        sb.append("needGeo=1&");
+        sb.append("originCoordLat=" + originLocation.getLatlng().latitude + "&");
+        sb.append("originCoordLong=" + originLocation.getLatlng().longitude + "&");
+        sb.append("originCoordName=" + sanitize(originLocation.getName()) + "&");
+        sb.append("destCoordLat=" + destLocation.getLatlng().latitude + "&");
+        sb.append("destCoordLong=" + destLocation.getLatlng().longitude + "&");
+        sb.append("destCoordName=" + sanitize(destLocation.getName()));
+        String uri = sb.toString();
 
+        TripParser parser = new TripParser(callback);
+        JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
+        queue.add(request);
     }
 
     @Override
@@ -77,11 +98,7 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
         String sanitizedInput = sanitize(input);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(baseURL);
-        sb.append(autocomplete + "?");
-        sb.append("authKey=" + apiKey + "&");
-        sb.append(format + "&");
+        StringBuilder sb = setupRequest(autocomplete);
         sb.append("input=" + sanitizedInput);
         String uri = sb.toString();
 
@@ -95,19 +112,80 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
     }
 
+    /**
+     * replaces any occurences of "ö", "å", "ä" with "o" respectively "a"
+     * removes any none word characters
+     * @param input the string which is to be sanitized
+     * @return the sanitized string
+     */
     private String sanitize(String input){
         input = input.replace('ö', 'o');
         input = input.replace('å', 'a');
         input = input.replace('ä', 'a');
-        input = input.replace('%', '\0');
+        input = input.replaceAll("\\W", "");
         return input;
     }
 
-    private class AutocompleteParser implements Response.Listener<JSONObject>, Response.ErrorListener{
+    /**
+     * Parses the answer from Vasttrafik's Geometry API and calls the callback with a list of coordinates
+     */
+    private class GeoParser implements Response.Listener<JSONObject>, Response.ErrorListener{
+
+        private VasttrafikHandler callback;
+        private int r, g, b;
+
+        public GeoParser(VasttrafikHandler callback, int r, int g, int b){
+            this.callback = callback;
+            this.r = r;
+            this.g = g;
+            this.b = b;
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            callback.vasttrafikRequestError(error.toString());
+        }
+
+        @Override
+        public void onResponse(JSONObject response) {
+            JSONObject geometry;
+            JSONObject points;
+            JSONObject temp;
+            JSONArray point;
+
+            try{
+                if(response.has("Geometry")){
+                    geometry = (JSONObject)response.get("Geometry");
+                    if(geometry.has("Points")){
+                        points = (JSONObject)geometry.get("Points");
+                        if(points.has("Point")){
+                            point = (JSONArray)points.get("Point");
+                            List<LatLng> polyline = new ArrayList<LatLng>();
+                            for(int i = 0; i < point.length(); i++){
+                                temp = (JSONObject)point.get(i);
+                                Double lat = Double.parseDouble((String)temp.get("lat"));
+                                Double lng = Double.parseDouble((String)temp.get("lon"));
+                                LatLng latlng = new LatLng(lat, lng);
+                                polyline.add(latlng);
+                            }
+                            callback.vasttrafikRequestDone(r, g, b, polyline.toArray(new LatLng[polyline.size()]));
+                        }
+                    }
+                }
+            } catch (JSONException e){
+                Log.e("JSONException", e.toString());
+            }
+        }
+    }
+
+    /**
+     * Parses the answer from Vasttrafik's trip API and creates a new request with the geometry ref
+     */
+    private class TripParser implements Response.Listener<JSONObject>, Response.ErrorListener{
 
         private VasttrafikHandler callback;
 
-        public AutocompleteParser(VasttrafikHandler callback){
+        public TripParser(VasttrafikHandler callback){
             this.callback = callback;
         }
 
@@ -118,38 +196,96 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
         @Override
         public void onResponse(JSONObject response) {
-            List<String> suggestions = new ArrayList<String>();
-            JSONObject locationList;
+            JSONObject tripList;
             JSONObject temp;
-            JSONArray stopLocation;
-            JSONArray coordLocation;
-            try{
-                if(response.has("LocationList")) {
-                    locationList = (JSONObject) response.get("LocationList");
-                    if (locationList.has("StopLocation")) {
-                        stopLocation = (JSONArray) locationList.get("StopLocation");
-                        for (int i = 0; i < 2; i++) {
-                            temp = stopLocation.getJSONObject(i);
-                            if(temp.has("name")) {
-                                suggestions.add((String) temp.get("name"));
-                            }
-                        }
-                    }
-
-                    if (locationList.has("CoordLocation")) {
-                        coordLocation = (JSONArray) locationList.get("CoordLocation");
-                        for (int i = 0; i < 2; i++) {
-                            temp = coordLocation.getJSONObject(i);
-                            if(temp.has("name")) {
-                                suggestions.add((String) temp.get("name"));
+            JSONArray trip;
+            JSONArray leg;
+            try {
+                if(response.has("TripList")) {
+                    tripList = (JSONObject) response.get("TripList");
+                    if(tripList.has("Trip")){
+                        trip = (JSONArray) tripList.get("Trip");
+                        if(((JSONObject)trip.get(0)).has("Leg")){
+                            leg = (JSONArray) ((JSONObject) trip.get(0)).get("Leg");
+                            for(int i = 0; i < leg.length(); i++) {
+                                int r = 0, g = 0, b = 0;
+                                if(((JSONObject) leg.get(i)).has("type")){
+                                    if(((JSONObject) leg.get(i)).get("type").equals("WALK")){
+                                        r = 0;
+                                        g = 0;
+                                        b = 255;
+                                    } else if(((JSONObject) leg.get(i)).get("type").equals("BUS")){
+                                        r = 0;
+                                        g = 255;
+                                        b = 0;
+                                    }
+                                }
+                                if (((JSONObject) leg.get(i)).has("GeometryRef")) {
+                                    temp = (JSONObject) ((JSONObject) leg.get(i)).get("GeometryRef");
+                                    String uri = (String) temp.get("ref");
+                                    GeoParser parser = new GeoParser(callback, r, g, b);
+                                    JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
+                                    queue.add(request);
+                                }
                             }
                         }
                     }
                 }
+            } catch (JSONException e) {
+                Log.e("JSONException", e.toString());
+            }
+        }
+    }
+
+    /**
+     * Parses the answer from Vasttrafik's Location.name API and calls the callback with a list of strings
+     */
+    private class AutocompleteParser implements Response.Listener<JSONObject>, Response.ErrorListener{
+
+        private VasttrafikHandler callback;
+        private List<VasttrafikLocation> locations;
+
+        public AutocompleteParser(VasttrafikHandler callback){
+            this.callback = callback;
+            this.locations = new ArrayList<VasttrafikLocation>();
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            callback.vasttrafikRequestError(error.toString());
+        }
+
+        @Override
+        public void onResponse(JSONObject response) {
+            JSONObject locationList;
+            try{
+                if(response.has("LocationList")) {
+                    locationList = (JSONObject) response.get("LocationList");
+                    addLocations(locationList, "CoordLocation");
+                    addLocations(locationList, "StopLocation");
+                }
             } catch (JSONException e){
                 Log.e("JSONException", e.toString());
             }
-            callback.vasttrafikRequestDone(suggestions);
+            callback.vasttrafikRequestDone(locations.toArray(new VasttrafikLocation[locations.size()]));
+        }
+
+        private void addLocations(JSONObject locationList, String has) throws JSONException {
+            JSONArray locations;
+            JSONObject temp;
+            if (locationList.has(has)) {
+                locations = (JSONArray) locationList.get(has);
+                for (int i = 0; i < 2; i++) {
+                    temp = locations.getJSONObject(i);
+                    if(temp.has("name") && temp.has("lon") && temp.has("lat")) {
+                        String name = (String) temp.get("name");
+                        double lat = Double.valueOf((String)temp.get("lat"));
+                        double lng = Double.valueOf((String)temp.get("lon"));
+                        VasttrafikLocation location = new VasttrafikLocation(name, lat, lng);
+                        this.locations.add(location);
+                    }
+                }
+            }
         }
     }
 }
