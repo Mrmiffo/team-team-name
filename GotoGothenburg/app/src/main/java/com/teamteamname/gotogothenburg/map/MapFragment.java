@@ -54,6 +54,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
+        view.findViewById(R.id.centerCameraButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(),15);
+            }
+        });
+
         mapView = ((MapView)view.findViewById(R.id.mapView));
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -104,7 +111,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         LocationServicesAPI.getInstance().registerLocationUpdateListener(this);
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
-        map.setMyLocationEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
     }
