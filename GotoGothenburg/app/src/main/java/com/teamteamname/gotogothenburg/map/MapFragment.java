@@ -1,5 +1,6 @@
 package com.teamteamname.gotogothenburg.map;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -15,6 +16,8 @@ import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ISoundDoneCallback;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.guide.Guide;
+import com.google.android.gms.maps.model.PolylineOptions;
+import java.util.List;
 
 
 /**
@@ -143,5 +146,15 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     @Override
     public void soundFinishedPlaying() {
         identifyBus();
+    }
+
+    public void drawPolyLine(int r, int g, int b, LatLng... coords){
+        PolylineOptions polyline = new PolylineOptions();
+        polyline.color(Color.argb(255, r, g, b));
+        for(LatLng latlng : coords){
+            polyline.add(latlng);
+        }
+        map.addPolyline(polyline);
+        polyline.visible(true);
     }
 }
