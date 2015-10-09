@@ -1,5 +1,7 @@
 package com.teamteamname.gotogothenburg.guide;
 
+import android.util.Log;
+
 import com.teamteamname.gotogothenburg.PointOfInterest;
 import com.teamteamname.gotogothenburg.Stops;
 import com.teamteamname.gotogothenburg.api.ElectricityAPI;
@@ -9,6 +11,8 @@ import com.teamteamname.gotogothenburg.map.Bus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A class representing a guided tour.
@@ -30,6 +34,14 @@ public class Guide implements ElectricityNextStopHandler{
         this.bus = bus;
         visitedPOIs = new ArrayList<>();
         poiQueue = new ArrayList<>();
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                checkNextStop();
+            }
+        },0, 5000);
     }
 
     /**
@@ -52,12 +64,11 @@ public class Guide implements ElectricityNextStopHandler{
     }
 
     /**
-     * Used to access the next Point of Interest.
+     * Iterates over Point of Intresets along the tour and returns the next Point of Interest.
      * @return the next Point of Interest associated with the current stop. Null if no such exists.
      */
     public PointOfInterest getNextPOI() {
-        checkNextStop();
-        if (poiQueue.size() > 1) {
+        if (poiQueue.size() > 0) {
             final PointOfInterest next = poiQueue.get(0);
             if (!visitedPOIs.contains(next)) {
                 visitedPOIs.add(next);
