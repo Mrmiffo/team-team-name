@@ -28,14 +28,7 @@ public class InfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_info, container, false);
-        view.findViewById(R.id.display_resale_points).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ResalePoints r = new ResalePoints(getActivity());
-            }
-        });
-        return view;
+        return inflater.inflate(R.layout.fragment_info, container, false);
     }
 
 

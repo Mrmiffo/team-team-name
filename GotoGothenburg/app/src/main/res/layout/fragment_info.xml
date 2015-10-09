@@ -2,13 +2,4 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.teamteamname.gotogothenburg.information.InfoFragment">
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Display resale points"
-        android:id="@+id/display_resale_points"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="40dp"/>
 </FrameLayout>
