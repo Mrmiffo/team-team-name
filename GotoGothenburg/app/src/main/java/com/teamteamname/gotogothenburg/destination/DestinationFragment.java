@@ -77,7 +77,7 @@ public class DestinationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO implement on click action, such as generate a guide or give directions.
-                
+
                 //TODO Remove test code.
                 //--TEST CODE--
                 Destination dest = (Destination) parent.getItemAtPosition(position);
