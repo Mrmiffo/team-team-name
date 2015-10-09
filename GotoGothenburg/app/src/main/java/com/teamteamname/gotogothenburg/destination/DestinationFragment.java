@@ -65,6 +65,8 @@ public class DestinationFragment extends Fragment {
         AsyncTask loadDest = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] params) {
+                //Initialize the SavedDestinations with destinations from the database. (This must run in background)
+                SavedDestinations.getInstance().loadDestinations(saver.loadAll());
                 return null;
             }
         };
