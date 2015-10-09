@@ -38,6 +38,11 @@ public class Destination implements Serializable{
         visited = false;
     }
 
+    public Destination(String name, double latitude, double longitude, boolean visited){
+        this(name,latitude,longitude);
+        this.visited = visited;
+    }
+
     @Override
     public String toString(){
         return getName() + "At: " + latitude + ", " + longitude + "Visited: " + visited + "Created: " + dateCreated;
