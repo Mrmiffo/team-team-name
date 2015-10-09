@@ -2,6 +2,7 @@ package com.teamteamname.gotogothenburg.destination;
 
 import android.app.Fragment;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
@@ -53,16 +54,36 @@ public class DestinationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        final View toReturn = inflater.inflate(R.layout.fragment_destination, container, false);
+        //Load the destinations view xml
         destinationListView = (ListView) toReturn.findViewById(R.id.destinationListView);
-        adapter = new DestinationListAdapter(savedDestinations, getActivity());
+        //Fill the saved destinations object with data from the database.
+        //Create a saver for the SavedDestinations
+        final DestinationSaver saver = new DestinationSaver(getActivity());
+        SavedDestinations.init(saver);
+        adapter = new DestinationListAdapter(getActivity());
+        AsyncTask loadDest = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                return null;
+            }
+        };
+        loadDest.execute();
+
         destinationListView.setAdapter(adapter);
         destinationListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO implement on click action, such as generate a guide or give directions.
+                Destination dest = (Destination) parent.getItemAtPosition(position);
+                Log.e("Name", dest.getName());
+                Log.e("Lat", String.valueOf(dest.getLatitude()));
+                Log.e("Long", String.valueOf(dest.getLongitude()));
+                Log.e("Visited", String.valueOf(dest.isVisited()));
+
             }
         });
+
 
         toReturn.findViewById(R.id.newDestinationButton).setOnClickListener(createDestinationListener);
 

@@ -8,12 +8,14 @@ import java.util.List;
  * serializable in order to save all the destinations into.
  * Created by Anton on 2015-09-30.
  */
-public class SavedDestinations {
+class SavedDestinations {
     private List<Destination> savedDestinations;
+    private IDestinationSaver saver;
     private List<ISavedDestinationListener> listeners;
     private static SavedDestinations instance;
 
-    public SavedDestinations(){
+    private SavedDestinations(IDestinationSaver saver){
+        this.saver = saver;
         savedDestinations = new ArrayList<>();
         listeners = new ArrayList<>();
     }
@@ -21,6 +23,20 @@ public class SavedDestinations {
     static SavedDestinations getInstance(){
         return instance;
     }
+
+    public static synchronized void init(IDestinationSaver saver){
+        if (instance == null){
+            instance = new SavedDestinations(saver);
+
+        }
+    }
+
+    public void loadDestinations(List<Destination> destinationsToLoad){
+        if (destinationsToLoad != null && instance != null){
+            savedDestinations = new ArrayList<>();
+            savedDestinations.addAll(destinationsToLoad);
+            notifyListeners();
+        }
     }
 
     public List<Destination> getSavedDestinations(){
@@ -31,6 +47,7 @@ public class SavedDestinations {
 
     public void addDestination(Destination toAdd){
         savedDestinations.add(toAdd);
+        saver.save(toAdd);
         sort();
         notifyListeners();
     }
@@ -38,6 +55,7 @@ public class SavedDestinations {
     public void removeDestination(Destination toRemove) {
         if (savedDestinations.contains(toRemove)) {
             savedDestinations.remove(toRemove);
+            saver.removeDestination(toRemove);
         }
         notifyListeners();
     }
