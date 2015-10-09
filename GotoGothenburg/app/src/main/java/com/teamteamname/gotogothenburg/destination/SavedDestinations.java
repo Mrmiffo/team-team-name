@@ -10,9 +10,11 @@ import java.util.List;
  */
 public class SavedDestinations {
     private List<Destination> savedDestinations;
+    private List<ISavedDestinationListener> listeners;
 
     public SavedDestinations(){
         savedDestinations = new ArrayList<>();
+        listeners = new ArrayList<>();
     }
 
     public SavedDestinations(List<Destination> savedDestinations){
@@ -30,12 +32,14 @@ public class SavedDestinations {
     public void addDestination(Destination toAdd){
         savedDestinations.add(toAdd);
         sort();
+        notifyListeners();
     }
 
     public void removeDestination(Destination toRemove) {
         if (savedDestinations.contains(toRemove)) {
             savedDestinations.remove(toRemove);
         }
+        notifyListeners();
     }
 
     public List<Destination> getVisited(boolean isVisited){
@@ -53,5 +57,23 @@ public class SavedDestinations {
         newSorting.addAll(getVisited(false));
         newSorting.addAll(getVisited(true));
         savedDestinations = newSorting;
+        notifyListeners();
+    }
+
+    private void notifyListeners(){
+        for (ISavedDestinationListener listener: listeners){
+            listener.update();
+        }
+    }
+
+    public void registerListener(ISavedDestinationListener listener){
+        listeners.add(listener);
+    }
+
+    public void removeListener(ISavedDestinationListener listener){
+        if (listeners.contains(listener)){
+            listeners.add(listener);
+        }
+
     }
 }

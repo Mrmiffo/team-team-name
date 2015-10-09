@@ -19,16 +19,17 @@ import java.util.List;
  *
  * Created by Anton on 2015-09-30.
  */
-public class DestinationListAdapter extends BaseAdapter {
+public class DestinationListAdapter extends BaseAdapter implements ISavedDestinationListener{
 
     private SavedDestinations savedDestinations;
     private List<Destination> destinations;
     private Activity activity;
 
-    public DestinationListAdapter(SavedDestinations savedDestinations, Activity activity){
-        this.savedDestinations = savedDestinations;
+    public DestinationListAdapter(Activity activity){
+        this.savedDestinations = SavedDestinations.getInstance();
         this.activity = activity;
         destinations = savedDestinations.getSavedDestinations();
+        savedDestinations.registerListener(this);
     }
     @Override
     public int getCount() {
@@ -71,5 +72,10 @@ public class DestinationListAdapter extends BaseAdapter {
         //TODO make second line display time to destination.
         secondLine.setText("Insert time to destination here!");
         return convertView;
+    }
+
+    @Override
+    public void update() {
+        notifyDataSetChanged();
     }
 }
