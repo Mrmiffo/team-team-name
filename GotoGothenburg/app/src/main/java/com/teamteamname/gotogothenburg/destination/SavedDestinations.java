@@ -11,16 +11,16 @@ import java.util.List;
 public class SavedDestinations {
     private List<Destination> savedDestinations;
     private List<ISavedDestinationListener> listeners;
+    private static SavedDestinations instance;
 
     public SavedDestinations(){
         savedDestinations = new ArrayList<>();
         listeners = new ArrayList<>();
     }
 
-    public SavedDestinations(List<Destination> savedDestinations){
-        this.savedDestinations = new ArrayList<>();
-        this.savedDestinations.addAll(savedDestinations);
-        sort();
+    static SavedDestinations getInstance(){
+        return instance;
+    }
     }
 
     public List<Destination> getSavedDestinations(){
