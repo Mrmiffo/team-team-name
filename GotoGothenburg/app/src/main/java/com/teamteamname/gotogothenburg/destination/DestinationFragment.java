@@ -92,10 +92,6 @@ public class DestinationFragment extends Fragment {
         return toReturn;
     }
 
-    public void displayDestination(Destination destToDisplay){
-    }
-
-
     /*
     Listener which displays the CreateNewDestinationFragment but disallows double clicks
      */
