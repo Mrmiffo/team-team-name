@@ -72,16 +72,6 @@ public class DestinationFragment extends Fragment {
     public void displayDestination(Destination destToDisplay){
     }
 
-    /**
-     * Creates a new Destination, adds it to the internal list and displays it.
-     *
-     * @param destinationName The name of the Destination
-     * @param destinationPos The position of the Destination
-     */
-    public void addDestination(String destinationName, LatLng destinationPos){
-        savedDestinations.addDestination(new Destination(destinationName,destinationPos.latitude,destinationPos.longitude));
-        adapter.notifyDataSetChanged();
-    }
 
     /*
     Listener which displays the CreateNewDestinationFragment but disallows double clicks
@@ -91,7 +81,7 @@ public class DestinationFragment extends Fragment {
         @Override
         public void onClick(View v) {
             if (time + 500 < System.currentTimeMillis()) {
-                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_out_down).add(android.R.id.content, CreateNewDestinationFragment.newInstance(DestinationFragment.this)).commit();
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_out_down).add(android.R.id.content, CreateNewDestinationFragment.newInstance()).commit();
                 time = System.currentTimeMillis();
             }
         }

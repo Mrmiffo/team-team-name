@@ -53,24 +53,22 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
     /*
     Callback for creating the new Destination
      */
-    private DestinationFragment destinationFragment;
     private GoogleApiClient locationsAPI;
     private AutoCompleteAdapter adapter;
     private TextView destinationDetails;
     private TextView destinationAttribution;
     private String selectedPlaceName;
     private LatLng selectedPlacePos;
+    private SavedDestinations savedDestinations;
 
     /**
      * Creates a new instance of CreateNewDestinationFragment unless an existing Fragment already exists
      *
-     * @param destinationFragment Callback for when new Destination is created
      * @return The created CreateNewDestinationFragment
      */
-    public static CreateNewDestinationFragment newInstance(DestinationFragment destinationFragment) {
-
+    public static CreateNewDestinationFragment newInstance() {
         CreateNewDestinationFragment instance = new CreateNewDestinationFragment();
-        instance.destinationFragment = destinationFragment;
+        instance.savedDestinations = SavedDestinations.getInstance();
         return instance;
     }
 
@@ -129,7 +127,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
     private View.OnClickListener createDestinationClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            destinationFragment.addDestination(selectedPlaceName, selectedPlacePos);
+            savedDestinations.addDestination(new Destination(selectedPlaceName, selectedPlacePos.latitude, selectedPlacePos.longitude));
             getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down).remove(CreateNewDestinationFragment.this).commit();
         }
     };
