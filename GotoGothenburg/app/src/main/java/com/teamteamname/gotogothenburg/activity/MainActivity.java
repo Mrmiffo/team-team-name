@@ -19,6 +19,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
+import com.teamteamname.gotogothenburg.api.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.map.Bus;
@@ -48,6 +49,7 @@ public class MainActivity extends FragmentActivity{
         Network network = new BasicNetwork(new HurlStack());
         RequestQueue queue = new RequestQueue(cache,network);
         VasttrafikAPI.init(this, queue);
+        ElectricityAPI.init(this, queue);
         queue.start();
         ElectriCityWiFiSystemIDAPI.initialize();
         OnWhichBusIdentifier.initialize();
