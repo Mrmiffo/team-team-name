@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.mock.MockElectricityHandler;
 import com.teamteamname.gotogothenburg.api.mock.MockRequestQueue;
 import com.teamteamname.gotogothenburg.map.Bus;
@@ -63,7 +64,7 @@ public class ElectricityAPITest extends AndroidTestCase {
 
         assertTrue(mQueue.getMethod() == 0);
         assertTrue(createdURI.equals(mockURI));
-        assertTrue(mQueue.getHeader().get("Authorization").equals("Basic Z3JwMjc6QkNjUmwtOFVsSQ=="));
+        assertTrue(mQueue.getHeader().get("Authorization").equals("Basic " + this.getContext().getResources().getString(R.string.electricity_api_key)));
 
     }
 
