@@ -14,21 +14,23 @@ import java.util.List;
 
 /**
  * Adapter for populating a listview.
- * Uses a SavedDestinations object for its underlying data. This means that it needs to query the
- * object when the data set has changed.
+ * Uses the SavedDestinations object for its underlying data. This means that it needs to query the
+ * object when the data set has changed. This is done by registering itself to savedDestinations
+ * as a listener.
  *
  * Created by Anton on 2015-09-30.
  */
-public class DestinationListAdapter extends BaseAdapter {
+public class DestinationListAdapter extends BaseAdapter implements ISavedDestinationListener{
 
     private SavedDestinations savedDestinations;
     private List<Destination> destinations;
     private Activity activity;
 
-    public DestinationListAdapter(SavedDestinations savedDestinations, Activity activity){
-        this.savedDestinations = savedDestinations;
+    public DestinationListAdapter(Activity activity){
+        this.savedDestinations = SavedDestinations.getInstance();
         this.activity = activity;
         destinations = savedDestinations.getSavedDestinations();
+        savedDestinations.registerListener(this);
     }
     @Override
     public int getCount() {
@@ -63,6 +65,7 @@ public class DestinationListAdapter extends BaseAdapter {
         firstLine = (TextView) convertView.findViewById(R.id.firstLine);
         secondLine = (TextView) convertView.findViewById(R.id.secondLine);
 
+        //Change the color of the text of a destination which is visited.
         if (destinations.get(position).isVisited()){
             firstLine.setTextColor(Color.argb(90,0,0,0));
         }
@@ -71,5 +74,11 @@ public class DestinationListAdapter extends BaseAdapter {
         //TODO make second line display time to destination.
         secondLine.setText("Insert time to destination here!");
         return convertView;
+    }
+
+    //Update method called once each time when the SavedDestinations has been modified.
+    @Override
+    public void update() {
+        notifyDataSetChanged();
     }
 }
