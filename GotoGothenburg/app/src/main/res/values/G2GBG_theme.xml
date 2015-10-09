@@ -16,6 +16,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/white</item>
+
         <item name="android:checkboxStyle">@style/checkboxStyle</item>
         <item name="android:listSeparatorTextViewStyle">@style/PreferenceListHeader</item>
         <item name="android:listViewStyle">@style/listViewStyle</item>

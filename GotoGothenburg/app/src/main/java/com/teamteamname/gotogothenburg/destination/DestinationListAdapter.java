@@ -10,33 +10,36 @@ import android.widget.TextView;
 
 import com.teamteamname.gotogothenburg.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Adapter for populating a listview.
+ * Uses the SavedDestinations object for its underlying data. This means that it needs to query the
+ * object when the data set has changed. This is done by registering itself to savedDestinations
+ * as a listener.
  *
  * Created by Anton on 2015-09-30.
  */
-public class DestinationListAdapter extends BaseAdapter{
-    final private SavedDestinations destinations;
-    final private List<Destination> currentSorting;
-    final private Activity activity;
+public class DestinationListAdapter extends BaseAdapter implements ISavedDestinationListener{
 
-    public DestinationListAdapter(SavedDestinations destinations, Activity activity){
-        this.destinations = destinations;
+    private SavedDestinations savedDestinations;
+    private List<Destination> destinations;
+    private Activity activity;
+
+    public DestinationListAdapter(Activity activity){
+        this.savedDestinations = SavedDestinations.getInstance();
         this.activity = activity;
-        currentSorting = new ArrayList<>();
-        currentSorting.addAll(destinations.getVisited(false));
-        currentSorting.addAll(destinations.getVisited(true));
+        destinations = savedDestinations.getSavedDestinations();
+        savedDestinations.registerListener(this);
     }
     @Override
     public int getCount() {
-        return currentSorting.size();
+        return destinations.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return currentSorting.get(position);
+        return destinations.get(position);
     }
 
     @Override
@@ -45,23 +48,37 @@ public class DestinationListAdapter extends BaseAdapter{
     }
 
     @Override
+    public void notifyDataSetChanged() {
+        destinations = savedDestinations.getSavedDestinations();
+        super.notifyDataSetChanged();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //Setup
-        final LayoutInflater inflater = activity.getLayoutInflater();
-        final View row = inflater.inflate(R.layout.destination_list_component, parent, false);
-        TextView firstLine;
-        TextView secondLine;
+        if (convertView == null) {
+            //Setup
+            LayoutInflater inflater = activity.getLayoutInflater();
+            convertView = inflater.inflate(R.layout.destination_list_component, parent, false);
+        }
+        TextView firstLine, secondLine;
 
-        firstLine = (TextView) row.findViewById(R.id.firstLine);
-        secondLine = (TextView) row.findViewById(R.id.secondLine);
+        firstLine = (TextView) convertView.findViewById(R.id.firstLine);
+        secondLine = (TextView) convertView.findViewById(R.id.secondLine);
 
-        if (currentSorting.get(position).isVisited()){
+        //Change the color of the text of a destination which is visited.
+        if (destinations.get(position).isVisited()){
             firstLine.setTextColor(Color.argb(90,0,0,0));
         }
 
-        firstLine.setText(currentSorting.get(position).getName());
+        firstLine.setText(destinations.get(position).getName());
         //TODO make second line display time to destination.
         secondLine.setText("Insert time to destination here!");
-        return row;
+        return convertView;
+    }
+
+    //Update method called once each time when the SavedDestinations has been modified.
+    @Override
+    public void update() {
+        notifyDataSetChanged();
     }
 }

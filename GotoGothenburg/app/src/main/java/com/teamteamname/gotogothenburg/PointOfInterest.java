@@ -12,6 +12,7 @@ public enum PointOfInterest {
     JOHANNEBERG_SCIENCE_PARK(new GPSCoord(57.684747f, 11.977967f), null, null, null),
 
     CHALMERS_CAMPUS_JOHANNEBERG(new GPSCoord(57.689167f, 11.973611f),
+
             new File(getDir() + "chalmers_campus_johanneberg_text_test.txt"),
             new File(getDir() +  "chalmers_campus_johanneberg_sound_test.mp3"),
             new File(getDir() + "chalmers_campus_johanneberg_picture_test.jpg")),
