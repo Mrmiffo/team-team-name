@@ -10,7 +10,7 @@ public interface IDestinationSaver {
      * This method will drop all previously saved destinations and replace them with the provided saved destinations.
      * @param destinationsToSave the destinations to save to the database
      */
-    void saveAll(SavedDestinations destinationsToSave);
+    void saveAll(List<Destination> destinationsToSave);
 
     /**
      * Will save the destinations to the database. Should be called everytime the Saved destinations is updated.

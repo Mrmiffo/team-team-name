@@ -15,7 +15,7 @@ import java.util.List;
  * The destination saver is a class used by the SavedDestination to register changes into a database
  * stored on the local device.
  * NOTE: ANY CHANGE TO THIS CLASS MUST UPDATE THE onUpgrade METHOD AND INCREASE THE DATABASE_VERSION
- * +1 IN ORDER TO UPDATE THE DATABASE ON THE DEVICE.
+ * +1 IN ORDER TO UPDATE THE DATABASE ON THE DEVICE
  * Created by Anton on 2015-10-06.
  */
 public class DestinationSaver implements IDestinationSaver{
@@ -62,13 +62,13 @@ public class DestinationSaver implements IDestinationSaver{
 
 
     @Override
-    public void saveAll(final SavedDestinations destinationsToSave) {
+    public void saveAll(final List<Destination> destinationsToSave) {
         AsyncTask thread = new AsyncTask<Object, Void, Void>() {
             @Override
             protected Void doInBackground(Object... params) {
                 //Drop the table to clean it from all previous destinations.
                 dropTable();
-                for (Destination dest: destinationsToSave.getSavedDestinations()) {
+                for (Destination dest: destinationsToSave) {
                     putDestination(dest);
                 }
                 return null;

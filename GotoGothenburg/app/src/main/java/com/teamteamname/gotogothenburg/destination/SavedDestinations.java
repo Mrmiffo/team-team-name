@@ -56,7 +56,7 @@ class SavedDestinations {
             savedDestinations = new ArrayList<>();
             savedDestinations.addAll(destinationsToLoad);
             notifyListeners();
-            saver.saveAll(this);
+            saver.saveAll(getSavedDestinations());
         }
     }
 
