@@ -62,6 +62,11 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         return instance;
     }
 
+    /**
+     * Setups the first part of the url which is always needed
+     * @param service the service which is to be called
+     * @return a stringbuilder containing the base of the url
+     */
     private StringBuilder setupRequest(String service){
         StringBuilder sb = new StringBuilder();
         sb.append(baseURL);
@@ -107,6 +112,12 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
     }
 
+    /**
+     * replaces any occurences of "ö", "å", "ä" with "o" respectively "a"
+     * removes any none word characters
+     * @param input the string which is to be sanitized
+     * @return the sanitized string
+     */
     private String sanitize(String input){
         input = input.replace('ö', 'o');
         input = input.replace('å', 'a');
@@ -115,6 +126,9 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         return input;
     }
 
+    /**
+     * Parses the answer from Vasttrafik's Geometry API and calls the callback with a list of coordinates
+     */
     private class GeoParser implements Response.Listener<JSONObject>, Response.ErrorListener{
 
         private VasttrafikHandler callback;
@@ -164,6 +178,9 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         }
     }
 
+    /**
+     * Parses the answer from Vasttrafik's trip API and creates a new request with the geometry ref
+     */
     private class TripParser implements Response.Listener<JSONObject>, Response.ErrorListener{
 
         private VasttrafikHandler callback;
@@ -220,6 +237,9 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         }
     }
 
+    /**
+     * Parses the answer from Vasttrafik's Location.name API and calls the callback with a list of strings
+     */
     private class AutocompleteParser implements Response.Listener<JSONObject>, Response.ErrorListener{
 
         private VasttrafikHandler callback;

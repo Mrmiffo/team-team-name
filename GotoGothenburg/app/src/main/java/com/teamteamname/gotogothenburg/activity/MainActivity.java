@@ -92,10 +92,17 @@ public class MainActivity extends FragmentActivity{
         }
     }
 
+    /**
+     * Sets the current tab to the one with the given index
+     * @param index the index of the tab
+     */
     public void changeTab(int index){
         viewPager.setCurrentItem(index, true);
     }
 
+    /**
+     * @return The currently active tab
+     */
     public Fragment getCurrentTab(){
         return ((FragmentAdapter)viewPager.getAdapter()).getRegisteredFragment(viewPager.getCurrentItem());
     }
