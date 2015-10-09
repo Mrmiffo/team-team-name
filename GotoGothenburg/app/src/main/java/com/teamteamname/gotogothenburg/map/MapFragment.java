@@ -122,7 +122,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         if(map == null) {
             return;
         }
-        markCurrentPosition(location);
+        //markCurrentPosition(location);
         if (!onLocationChangedHasRun) {
             zoomToLocation(location, 15);
             onLocationChangedHasRun = true;
@@ -142,7 +142,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public Marker placeMarker(MarkerOptions marker){
         return map.addMarker(marker);
     }
-
+/*
     // Place marker on devices' current position
     private void markCurrentPosition(Location location) {
         if(myPosition != null) {
@@ -151,7 +151,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         myPosition = map.addMarker( new MarkerOptions()
                 .position(new LatLng(location.getLatitude(), location.getLongitude()))
                 .title("I am here"));
-    }
+    }/*
 
     /**
      * Used by other classes to start a guide for the user
