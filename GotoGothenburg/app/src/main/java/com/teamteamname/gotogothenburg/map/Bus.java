@@ -53,6 +53,7 @@ public class Bus {
             addBus("Ericsson$171328", "YV3T1U223F1171328", "EOG 627", "2501069756", false);
             addBus("Ericsson$171329", "YV3T1U225F1171329", "EOG 631", "2501131250", false);
             addBus("Ericsson$171330", "YV3T1U223F1171330", "EOG 634", "2501074720", false);
+            addBus("Ericsson$Vin_Num_001", null, null, null, true); //ElectriCity's test bus
             initiated = true;
         }
     }
