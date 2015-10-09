@@ -1,5 +1,6 @@
 package com.teamteamname.gotogothenburg.map;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -147,12 +148,13 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         identifyBus();
     }
 
-    public void drawPolyLine(List<LatLng> coords){
+    public void drawPolyLine(int r, int g, int b, LatLng... coords){
         PolylineOptions polyline = new PolylineOptions();
+        polyline.color(Color.argb(255, r, g, b));
         for(LatLng latlng : coords){
             polyline.add(latlng);
         }
-        polyline.visible(true);
         map.addPolyline(polyline);
+        polyline.visible(true);
     }
 }
