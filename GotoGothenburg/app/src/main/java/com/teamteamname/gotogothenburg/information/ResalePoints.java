@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.map.MapFragment;
@@ -21,7 +22,8 @@ import java.util.Scanner;
  */
 public class ResalePoints {
 
-    private ArrayList<MarkerOptions> markers = new ArrayList<>();
+    private ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
+    private ArrayList<Marker> markers = new ArrayList<>();
     Context context;
 
     /**
@@ -37,7 +39,7 @@ public class ResalePoints {
             Scanner scanner = new Scanner(assetManager.open("resale_points.txt"));
             while (scanner.hasNextLine()) {
                 String[] values = scanner.nextLine().split("\\|");
-                markers.add(
+                markerOptions.add(
                         new MarkerOptions().title(values[0])
                                 .position(new LatLng(Double.parseDouble(values[1]), Double.parseDouble(values[2])))
                 );
@@ -45,15 +47,20 @@ public class ResalePoints {
         } catch (IOException e) {
             Log.e(e.toString(),e.getMessage());
         }
-
-        drawResalePoints();
     }
 
-    private void drawResalePoints(){
+    public void drawResalePoints(){
         ((MainActivity) context).changeTab(1);
-        for (MarkerOptions marker : markers) {
-            ((MapFragment)((MainActivity)context).getCurrentTab()).placeMarker(marker);
+        for (MarkerOptions marker : markerOptions) {
+            markers.add(((MapFragment) ((MainActivity) context).getCurrentTab()).placeMarker(marker));
         }
+    }
+
+    public void removeResalePoints(){
+        for (Marker marker : markers) {
+            marker.remove();
+        }
+        markers.clear();
     }
 
 

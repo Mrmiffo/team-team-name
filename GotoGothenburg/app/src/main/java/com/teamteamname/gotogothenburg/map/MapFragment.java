@@ -1,8 +1,12 @@
 package com.teamteamname.gotogothenburg.map;
 
+import android.app.Fragment;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,11 +16,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.teamteamname.gotogothenburg.PointOfInterest;
+import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ISoundDoneCallback;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.guide.Guide;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.teamteamname.gotogothenburg.information.ResalePoints;
+
 import java.util.List;
 
 
@@ -25,7 +32,7 @@ import java.util.List;
  * Created by Anton on 2015-09-21.
  */
 
-public class MapFragment extends com.google.android.gms.maps.MapFragment implements OnMapReadyCallback, LocationListener, IOnWhichBusListener, ISoundDoneCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener, IOnWhichBusListener, ISoundDoneCallback {
     private GoogleMap map;
     private Marker myPosition;
     private boolean onLocationChangedHasRun;
@@ -38,8 +45,29 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Let google maps know we want the handle the map and connect to locations api
-        getMapAsync(this);
-        LocationServicesAPI.getInstance().registerLocationUpdateListener(this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        view.findViewById(R.id.resalePointsButton).setOnClickListener(new View.OnClickListener() {
+            private ResalePoints resalePoints = new ResalePoints(getActivity());
+            private boolean isDisplaying = false;
+            @Override
+            public void onClick(View v) {
+                if(isDisplaying) {
+                    resalePoints.removeResalePoints();
+                } else {
+                    resalePoints.drawResalePoints();
+                }
+                isDisplaying = !isDisplaying;
+            }
+        });
+        return view;
     }
 
     @Override
@@ -62,7 +90,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LocationServicesAPI.getInstance().removeLocationUpdateListener(this);
+        LocationServicesAPI.getInstance().registerLocationUpdateListener(this);
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
         map.setMyLocationEnabled(true);
