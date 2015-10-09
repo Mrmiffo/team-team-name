@@ -34,7 +34,6 @@ public class Destination implements Serializable{
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
-        dateCreated = new Date();
         visited = false;
     }
 
