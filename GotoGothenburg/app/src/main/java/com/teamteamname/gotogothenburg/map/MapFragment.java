@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -33,6 +34,8 @@ import java.util.List;
  */
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener, IOnWhichBusListener, ISoundDoneCallback {
+
+    private MapView mapView;
     private GoogleMap map;
     private Marker myPosition;
     private boolean onLocationChangedHasRun;
@@ -44,22 +47,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Let google maps know we want the handle the map and connect to locations api
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
+        mapView = ((MapView)view.findViewById(R.id.mapView));
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+        
         view.findViewById(R.id.resalePointsButton).setOnClickListener(new View.OnClickListener() {
             private ResalePoints resalePoints = new ResalePoints(getActivity());
             private boolean isDisplaying = false;
+
             @Override
             public void onClick(View v) {
-                if(isDisplaying) {
+                if (isDisplaying) {
                     resalePoints.removeResalePoints();
                 } else {
                     resalePoints.drawResalePoints();
@@ -67,24 +72,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 isDisplaying = !isDisplaying;
             }
         });
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mapView.onResume();
         LocationServicesAPI.getInstance().registerLocationUpdateListener(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        mapView.onPause();
         LocationServicesAPI.getInstance().removeLocationUpdateListener(this);
     }
 
     @Override
     public void onStop(){
         super.onStop();
+        mapView.onDestroy();
         LocationServicesAPI.getInstance().removeLocationUpdateListener(this);
     }
 
@@ -117,7 +126,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     /**
-     * Adds the MarkerOptions Marker to the map and returns the referene to the added object
+     * Adds the MarkerOptions Marker to the map and returns the reference to the added object
      *
      * @param marker Marker to add
      * @return Reference to created marker
