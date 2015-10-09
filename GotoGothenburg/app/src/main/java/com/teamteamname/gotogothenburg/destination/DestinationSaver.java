@@ -9,12 +9,13 @@ import android.os.AsyncTask;
 import android.provider.BaseColumns;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * The destination saver is a class used by the SavedDestination to register changes into a database
  * stored on the local device.
+ * NOTE: ANY CHANGE TO THIS CLASS MUST UPDATE THE onUpgrade METHOD AND INCREASE THE DATABASE_VERSION
+ * +1 IN ORDER TO UPDATE THE DATABASE ON THE DEVICE.
  * Created by Anton on 2015-10-06.
  */
 public class DestinationSaver implements IDestinationSaver{
@@ -158,6 +159,7 @@ public class DestinationSaver implements IDestinationSaver{
 
     }
 
+    //Local method used to remove all entries in the database.
     private void dropTable() {
         final String SQL_DELETE_ENTRIES =
                 "delete from " + DestinationEntry.TABLE_NAME;
@@ -165,6 +167,7 @@ public class DestinationSaver implements IDestinationSaver{
         db.execSQL(SQL_DELETE_ENTRIES);
     }
 
+    //Local method used to extract a destination from a CursorQuery.
     private Destination createDestination(Cursor data){
         String name = data.getString(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_NAME));
         double lat = data.getDouble(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_LATITUDE));
@@ -174,6 +177,7 @@ public class DestinationSaver implements IDestinationSaver{
     }
 
 
+    //Local class used as a reference to all the tables in the database.
     private static abstract class DestinationEntry implements BaseColumns {
         public static final String TABLE_NAME = "savedDestinations";
         public static final String COLUMN_NAME_NAME = "destination_name";
@@ -183,6 +187,7 @@ public class DestinationSaver implements IDestinationSaver{
 
     }
 
+    //Local class used to provide and create a read and writable database on the local device.
     private class DestinationDBReaderHelper extends SQLiteOpenHelper {
         // If you change the database schema, you must increment the database version.
         public static final int DATABASE_VERSION = 1;
