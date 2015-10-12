@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,8 +31,8 @@ import com.teamteamname.gotogothenburg.information.ResalePoints;
  * The fragment used to display the map in the application.
  * Created by Anton on 2015-09-21.
  */
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
     private MapView mapView;
     private GoogleMap map;
@@ -87,48 +88,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        LocationServicesAPI.getInstance().registerLocationUpdateListener(this);
-    }
+      }
 
     @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
-        LocationServicesAPI.getInstance().removeLocationUpdateListener(this);
     }
 
     @Override
     public void onStop(){
         super.onStop();
         mapView.onDestroy();
-        LocationServicesAPI.getInstance().removeLocationUpdateListener(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LocationServicesAPI.getInstance().registerLocationUpdateListener(this);
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
-    }
-
-
-
-    @Override
-    public void onLocationChanged(Location location) {
-        if(map == null) {
-            return;
-        }
-        //markCurrentPosition(location);
-        if (!onLocationChangedHasRun) {
-            zoomToLocation(location, 15);
-            onLocationChangedHasRun = true;
-        }
+        zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
     }
 
     private void zoomToLocation(Location location, float zoom){
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoom));
+        if (location != null) {
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoom));
+        }
     }
 
     /**
@@ -140,16 +126,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public Marker placeMarker(MarkerOptions marker){
         return map.addMarker(marker);
     }
-/*
-    // Place marker on devices' current position
-    private void markCurrentPosition(Location location) {
-        if(myPosition != null) {
-            myPosition.remove();
-        }
-        myPosition = map.addMarker( new MarkerOptions()
-                .position(new LatLng(location.getLatitude(), location.getLongitude()))
-                .title("I am here"));
-    }/*
 
 
     /**
