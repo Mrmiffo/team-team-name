@@ -31,7 +31,7 @@ import com.teamteamname.gotogothenburg.information.ResalePoints;
  * Created by Anton on 2015-09-21.
  */
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener, IOnWhichBusListener, ISoundDoneCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
     private MapView mapView;
     private GoogleMap map;
@@ -151,55 +151,60 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 .title("I am here"));
     }/*
 
+
     /**
      * Used by other classes to start a route for the user
      */
     public void guideUser() {
-        identifyBus();
+        Guide guide = new Guide();
+        guide.identifyBus();
     }
+    
+    private class Guide implements IOnWhichBusListener, ISoundDoneCallback {
 
-    /**
-     * Starts listening for which bus the user is on
-     */
-    private void identifyBus() {
-        final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
-        identifier.registerListener(this);
-        identifier.start();
-    }
-
-    private void doGuide(Bus bus) {
-        final Route route = new Route(bus);
-        final PointOfInterest nextPOI = route.getNextPOI();
-
-        if (nextPOI != null) {
-            AndroidDeviceAPI.getInstance().playSound(this, nextPOI.getSoundGuide());
-
-            final GuideDialog guideDialog = GuideDialog.createInstance(nextPOI);
-            guideDialog.show(getFragmentManager(), "route");
+        /**
+         * Starts listening for which bus the user is on
+         */
+        private void identifyBus() {
+            final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
+            identifier.registerListener(this);
+            identifier.start();
         }
-    }
 
-    @Override
-    public void whichBussCallBack(Bus busUserIsOn) {
-        final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
-        identifier.removeListener(this);
-        identifier.stop();
-        doGuide(busUserIsOn);
-    }
+        private void doGuide(Bus bus) {
+            final Route route = new Route(bus);
+            final PointOfInterest nextPOI = route.getNextPOI();
 
-    @Override
-    public void notConnectedToElectriCityWifiError() {
+            if (nextPOI != null) {
+                AndroidDeviceAPI.getInstance().playSound(this, nextPOI.getSoundGuide());
 
-    }
+                final GuideDialog guideDialog = GuideDialog.createInstance(nextPOI);
+                guideDialog.show(getFragmentManager(), "guide");
+            }
+        }
 
-    @Override
-    public void unableToIdentifyBusError() {
+        @Override
+        public void whichBussCallBack(Bus busUserIsOn) {
+            final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
+            identifier.removeListener(this);
+            identifier.stop();
+            doGuide(busUserIsOn);
+        }
 
-    }
+        @Override
+        public void notConnectedToElectriCityWifiError() {
 
-    @Override
-    public void soundFinishedPlaying() {
-        identifyBus();
+        }
+
+        @Override
+        public void unableToIdentifyBusError() {
+
+        }
+
+        @Override
+        public void soundFinishedPlaying() {
+            identifyBus();
+        }
     }
 
     /**
