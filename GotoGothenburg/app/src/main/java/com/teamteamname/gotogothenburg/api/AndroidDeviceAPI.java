@@ -68,7 +68,7 @@ public class AndroidDeviceAPI implements IDeviceAPI {
     }
 
     @Override
-    public void playSound(ISoundDoneCallback callback, File sound) {
+    public void playSound(final ISoundDoneCallback callback, File sound) {
         int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
         final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
         mediaPlayer.start();
@@ -78,9 +78,9 @@ public class AndroidDeviceAPI implements IDeviceAPI {
             public void run() {
                 mediaPlayer.stop();
                 mediaPlayer.release();
+                callback.soundFinishedPlaying();
             }
         }, mediaPlayer.getDuration());
-        callback.soundFinishedPlaying();
     }
 
     @Override
