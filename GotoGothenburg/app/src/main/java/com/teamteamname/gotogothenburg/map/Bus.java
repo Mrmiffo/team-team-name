@@ -42,7 +42,7 @@ public class Bus {
     }
 
     public static void init(){
-        if(initiated) {
+        if(!initiated) {
             addBus("Ericsson$100020", "YV3U0V222FA100020", "EPO 131", "2501069301", false);
             addBus("Ericsson$100021", "YV3U0V222FA100021", "EPO 136", "2501069758", true);
             addBus("Ericsson$100022", "YV3U0V222FA100022", "EPO 143", "2501131248", false);
