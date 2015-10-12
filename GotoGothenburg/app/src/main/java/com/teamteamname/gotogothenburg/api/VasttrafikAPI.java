@@ -77,7 +77,7 @@ public class VasttrafikAPI implements IVasttrafikAPI{
     }
 
     @Override
-    public void getCoordinates(VasttrafikHandler callback, VasttrafikLocation originLocation, VasttrafikLocation destLocation) {
+    public void getCoordinates(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, VasttrafikLocation originLocation, VasttrafikLocation destLocation) {
         StringBuilder sb = setupRequest(trip);
         sb.append("needGeo=1&");
         sb.append("originCoordLat=" + originLocation.getLatlng().latitude + "&");
@@ -88,13 +88,13 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         sb.append("destCoordName=" + sanitize(destLocation.getName()));
         String uri = sb.toString();
 
-        TripParser parser = new TripParser(callback);
+        TripParser parser = new TripParser(tripCallback, errorCallback);
         JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
         queue.add(request);
     }
 
     @Override
-    public void getAutocomplete(VasttrafikHandler callback, String input) {
+    public void getAutocomplete(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback, String input) {
 
         String sanitizedInput = sanitize(input);
 
@@ -102,14 +102,9 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         sb.append("input=" + sanitizedInput);
         String uri = sb.toString();
 
-        AutocompleteParser parser = new AutocompleteParser(callback);
+        AutocompleteParser parser = new AutocompleteParser(autoCallback, errorCallback);
         JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
         queue.add(request);
-    }
-
-    @Override
-    public void getNearbyStops(VasttrafikHandler callback, LatLng origin, int maxDist) {
-
     }
 
     /**
@@ -131,11 +126,15 @@ public class VasttrafikAPI implements IVasttrafikAPI{
      */
     private class GeoParser implements Response.Listener<JSONObject>, Response.ErrorListener{
 
-        private VasttrafikHandler callback;
+        private VasttrafikTripHandler tripCallback;
+        private VasttrafikErrorHandler errorCallback;
         private int r, g, b;
+        private boolean newPolyline;
 
-        public GeoParser(VasttrafikHandler callback, int r, int g, int b){
-            this.callback = callback;
+        public GeoParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, boolean newPolyline, int r, int g, int b){
+            this.tripCallback = tripCallback;
+            this.errorCallback = errorCallback;
+            this.newPolyline = newPolyline;
             this.r = r;
             this.g = g;
             this.b = b;
@@ -143,7 +142,7 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            callback.vasttrafikRequestError(error.toString());
+            errorCallback.vasttrafikRequestError(error.toString());
         }
 
         @Override
@@ -168,7 +167,7 @@ public class VasttrafikAPI implements IVasttrafikAPI{
                                 LatLng latlng = new LatLng(lat, lng);
                                 polyline.add(latlng);
                             }
-                            callback.vasttrafikRequestDone(r, g, b, polyline.toArray(new LatLng[polyline.size()]));
+                            tripCallback.vasttrafikRequestDone(newPolyline, r, g, b, polyline.toArray(new LatLng[polyline.size()]));
                         }
                     }
                 }
@@ -183,15 +182,17 @@ public class VasttrafikAPI implements IVasttrafikAPI{
      */
     private class TripParser implements Response.Listener<JSONObject>, Response.ErrorListener{
 
-        private VasttrafikHandler callback;
+        private VasttrafikTripHandler tripCallback;
+        private VasttrafikErrorHandler errorCallback;
 
-        public TripParser(VasttrafikHandler callback){
-            this.callback = callback;
+        public TripParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback){
+            this.tripCallback = tripCallback;
+            this.errorCallback = errorCallback;
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            callback.vasttrafikRequestError(error.toString());
+            errorCallback.vasttrafikRequestError(error.toString());
         }
 
         @Override
@@ -223,7 +224,7 @@ public class VasttrafikAPI implements IVasttrafikAPI{
                                 if (((JSONObject) leg.get(i)).has("GeometryRef")) {
                                     temp = (JSONObject) ((JSONObject) leg.get(i)).get("GeometryRef");
                                     String uri = (String) temp.get("ref");
-                                    GeoParser parser = new GeoParser(callback, r, g, b);
+                                    GeoParser parser = new GeoParser(tripCallback, errorCallback, i==0, r, g, b);
                                     JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
                                     queue.add(request);
                                 }
@@ -242,17 +243,19 @@ public class VasttrafikAPI implements IVasttrafikAPI{
      */
     private class AutocompleteParser implements Response.Listener<JSONObject>, Response.ErrorListener{
 
-        private VasttrafikHandler callback;
+        private VasttrafikAutocompleteHandler autoCallback;
+        private VasttrafikErrorHandler errorCallback;
         private List<VasttrafikLocation> locations;
 
-        public AutocompleteParser(VasttrafikHandler callback){
-            this.callback = callback;
+        public AutocompleteParser(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback){
+            this.autoCallback = autoCallback;
+            this.errorCallback = errorCallback;
             this.locations = new ArrayList<VasttrafikLocation>();
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            callback.vasttrafikRequestError(error.toString());
+            errorCallback.vasttrafikRequestError(error.toString());
         }
 
         @Override
@@ -267,14 +270,14 @@ public class VasttrafikAPI implements IVasttrafikAPI{
             } catch (JSONException e){
                 Log.e("JSONException", e.toString());
             }
-            callback.vasttrafikRequestDone(locations.toArray(new VasttrafikLocation[locations.size()]));
+            autoCallback.vasttrafikRequestDone(locations.toArray(new VasttrafikLocation[locations.size()]));
         }
 
         private void addLocations(JSONObject locationList, String has) throws JSONException {
             JSONArray locations;
             JSONObject temp;
-            if (locationList.has(has)) {
-                locations = (JSONArray) locationList.get(has);
+            if (locationList.has(has) && locationList.get(has) instanceof JSONArray) {
+                locations = (JSONArray)locationList.get(has);
                 for (int i = 0; i < 2; i++) {
                     temp = locations.getJSONObject(i);
                     if(temp.has("name") && temp.has("lon") && temp.has("lat")) {

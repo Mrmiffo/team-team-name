@@ -10,20 +10,22 @@ public interface IVasttrafikAPI {
     /**
      * Sends a list of coordinates to the callback
      * The coordinates are a route from originLocation to destLocation
-     * @param callback the callback
+     * @param tripCallback the callback supplied with response
+     * @param errorCallback the callback supplied with an eventual error
      * @param originLocation the location from which the coordinates start
      * @param destLocation the destination where the coordinates end
      */
-    void getCoordinates(VasttrafikHandler callback, VasttrafikLocation originLocation, VasttrafikLocation destLocation);
+    void getCoordinates(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, VasttrafikLocation originLocation, VasttrafikLocation destLocation);
 
     /**
      * Sends a list fo autocomplete suggestions to the callback.
      * The suggestions are based on the string "input" which is supplied.
-     * @param callback  The interface which is to be supplied with the result
+     * @param autoCallback  The interface which is to be supplied with the result
+     * @param errorCallback The interface which is to be supplied with an eventual error
      * @param input     The input which is the base for the autocomplete suggestions
      */
-    void getAutocomplete(VasttrafikHandler callback, String input);
-    void getNearbyStops(VasttrafikHandler callback, LatLng origin, int maxDist);
+    void getAutocomplete(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback, String input);
+
     void setWalkSpeed(int walkSpeed);
     void setMaxWalkDist(int maxWalkDist);
     void setAddChangeTime(int addChangeTime);
