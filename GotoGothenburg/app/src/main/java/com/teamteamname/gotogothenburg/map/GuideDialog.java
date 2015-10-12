@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 
-import com.teamteamname.gotogothenburg.PointOfInterest;
+import com.teamteamname.gotogothenburg.route.PointOfInterest;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.utils.AndroidConverter;
 

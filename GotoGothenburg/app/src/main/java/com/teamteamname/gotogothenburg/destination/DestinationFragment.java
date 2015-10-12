@@ -77,7 +77,7 @@ public class DestinationFragment extends Fragment {
         destinationListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO implement on click action, such as generate a guide or give directions.
+                //TODO implement on click action, such as generate a route or give directions.
 
                 //TODO Remove test code.
                 //--TEST CODE--

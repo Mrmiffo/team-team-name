@@ -1,4 +1,6 @@
-package com.teamteamname.gotogothenburg;
+package com.teamteamname.gotogothenburg.route;
+
+import com.teamteamname.gotogothenburg.GPSCoord;
 
 import java.io.File;
 

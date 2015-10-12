@@ -1,9 +1,5 @@
-package com.teamteamname.gotogothenburg.guide;
+package com.teamteamname.gotogothenburg.route;
 
-import android.util.Log;
-
-import com.teamteamname.gotogothenburg.PointOfInterest;
-import com.teamteamname.gotogothenburg.Stops;
 import com.teamteamname.gotogothenburg.api.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.ElectricityNextStopHandler;
 import com.teamteamname.gotogothenburg.map.Bus;
@@ -15,10 +11,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A class representing a guided tour.
+ * A class iterating over, firstly, stops and, secondly, points of interest of the given bus.
  * Created by kakan on 2015-09-25.
  */
-public class Guide implements ElectricityNextStopHandler{
+public class Route implements ElectricityNextStopHandler{
 
     private final Bus bus;
     private final List<PointOfInterest> visitedPOIs;
@@ -27,10 +23,10 @@ public class Guide implements ElectricityNextStopHandler{
     private boolean secondTry;
 
     /**
-     * Creates a guide for the given bus.
-     * @param bus the bus to be guided.
+     * Creates a route for the given bus.
+     * @param bus the bus to iterated over.
      */
-    public Guide(final Bus bus) {
+    public Route(final Bus bus) {
         this.bus = bus;
         visitedPOIs = new ArrayList<>();
         poiQueue = new ArrayList<>();

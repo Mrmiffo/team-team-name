@@ -11,7 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.Stops;
+import com.teamteamname.gotogothenburg.route.Stops;
 import com.teamteamname.gotogothenburg.map.Bus;
 
 import org.json.JSONArray;

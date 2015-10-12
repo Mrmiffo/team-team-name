@@ -16,16 +16,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.teamteamname.gotogothenburg.PointOfInterest;
+import com.teamteamname.gotogothenburg.route.PointOfInterest;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ISoundDoneCallback;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.guide.Guide;
+import com.teamteamname.gotogothenburg.route.Route;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.information.ResalePoints;
-
-import java.util.List;
 
 
 /**
@@ -154,7 +152,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }/*
 
     /**
-     * Used by other classes to start a guide for the user
+     * Used by other classes to start a route for the user
      */
     public void guideUser() {
         identifyBus();
@@ -170,14 +168,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     private void doGuide(Bus bus) {
-        final Guide guide = new Guide(bus);
-        final PointOfInterest nextPOI = guide.getNextPOI();
+        final Route route = new Route(bus);
+        final PointOfInterest nextPOI = route.getNextPOI();
 
         if (nextPOI != null) {
             AndroidDeviceAPI.getInstance().playSound(this, nextPOI.getSoundGuide());
 
             final GuideDialog guideDialog = GuideDialog.createInstance(nextPOI);
-            guideDialog.show(getFragmentManager(), "guide");
+            guideDialog.show(getFragmentManager(), "route");
         }
     }
 
