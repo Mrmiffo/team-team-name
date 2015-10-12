@@ -69,7 +69,7 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public void playSound(ISoundDoneCallback callback, File sound) {
-        int resourceID = context.getResources().getIdentifier(sound.getName(), null, null);
+        int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
         final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
         mediaPlayer.start();
         Timer mediaStopper = new Timer();
