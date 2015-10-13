@@ -30,7 +30,6 @@ import com.teamteamname.gotogothenburg.map.MapFragment;
 public class DestinationFragment extends Fragment{
 
     private ListView destinationListView;
-    private SavedDestinations savedDestinations;
     private DestinationListAdapter adapter;
 
     public DestinationFragment() {
@@ -60,21 +59,7 @@ public class DestinationFragment extends Fragment{
         final View toReturn = inflater.inflate(R.layout.fragment_destination, container, false);
         //Load the destinations view xml
         destinationListView = (ListView) toReturn.findViewById(R.id.destinationListView);
-        //Fill the saved destinations object with data from the database.
-        //Create a saver for the SavedDestinations
-        final DestinationSaver saver = new DestinationSaver(getActivity());
-        SavedDestinations.init(saver);
         adapter = new DestinationListAdapter(getActivity());
-        AsyncTask loadDest = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] params) {
-                //Initialize the SavedDestinations with destinations from the database. (This must run in background)
-                SavedDestinations.getInstance().loadDestinations(saver.loadAll());
-                return null;
-            }
-        };
-        loadDest.execute();
-
         destinationListView.setAdapter(adapter);
 
         destinationListView.setOnItemClickListener(new DestinationClickListener());

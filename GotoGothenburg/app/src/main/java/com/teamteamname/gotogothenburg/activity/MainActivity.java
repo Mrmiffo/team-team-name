@@ -3,6 +3,7 @@ package com.teamteamname.gotogothenburg.activity;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,8 @@ import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
 import com.teamteamname.gotogothenburg.api.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.destination.DestinationSaver;
+import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
@@ -63,6 +66,20 @@ public class MainActivity extends FragmentActivity{
         searchBar.setOnQueryTextListener(new SearchbarListener(this, searchBar));
         SearchManager manager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
         searchBar.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+
+        //Fill the saved destinations object with data from the database.
+        //Create a saver for the SavedDestinations
+        final DestinationSaver saver = new DestinationSaver(this);
+        SavedDestinations.init(saver);
+        AsyncTask loadDest = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                //Initialize the SavedDestinations with destinations from the database. (This must run in background)
+                SavedDestinations.getInstance().loadDestinations(saver.loadAll());
+                return null;
+            }
+        };
+        loadDest.execute();
     }
 
     @Override
