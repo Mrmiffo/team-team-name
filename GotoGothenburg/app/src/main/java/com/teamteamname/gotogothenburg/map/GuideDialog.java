@@ -1,38 +1,44 @@
 package com.teamteamname.gotogothenburg.map;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.os.Bundle;
 
-import com.teamteamname.gotogothenburg.route.PointOfInterest;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.route.PointOfInterest;
 import com.teamteamname.gotogothenburg.utils.AndroidConverter;
 
 /**
+ * A modal window which contains the guiding information of the given Point of Interest.
  * Created by kakan on 2015-10-05.
  */
 public class GuideDialog extends DialogFragment {
 
-    private PointOfInterest pointToGuide;
-
-    public static GuideDialog createInstance(PointOfInterest pointToGuide) { //Android does not want constructors
-        final GuideDialog guideDialog = new GuideDialog();
-        guideDialog.pointToGuide = pointToGuide;
-        guideDialog.createGUI();
-        return guideDialog;
+    public static GuideDialog newInstance(PointOfInterest poi) {
+        GuideDialog frag = new GuideDialog();
+        Bundle args = new Bundle();
+        args.putSerializable("poi", poi);
+        frag.setArguments(args);
+        return frag;
     }
 
-    private void createGUI() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final String title = pointToGuide.toString();
-        builder.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1).toLowerCase()); //Capitalise first letter
-        builder.setIcon(AndroidConverter.fileToRawResourceID(getActivity(), pointToGuide.getPicture()));
-        builder.setMessage(AndroidConverter.fileToRawResourceID(getActivity(), pointToGuide.getTextGuide()))
-            .setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dismiss();
-            }
-        });
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        PointOfInterest poi = (PointOfInterest) getArguments().getSerializable("poi");
+
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(poi.getName())
+                .setIcon(AndroidConverter.fileToRawResourceID(getActivity(), poi.getPicture()))
+                .setMessage(AndroidConverter.fileToMessageConverter(getActivity(), poi.getTextGuide()))
+                .setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dismiss();
+                            }
+                        }
+                )
+                .create();
     }
 }
