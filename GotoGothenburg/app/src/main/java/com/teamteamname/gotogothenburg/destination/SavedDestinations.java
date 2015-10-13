@@ -9,7 +9,7 @@ import java.util.List;
  * notified when destinations are added or removed.
  * Created by Anton on 2015-09-30.
  */
-class SavedDestinations {
+public class SavedDestinations {
     private List<Destination> savedDestinations;
     private IDestinationSaver saver;
     private List<ISavedDestinationListener> listeners;
@@ -26,7 +26,7 @@ class SavedDestinations {
      *
      * @return the instance of the singleton, or null if the init class has not been run.
      */
-    static SavedDestinations getInstance(){
+    public static SavedDestinations getInstance(){
         return instance;
     }
 
