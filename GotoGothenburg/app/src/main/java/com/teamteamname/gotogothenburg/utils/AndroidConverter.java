@@ -1,8 +1,12 @@
 package com.teamteamname.gotogothenburg.utils;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Created by kakan on 2015-10-02.
@@ -27,5 +31,27 @@ public class AndroidConverter {
         final String fileName = file.getName();
         int index = fileName.lastIndexOf('.');
         return context.getResources().getIdentifier(fileName.substring(0, index), "raw", context.getPackageName());
+    }
+
+    /**
+     * Converts the contents of the given file to a String.
+     * @param context the context which holds the assets.
+     * @param file the file which to read.
+     * @return the contents of the file as a String.
+     */
+    public static String fileToMessageConverter(Context context, File file) {
+        AssetManager assetManager = context.getAssets();
+        StringBuilder text = new StringBuilder();
+        try {
+            Scanner scanner = new Scanner(assetManager.open(file.getName()));
+            while (scanner.hasNextLine()) {
+                text.append(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text.toString();
     }
 }
