@@ -69,18 +69,21 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public void playSound(final ISoundDoneCallback callback, File sound) {
-        int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
-        final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
-        mediaPlayer.start();
-        Timer mediaStopper = new Timer();
-        mediaStopper.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                callback.soundFinishedPlaying();
-            }
-        }, mediaPlayer.getDuration());
+        if (sound != null) {
+            int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
+            final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
+            mediaPlayer.start();
+            Timer mediaStopper = new Timer();
+            mediaStopper.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    callback.soundFinishedPlaying();
+                }
+            }, mediaPlayer.getDuration());
+        }
+        callback.soundCouldNotBePlayed();
     }
 
     @Override
