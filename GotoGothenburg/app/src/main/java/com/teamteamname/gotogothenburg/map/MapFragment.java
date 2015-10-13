@@ -15,6 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.teamteamname.gotogothenburg.destination.Destination;
+import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.route.PointOfInterest;
 import com.teamteamname.gotogothenburg.R;
 import com.google.android.gms.maps.model.Polyline;
@@ -79,6 +81,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     v.setAlpha(0.5f);
                 } else {
                     resalePoints.drawResalePoints();
+                    v.setAlpha(1f);
+                }
+                isDisplaying = !isDisplaying;
+            }
+        });
+
+        view.findViewById(R.id.showDestButton).setOnClickListener(new View.OnClickListener() {
+            private boolean isDisplaying = false;
+            private ArrayList<Marker> markers = new ArrayList<>();
+
+            @Override
+            public void onClick(View v) {
+                if (isDisplaying) {
+                    for(Marker marker: markers){
+                        marker.remove();
+                    }
+                    v.setAlpha(0.5f);
+                } else {
+                    for (Destination dest : SavedDestinations.getInstance().getSavedDestinations()) {
+                        MarkerOptions marker = new MarkerOptions();
+                        marker.position(new LatLng(dest.getLatitude(), dest.getLongitude()));
+                        marker.title(dest.getName());
+                        markers.add(placeMarker(marker));
+                    }
+
                     v.setAlpha(1f);
                 }
                 isDisplaying = !isDisplaying;
