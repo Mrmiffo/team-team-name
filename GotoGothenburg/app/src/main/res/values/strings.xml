@@ -61,4 +61,9 @@
 
     <!-- Places attribution -->
     <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Address: %2$s&lt;br/&gt;Phone: %3$s&lt;br/&gt;Website: %4$s</string>
+
+    <!--NotConnected to wifi error-->
+    <string name="notConnectedToWifiErrorTitle">Connect to ElectriCity wifi</string>
+    <string name="notConnectedToWifiErrorText">Please connect to the free open WiFI ElectriCity in order to start the guided tour. This app use the WiFi to identify which bus you are currently on.</string>
+    <string name="openWifiSettings">Go to WiFi</string>
 </resources>
