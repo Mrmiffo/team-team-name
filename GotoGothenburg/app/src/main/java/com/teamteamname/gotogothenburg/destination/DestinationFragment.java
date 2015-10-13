@@ -1,10 +1,8 @@
 package com.teamteamname.gotogothenburg.destination;
 
 import android.app.Fragment;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.util.Log;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,11 +59,8 @@ public class DestinationFragment extends Fragment{
         destinationListView = (ListView) toReturn.findViewById(R.id.destinationListView);
         adapter = new DestinationListAdapter(getActivity());
         destinationListView.setAdapter(adapter);
-
         destinationListView.setOnItemClickListener(new DestinationClickListener());
-
         toReturn.findViewById(R.id.newDestinationButton).setOnClickListener(createDestinationListener);
-
         return toReturn;
     }
 
