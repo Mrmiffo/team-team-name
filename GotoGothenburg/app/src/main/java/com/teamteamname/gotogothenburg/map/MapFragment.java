@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -19,12 +17,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.teamteamname.gotogothenburg.route.PointOfInterest;
 import com.teamteamname.gotogothenburg.R;
+import com.google.android.gms.maps.model.Polyline;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ISoundDoneCallback;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.route.Route;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.information.ResalePoints;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -36,6 +38,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private MapView mapView;
     private GoogleMap map;
+    private List<Polyline> polyline;
     private Marker myPosition;
     private boolean onLocationChangedHasRun;
 
@@ -46,6 +49,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.polyline = new ArrayList<>();
     }
 
     @Override
@@ -80,7 +84,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 isDisplaying = !isDisplaying;
             }
         });
-
         return view;
     }
 
@@ -190,13 +193,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
      * @param b color
      * @param coords List of coordinates to connect with a line
      */
-    public void drawPolyLine(int r, int g, int b, LatLng... coords){
+    public void drawPolyLine(boolean cleanMap, int r, int g, int b, LatLng... coords){
+        if(polyline != null && cleanMap) {
+            removePolyline();
+        }
+
         PolylineOptions polyline = new PolylineOptions();
         polyline.color(Color.argb(255, r, g, b));
         for(LatLng latlng : coords){
             polyline.add(latlng);
         }
-        map.addPolyline(polyline);
+        this.polyline.add(map.addPolyline(polyline));
         polyline.visible(true);
+    }
+
+    private void removePolyline(){
+        for(Polyline p : polyline){
+            p.remove();
+        }
     }
 }

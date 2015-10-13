@@ -1,11 +1,9 @@
 package com.teamteamname.gotogothenburg.destination;
 
 import android.app.Fragment;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 
 import android.view.LayoutInflater;
@@ -15,17 +13,21 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
-
-import java.util.Timer;
+import com.teamteamname.gotogothenburg.activity.MainActivity;
+import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
+import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.VasttrafikErrorHandler;
+import com.teamteamname.gotogothenburg.api.VasttrafikLocation;
+import com.teamteamname.gotogothenburg.api.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.map.MapFragment;
 
 /**
  * THe fragment used to display the Destination screen in the application.
  * Created by Anton on 2015-09-21.
  */
-public class DestinationFragment extends Fragment {
+public class DestinationFragment extends Fragment{
 
     private ListView destinationListView;
     private SavedDestinations savedDestinations;
@@ -74,26 +76,40 @@ public class DestinationFragment extends Fragment {
         loadDest.execute();
 
         destinationListView.setAdapter(adapter);
-        destinationListView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO implement on click action, such as generate a route or give directions.
 
-                //TODO Remove test code.
-                //--TEST CODE--
-                Destination dest = (Destination) parent.getItemAtPosition(position);
-                Log.e("Name", dest.getName());
-                Log.e("Lat", String.valueOf(dest.getLatitude()));
-                Log.e("Long", String.valueOf(dest.getLongitude()));
-                Log.e("Visited", String.valueOf(dest.isVisited()));
-                //--TEST CODE--
-            }
-        });
-
+        destinationListView.setOnItemClickListener(new DestinationClickListener());
 
         toReturn.findViewById(R.id.newDestinationButton).setOnClickListener(createDestinationListener);
 
         return toReturn;
+    }
+
+    private class DestinationClickListener implements OnItemClickListener, VasttrafikTripHandler, VasttrafikErrorHandler{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            double originLat = LocationServicesAPI.getInstance().getLastKnownLocation().getLatitude();
+            double originLng = LocationServicesAPI.getInstance().getLastKnownLocation().getLongitude();
+            VasttrafikLocation origin = new VasttrafikLocation("origin", originLat, originLng);
+
+            double destLat = ((Destination)parent.getItemAtPosition(position)).getLatitude();
+            double destLng = ((Destination)parent.getItemAtPosition(position)).getLongitude();
+            String name = ((Destination)parent.getItemAtPosition(position)).getName();
+            VasttrafikLocation dest = new VasttrafikLocation(name, destLat, destLng);
+
+            VasttrafikAPI.getInstance().getCoordinates(this, this, origin, dest);
+        }
+
+        @Override
+        public void vasttrafikRequestDone(boolean newPolyline, int r, int g, int b, LatLng... polyline) {
+            ((MainActivity)getActivity()).changeTab(1);
+            ((MapFragment)((MainActivity)getActivity()).getCurrentTab()).drawPolyLine(newPolyline, r, g, b, polyline);
+        }
+
+        @Override
+        public void vasttrafikRequestError(String e) {
+
+        }
     }
 
     /*
@@ -109,5 +125,4 @@ public class DestinationFragment extends Fragment {
             }
         }
     };
-
 }

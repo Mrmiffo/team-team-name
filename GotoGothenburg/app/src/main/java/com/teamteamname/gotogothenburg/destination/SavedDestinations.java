@@ -55,8 +55,8 @@ public class SavedDestinations {
         if (destinationsToLoad != null && instance != null){
             savedDestinations = new ArrayList<>();
             savedDestinations.addAll(destinationsToLoad);
-            notifyListeners();
             saver.saveAll(getSavedDestinations());
+            notifyListeners();
         }
     }
 
