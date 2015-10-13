@@ -34,10 +34,8 @@ import java.util.List;
  * The fragment used to display the map in the application.
  * Created by Anton on 2015-09-21.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends com.google.android.gms.maps.MapFragment implements OnMapReadyCallback {
 
-
-    private MapView mapView;
     private GoogleMap map;
     private List<Polyline> polyline;
     private Marker myPosition;
@@ -56,18 +54,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        ViewGroup parentView = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_map, null);
+        parentView.addView(view);
 
         view.findViewById(R.id.centerCameraButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(),15);
+                zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
             }
         });
 
-        mapView = ((MapView)view.findViewById(R.id.mapView));
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
+        getMapAsync(this);
         
         view.findViewById(R.id.resalePointsButton).setOnClickListener(new View.OnClickListener() {
             private ResalePoints resalePoints = new ResalePoints(getActivity());
@@ -93,7 +91,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if (isDisplaying) {
-                    for(Marker marker: markers){
+                    for (Marker marker : markers) {
                         marker.remove();
                     }
                     v.setAlpha(0.5f);
@@ -110,25 +108,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 isDisplaying = !isDisplaying;
             }
         });
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-      }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        mapView.onDestroy();
+        return parentView;
     }
 
     @Override
