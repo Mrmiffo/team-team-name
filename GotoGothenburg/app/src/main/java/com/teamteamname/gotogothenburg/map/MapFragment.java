@@ -147,6 +147,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     
     private class Guide implements IOnWhichBusListener, ISoundDoneCallback {
 
+        private GuideDialog guideDialog;
+
         /**
          * Starts listening for which bus the user is on
          */
@@ -161,10 +163,13 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
             final PointOfInterest nextPOI = route.getNextPOI();
 
             if (nextPOI != null) {
-                AndroidDeviceAPI.getInstance().playSound(this, nextPOI.getSoundGuide());
+                //TODO Check if handsfree are plugged in. (Also, what to do if they are unplugged afterwards?)
+                if (nextPOI.getSoundGuide() != null) {
+                    AndroidDeviceAPI.getInstance().playSound(this, nextPOI.getSoundGuide()); //TODO change in API to not play if null
+                }
 
-                final GuideDialog guideDialog = GuideDialog.createInstance(nextPOI);
-                guideDialog.show(getFragmentManager(), "guide");
+                guideDialog = GuideDialog.newInstance(nextPOI);
+                guideDialog.show(getActivity().getFragmentManager(), "guide");
             }
         }
 
@@ -190,6 +195,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         @Override
         public void soundFinishedPlaying() {
             identifyBus();
+            guideDialog.dismiss();
         }
     }
 
