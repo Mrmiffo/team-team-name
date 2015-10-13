@@ -1,6 +1,5 @@
 package com.teamteamname.gotogothenburg.map;
 
-import android.app.Fragment;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,22 +8,16 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.teamteamname.gotogothenburg.api.IDeviceAPI;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
-import com.teamteamname.gotogothenburg.route.PointOfInterest;
-import com.teamteamname.gotogothenburg.R;
-import com.google.android.gms.maps.model.Polyline;
-import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
-import com.teamteamname.gotogothenburg.api.ISoundDoneCallback;
-import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.route.Route;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.information.ResalePoints;
 
 import java.util.ArrayList;
@@ -135,75 +128,6 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
      */
     public Marker placeMarker(MarkerOptions marker){
         return map.addMarker(marker);
-    }
-
-
-    /**
-     * Used by other classes to start a route for the user
-     */
-    public void guideUser() {
-        Guide guide = new Guide();
-        guide.identifyBus();
-    }
-    
-    private class Guide implements IOnWhichBusListener, ISoundDoneCallback {
-
-        private GuideDialog guideDialog;
-        private IDeviceAPI api = AndroidDeviceAPI.getInstance();
-
-        /**
-         * Starts listening for which bus the user is on
-         */
-        private void identifyBus() {
-            final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
-            identifier.registerListener(this);
-            identifier.start();
-        }
-
-        private void doGuide(Bus bus) {
-            final Route route = new Route(bus);
-            final PointOfInterest nextPOI = route.getNextPOI();
-
-            if (nextPOI != null) {
-                //TODO Check if handsfree are plugged in. (Also, what to do if they are unplugged afterwards?)
-                if (api.isHandsfreePluggedIn()) {
-                    api.playSound(this, nextPOI.getSoundGuide());
-                }
-
-                guideDialog = GuideDialog.newInstance(nextPOI);
-                guideDialog.show(getActivity().getFragmentManager(), "guide");
-            }
-        }
-
-        @Override
-        public void whichBussCallBack(Bus busUserIsOn) {
-            final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
-            identifier.removeListener(this);
-            identifier.stop();
-            doGuide(busUserIsOn);
-        }
-
-        @Override
-        public void notConnectedToElectriCityWifiError() {
-            ConnectToWiFiErrorDialog connectError = ConnectToWiFiErrorDialog.createInstance(getActivity());
-            connectError.show(getActivity().getFragmentManager(), "notConnectedToElectriCityWifiError");
-        }
-
-        @Override
-        public void unableToIdentifyBusError() {
-
-        }
-
-        @Override
-        public void soundFinishedPlaying() {
-            identifyBus();
-            guideDialog.dismiss();
-        }
-
-        @Override
-        public void soundCouldNotBePlayed() {
-
-        }
     }
 
     /**
