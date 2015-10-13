@@ -3,6 +3,7 @@ package com.teamteamname.gotogothenburg.route;
 import com.teamteamname.gotogothenburg.GPSCoord;
 
 import java.io.File;
+import java.io.Serializable;
 
 import lombok.Getter;
 
@@ -10,14 +11,14 @@ import lombok.Getter;
  * An enum representing a point of interest, complete with physical location, picture and information in both text and sound.
  * Created by kakan on 2015-09-28.
  */
-public enum PointOfInterest {
+public enum PointOfInterest implements Serializable {
     JOHANNEBERG_SCIENCE_PARK(new GPSCoord(57.684747f, 11.977967f), null, null, null),
 
     CHALMERS_CAMPUS_JOHANNEBERG(new GPSCoord(57.689167f, 11.973611f),
 
-            new File(getDir() + "chalmers_campus_johanneberg_text_test.txt"),
-            new File(getDir() +  "chalmers_campus_johanneberg_sound_test.mp3"),
-            new File(getDir() + "chalmers_campus_johanneberg_picture_test.jpg")),
+            new File(getAssetsDir() + "chalmers_campus_johanneberg_text_test.txt"),
+            new File(getResDir() +  "chalmers_campus_johanneberg_sound_test.mp3"),
+            new File(getResDir() + "chalmers_campus_johanneberg_picture_test.jpg")),
 
     LANDALA(new GPSCoord(57.693319f, 11.970892f), null, null, null),
     LANDSHÖVDINGEHUS(new GPSCoord(), null, null, null),                     //OBS
@@ -44,8 +45,20 @@ public enum PointOfInterest {
     INOMHUSHÅLLPLATSEN(new GPSCoord(57.706911f, 11.93721f), null, null, null);
 
 
-    private static String getDir() {
+    /**
+     * Returns the path for the resource directory. Please note that text files should be put in assets.
+     * @return the path for the resource directory.
+     */
+    private static String getResDir() {
         return "src/main/res/raw/";
+    }
+
+    /**
+     * Returns the path for the assets directory.
+     * @return the path for the assets directory.
+     */
+    private static String getAssetsDir() {
+        return "src/main/assets/";
     }
 
     @Getter private final GPSCoord location;
@@ -60,11 +73,17 @@ public enum PointOfInterest {
         this.picture = picture;
 
         if (textGuide == null) {
-            this.textGuide = new File(getDir() + "null_text.txt");
+            this.textGuide = new File(getAssetsDir() + "null_text.txt");
         }
 
         if (picture == null) {
-            this.picture = new File(getDir() + "null_picture.jpg");
+            this.picture = new File(getResDir() + "null_picture.jpg");
         }
+    }
+
+    public String getName() {
+        String name = this.toString();
+        name = name.replaceAll("_", " "); //replace non-word characters with a space.
+        return name.substring(0, 1).toUpperCase() + name.toString().substring(1).toLowerCase(); //Capitalise first letter only
     }
 }
