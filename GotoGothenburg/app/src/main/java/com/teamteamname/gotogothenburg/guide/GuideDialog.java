@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.map;
+package com.teamteamname.gotogothenburg.guide;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

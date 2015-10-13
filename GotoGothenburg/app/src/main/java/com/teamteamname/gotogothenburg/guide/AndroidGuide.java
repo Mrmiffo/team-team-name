@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.map.Bus;
-import com.teamteamname.gotogothenburg.map.GuideDialog;
 
 /**
  * A class handling guiding as an Android device.
