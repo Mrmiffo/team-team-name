@@ -1,7 +1,6 @@
 package com.teamteamname.gotogothenburg.map;
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -215,19 +214,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     /**
-     * Draws a polyline on the map with the color rgb
-     * @param r color
-     * @param g color
-     * @param b color
+     * Draws a polyline on the map
      * @param coords List of coordinates to connect with a line
      */
-    public void drawPolyLine(boolean cleanMap, int r, int g, int b, LatLng... coords){
+    public void drawPolyLine(boolean cleanMap, LatLng... coords){
         if(polyline != null && cleanMap) {
             removePolyline();
         }
-
         PolylineOptions polyline = new PolylineOptions();
-        polyline.color(Color.argb(255, r, g, b));
+        polyline.width(5);
         for(LatLng latlng : coords){
             polyline.add(latlng);
         }

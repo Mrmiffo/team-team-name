@@ -70,9 +70,9 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Vasttr
 
 
     @Override
-    public void vasttrafikRequestDone(boolean newPolyline, int r, int g, int b, LatLng... polyline){
+    public void vasttrafikRequestDone(boolean newPolyline, LatLng... polyline){
         ((MainActivity)context).changeTab(1);
-        ((MapFragment)((MainActivity)context).getCurrentTab()).drawPolyLine(newPolyline, r, g, b, polyline);
+        ((MapFragment)((MainActivity)context).getCurrentTab()).drawPolyLine(newPolyline, polyline);
     }
 
     @Override

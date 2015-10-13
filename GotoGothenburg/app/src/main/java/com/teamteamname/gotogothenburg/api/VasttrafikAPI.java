@@ -88,7 +88,7 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         sb.append("destCoordName=" + sanitize(destLocation.getName()));
         String uri = sb.toString();
 
-        TripParser parser = new TripParser(tripCallback, errorCallback);
+        TripParser parser = new TripParser(tripCallback, errorCallback, uri);
         JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
         queue.add(request);
     }
@@ -102,7 +102,7 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         sb.append("input=" + sanitizedInput);
         String uri = sb.toString();
 
-        AutocompleteParser parser = new AutocompleteParser(autoCallback, errorCallback);
+        AutocompleteParser parser = new AutocompleteParser(autoCallback, errorCallback, uri);
         JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
         queue.add(request);
     }
@@ -128,52 +128,129 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
         private VasttrafikTripHandler tripCallback;
         private VasttrafikErrorHandler errorCallback;
-        private int r, g, b;
+        private String uri;
         private boolean newPolyline;
+        private boolean walk;
 
-        public GeoParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, boolean newPolyline, int r, int g, int b){
+        public GeoParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, String uri, boolean newPolyline, boolean walk){
             this.tripCallback = tripCallback;
             this.errorCallback = errorCallback;
             this.newPolyline = newPolyline;
-            this.r = r;
-            this.g = g;
-            this.b = b;
+            this.walk = walk;
+            this.uri = uri;
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            errorCallback.vasttrafikRequestError(error.toString());
+            GeoParser parser = new GeoParser(tripCallback, errorCallback, uri, newPolyline, walk);
+            JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
+            queue.add(request);
         }
 
         @Override
         public void onResponse(JSONObject response) {
-            JSONObject geometry;
-            JSONObject points;
-            JSONObject temp;
-            JSONArray point;
-
             try{
-                if(response.has("Geometry")){
-                    geometry = (JSONObject)response.get("Geometry");
-                    if(geometry.has("Points")){
-                        points = (JSONObject)geometry.get("Points");
-                        if(points.has("Point")){
-                            point = (JSONArray)points.get("Point");
-                            List<LatLng> polyline = new ArrayList<LatLng>();
-                            for(int i = 0; i < point.length(); i++){
-                                temp = (JSONObject)point.get(i);
-                                Double lat = Double.parseDouble((String)temp.get("lat"));
-                                Double lng = Double.parseDouble((String)temp.get("lon"));
-                                LatLng latlng = new LatLng(lat, lng);
-                                polyline.add(latlng);
-                            }
-                            tripCallback.vasttrafikRequestDone(newPolyline, r, g, b, polyline.toArray(new LatLng[polyline.size()]));
-                        }
-                    }
+                List<LatLng> polyline = getPolylineFromJSON(response);
+                if(polyline == null){
+                    errorCallback.vasttrafikRequestError("null response");
+                } else {
+                    polylineDone(polyline);
                 }
             } catch (JSONException e){
                 Log.e("JSONException", e.toString());
             }
+        }
+
+        private List<LatLng> getPolylineFromJSON(JSONObject jo) throws JSONException {
+            if(jo.has("Geometry")) {
+                JSONObject geometry = (JSONObject)jo.get("Geometry");
+                return ifHasPoints(geometry);
+            }
+            return null;
+        }
+
+        private List<LatLng> ifHasPoints(JSONObject jo) throws JSONException {
+            if(jo.has("Points")) {
+                JSONObject points = (JSONObject) jo.get("Points");
+                return ifHasPoint(points);
+            }
+            return null;
+        }
+
+        private List<LatLng> ifHasPoint(JSONObject jo) throws JSONException {
+            if(jo.has("Point")){
+                JSONArray point = (JSONArray) jo.get("Point");
+                return createPolyline(point);
+            }
+            return null;
+        }
+
+        private List<LatLng> createPolyline(JSONArray ja) throws JSONException {
+            List<LatLng> polyline = new ArrayList<>();
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject temp = (JSONObject) ja.get(i);
+                Double lat = Double.parseDouble((String) temp.get("lat"));
+                Double lng = Double.parseDouble((String) temp.get("lon"));
+                LatLng latlng = new LatLng(lat, lng);
+                polyline.add(latlng);
+            }
+            return polyline;
+        }
+
+        private void polylineDone(List<LatLng> polyline){
+            if(walk){
+                returnDashed(polyline);
+            } else {
+                LatLng[] polylineArray = polyline.toArray(new LatLng[polyline.size()]);
+                tripCallback.vasttrafikRequestDone(newPolyline, polylineArray);
+            }
+
+        }
+
+        private LatLng[] returnDashed(List<LatLng> polyline){
+            List<LatLng> temp = new ArrayList<>();
+            polyline = enhance(polyline);
+            for(int i = 0; i < polyline.size(); i++){
+                temp.add(polyline.get(i));
+                if(i%2 == 0){
+                    tripCallback.vasttrafikRequestDone(newPolyline, temp.toArray(new LatLng[temp.size()]));
+                    temp = new ArrayList<>();
+                }
+            }
+            return polyline.toArray(new LatLng[polyline.size()]);
+        }
+
+        private List<LatLng> enhance(List<LatLng> polyline){
+            for(int i = 0; i < polyline.size(); i+=2){
+                if(i >= polyline.size()-1){
+                    break;
+                }
+                if(distance(polyline.get(i).latitude, polyline.get(i+1).latitude, polyline.get(i).longitude, polyline.get(i+1).longitude) > 21){
+                    polyline.add(i+1, new LatLng((polyline.get(i).latitude + polyline.get(i+1).latitude)/2, (polyline.get(i).longitude + polyline.get(i+1).longitude)/2));
+                    polyline = enhance(polyline);
+                }
+                if(distance(polyline.get(i).latitude, polyline.get(i+1).latitude, polyline.get(i).longitude, polyline.get(i+1).longitude) < 10){
+                    polyline.remove(i+1);
+                    polyline = enhance(polyline);
+                }
+            }
+            return polyline;
+        }
+
+        private double distance(double lat1, double lat2, double lon1, double lon2) {
+            final int R = 6371; // Radius of the earth
+
+            Double latDistance = Math.toRadians(lat2 - lat1);
+            Double lonDistance = Math.toRadians(lon2 - lon1);
+            Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                    + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                    * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+            Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            double distance = R * c * 1000; // convert to meters
+
+            distance = Math.pow(distance, 2) + Math.pow(0, 2);
+
+            return Math.sqrt(distance);
         }
     }
 
@@ -184,15 +261,19 @@ public class VasttrafikAPI implements IVasttrafikAPI{
 
         private VasttrafikTripHandler tripCallback;
         private VasttrafikErrorHandler errorCallback;
+        private String uri;
 
-        public TripParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback){
+        public TripParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, String uri){
             this.tripCallback = tripCallback;
             this.errorCallback = errorCallback;
+            this.uri = uri;
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            errorCallback.vasttrafikRequestError(error.toString());
+            TripParser parser = new TripParser(tripCallback, errorCallback, uri);
+            JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
+            queue.add(request);
         }
 
         @Override
@@ -211,22 +292,13 @@ public class VasttrafikAPI implements IVasttrafikAPI{
                             for(int i = 0; i < leg.length(); i++) {
                                 int r = 0, g = 0, b = 0;
                                 if(((JSONObject) leg.get(i)).has("type")){
-                                    if(((JSONObject) leg.get(i)).get("type").equals("WALK")){
-                                        r = 0;
-                                        g = 0;
-                                        b = 255;
-                                    } else if(((JSONObject) leg.get(i)).get("type").equals("BUS")){
-                                        r = 0;
-                                        g = 255;
-                                        b = 0;
+                                    if (((JSONObject) leg.get(i)).has("GeometryRef")) {
+                                        temp = (JSONObject) ((JSONObject) leg.get(i)).get("GeometryRef");
+                                        String uri = (String) temp.get("ref");
+                                        GeoParser parser = new GeoParser(tripCallback, errorCallback, uri, i==0, ((JSONObject) leg.get(i)).get("type").equals("WALK"));
+                                        JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
+                                        queue.add(request);
                                     }
-                                }
-                                if (((JSONObject) leg.get(i)).has("GeometryRef")) {
-                                    temp = (JSONObject) ((JSONObject) leg.get(i)).get("GeometryRef");
-                                    String uri = (String) temp.get("ref");
-                                    GeoParser parser = new GeoParser(tripCallback, errorCallback, i==0, r, g, b);
-                                    JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
-                                    queue.add(request);
                                 }
                             }
                         }
@@ -246,16 +318,20 @@ public class VasttrafikAPI implements IVasttrafikAPI{
         private VasttrafikAutocompleteHandler autoCallback;
         private VasttrafikErrorHandler errorCallback;
         private List<VasttrafikLocation> locations;
+        private String uri;
 
-        public AutocompleteParser(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback){
+        public AutocompleteParser(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback, String uri){
             this.autoCallback = autoCallback;
             this.errorCallback = errorCallback;
-            this.locations = new ArrayList<VasttrafikLocation>();
+            this.locations = new ArrayList<>();
+            this.uri = uri;
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            errorCallback.vasttrafikRequestError(error.toString());
+            AutocompleteParser parser = new AutocompleteParser(autoCallback, errorCallback, uri);
+            JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
+            queue.add(request);
         }
 
         @Override

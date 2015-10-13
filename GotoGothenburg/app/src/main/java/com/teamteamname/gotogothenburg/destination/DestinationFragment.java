@@ -81,9 +81,9 @@ public class DestinationFragment extends Fragment{
         }
 
         @Override
-        public void vasttrafikRequestDone(boolean newPolyline, int r, int g, int b, LatLng... polyline) {
+        public void vasttrafikRequestDone(boolean newPolyline, LatLng... polyline) {
             ((MainActivity)getActivity()).changeTab(1);
-            ((MapFragment)((MainActivity)getActivity()).getCurrentTab()).drawPolyLine(newPolyline, r, g, b, polyline);
+            ((MapFragment)((MainActivity)getActivity()).getCurrentTab()).drawPolyLine(newPolyline, polyline);
         }
 
         @Override
