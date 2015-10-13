@@ -14,6 +14,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.teamteamname.gotogothenburg.api.IDeviceAPI;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.route.PointOfInterest;
@@ -148,6 +149,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     private class Guide implements IOnWhichBusListener, ISoundDoneCallback {
 
         private GuideDialog guideDialog;
+        private IDeviceAPI api = AndroidDeviceAPI.getInstance();
 
         /**
          * Starts listening for which bus the user is on
@@ -164,8 +166,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
             if (nextPOI != null) {
                 //TODO Check if handsfree are plugged in. (Also, what to do if they are unplugged afterwards?)
-                if (nextPOI.getSoundGuide() != null) {
-                    AndroidDeviceAPI.getInstance().playSound(this, nextPOI.getSoundGuide()); //TODO change in API to not play if null
+                if (api.isHandsfreePluggedIn()) {
+                    api.playSound(this, nextPOI.getSoundGuide());
                 }
 
                 guideDialog = GuideDialog.newInstance(nextPOI);
@@ -184,7 +186,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         @Override
         public void notConnectedToElectriCityWifiError() {
             ConnectToWiFiErrorDialog connectError = ConnectToWiFiErrorDialog.createInstance(getActivity());
-            connectError.show(getActivity().getFragmentManager(),"notConnectedToElectriCityWifiError");
+            connectError.show(getActivity().getFragmentManager(), "notConnectedToElectriCityWifiError");
         }
 
         @Override
@@ -196,6 +198,11 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         public void soundFinishedPlaying() {
             identifyBus();
             guideDialog.dismiss();
+        }
+
+        @Override
+        public void soundCouldNotBePlayed() {
+
         }
     }
 
