@@ -82,8 +82,9 @@ public class AndroidDeviceAPI implements IDeviceAPI {
                     callback.soundFinishedPlaying();
                 }
             }, mediaPlayer.getDuration());
+        } else {
+            callback.soundCouldNotBePlayed();
         }
-        callback.soundCouldNotBePlayed();
     }
 
     @Override
