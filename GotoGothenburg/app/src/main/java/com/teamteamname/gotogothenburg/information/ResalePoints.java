@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -42,6 +43,7 @@ public class ResalePoints {
                 markerOptions.add(
                         new MarkerOptions().title(values[0])
                                 .position(new LatLng(Double.parseDouble(values[1]), Double.parseDouble(values[2])))
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                 );
             }
         } catch (IOException e) {
