@@ -199,7 +199,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         @Override
         public void notConnectedToElectriCityWifiError() {
-
+            ConnectToWiFiErrorDialog connectError = ConnectToWiFiErrorDialog.createInstance(getActivity());
+            connectError.show(getActivity().getFragmentManager(),"notConnectedToElectriCityWifiError");
         }
 
         @Override
