@@ -1,14 +1,18 @@
 package com.teamteamname.gotogothenburg.map;
 
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -19,6 +23,7 @@ import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +36,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
     private GoogleMap map;
     private List<Polyline> polyline;
+    Marker currentSelection;
 
     public static MapFragment newInstance(){
         return new MapFragment();
@@ -109,6 +115,25 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
         zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
+        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                Geocoder geocoder = new Geocoder(getActivity());
+                if (currentSelection != null) {
+                    currentSelection.remove();
+                }
+                try {
+                    currentSelection = placeMarker(new MarkerOptions()
+                            .position(latLng)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_drop_black_48dp))
+                            .title(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0).getAddressLine(0))
+                            .snippet("Click here to add to Destinations"));
+                } catch (IOException e) {
+                    Log.e("No network", e.getMessage());
+                    // TODO error handling
+                }
+            }
+        });
     }
 
     private void zoomToLocation(Location location, float zoom){
