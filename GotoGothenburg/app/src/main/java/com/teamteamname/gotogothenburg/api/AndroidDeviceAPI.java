@@ -16,21 +16,21 @@ import java.util.TimerTask;
  * The AndriodDeviceAPI is intended for any android device with a WiFi signal.
  * Created by Anton on 2015-09-23.
  */
-public class AndroidDeviceAPI implements IDeviceAPI {
+public final class AndroidDeviceAPI implements IDeviceAPI {
     private static AndroidDeviceAPI instance;
-    private WifiInfo wifiInfo;
-    private Context context;
+    final private WifiInfo wifiInfo;
+    final private Context context;
 
     /**
      * Constructor require a context in order to connect the API to the device.
      */
     private AndroidDeviceAPI(Context context){
         this.context = context;
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         wifiInfo = wifiManager.getConnectionInfo();
     }
 
-    public static synchronized AndroidDeviceAPI getInstance(){
+    public static AndroidDeviceAPI getInstance() {
         return instance;
     }
 
@@ -41,8 +41,10 @@ public class AndroidDeviceAPI implements IDeviceAPI {
      * @param context
      */
     public static void initialize(Context context) {
-        if (instance == null) {
-            instance = new AndroidDeviceAPI(context);
+        synchronized (AndroidDeviceAPI.class) {
+            if (instance == null) {
+                instance = new AndroidDeviceAPI(context);
+            }
         }
     }
 
@@ -69,11 +71,13 @@ public class AndroidDeviceAPI implements IDeviceAPI {
 
     @Override
     public void playSound(final ISoundDoneCallback callback, File sound) {
-        if (sound != null) {
-            int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
+        if (sound == null) {
+            callback.soundCouldNotBePlayed();
+        } else {
+            final int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
             final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
             mediaPlayer.start();
-            Timer mediaStopper = new Timer();
+            final Timer mediaStopper = new Timer();
             mediaStopper.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -82,14 +86,12 @@ public class AndroidDeviceAPI implements IDeviceAPI {
                     callback.soundFinishedPlaying();
                 }
             }, mediaPlayer.getDuration());
-        } else {
-            callback.soundCouldNotBePlayed();
         }
     }
 
     @Override
     public boolean isHandsfreePluggedIn() {
-        AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        final AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
         //Check both wired and wireless handsfree
         //Only other parts of the deprecated method is deprecated.
         return audioManager.isWiredHeadsetOn() || audioManager.isBluetoothA2dpOn(); 
