@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api;
+package com.teamteamname.gotogothenburg.api.electricity;
 
 import android.test.AndroidTestCase;
 import android.util.Log;
@@ -8,8 +8,8 @@ import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.electricity.IElectricityAPI;
-import com.teamteamname.gotogothenburg.api.mock.MockElectricityHandler;
-import com.teamteamname.gotogothenburg.api.mock.MockRequestQueue;
+import com.teamteamname.gotogothenburg.api.electricity.mock.MockElectricityHandler;
+import com.teamteamname.gotogothenburg.api.electricity.mock.MockRequestQueue;
 import com.teamteamname.gotogothenburg.map.Bus;
 
 import org.json.JSONArray;

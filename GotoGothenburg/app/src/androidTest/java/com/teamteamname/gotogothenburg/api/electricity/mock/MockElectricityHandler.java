@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.mock;
+package com.teamteamname.gotogothenburg.api.electricity.mock;
 
 import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;

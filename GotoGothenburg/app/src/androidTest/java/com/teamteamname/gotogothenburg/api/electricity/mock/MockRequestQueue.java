@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.mock;
+package com.teamteamname.gotogothenburg.api.electricity.mock;
 
 import android.util.Log;
 
@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NoCache;
+import com.teamteamname.gotogothenburg.api.electricity.mock.MockNetwork;
 
 import org.json.JSONArray;
 
@@ -29,7 +30,7 @@ public class MockRequestQueue extends RequestQueue {
 
 
     public MockRequestQueue(){
-        super(new NoCache(), new com.teamteamname.gotogothenburg.api.mock.MockNetwork());
+        super(new NoCache(), new MockNetwork());
     }
 
 
