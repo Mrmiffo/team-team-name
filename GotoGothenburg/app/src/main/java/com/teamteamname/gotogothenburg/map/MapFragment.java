@@ -31,8 +31,6 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
     private GoogleMap map;
     private List<Polyline> polyline;
-    private Marker myPosition;
-    private boolean onLocationChangedHasRun;
 
     public static MapFragment newInstance(){
         return new MapFragment();
