@@ -9,13 +9,13 @@ import com.teamteamname.gotogothenburg.route.Route;
  * A class defining what a guide provides, regardless of what device doing the guiding.
  * Created by kakan on 2015-10-13.
  */
-public abstract class Guide implements ISoundDoneCallback {
+public abstract class AbstractGuide implements ISoundDoneCallback {
     protected IDeviceAPI api;
     protected Route route;
     protected PointOfInterest pointOfInterest;
     protected boolean isGuiding;
 
-    public Guide(Route route) {
+    public AbstractGuide(Route route) {
         this.route = route;
     }
     /**

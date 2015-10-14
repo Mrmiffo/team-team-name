@@ -13,9 +13,9 @@ import java.util.TimerTask;
  * A class handling guiding as an Android device.
  * Created by kakan on 2015-10-13.
  */
-public class AndroidGuide extends Guide {
+public class AndroidGuide extends AbstractGuide {
 
-    private Context context;
+    final private Context context;
     private GuideDialog guideDialog;
 
     public AndroidGuide(Context context, Route route) {
@@ -41,7 +41,7 @@ public class AndroidGuide extends Guide {
                 if (api.isHandsfreePluggedIn()) {
                     api.playSound(this, pointOfInterest.getSoundGuide());
                 } else {
-                    UnpluggedHandsfreeDialog unpluggedDialog = new UnpluggedHandsfreeDialog();
+                    final UnpluggedHandsfreeDialog unpluggedDialog = new UnpluggedHandsfreeDialog();
                     unpluggedDialog.show(((Activity) context).getFragmentManager(), "unplugged");
                     soundCouldNotBePlayed();
                 }
@@ -64,8 +64,8 @@ public class AndroidGuide extends Guide {
 
     @Override
     public void soundCouldNotBePlayed() {
-        Timer delay = new Timer();
-        int DELAY_TIME = 10000;
+        final Timer delay = new Timer();
+        final int DELAY_TIME = 10000;
         delay.schedule(new TimerTask() {
             @Override
             public void run() {
