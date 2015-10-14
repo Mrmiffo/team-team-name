@@ -13,8 +13,6 @@ import com.teamteamname.gotogothenburg.R;
  */
 public class UnpluggedHandsfreeDialog extends DialogFragment {
 
-    public UnpluggedHandsfreeDialog() {}
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
