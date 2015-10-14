@@ -19,7 +19,7 @@ public class UnpluggedHandsfreeDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         return new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.unplugged_handsfree)
+                .setTitle(R.string.unplugged_handsfree_title)
                 .setMessage(R.string.unplugged_handsfree_message)
                 .setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
