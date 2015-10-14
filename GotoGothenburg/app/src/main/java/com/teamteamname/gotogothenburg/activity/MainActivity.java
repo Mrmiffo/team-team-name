@@ -70,7 +70,7 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
         // Adding listeners to searchbar
         SearchView searchBar = (SearchView)findViewById(R.id.searchBar);
         searchBar.setOnQueryTextListener(new SearchbarListener(this, searchBar));
-        SearchManager manager = (SearchManager) getSystemService(this.SEARCH_SERVICE);
+        SearchManager manager = (SearchManager) getSystemService(Activity.SEARCH_SERVICE);
         searchBar.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
 
         //Fill the saved destinations object with data from the database.
@@ -116,7 +116,6 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
         if (requestCode == LocationServicesAPI.REQUEST_RESOLVE_ERROR) {
             LocationServicesAPI.getInstance().resolutionResult(resultCode, data);
         }
