@@ -18,7 +18,6 @@ import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
-import com.teamteamname.gotogothenburg.information.ResalePoints;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.information;
+package com.teamteamname.gotogothenburg.map;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 /**
  *
- * Loads resale points from textfile and stores them as MarkerOptions
+ * Loads ticket resale points from textfile and stores them as MarkerOptions
  *
  * Created by patrick on 08/10/2015.
  */
