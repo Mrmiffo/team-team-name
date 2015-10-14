@@ -41,9 +41,10 @@ public class AndroidGuide extends Guide {
                 if (api.isHandsfreePluggedIn()) {
                     api.playSound(this, pointOfInterest.getSoundGuide());
                 } else {
+                    UnpluggedHandsfreeDialog unpluggedDialog = new UnpluggedHandsfreeDialog();
+                    unpluggedDialog.show(((Activity) context).getFragmentManager(), "unplugged");
                     soundCouldNotBePlayed();
                 }
-
                 guideDialog = GuideDialog.newInstance(pointOfInterest);
                 guideDialog.show(((Activity) context).getFragmentManager(), "guide");
             }
