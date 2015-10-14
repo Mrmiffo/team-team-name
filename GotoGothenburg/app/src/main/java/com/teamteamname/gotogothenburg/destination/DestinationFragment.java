@@ -1,6 +1,7 @@
 package com.teamteamname.gotogothenburg.destination;
 
 import android.app.Fragment;
+import android.location.Location;
 import android.os.Bundle;
 
 
@@ -10,25 +11,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
-import com.teamteamname.gotogothenburg.map.MapFragment;
 
 /**
  * THe fragment used to display the Destination screen in the application.
  * Created by Anton on 2015-09-21.
  */
 public class DestinationFragment extends Fragment{
-
-    private ListView destinationListView;
-    private DestinationListAdapter adapter;
 
     public DestinationFragment() {
         super();
@@ -56,44 +51,42 @@ public class DestinationFragment extends Fragment{
         // Inflate the layout for this fragment
         final View toReturn = inflater.inflate(R.layout.fragment_destination, container, false);
         //Load the destinations view xml
-        destinationListView = (ListView) toReturn.findViewById(R.id.destinationListView);
-        adapter = new DestinationListAdapter(getActivity());
+        DestinationListAdapter adapter = new DestinationListAdapter(getActivity());
+
+        ListView destinationListView = (ListView) toReturn.findViewById(R.id.destinationListView);
         destinationListView.setAdapter(adapter);
-        destinationListView.setOnItemClickListener(new DestinationClickListener());
+        destinationListView.setOnItemClickListener(destinationClickListener);
+
         toReturn.findViewById(R.id.newDestinationButton).setOnClickListener(createDestinationListener);
+
         return toReturn;
     }
 
-    private class DestinationClickListener implements OnItemClickListener, VasttrafikTripHandler, VasttrafikErrorHandler{
-
+    /**
+     * Listener for showing trip in mapfragment based on which destination item was pressed
+     */
+    private OnItemClickListener destinationClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            double originLat = LocationServicesAPI.getInstance().getLastKnownLocation().getLatitude();
-            double originLng = LocationServicesAPI.getInstance().getLastKnownLocation().getLongitude();
-            VasttrafikLocation origin = new VasttrafikLocation("origin", originLat, originLng);
+            Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
+            if (myLocation != null) {
+                VasttrafikLocation origin = new VasttrafikLocation("origin", myLocation.getLatitude(), myLocation.getLongitude());
 
-            double destLat = ((Destination)parent.getItemAtPosition(position)).getLatitude();
-            double destLng = ((Destination)parent.getItemAtPosition(position)).getLongitude();
-            String name = ((Destination)parent.getItemAtPosition(position)).getName();
-            VasttrafikLocation dest = new VasttrafikLocation(name, destLat, destLng);
+                double destLat = ((Destination) parent.getItemAtPosition(position)).getLatitude();
+                double destLng = ((Destination) parent.getItemAtPosition(position)).getLongitude();
+                String name = ((Destination) parent.getItemAtPosition(position)).getName();
+                VasttrafikLocation dest = new VasttrafikLocation(name, destLat, destLng);
 
-            VasttrafikAPI.getInstance().getCoordinates(this, this, origin, dest);
+                VasttrafikAPI.getInstance().getCoordinates((MainActivity) getActivity(), (MainActivity) getActivity(), origin, dest);
+            } else {
+                Toast.makeText(getActivity(), "Device Location not found", Toast.LENGTH_SHORT).show();
+            }
         }
 
-        @Override
-        public void vasttrafikRequestDone(boolean newPolyline, LatLng... polyline) {
-            ((MainActivity)getActivity()).changeTab(1);
-            ((MapFragment)((MainActivity)getActivity()).getCurrentTab()).drawPolyLine(newPolyline, polyline);
-        }
+    };
 
-        @Override
-        public void vasttrafikRequestError(String e) {
-
-        }
-    }
-
-    /*
-    Listener which displays the CreateNewDestinationFragment but disallows double clicks
+    /**
+     * Listener which displays the CreateNewDestinationFragment but disallows double clicks
      */
     private View.OnClickListener createDestinationListener = new View.OnClickListener() {
         private long time = 0;
