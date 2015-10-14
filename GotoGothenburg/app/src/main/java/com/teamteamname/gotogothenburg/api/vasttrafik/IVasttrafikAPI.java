@@ -1,6 +1,8 @@
-package com.teamteamname.gotogothenburg.api;
+package com.teamteamname.gotogothenburg.api.vasttrafik;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikAutocompleteHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
 
 /**
  * Created by Mattias Ahlstedt on 2015-09-25.

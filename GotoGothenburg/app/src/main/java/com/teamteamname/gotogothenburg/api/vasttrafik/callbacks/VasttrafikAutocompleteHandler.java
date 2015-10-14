@@ -1,4 +1,6 @@
-package com.teamteamname.gotogothenburg.api;
+package com.teamteamname.gotogothenburg.api.vasttrafik.callbacks;
+
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
 
 /**
  * Created by Mattias Ahlstedt on 2015-10-09.

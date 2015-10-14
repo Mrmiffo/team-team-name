@@ -15,10 +15,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.api.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.VasttrafikLocation;
-import com.teamteamname.gotogothenburg.api.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 
 /**

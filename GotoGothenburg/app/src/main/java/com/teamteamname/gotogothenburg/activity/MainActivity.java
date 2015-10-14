@@ -22,7 +22,7 @@ import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
 import com.teamteamname.gotogothenburg.api.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.api.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.map.Bus;
