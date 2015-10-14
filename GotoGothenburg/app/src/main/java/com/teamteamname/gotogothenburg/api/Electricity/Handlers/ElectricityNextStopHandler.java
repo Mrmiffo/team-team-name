@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api;
+package com.teamteamname.gotogothenburg.api.Electricity.Handlers;
 
 import com.teamteamname.gotogothenburg.route.Stops;
 

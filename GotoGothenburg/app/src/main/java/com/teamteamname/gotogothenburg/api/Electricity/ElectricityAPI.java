@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api;
+package com.teamteamname.gotogothenburg.api.Electricity;
 
 
 import android.content.Context;
@@ -11,6 +11,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.api.ElectricityGPSHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityStopButtonHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityTempHandler;
+import com.teamteamname.gotogothenburg.api.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.IElectricityAPI;
 import com.teamteamname.gotogothenburg.route.Stops;
 import com.teamteamname.gotogothenburg.map.Bus;
 
@@ -26,7 +32,7 @@ import java.util.PriorityQueue;
 /**
  * Created by Olof on 25/09/2015.
  */
-public class ElectricityAPI implements IElectricityAPI{
+public class ElectricityAPI implements IElectricityAPI {
 
     private RequestQueue queue;
     private static IElectricityAPI instance;

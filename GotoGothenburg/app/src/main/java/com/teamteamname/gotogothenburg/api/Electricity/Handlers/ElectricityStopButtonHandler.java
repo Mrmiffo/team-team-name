@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api;
+package com.teamteamname.gotogothenburg.api.Electricity.Handlers;
 
 /**
  * A interface for recieving the callback response from Electricity's REST API.
