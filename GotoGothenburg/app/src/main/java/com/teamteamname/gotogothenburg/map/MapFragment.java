@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -82,6 +83,28 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
         zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
+        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                if ("Create Destination".equalsIgnoreCase(marker.getSnippet())) {
+                    View v = LayoutInflater.from(getActivity()).inflate(R.layout.custom_add_destinations_marker_info_window_layout ,null);
+                    ((Button)v.findViewById(R.id.info_window_button)).setText(marker.getTitle());
+                    return v;
+                } else if ("Directions".equalsIgnoreCase(marker.getSnippet())) {
+                    View v = LayoutInflater.from(getActivity()).inflate(R.layout.custom_directions_marker_info_window_layout, null);
+                    ((Button)v.findViewById(R.id.info_window_button)).setText(marker.getTitle());
+                    return v;
+                } else {
+                    return null;
+                }
+            }
+        });
         map.setOnMapLongClickListener(onMapLongClickListener);
         map.setOnInfoWindowClickListener(onInfoWindowClickListener);
     }
