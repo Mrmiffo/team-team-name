@@ -44,6 +44,7 @@ public class ResalePoints {
                         new MarkerOptions().title(values[0])
                                 .position(new LatLng(Double.parseDouble(values[1]), Double.parseDouble(values[2])))
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .snippet("Directions")
                 );
             }
         } catch (IOException e) {

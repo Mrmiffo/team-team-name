@@ -190,6 +190,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                     MarkerOptions marker = new MarkerOptions();
                     marker.position(new LatLng(dest.getLatitude(), dest.getLongitude()));
                     marker.title(dest.getName());
+                    marker.snippet("Directions");
                     markers.add(placeMarker(marker));
                 }
 
@@ -214,7 +215,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                         .position(latLng)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_drop_black_48dp))
                         .title(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0).getAddressLine(0))
-                        .snippet("Click here to add to Destinations"));
+                        .snippet("Create Destination"));
             } catch (IOException e) {
                 Log.e("No network", e.getMessage());
                 // TODO error handling
