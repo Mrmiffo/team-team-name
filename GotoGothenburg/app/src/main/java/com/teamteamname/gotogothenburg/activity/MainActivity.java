@@ -1,5 +1,6 @@
 package com.teamteamname.gotogothenburg.activity;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -7,8 +8,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -17,19 +20,22 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 
-public class MainActivity extends FragmentActivity{
+public class MainActivity extends FragmentActivity implements VasttrafikTripHandler, VasttrafikErrorHandler{
 
     private ViewPager viewPager;
 
@@ -129,5 +135,18 @@ public class MainActivity extends FragmentActivity{
      */
     public Fragment getCurrentTab(){
         return ((FragmentAdapter)viewPager.getAdapter()).getRegisteredFragment(viewPager.getCurrentItem());
+    }
+
+    @Override
+    public void vasttrafikRequestError(String e) {
+        // TODO look into error handling
+        Log.e("VastTrafikError",e);
+        Toast.makeText(this, "Error with Vasttrafik: " + e, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void vasttrafikRequestDone(boolean newPolyline, LatLng... polyline) {
+        changeTab(1);
+        ((MapFragment) getCurrentTab()).drawPolyLine(newPolyline, polyline);
     }
 }
