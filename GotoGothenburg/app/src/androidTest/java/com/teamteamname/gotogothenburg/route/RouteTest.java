@@ -20,17 +20,11 @@ public class RouteTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     @Override
     protected void setUp() throws Exception {
+        super.setUp();
         testBusDwg = "Ericsson$Vin_Num_001";
         Bus.init();
         ElectricityAPI.init(getActivity(), new MockRequestQueue());
         route = new Route(Bus.getBusByDgw(testBusDwg));
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        route = null;
-        testBusDwg = null;
-        System.gc();
     }
 
     public void testGetNextPOI() {
@@ -40,14 +34,14 @@ public class RouteTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
         route.electricityNextStopResponse(Stops.BRUNNSPARKEN);
 
-        PointOfInterest poi_1 = route.getNextPOI();
-        for (PointOfInterest kungsportsplatsenPOI: Stops.KUNGSPORTSPLATSEN.getPointOfInterests()) {
+        final PointOfInterest poi_1 = route.getNextPOI();
+        for (final PointOfInterest kungsportsplatsenPOI: Stops.KUNGSPORTSPLATSEN.getPointOfInterests()) {
             assertFalse(poi_1.equals(kungsportsplatsenPOI)); //make sure that POIs from previous stop are not being stored.
         }
         assertTrue("poi_1 was null", poi_1 != null); //make sure a POI is retrived.
 
 
-        PointOfInterest poi_2 = route.getNextPOI();
+        final PointOfInterest poi_2 = route.getNextPOI();
         assertFalse("poi_1 is equal to poi_2", poi_1.equals(poi_2)); //make sure the route is not doubled
 
 
