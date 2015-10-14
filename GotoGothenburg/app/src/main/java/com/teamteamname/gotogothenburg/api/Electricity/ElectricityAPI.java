@@ -11,12 +11,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.ElectricityGPSHandler;
-import com.teamteamname.gotogothenburg.api.ElectricityNextStopHandler;
-import com.teamteamname.gotogothenburg.api.ElectricityStopButtonHandler;
-import com.teamteamname.gotogothenburg.api.ElectricityTempHandler;
-import com.teamteamname.gotogothenburg.api.ElectricityWifiHandler;
-import com.teamteamname.gotogothenburg.api.IElectricityAPI;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityGPSHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityStopButtonHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityTempHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Parsers.AmbientTempParser;
+import com.teamteamname.gotogothenburg.api.Electricity.Parsers.CabinTempParser;
+import com.teamteamname.gotogothenburg.api.Electricity.Parsers.GPSCoordParser;
+import com.teamteamname.gotogothenburg.api.Electricity.Parsers.NextStopParser;
+import com.teamteamname.gotogothenburg.api.Electricity.Parsers.StopPressedParser;
+import com.teamteamname.gotogothenburg.api.Electricity.Parsers.WifiUsersParser;
 import com.teamteamname.gotogothenburg.route.Stops;
 import com.teamteamname.gotogothenburg.map.Bus;
 
@@ -190,42 +195,6 @@ public class ElectricityAPI implements IElectricityAPI {
         return sb.toString();
     }
 
-    // Returns the JSONObject with latest value (according to the timestamps) for a specific resource out of a array which could contain other resources.
-    private JSONObject getLatestJSONValue(String resourceName, JSONArray array){
-
-        PriorityQueue<JSONObject> objectsWithResourceName = new PriorityQueue<JSONObject>(2,new Comparator<JSONObject>(){
-
-            @Override
-            public int compare(JSONObject lhs, JSONObject rhs) {
-                Log.i("ParseLatest",lhs.toString());
-                Log.i("ParseLatest",rhs.toString());
-                try {
-                    return rhs.getInt("timestamp")-lhs.getInt("timestamp");
-                }catch (JSONException e){
-                    Log.e("ParsingError","No timestamp in Object");
-                }
-                return 0;
-            }
-        });
-        try{
-            for(int i = 0; i < array.length(); i++){
-                JSONObject object = array.getJSONObject(i);
-                if(object.getString("resourceSpec").equals(resourceName)){
-                    objectsWithResourceName.add(object);
-                }
-
-            }
-
-            return objectsWithResourceName.poll();
-
-        }catch(JSONException e){
-            Log.e("ParsingError", "Not able to find resource in array.");
-        }
-
-        //Should only return if there was an parsing error.
-        return new JSONObject();
-    }
-
     private Map<String,String> createBasicAuth(String auth){
         Map<String,String> headerMap = new HashMap<String,String>();
 
@@ -247,193 +216,6 @@ public class ElectricityAPI implements IElectricityAPI {
             return createBasicAuth(apiKey);
         }
 
-    }
-
-    // The following listeners parses the JSONArray response from the api into the appropriate format.
-    // They then pass it to the callback object
-
-    // Parses a response into a GPSCoord.
-    private class GPSCoordParser implements Response.Listener<JSONArray>, Response.ErrorListener{
-
-        private ElectricityGPSHandler callback;
-
-        public GPSCoordParser(ElectricityGPSHandler callback){
-            this.callback = callback;
-        }
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.e("GPSCoordParser",error.toString());
-            callback.electricityRequestError(error.toString());
-        }
-
-        @Override
-        public void onResponse(JSONArray response) {
-            Log.i("Response",response.toString());
-
-            JSONObject lat = getLatestJSONValue("Latitude2_Value",response);
-            JSONObject lng = getLatestJSONValue("Longitude2_Value",response);
-
-            try {
-                callback.electricityGPSResponse(new GPSCoord((float) lat.getDouble("value"), (float) lng.getDouble("value")));
-            }catch(JSONException e){
-                Log.e("JSONException","Error getting values from JSONObject-response");
-            }catch(NullPointerException e){
-                Log.e("NullPointer","Error reading JSONObjects");
-            }
-        }
-    }
-
-    private class NextStopParser implements Response.Listener<JSONArray>, Response.ErrorListener{
-
-        ElectricityNextStopHandler callback;
-
-        public NextStopParser(ElectricityNextStopHandler callback){
-            this.callback = callback;
-        }
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.e("NextStopParser",error.toString());
-            callback.electricityRequestError(error.toString());
-        }
-
-        @Override
-        public void onResponse(JSONArray response) {
-            Log.i("Response",response.toString());
-
-            JSONObject nextStop = getLatestJSONValue("Bus_Stop_Name_Value",response);
-            boolean stopExists = false;
-
-            try {
-                for(Stops stop:Stops.values()){
-                    //Checks caps to match
-                    if(nextStop.getString("value").toUpperCase().equals(stop.toString())){
-                        callback.electricityNextStopResponse(stop);
-                        stopExists = true;
-                    }
-                }
-                if(!stopExists){
-                    throw new IllegalArgumentException("No stop" + nextStop.getString("value") + "exists");
-                }
-            }catch(JSONException e){
-                Log.e("JSONException","Error getting values from JSONObject-response");
-            }catch(NullPointerException e){
-                Log.e("NullPointer","Error reading JSONObjects");
-            }
-        }
-    }
-
-    private class AmbientTempParser implements Response.Listener<JSONArray>, Response.ErrorListener{
-
-        ElectricityTempHandler callback;
-
-        public AmbientTempParser(ElectricityTempHandler callback){ this.callback = callback; }
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.e("AmbientTempParser", error.toString());
-            callback.electricityRequestError(error.toString());
-        }
-
-        @Override
-        public void onResponse(JSONArray response) {
-            Log.i("Response",response.toString());
-
-            JSONObject temperature = getLatestJSONValue("Ambient_Temperature_Value",response);
-
-            try {
-                callback.electricityAmbientTemperatureResponse(temperature.getDouble("value"));
-            }catch(JSONException e){
-                Log.e("JSONException","Error getting values from JSONObject-response");
-            }catch(NullPointerException e){
-                Log.e("NullPointer","Error reading JSONObjects");
-            }
-        }
-    }
-
-    private class CabinTempParser implements Response.Listener<JSONArray>, Response.ErrorListener{
-
-        ElectricityTempHandler callback;
-
-        public CabinTempParser(ElectricityTempHandler callback){ this.callback = callback; }
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.e("CabinTempParser", error.toString());
-            callback.electricityRequestError(error.toString());
-        }
-
-        @Override
-        public void onResponse(JSONArray response) {
-            Log.i("Response",response.toString());
-
-            JSONObject temperature = getLatestJSONValue("Driver_Cabin_Temperature_Value",response);
-
-            try {
-                callback.electricityCabinTemperature(temperature.getDouble("value"));
-            }catch(JSONException e){
-                Log.e("JSONException","Error getting values from JSONObject-response");
-            }catch(NullPointerException e){
-                Log.e("NullPointer","Error reading JSONObjects");
-            }
-        }
-    }
-
-    private class StopPressedParser implements Response.Listener<JSONArray>, Response.ErrorListener{
-
-        ElectricityStopButtonHandler callback;
-
-        public StopPressedParser(ElectricityStopButtonHandler callback){ this.callback = callback; }
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.e("StopPressedParser", error.toString());
-            callback.electricityRequestError(error.toString());
-        }
-
-        @Override
-        public void onResponse(JSONArray response) {
-            Log.i("Response",response.toString());
-
-            JSONObject stopPressed = getLatestJSONValue("Stop_Pressed_Value",response);
-
-            try {
-                callback.electricityStopPressedResponse(stopPressed.getBoolean("value"));
-            }catch(JSONException e){
-                Log.e("JSONException","Error getting values from JSONObject-response");
-            }catch(NullPointerException e){
-                Log.e("NullPointer","Error reading JSONObjects");
-            }
-        }
-    }
-
-    private class WifiUsersParser implements Response.Listener<JSONArray>, Response.ErrorListener{
-
-        ElectricityWifiHandler callback;
-
-        public WifiUsersParser(ElectricityWifiHandler callback){ this.callback = callback; }
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.e("WifiUsersParser", error.toString());
-            callback.electricityRequestError(error.toString());
-        }
-
-        @Override
-        public void onResponse(JSONArray response) {
-            Log.i("Response", response.toString());
-
-            JSONObject wifiUsers = getLatestJSONValue("Total_Online_Users_Value",response);
-            callback.electricityWifiUsersResponse(30);
-            try {
-                callback.electricityWifiUsersResponse(wifiUsers.getInt("value"));
-            }catch(JSONException e){
-                Log.e("JSONException","Error getting values from JSONObject-response");
-            }catch(NullPointerException e){
-                Log.e("NullPointer","Error reading JSONObjects");
-            }
-        }
     }
 
 }
