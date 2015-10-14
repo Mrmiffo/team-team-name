@@ -2,7 +2,9 @@ package com.teamteamname.gotogothenburg.activity;
 
 import android.content.Context;
 import android.database.MatrixCursor;
+import android.location.Location;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
@@ -19,7 +21,7 @@ import java.util.List;
 /**
  * Created by Mattias Ahlstedt on 2015-09-29.
  */
-public class SearchbarListener implements SearchView.OnQueryTextListener, VasttrafikErrorHandler, VasttrafikAutocompleteHandler, VasttrafikTripHandler {
+public class SearchbarListener implements SearchView.OnQueryTextListener, VasttrafikAutocompleteHandler {
 
     private long lastCall;
     private Context context;
@@ -36,11 +38,19 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Vasttr
     public boolean onQueryTextSubmit(String query) {
         for(VasttrafikLocation location : locations){
             if(location.getName().equals(query)){
-                double lat = LocationServicesAPI.getInstance().getLastKnownLocation().getLatitude();
-                double lng = LocationServicesAPI.getInstance().getLastKnownLocation().getLongitude();
-                VasttrafikAPI.getInstance().getCoordinates(this, this, new VasttrafikLocation("origin", lat, lng), location);
-                searchbar.clearFocus();
-                return true;
+                Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
+                if (myLocation != null) {
+                    VasttrafikAPI.getInstance().getCoordinates(
+                            (MainActivity) context,
+                            (MainActivity) context,
+                            new VasttrafikLocation("origin", myLocation.getLatitude(), myLocation.getLongitude()),
+                            location);
+
+                    searchbar.clearFocus();
+                    return true;
+                } else {
+                    Toast.makeText(context, "Device Location not found", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         return false;
@@ -49,7 +59,7 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Vasttr
     @Override
     public boolean onQueryTextChange(String input) {
         if(System.currentTimeMillis()-lastCall > 500){
-            VasttrafikAPI.getInstance().getAutocomplete(this, this, input);
+            VasttrafikAPI.getInstance().getAutocomplete(this, (MainActivity)context, input);
         }
         this.lastCall = System.currentTimeMillis();
         return true;
@@ -69,14 +79,4 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Vasttr
     }
 
 
-    @Override
-    public void vasttrafikRequestDone(boolean newPolyline, LatLng... polyline){
-        ((MainActivity)context).changeTab(1);
-        ((MapFragment)((MainActivity)context).getCurrentTab()).drawPolyLine(newPolyline, polyline);
-    }
-
-    @Override
-    public void vasttrafikRequestError(String e) {
-
-    }
 }
