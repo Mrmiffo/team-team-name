@@ -220,8 +220,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                         .title(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0).getAddressLine(0))
                         .snippet("Create Destination"));
             } catch (IOException e) {
-                Log.e("No network", e.getMessage());
-                // TODO error handling
+                Toast.makeText(getActivity(),"No network connection",Toast.LENGTH_SHORT).show();
             }
         }
     };
