@@ -17,8 +17,8 @@ import com.teamteamname.gotogothenburg.utils.AndroidConverter;
 public class GuideDialog extends DialogFragment {
 
     public static GuideDialog newInstance(PointOfInterest poi) {
-        GuideDialog frag = new GuideDialog();
-        Bundle args = new Bundle();
+        final GuideDialog frag = new GuideDialog();
+        final Bundle args = new Bundle();
         args.putSerializable("poi", poi);
         frag.setArguments(args);
         return frag;
@@ -26,7 +26,7 @@ public class GuideDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        PointOfInterest poi = (PointOfInterest) getArguments().getSerializable("poi");
+        final PointOfInterest poi = (PointOfInterest) getArguments().getSerializable("poi");
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(poi.getName())
