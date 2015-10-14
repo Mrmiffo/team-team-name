@@ -56,7 +56,7 @@ public class SavedDestinations {
             savedDestinations = new ArrayList<>();
             savedDestinations.addAll(destinationsToLoad);
             saver.saveAll(getSavedDestinations());
-            notifyListeners();
+            //notifyListeners();
         }
     }
 
@@ -125,7 +125,7 @@ public class SavedDestinations {
     }
 
     //Local method to report to all the listeners that a change has been made.
-    private void notifyListeners(){
+    public void notifyListeners(){
         for (ISavedDestinationListener listener: listeners){
             listener.update();
         }

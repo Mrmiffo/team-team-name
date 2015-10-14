@@ -78,6 +78,11 @@ public class MainActivity extends FragmentActivity{
                 SavedDestinations.getInstance().loadDestinations(saver.loadAll());
                 return null;
             }
+
+            @Override
+            protected void onPostExecute(Object params) {
+                SavedDestinations.getInstance().notifyListeners();
+            }
         };
         loadDest.execute();
     }

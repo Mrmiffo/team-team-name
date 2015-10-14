@@ -4,8 +4,6 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.teamteamname.gotogothenburg.activity.MainActivity;
 
-import junit.framework.TestCase;
-
 import java.util.ArrayList;
 import java.util.List;
 
