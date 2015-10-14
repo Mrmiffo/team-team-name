@@ -6,6 +6,9 @@ import android.content.Context;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.map.Bus;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * A class handling guiding as an Android device.
  * Created by kakan on 2015-10-13.
@@ -37,13 +40,16 @@ public class AndroidGuide extends Guide {
 
     @Override
     protected void guideNextPointOfInterest() {
+    //Please note that the user will not be able to call this method in any way.
+    //It is automatically called when the sound file has finished playing, or after 10 seconds if it could not be played.
         if (isGuiding) {
             pointOfInterest = route.getNextPOI();
 
             if (pointOfInterest != null) {
-                //TODO Check if handsfree are plugged in. (Also, what to do if they are unplugged afterwards?)
                 if (api.isHandsfreePluggedIn()) {
                     api.playSound(this, pointOfInterest.getSoundGuide());
+                } else {
+                    soundCouldNotBePlayed();
                 }
 
                 guideDialog = GuideDialog.newInstance(pointOfInterest);
@@ -81,10 +87,18 @@ public class AndroidGuide extends Guide {
     @Override
     public void soundFinishedPlaying() {
         guideDialog.dismiss();
+        guideNextPointOfInterest();
     }
 
     @Override
     public void soundCouldNotBePlayed() {
-
+        Timer delay = new Timer();
+        int DELAY_TIME = 10000;
+        delay.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                soundFinishedPlaying();
+            }
+        }, DELAY_TIME);
     }
 }
