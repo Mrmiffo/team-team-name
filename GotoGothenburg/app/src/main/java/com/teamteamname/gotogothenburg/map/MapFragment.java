@@ -86,28 +86,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
         zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
-        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-            @Override
-            public View getInfoWindow(Marker marker) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-
-                if ("Create Destination".equalsIgnoreCase(marker.getSnippet())) {
-                    View v = LayoutInflater.from(getActivity()).inflate(R.layout.custom_add_destinations_marker_info_window_layout ,null);
-                    ((Button)v.findViewById(R.id.info_window_button)).setText(marker.getTitle());
-                    return v;
-                } else if ("Directions".equalsIgnoreCase(marker.getSnippet())) {
-                    View v = LayoutInflater.from(getActivity()).inflate(R.layout.custom_directions_marker_info_window_layout, null);
-                    ((Button)v.findViewById(R.id.info_window_button)).setText(marker.getTitle());
-                    return v;
-                } else {
-                    return null;
-                }
-            }
-        });
+        map.setInfoWindowAdapter(customInfoWindowAdapter);
         map.setOnMapLongClickListener(onMapLongClickListener);
         map.setOnInfoWindowClickListener(onInfoWindowClickListener);
     }
@@ -237,6 +216,27 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 Toast.makeText(getActivity(), "Destination added", Toast.LENGTH_SHORT).show();
             } else {
                 // TODO get trip to selected marker
+
+    /**
+     * Custom InfoWindowAdapter for displaying custom marker InfoWindows
+     * Uses snippet text for deciding what type of InfoWindow to display
+     */
+    private GoogleMap.InfoWindowAdapter customInfoWindowAdapter = new GoogleMap.InfoWindowAdapter() {
+        @Override
+        public View getInfoWindow(Marker marker) {return null;}
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            if ("Create Destination".equalsIgnoreCase(marker.getSnippet())) {
+                View v = LayoutInflater.from(getActivity()).inflate(R.layout.custom_add_destinations_marker_info_window_layout ,null);
+                ((Button)v.findViewById(R.id.info_window_button)).setText(marker.getTitle());
+                return v;
+            } else if ("Directions".equalsIgnoreCase(marker.getSnippet())) {
+                View v = LayoutInflater.from(getActivity()).inflate(R.layout.custom_directions_marker_info_window_layout, null);
+                ((Button)v.findViewById(R.id.info_window_button)).setText(marker.getTitle());
+                return v;
+            } else {
+                return null;
             }
         }
     };
