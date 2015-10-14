@@ -3,7 +3,6 @@ package com.teamteamname.gotogothenburg.map;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 
@@ -35,9 +37,12 @@ import java.util.List;
  */
 public class MapFragment extends com.google.android.gms.maps.MapFragment implements OnMapReadyCallback {
 
+    // Reference to the map displayed in application
     private GoogleMap map;
-    private List<Polyline> polyline;
-    Marker currentSelection;
+    // The current or lastly drawn polyline
+    private List<Polyline> polyline = new ArrayList<>();
+    // Marker for where the user clicks on the map
+    Marker userSelectionMarker;
 
     public static MapFragment newInstance(){
         return new MapFragment();
@@ -46,12 +51,13 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.polyline = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
+        getMapAsync(this);
+
         ViewGroup parentView = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_map, null);
         parentView.addView(view);
@@ -62,9 +68,6 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
             }
         });
-
-        getMapAsync(this);
-        
         view.findViewById(R.id.resalePointsButton).setOnClickListener(resalePointsListener);
         view.findViewById(R.id.showDestButton).setOnClickListener(destinationPointsListener);
 
@@ -72,7 +75,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     }
 
     /*
-    Initiate the map when the map is available
+    Initiate the map when it is available
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -207,11 +210,11 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         @Override
         public void onMapLongClick(LatLng latLng) {
             Geocoder geocoder = new Geocoder(getActivity());
-            if (currentSelection != null) {
-                currentSelection.remove();
+            if (userSelectionMarker != null) {
+                userSelectionMarker.remove();
             }
             try {
-                currentSelection = placeMarker(new MarkerOptions()
+                userSelectionMarker = placeMarker(new MarkerOptions()
                         .position(latLng)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_drop_black_48dp))
                         .title(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0).getAddressLine(0))
@@ -229,7 +232,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     private GoogleMap.OnInfoWindowClickListener onInfoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
-            if (marker.equals(currentSelection)) {
+            if (marker.equals(userSelectionMarker)) {
                 SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(),marker.getPosition().latitude,marker.getPosition().longitude));
                 marker.remove();
                 Toast.makeText(getActivity(), "Destination added", Toast.LENGTH_SHORT).show();
