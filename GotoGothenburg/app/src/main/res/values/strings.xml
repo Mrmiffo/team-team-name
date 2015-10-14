@@ -68,4 +68,50 @@
     <string name="notConnectedToWifiErrorTitle">Connect to ElectriCity wifi</string>
     <string name="notConnectedToWifiErrorText">Please connect to the free open WiFI ElectriCity in order to start the guided tour. This app use the WiFi to identify which bus you are currently on.</string>
     <string name="openWifiSettings">Go to WiFi</string>
+
+    <!--Information fragment-->
+    <string name="info_frag_ticket_title">Tickets</string>
+    <string name="info_frag_ticket_text">
+        The most convenient ticket for shorter stays is to buy a Tourist pass. These are available as 1-day or 3-day pass for each zones mentioned below and cost about the same as 3 one way tickets.
+        \n
+        \nIn the public transport system in and around Gothenburg the type of ticket you need may vary. The most important thing to note is that the ticket system is divided into zones, each zone representing a geographical area in which a certain type of tickets are valid.
+        \n\nZones:
+        \nGöteborg
+        \nThis zone includes the center of Gotheburg and most of Mölndal.
+        \n
+        \nGöteborg+
+        \nThis zone includes the same as Göteborg as well as the neighbouring towns and cities, such as Partille, Ale and the archipelago.
+        \n
+        \nGöteborg++
+        \nThis zone includes the same as Göteborg+ and towns further away from Gothenburg such as Kungsbacka, Kungälv, Lerum and Marstrand.
+        \n
+        \nGöteborg+++
+        \nThis zone includes the same as Göteborg++ but even more towns such as Alingsås, Orust, Stenungsund and Tjörn.
+        \n
+        \nNOTE: This is not a complete list but the most important for visitors to Gothenburg.
+        \n
+        \nChildren:
+        \nIf you are above 20 please note that you can bring up to 3 children (under the age of 20) free of charge on the same ticket.
+    </string>
+    <string name="info_frag_how_to_travel_title">How to use public transport</string>
+    <string name="info_frag_how_to_travel_text">
+        Here you can find the basics of how public transport works in Gothenburg.
+        \n1. Buy a ticket before you board.
+        \n\tTickets are normally not sold onboard. Press the ticket icon in the map to see resellers.
+        \n
+        \n2. Show your ticket to the card reader on the vehicle each time you board.
+        \n\tSome ticket types also require you to show your ticket when you exit as well.
+        \n
+        \n3. Outside Gothenburg you enter through the front door and exit through the back doors of the bus.
+        \n\tIn central Gothenburg you may enter from any door. This is OK in order to speed up boarding.
+        \n
+        \n4. Please let other people leave the vehicle before you board.
+        \n\tStand to the left and right side of the door when they open.
+        \n
+        \n5. Keep the receipt of the ticket available throughout the trip.
+        \n\tSome transport partners, such as SJ trains, don\'t use card scanners but inspect you receipt instead.
+        \n
+        \nNOTE: Traveling without a valid ticket will result in a fine. Inspections are frequent.
+        \n
+    </string>
 </resources>
