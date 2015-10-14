@@ -134,6 +134,18 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 }
             }
         });
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                if (marker.equals(currentSelection)) {
+                    SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(),marker.getPosition().latitude,marker.getPosition().longitude));
+                    marker.remove();
+                    Toast.makeText(getActivity(), "Destination added", Toast.LENGTH_SHORT).show();
+                } else {
+                    // TODO get trip to selected marker
+                }
+            }
+        });
     }
 
     private void zoomToLocation(Location location, float zoom){
