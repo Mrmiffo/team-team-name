@@ -1,10 +1,10 @@
 package com.teamteamname.gotogothenburg.api.Electricity;
 
-import com.teamteamname.gotogothenburg.api.Electricity.ElectricityGPSHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.ElectricityNextStopHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.ElectricityStopButtonHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.ElectricityTempHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityGPSHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityStopButtonHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityTempHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityWifiHandler;
 import com.teamteamname.gotogothenburg.map.Bus;
 
 /**

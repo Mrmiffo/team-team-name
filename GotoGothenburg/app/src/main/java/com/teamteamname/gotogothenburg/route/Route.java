@@ -1,7 +1,7 @@
 package com.teamteamname.gotogothenburg.route;
 
-import com.teamteamname.gotogothenburg.api.ElectricityAPI;
-import com.teamteamname.gotogothenburg.api.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.Electricity.ElectricityAPI;
+import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityNextStopHandler;
 import com.teamteamname.gotogothenburg.map.Bus;
 
 import java.util.ArrayList;
