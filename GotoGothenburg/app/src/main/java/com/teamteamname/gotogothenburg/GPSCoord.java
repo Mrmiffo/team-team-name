@@ -36,8 +36,8 @@ public class GPSCoord {
         }else if(!other.getClass().equals(this.getClass())){
             return false;
         }
-        float epsilon = 0.00000001f;
-        GPSCoord otherGPSCoord = (GPSCoord)other;
+        final float epsilon = 0.00000001f;
+        final GPSCoord otherGPSCoord = (GPSCoord)other;
         if(Math.abs(otherGPSCoord.getLatitude()-this.getLatitude())<epsilon && otherGPSCoord.getLongitude()-this.getLongitude()<epsilon){
             return true;
         }
