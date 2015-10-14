@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
-import com.teamteamname.gotogothenburg.map.Bus;
+import com.teamteamname.gotogothenburg.route.Route;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,8 +18,8 @@ public class AndroidGuide extends Guide {
     private Context context;
     private GuideDialog guideDialog;
 
-    public AndroidGuide(Context context, Bus bus) {
-        super(bus);
+    public AndroidGuide(Context context, Route route) {
+        super(route);
         api = AndroidDeviceAPI.getInstance();
         this.context = context;
     }
@@ -29,14 +29,6 @@ public class AndroidGuide extends Guide {
         isGuiding = true;
         guideNextPointOfInterest();
     }
-
-    /*@Override
-    protected void identifyBus() {
-        final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
-        identifier.registerListener(this);
-        identifier.start();
-    }*/
-
 
     @Override
     protected void guideNextPointOfInterest() {
@@ -62,27 +54,6 @@ public class AndroidGuide extends Guide {
     public void stopGuide() {
         isGuiding = false;
     }
-
-    /*@Override
-    public void whichBussCallBack(Bus busUserIsOn) {
-        final OnWhichBusIdentifier identifier = OnWhichBusIdentifier.getInstance();
-        identifier.removeListener(this);
-        identifier.stop();
-        bus = busUserIsOn;
-        doGuide();
-    }*/
-
-    /*@Override
-    public void notConnectedToElectriCityWifiError() {
-        ConnectToWiFiErrorDialog connectError = ConnectToWiFiErrorDialog.createInstance(getActivity());
-        connectError.show(getActivity().getFragmentManager(), "notConnectedToElectriCityWifiError");
-    }*/
-
-    /*@Override
-    public void unableToIdentifyBusError() {
-
-    }*/
-
 
     @Override
     public void soundFinishedPlaying() {

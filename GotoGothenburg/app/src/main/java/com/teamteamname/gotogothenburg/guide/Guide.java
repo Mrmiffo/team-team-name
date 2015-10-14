@@ -2,7 +2,6 @@ package com.teamteamname.gotogothenburg.guide;
 
 import com.teamteamname.gotogothenburg.api.IDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ISoundDoneCallback;
-import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.route.PointOfInterest;
 import com.teamteamname.gotogothenburg.route.Route;
 
@@ -12,14 +11,12 @@ import com.teamteamname.gotogothenburg.route.Route;
  */
 public abstract class Guide implements ISoundDoneCallback {
     protected IDeviceAPI api;
-    protected Bus bus;
     protected Route route;
     protected PointOfInterest pointOfInterest;
     protected boolean isGuiding;
 
-    public Guide(Bus bus) {
-        this.bus = bus;
-        this.route = new Route(bus);
+    public Guide(Route route) {
+        this.route = route;
     }
     /**
      * Initiates the guiding.
