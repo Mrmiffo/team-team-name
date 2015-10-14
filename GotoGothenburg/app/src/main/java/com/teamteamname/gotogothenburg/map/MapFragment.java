@@ -64,50 +64,15 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
         getMapAsync(this);
         
-        view.findViewById(R.id.resalePointsButton).setOnClickListener(new View.OnClickListener() {
-            private ResalePoints resalePoints = new ResalePoints(getActivity());
-            private boolean isDisplaying = false;
+        view.findViewById(R.id.resalePointsButton).setOnClickListener(resalePointsListener);
+        view.findViewById(R.id.showDestButton).setOnClickListener(destinationPointsListener);
 
-            @Override
-            public void onClick(View v) {
-                if (isDisplaying) {
-                    resalePoints.removeResalePoints();
-                    v.setAlpha(0.5f);
-                } else {
-                    resalePoints.drawResalePoints();
-                    v.setAlpha(1f);
-                }
-                isDisplaying = !isDisplaying;
-            }
-        });
-
-        view.findViewById(R.id.showDestButton).setOnClickListener(new View.OnClickListener() {
-            private boolean isDisplaying = false;
-            private ArrayList<Marker> markers = new ArrayList<>();
-
-            @Override
-            public void onClick(View v) {
-                if (isDisplaying) {
-                    for (Marker marker : markers) {
-                        marker.remove();
-                    }
-                    v.setAlpha(0.5f);
-                } else {
-                    for (Destination dest : SavedDestinations.getInstance().getSavedDestinations()) {
-                        MarkerOptions marker = new MarkerOptions();
-                        marker.position(new LatLng(dest.getLatitude(), dest.getLongitude()));
-                        marker.title(dest.getName());
-                        markers.add(placeMarker(marker));
-                    }
-
-                    v.setAlpha(1f);
-                }
-                isDisplaying = !isDisplaying;
-            }
-        });
         return parentView;
     }
 
+    /*
+    Initiate the map when the map is available
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
@@ -115,37 +80,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
         zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                Geocoder geocoder = new Geocoder(getActivity());
-                if (currentSelection != null) {
-                    currentSelection.remove();
-                }
-                try {
-                    currentSelection = placeMarker(new MarkerOptions()
-                            .position(latLng)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_drop_black_48dp))
-                            .title(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0).getAddressLine(0))
-                            .snippet("Click here to add to Destinations"));
-                } catch (IOException e) {
-                    Log.e("No network", e.getMessage());
-                    // TODO error handling
-                }
-            }
-        });
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                if (marker.equals(currentSelection)) {
-                    SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(),marker.getPosition().latitude,marker.getPosition().longitude));
-                    marker.remove();
-                    Toast.makeText(getActivity(), "Destination added", Toast.LENGTH_SHORT).show();
-                } else {
-                    // TODO get trip to selected marker
-                }
-            }
-        });
+        map.setOnMapLongClickListener(onMapLongClickListener);
+        map.setOnInfoWindowClickListener(onInfoWindowClickListener);
     }
 
     private void zoomToLocation(Location location, float zoom){
@@ -186,4 +122,94 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
             p.remove();
         }
     }
+
+    /**
+     *  Listener for displaying ticket resale points on the map
+     */
+    private View.OnClickListener resalePointsListener = new View.OnClickListener() {
+        private ResalePoints resalePoints;
+        private boolean isDisplaying = false;
+
+        @Override
+        public void onClick(View v) {
+            if (resalePoints == null) {
+                resalePoints = new ResalePoints(getActivity()); //can't initiate resalepoints directly since activity isn't available
+            }
+            if (isDisplaying) {
+                resalePoints.removeResalePoints();
+                v.setAlpha(0.5f);
+            } else {
+                resalePoints.drawResalePoints();
+                v.setAlpha(1f);
+            }
+            isDisplaying = !isDisplaying;
+        }
+    };
+
+    /**
+     * Listener for displaying destinations on the map
+     */
+    private View.OnClickListener destinationPointsListener = new View.OnClickListener() {
+        private boolean isDisplaying = false;
+        private ArrayList<Marker> markers = new ArrayList<>();
+
+        @Override
+        public void onClick(View v) {
+            if (isDisplaying) {
+                for (Marker marker : markers) {
+                    marker.remove();
+                }
+                v.setAlpha(0.5f);
+            } else {
+                for (Destination dest : SavedDestinations.getInstance().getSavedDestinations()) {
+                    MarkerOptions marker = new MarkerOptions();
+                    marker.position(new LatLng(dest.getLatitude(), dest.getLongitude()));
+                    marker.title(dest.getName());
+                    markers.add(placeMarker(marker));
+                }
+
+                v.setAlpha(1f);
+            }
+            isDisplaying = !isDisplaying;
+        }
+    };
+
+    /**
+     * Listener for displaying a marker where the user clicks on the map
+     */
+    private GoogleMap.OnMapLongClickListener onMapLongClickListener = new GoogleMap.OnMapLongClickListener() {
+        @Override
+        public void onMapLongClick(LatLng latLng) {
+            Geocoder geocoder = new Geocoder(getActivity());
+            if (currentSelection != null) {
+                currentSelection.remove();
+            }
+            try {
+                currentSelection = placeMarker(new MarkerOptions()
+                        .position(latLng)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_drop_black_48dp))
+                        .title(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0).getAddressLine(0))
+                        .snippet("Click here to add to Destinations"));
+            } catch (IOException e) {
+                Log.e("No network", e.getMessage());
+                // TODO error handling
+            }
+        }
+    };
+
+    /**
+     * Listener for deciding what should happen when the user clicks on a markers info window
+     */
+    private GoogleMap.OnInfoWindowClickListener onInfoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            if (marker.equals(currentSelection)) {
+                SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(),marker.getPosition().latitude,marker.getPosition().longitude));
+                marker.remove();
+                Toast.makeText(getActivity(), "Destination added", Toast.LENGTH_SHORT).show();
+            } else {
+                // TODO get trip to selected marker
+            }
+        }
+    };
 }
