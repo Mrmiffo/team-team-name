@@ -21,10 +21,24 @@ public class RouteNotifier extends Handler {
         this.context = context;
     }
 
+    /**
+     * Adds a catchBusEvent which will create a notification at the given timespamp (uptimeMillis).
+     * @param timestamp
+     * @param busLine
+     * @param stopName
+     * @param stopPosition
+     */
     public void addCatchBusEvent(long timestamp, int busLine, String stopName, String stopPosition){
         this.postAtTime(new CatchingBusEvent(context,busLine,stopName,stopPosition),timestamp);
     }
 
+    /**
+     * Adds a getOffBusEvent which will create a notification at the given timestamp (uptimeMillis).
+     * @param timestamp
+     * @param busLine
+     * @param stopName
+     * @param stopPosition
+     */
     public void addGetOffBusEvent(long timestamp, int busLine, String stopName, String stopPosition){
         this.postAtTime(new GetOffBusEvent(context,busLine,stopName,stopPosition),timestamp);
     }
