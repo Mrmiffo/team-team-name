@@ -76,6 +76,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        map.setMyLocationEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
