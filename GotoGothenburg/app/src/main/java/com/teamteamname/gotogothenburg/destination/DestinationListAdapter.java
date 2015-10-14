@@ -49,8 +49,8 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
 
     @Override
     public void notifyDataSetChanged() {
-        destinations = savedDestinations.getSavedDestinations();
         super.notifyDataSetChanged();
+
     }
 
     @Override
@@ -79,6 +79,6 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
     //Update method called once each time when the SavedDestinations has been modified.
     @Override
     public void update() {
-        notifyDataSetChanged();
+        destinations = savedDestinations.getSavedDestinations();
     }
 }
