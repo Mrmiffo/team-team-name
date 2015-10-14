@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.Electricity.Parsers;
+package com.teamteamname.gotogothenburg.api.electricity.parsers;
 
 import android.util.Log;
 

@@ -1,10 +1,10 @@
-package com.teamteamname.gotogothenburg.api.Electricity.Parsers;
+package com.teamteamname.gotogothenburg.api.electricity.parsers;
 
 import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityTempHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;

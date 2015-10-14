@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.Electricity.Handlers;
+package com.teamteamname.gotogothenburg.api.electricity.handlers;
 
 /**
  * A interface for recieving error messages from Electricity's REST API.

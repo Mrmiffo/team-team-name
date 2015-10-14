@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.Electricity;
+package com.teamteamname.gotogothenburg.api.electricity;
 
 
 import android.content.Context;
@@ -7,32 +7,25 @@ import android.util.Log;
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityGPSHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityNextStopHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityStopButtonHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityTempHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.Handlers.ElectricityWifiHandler;
-import com.teamteamname.gotogothenburg.api.Electricity.Parsers.AmbientTempParser;
-import com.teamteamname.gotogothenburg.api.Electricity.Parsers.CabinTempParser;
-import com.teamteamname.gotogothenburg.api.Electricity.Parsers.GPSCoordParser;
-import com.teamteamname.gotogothenburg.api.Electricity.Parsers.NextStopParser;
-import com.teamteamname.gotogothenburg.api.Electricity.Parsers.StopPressedParser;
-import com.teamteamname.gotogothenburg.api.Electricity.Parsers.WifiUsersParser;
-import com.teamteamname.gotogothenburg.route.Stops;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.electricity.parsers.AmbientTempParser;
+import com.teamteamname.gotogothenburg.api.electricity.parsers.CabinTempParser;
+import com.teamteamname.gotogothenburg.api.electricity.parsers.GPSCoordParser;
+import com.teamteamname.gotogothenburg.api.electricity.parsers.NextStopParser;
+import com.teamteamname.gotogothenburg.api.electricity.parsers.StopPressedParser;
+import com.teamteamname.gotogothenburg.api.electricity.parsers.WifiUsersParser;
 import com.teamteamname.gotogothenburg.map.Bus;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
 
 /**
  * Created by Olof on 25/09/2015.

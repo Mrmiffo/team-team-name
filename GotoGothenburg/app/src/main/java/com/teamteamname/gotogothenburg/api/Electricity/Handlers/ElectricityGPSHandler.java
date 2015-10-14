@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.Electricity.Handlers;
+package com.teamteamname.gotogothenburg.api.electricity.handlers;
 
 import com.teamteamname.gotogothenburg.GPSCoord;
 
