@@ -215,7 +215,19 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 marker.remove();
                 Toast.makeText(getActivity(), "Destination added", Toast.LENGTH_SHORT).show();
             } else {
-                // TODO get trip to selected marker
+                Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
+                if (myLocation != null) {
+                    VasttrafikAPI.getInstance().getCoordinates(
+                            (MainActivity) getActivity(),
+                            (MainActivity) getActivity(),
+                            new VasttrafikLocation("origin", myLocation.getLatitude(), myLocation.getLongitude()),
+                            new VasttrafikLocation(marker.getTitle(), marker.getPosition().latitude, marker.getPosition().longitude));
+                } else {
+                    Toast.makeText(getActivity(),"Device Location not found",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    };
 
     /**
      * Custom InfoWindowAdapter for displaying custom marker InfoWindows
