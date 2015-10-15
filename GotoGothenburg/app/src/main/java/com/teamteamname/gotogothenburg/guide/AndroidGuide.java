@@ -2,6 +2,7 @@ package com.teamteamname.gotogothenburg.guide;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.route.Route;
@@ -36,7 +37,6 @@ public class AndroidGuide extends AbstractGuide {
     //It is automatically called when the sound file has finished playing, or after 10 seconds if it could not be played.
         if (isGuiding) {
             pointOfInterest = route.getNextPOI();
-
             if (pointOfInterest != null) {
                 if (api.isHandsfreePluggedIn()) {
                     api.playSound(this, pointOfInterest.getSoundGuide());
@@ -47,6 +47,8 @@ public class AndroidGuide extends AbstractGuide {
                 }
                 guideDialog = GuideDialog.newInstance(pointOfInterest);
                 guideDialog.show(((Activity) context).getFragmentManager(), "guide");
+            } else {
+                soundCouldNotBePlayed();
             }
         }
     }
@@ -58,7 +60,9 @@ public class AndroidGuide extends AbstractGuide {
 
     @Override
     public void soundFinishedPlaying() {
-        guideDialog.dismiss();
+        if (guideDialog != null) {
+            guideDialog.dismiss();
+        }
         guideNextPointOfInterest();
     }
 
