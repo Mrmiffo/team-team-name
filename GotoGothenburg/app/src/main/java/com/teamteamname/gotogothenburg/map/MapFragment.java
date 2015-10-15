@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -59,6 +60,16 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                              Bundle savedInstanceState){
         getMapAsync(this);
 
+        LocationServicesAPI.getInstance().registerLocationUpdateListener(new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if (location != null) {
+                    zoomToLocation(location, 15);
+                    LocationServicesAPI.getInstance().removeLocationUpdateListener(this);
+                }
+            }
+        });
+
         ViewGroup parentView = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_map, null);
         parentView.addView(view);
@@ -88,7 +99,6 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
-        zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
         map.setInfoWindowAdapter(customInfoWindowAdapter);
         map.setOnMapLongClickListener(onMapLongClickListener);
         map.setOnInfoWindowClickListener(onInfoWindowClickListener);
