@@ -24,6 +24,7 @@ import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
 import com.teamteamname.gotogothenburg.destination.Destination;
+import com.teamteamname.gotogothenburg.destination.RecommendedDestinations;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 
 import java.io.IOException;
@@ -70,7 +71,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         });
         view.findViewById(R.id.resalePointsButton).setOnClickListener(resalePointsListener);
         view.findViewById(R.id.showDestButton).setOnClickListener(destinationPointsListener);
-
+        view.findViewById(R.id.showRecDest).setOnClickListener(showRecommendedDestinations);
         return parentView;
     }
 
@@ -147,6 +148,32 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 v.setAlpha(0.5f);
             } else {
                 resalePoints.drawResalePoints();
+                v.setAlpha(1f);
+            }
+            isDisplaying = !isDisplaying;
+        }
+    };
+
+    private View.OnClickListener showRecommendedDestinations = new View.OnClickListener(){
+        private List<Marker> markers = new ArrayList<>();
+        private boolean isDisplaying;
+
+        @Override
+        public void onClick(View v){
+            if (isDisplaying){
+                for (Marker marker : markers) {
+                    marker.remove();
+                }
+                v.setAlpha(0.5f);
+            } else {
+                for (Destination dest : RecommendedDestinations.getInstance().getRecommendedDestinations()) {
+                    MarkerOptions marker = new MarkerOptions();
+                    marker.position(new LatLng(dest.getLatitude(), dest.getLongitude()));
+                    marker.title(dest.getName());
+                    marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                    marker.snippet("directions");
+                    markers.add(placeMarker(marker));
+                }
                 v.setAlpha(1f);
             }
             isDisplaying = !isDisplaying;
