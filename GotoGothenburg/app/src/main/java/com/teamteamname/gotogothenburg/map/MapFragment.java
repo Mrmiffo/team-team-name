@@ -70,6 +70,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
             }
         });
         view.findViewById(R.id.resalePointsButton).setOnClickListener(new FABListener(new ResalePoints(getActivity()), this));
+        view.findViewById(R.id.showHotels).setOnClickListener(new FABListener(new HotelPoints(),this));
+        view.findViewById(R.id.showResturants).setOnClickListener(new FABListener(new ResturantPoints(),this));
         view.findViewById(R.id.showDestButton).setOnClickListener(destinationPointsListener);
         view.findViewById(R.id.showRecDest).setOnClickListener(showRecommendedDestinations);
         return parentView;
