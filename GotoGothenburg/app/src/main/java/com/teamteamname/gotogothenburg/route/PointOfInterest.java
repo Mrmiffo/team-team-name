@@ -82,8 +82,7 @@ public enum PointOfInterest implements Serializable {
     }
 
     public String getName() {
-        String name = this.toString();
-        name = name.replaceAll("_", " "); //replace non-word characters with a space.
+        String name = this.toString().replaceAll("_", " "); //replace non-word characters with a space.
         return name.substring(0, 1).toUpperCase() + name.toString().substring(1).toLowerCase(); //Capitalise first letter only
     }
 }
