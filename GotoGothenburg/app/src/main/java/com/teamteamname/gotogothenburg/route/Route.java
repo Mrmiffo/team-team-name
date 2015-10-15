@@ -1,5 +1,7 @@
 package com.teamteamname.gotogothenburg.route;
 
+import android.util.Log;
+
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
 import com.teamteamname.gotogothenburg.map.Bus;
@@ -83,10 +85,6 @@ public class Route implements ElectricityNextStopHandler{
 
     @Override
     public void electricityRequestError(String error) {
-        if(secondTry) {
-            evaluateStop(Stops.DEFAULT);
-        } else {
-            checkNextStop();
-        }
+
     }
 }
