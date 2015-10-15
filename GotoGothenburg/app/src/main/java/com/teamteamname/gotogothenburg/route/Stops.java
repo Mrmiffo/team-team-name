@@ -24,7 +24,7 @@ public enum Stops {
             PointOfInterest.GÖTEBORGS_KONSERTHUS
     ),
     VALAND(),
-    KUNGSPORTSPLATSEN(
+    KUNGSPORTSPL(
             PointOfInterest.KOPPARMÄRRA,
             PointOfInterest.SALUHALLEN,
             PointOfInterest.TURISTBYRÅN_KUNGSPORTSPLATSEN
