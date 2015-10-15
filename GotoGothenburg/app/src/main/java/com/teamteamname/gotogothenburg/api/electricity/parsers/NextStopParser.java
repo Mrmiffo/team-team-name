@@ -24,13 +24,11 @@ public class NextStopParser extends ElectricityParser implements Response.Listen
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("NextStopParser", error.toString());
         callback.electricityRequestError(error.toString());
     }
 
     @Override
     public void onResponse(JSONArray response) {
-        Log.i("Response",response.toString());
 
         JSONObject nextStop = this.getLatestJSONValue("Bus_Stop_Name_Value",response);
         boolean stopExists = false;
