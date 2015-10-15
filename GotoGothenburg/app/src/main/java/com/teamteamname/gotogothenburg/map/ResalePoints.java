@@ -13,6 +13,7 @@ import com.teamteamname.gotogothenburg.map.MapFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -21,11 +22,10 @@ import java.util.Scanner;
  *
  * Created by patrick on 08/10/2015.
  */
-public class ResalePoints {
+public class ResalePoints implements IMapMarkerData{
 
     private ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
     private ArrayList<Marker> markers = new ArrayList<>();
-    Context context;
 
     /**
      * Loads resale points from resale_points.txt and stores them as MarkerOptions
@@ -33,7 +33,6 @@ public class ResalePoints {
      * @param context Context for loading the text file
      */
     public ResalePoints(Context context) {
-        this.context = context;
         AssetManager assetManager = context.getAssets();
         try {
 
@@ -52,19 +51,19 @@ public class ResalePoints {
         }
     }
 
-    public void drawResalePoints(){
-        ((MainActivity) context).changeTab(1);
+
+    @Override
+    public void addMarkers(MapFragment map) {
         for (MarkerOptions marker : markerOptions) {
-            markers.add(((MapFragment) ((MainActivity) context).getCurrentTab()).placeMarker(marker));
+            markers.add(map.placeMarker(marker));
         }
     }
 
-    public void removeResalePoints(){
-        for (Marker marker : markers) {
-            marker.remove();
-        }
-        markers.clear();
+    @Override
+    public void removeMarkers() {
+            for (Marker marker : markers) {
+                marker.remove();
+            }
+            markers.clear();
     }
-
-
 }

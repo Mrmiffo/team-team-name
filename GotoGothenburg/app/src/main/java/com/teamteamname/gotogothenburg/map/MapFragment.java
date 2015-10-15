@@ -69,7 +69,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 zoomToLocation(LocationServicesAPI.getInstance().getLastKnownLocation(), 15);
             }
         });
-        view.findViewById(R.id.resalePointsButton).setOnClickListener(resalePointsListener);
+        view.findViewById(R.id.resalePointsButton).setOnClickListener(new FABListener(new ResalePoints(getActivity()), this));
         view.findViewById(R.id.showDestButton).setOnClickListener(destinationPointsListener);
         view.findViewById(R.id.showRecDest).setOnClickListener(showRecommendedDestinations);
         return parentView;
@@ -130,29 +130,6 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
             p.remove();
         }
     }
-
-    /**
-     *  Listener for displaying ticket resale points on the map
-     */
-    private View.OnClickListener resalePointsListener = new View.OnClickListener() {
-        private ResalePoints resalePoints;
-        private boolean isDisplaying = false;
-
-        @Override
-        public void onClick(View v) {
-            if (resalePoints == null) {
-                resalePoints = new ResalePoints(getActivity()); //can't initiate resalepoints directly since activity isn't available
-            }
-            if (isDisplaying) {
-                resalePoints.removeResalePoints();
-                v.setAlpha(0.5f);
-            } else {
-                resalePoints.drawResalePoints();
-                v.setAlpha(1f);
-            }
-            isDisplaying = !isDisplaying;
-        }
-    };
 
     private View.OnClickListener showRecommendedDestinations = new View.OnClickListener(){
         private List<Marker> markers = new ArrayList<>();
