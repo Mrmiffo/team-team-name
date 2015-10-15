@@ -3,6 +3,7 @@ package com.teamteamname.gotogothenburg.map;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.RecommendedDestinations;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
+import com.teamteamname.gotogothenburg.guide.GuideStarter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -195,6 +197,12 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 v.setAlpha(1f);
             }
             isDisplaying = !isDisplaying;
+            //TODO Remove test code
+            //--TEST CODE
+            Log.e("Display dests", "Now starting guide");
+            OnWhichBusIdentifier.getInstance().registerListener(new GuideStarter(getActivity()));
+            OnWhichBusIdentifier.getInstance().start();
+            //--TEST CODE END--
         }
     };
 
