@@ -28,7 +28,7 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.RecommendedDestinations;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
-import com.teamteamname.gotogothenburg.guide.GuideStarter;
+import com.teamteamname.gotogothenburg.guide.GuideHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,6 +87,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         view.findViewById(R.id.showResturants).setOnClickListener(new FABListener(new ResturantPoints(),this));
         view.findViewById(R.id.showDestButton).setOnClickListener(destinationPointsListener);
         view.findViewById(R.id.showRecDest).setOnClickListener(showRecommendedDestinations);
+        view.findViewById(R.id.startGuideButton).setOnClickListener(startGuideButtonListener);
+
         return parentView;
     }
 
@@ -171,6 +173,24 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         }
     };
 
+    private View.OnClickListener startGuideButtonListener = new View.OnClickListener() {
+        GuideHandler guideStarter;
+        boolean hasBeenPressed;
+        @Override
+        public void onClick(View v) {
+            if (hasBeenPressed) {
+                guideStarter.stopGuide();
+                v.setAlpha(0.5f);
+            } else {
+                if (guideStarter == null){
+                    guideStarter = new GuideHandler(getActivity());
+                }
+                guideStarter.startGuide();
+                v.setAlpha(1f);
+            }
+            hasBeenPressed = !hasBeenPressed;
+        }
+    };
     /**
      * Listener for displaying destinations on the map
      */
@@ -197,12 +217,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 v.setAlpha(1f);
             }
             isDisplaying = !isDisplaying;
-            //TODO Remove test code
-            //--TEST CODE
-            Log.e("Display dests", "Now starting guide");
-            OnWhichBusIdentifier.getInstance().registerListener(new GuideStarter(getActivity()));
-            OnWhichBusIdentifier.getInstance().start();
-            //--TEST CODE END--
+
         }
     };
 
