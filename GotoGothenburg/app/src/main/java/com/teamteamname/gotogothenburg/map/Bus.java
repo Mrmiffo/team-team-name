@@ -43,16 +43,16 @@ public class Bus {
 
     public static void init(){
         if(!initiated) {
-            addBus("Ericsson$100020", "YV3U0V222FA100020", "EPO 131", "2501069301", false);
+            addBus("Ericsson$100020", "YV3U0V222FA100020", "EPO 131", "2501069301", true);
             addBus("Ericsson$100021", "YV3U0V222FA100021", "EPO 136", "2501069758", true);
-            addBus("Ericsson$100022", "YV3U0V222FA100022", "EPO 143", "2501131248", false);
-            addBus("Ericsson$171164", "YV3T1U22XF1171164", "EOG 604", "2501142922", false);
-            addBus("Ericsson$171234", "YV3T1U225F1171234", "EOG 606", "2501069303", false);
+            addBus("Ericsson$100022", "YV3U0V222FA100022", "EPO 143", "2501131248", true);
+            addBus("Ericsson$171164", "YV3T1U22XF1171164", "EOG 604", "2501142922", true);
+            addBus("Ericsson$171234", "YV3T1U225F1171234", "EOG 606", "2501069303", true);
             addBus("Ericsson$171235", "YV3T1U227F1171235", "EOG 616", "2500825764", false);
-            addBus("Ericsson$171327", "YV3T1U221F1171327", "EOG 622", "2501075606", false);
+            addBus("Ericsson$171327", "YV3T1U221F1171327", "EOG 622", "2501075606", true);
             addBus("Ericsson$171328", "YV3T1U223F1171328", "EOG 627", "2501069756", false);
             addBus("Ericsson$171329", "YV3T1U225F1171329", "EOG 631", "2501131250", false);
-            addBus("Ericsson$171330", "YV3T1U223F1171330", "EOG 634", "2501074720", false);
+            addBus("Ericsson$171330", "YV3T1U223F1171330", "EOG 634", "2501074720", true);
             addBus("Ericsson$Vin_Num_001", null, null, null, true); //ElectriCity's test bus
             initiated = true;
         }
