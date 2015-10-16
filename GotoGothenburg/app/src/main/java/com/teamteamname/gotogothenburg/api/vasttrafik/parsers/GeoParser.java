@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
 
@@ -25,22 +26,25 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
     private VasttrafikTripHandler tripCallback;
     private VasttrafikErrorHandler errorCallback;
     private String uri;
+    private VasttrafikChange trip;
+    private int tripIndex;
     private boolean newPolyline;
     private boolean walk;
     private RequestQueue queue;
 
-    public GeoParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, String uri, boolean newPolyline, boolean walk, RequestQueue queue) {
+    public GeoParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, String uri, VasttrafikChange trip, boolean newPolyline, boolean walk, RequestQueue queue) {
         this.tripCallback = tripCallback;
         this.errorCallback = errorCallback;
         this.newPolyline = newPolyline;
         this.walk = walk;
         this.uri = uri;
         this.queue = queue;
+        this.trip = trip;
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        GeoParser parser = new GeoParser(tripCallback, errorCallback, uri, newPolyline, walk, queue);
+        GeoParser parser = new GeoParser(tripCallback, errorCallback, uri, trip, false, walk, queue);
         JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
         queue.add(request);
     }
@@ -48,37 +52,43 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
     @Override
     public void onResponse(JSONObject response) {
         try {
-            List<LatLng> polyline = getPolylineFromJSON(response);
-            if (polyline == null) {
-                errorCallback.vasttrafikRequestError("null response");
+            JSONArray point = getPoint(response);
+            if (point != null) {
+                polylineDone(createPolyline(point));
+                returnTripInfo(trip, point);
             } else {
-                polylineDone(polyline);
+                errorCallback.vasttrafikRequestError("null response");
             }
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
         }
     }
 
-    private List<LatLng> getPolylineFromJSON(JSONObject jo) throws JSONException {
-        if (jo.has("Geometry")) {
-            JSONObject geometry = (JSONObject) jo.get("Geometry");
-            return ifHasPoints(geometry);
+    private void returnTripInfo(VasttrafikChange vc, JSONArray ja) throws JSONException {
+            tripCallback.vasttrafikRequestDone(newPolyline, new VasttrafikChange(   vc.getLine(),
+                                                                                    vc.getStopName(),
+                                                                                    vc.getTrack(),
+                                                                                    getCoordFromJSON(ja)));
+    }
+
+    private LatLng getCoordFromJSON(JSONArray ja) throws JSONException {
+        if(((JSONObject)ja.get(0)).has("lat") && ((JSONObject)ja.get(0)).has("lon")){
+            double lat = Double.parseDouble((String) ((JSONObject)ja.get(0)).get("lat"));
+            double lng = Double.parseDouble((String) ((JSONObject)ja.get(0)).get("lon"));
+            return new LatLng(lat, lng);
         }
         return null;
     }
 
-    private List<LatLng> ifHasPoints(JSONObject jo) throws JSONException {
-        if (jo.has("Points")) {
-            JSONObject points = (JSONObject) jo.get("Points");
-            return ifHasPoint(points);
-        }
-        return null;
-    }
-
-    private List<LatLng> ifHasPoint(JSONObject jo) throws JSONException {
-        if (jo.has("Point")) {
-            JSONArray point = (JSONArray) jo.get("Point");
-            return createPolyline(point);
+    private JSONArray getPoint(JSONObject input) throws JSONException{
+        if (input.has("Geometry")) {
+            JSONObject geometry = (JSONObject) input.get("Geometry");
+            if (geometry.has("Points")) {
+                JSONObject points = (JSONObject) geometry.get("Points");
+                if (points.has("Point")) {
+                    return (JSONArray) points.get("Point");
+                }
+            }
         }
         return null;
     }
@@ -110,7 +120,7 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
         for (int i = 0; i < polyline.size(); i++) {
             temp.add(polyline.get(i));
             if (i % 2 == 0) {
-                tripCallback.vasttrafikRequestDone(newPolyline, temp.toArray(new LatLng[temp.size()]));
+                tripCallback.vasttrafikRequestDone(newPolyline && i==0, temp.toArray(new LatLng[temp.size()]));
                 temp = new ArrayList<>();
             }
         }

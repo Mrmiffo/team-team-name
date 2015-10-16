@@ -71,14 +71,14 @@ public class DestinationFragment extends Fragment{
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
             if (myLocation != null) {
-                VasttrafikLocation origin = new VasttrafikLocation("origin", myLocation.getLatitude(), myLocation.getLongitude());
+                VasttrafikLocation origin = new VasttrafikLocation("Me", myLocation.getLatitude(), myLocation.getLongitude());
 
                 double destLat = ((Destination) parent.getItemAtPosition(position)).getLatitude();
                 double destLng = ((Destination) parent.getItemAtPosition(position)).getLongitude();
                 String name = ((Destination) parent.getItemAtPosition(position)).getName();
                 VasttrafikLocation dest = new VasttrafikLocation(name, destLat, destLng);
 
-                VasttrafikAPI.getInstance().getCoordinates((MainActivity) getActivity(), (MainActivity) getActivity(), origin, dest);
+                VasttrafikAPI.getInstance().getTrip((MainActivity) getActivity(), (MainActivity) getActivity(), origin, dest);
             } else {
                 Toast.makeText(getActivity(), "Device Location not found", Toast.LENGTH_SHORT).show();
             }
