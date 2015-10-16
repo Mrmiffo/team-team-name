@@ -1,6 +1,7 @@
 package com.teamteamname.gotogothenburg.api.electricity.mock;
 
 import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
@@ -21,7 +22,7 @@ public class MockElectricityHandler implements ElectricityWifiHandler, Electrici
     @Getter private double cabinTempResponse;
     @Getter private boolean isPressedResponse;
     @Getter private int nbrOfUsersResponse;
-    @Getter private String errorResponse;
+    @Getter private ElectricityError errorResponse;
 
     @Override
     public void electricityGPSResponse(GPSCoord coord) {
@@ -54,7 +55,7 @@ public class MockElectricityHandler implements ElectricityWifiHandler, Electrici
     }
 
     @Override
-    public void electricityRequestError(String error) {
+    public void electricityRequestError(ElectricityError error) {
         errorResponse = error;
     }
 }
