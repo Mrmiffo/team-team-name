@@ -21,8 +21,8 @@ public enum PointOfInterest implements Serializable {
             new File(getResDir() + "chalmers_campus_johanneberg_picture_test.jpg")),
 
     LANDALA(new GPSCoord(57.693319f, 11.970892f), null, null, null),
-    LANDSHÖVDINGEHUS(new GPSCoord(), null, null, null),                     //OBS
-    MILJONPROGRAMMET(new GPSCoord(), null, null, null),                     //OBS
+//    LANDSHÖVDINGEHUS(new GPSCoord(), null, null, null),
+//    MILJONPROGRAMMET(new GPSCoord(), null, null, null),
     POSEIDON(new GPSCoord(57.697206f, 11.979561f), null, null, null),
     GÖTEBORGS_KONSTMUSEUM(new GPSCoord(57.696389f, 11.980611f), null, null, null),
     STADSTEATERN(new GPSCoord(57.697444f, 11.980417f), null, null, null),
@@ -36,10 +36,10 @@ public enum PointOfInterest implements Serializable {
     TURISTBYRÅN_NORDSTAND(new GPSCoord(57.708444f, 11.969252f), null, null, null),
     ARKADEN(new GPSCoord(57.706389f, 11.969444f), null, null, null),
     NK(new GPSCoord(57.705695f, 11.968755f), null, null, null),
-    DOMSTOLEN(new GPSCoord(), null, null, null),                            //OBS
+//    DOMSTOLEN(new GPSCoord(), null, null, null),
     LÄPPSTIFTET(new GPSCoord(57.713197f, 11.967481f), null, null, null),
-    NEW_DEVELOPMENT(new GPSCoord(), null, null, null),                      //OBS
-    CHALMERS_CAMPUS_LINDHOLMEN(new GPSCoord(), null, null, null),           //OBS
+    ÄLVSTADEN_FRIHAMNEN(new GPSCoord(57.718058f, 11.959366f), null, null, null),
+    CHALMERS_CAMPUS_LINDHOLMEN(new GPSCoord(57.706588f, 11.936651f), null, null, null),
     KUGGEN(new GPSCoord(57.706786f, 11.938908f), null, null, null),
     LINDHOLMEN_SCIENCE_PARK(new GPSCoord(57.707f, 11.94f), null, null, null),
     INOMHUSHÅLLPLATSEN(new GPSCoord(57.706911f, 11.93721f), null, null, null);
