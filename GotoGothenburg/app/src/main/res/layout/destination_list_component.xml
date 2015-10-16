@@ -4,6 +4,16 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
 
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/remove_destination"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/remove_destination"
+        android:focusable="false" />
+
     <TextView
         android:id="@+id/secondLine"
         android:layout_width="fill_parent"
@@ -26,14 +36,5 @@
         android:gravity="center_vertical"
         android:text="Example application"
         android:textSize="16sp" />
-
-    <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/remove_destination"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/remove_destination" />
 
 </RelativeLayout>
