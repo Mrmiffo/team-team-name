@@ -39,7 +39,7 @@ public enum PointOfInterest implements Serializable {
             null),
 
     GÖTEBORGS_KONSTMUSEUM(new GPSCoord(57.696389f, 11.980611f),
-            new File(getAssetsDir() + "goteborgs_konstmuseeum_text.txt"),
+            new File(getAssetsDir() + "goteborgs_konstmuseum_text.txt"),
             null,
             null),
 
