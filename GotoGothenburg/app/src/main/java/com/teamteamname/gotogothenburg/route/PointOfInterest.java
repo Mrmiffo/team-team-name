@@ -16,9 +16,9 @@ public enum PointOfInterest implements Serializable {
 
     CHALMERS_CAMPUS_JOHANNEBERG(new GPSCoord(57.689167f, 11.973611f),
 
-            new File(getAssetsDir() + "chalmers_campus_johanneberg_text_test.txt"),
-            new File(getResDir() +  "chalmers_campus_johanneberg_sound_test.mp3"),
-            new File(getResDir() + "chalmers_campus_johanneberg_picture_test.jpg")),
+            new File(getAssetsDir() + "chalmers_campus_johanneberg_text.txt"),
+            new File(getResDir() +  "chalmers_campus_johanneberg_sound.mp3"),
+            new File(getResDir() + "chalmers_campus_johanneberg_picture.jpg")),
 
     LANDALA(new GPSCoord(57.693319f, 11.970892f), null, null, null),
 //    LANDSHÖVDINGEHUS(new GPSCoord(), null, null, null),
