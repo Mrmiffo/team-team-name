@@ -27,6 +27,7 @@ import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
@@ -141,7 +142,6 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
 
     @Override
     public void vasttrafikRequestError(String e) {
-        // TODO look into error handling
         Log.e("VastTrafikError",e);
         Toast.makeText(this, "Error with Vasttrafik: " + e, Toast.LENGTH_SHORT).show();
     }
@@ -150,5 +150,11 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
     public void vasttrafikRequestDone(boolean newPolyline, LatLng... polyline) {
         changeTab(1);
         ((MapFragment) getCurrentTab()).drawPolyLine(newPolyline, polyline);
+    }
+
+    @Override
+    public void vasttrafikRequestDone(boolean newPolyline, VasttrafikChange... tripInfo){
+        changeTab(1);
+        ((MapFragment) getCurrentTab()).updateCurrentTrip(newPolyline, tripInfo);
     }
 }

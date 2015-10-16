@@ -6,14 +6,10 @@ import android.location.Location;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikAutocompleteHandler;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
-import com.teamteamname.gotogothenburg.map.MapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +36,10 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Vasttr
             if(location.getName().equals(query)){
                 Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
                 if (myLocation != null) {
-                    VasttrafikAPI.getInstance().getCoordinates(
+                    VasttrafikAPI.getInstance().getTrip(
                             (MainActivity) context,
                             (MainActivity) context,
-                            new VasttrafikLocation("origin", myLocation.getLatitude(), myLocation.getLongitude()),
+                            new VasttrafikLocation("Me", myLocation.getLatitude(), myLocation.getLongitude()),
                             location);
 
                     searchbar.clearFocus();
@@ -77,6 +73,4 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Vasttr
         AutocompleteAdapter autocompleteAdapter = new AutocompleteAdapter(context, cursor, 0, temp, searchbar);
         this.searchbar.setSuggestionsAdapter(autocompleteAdapter);
     }
-
-
 }

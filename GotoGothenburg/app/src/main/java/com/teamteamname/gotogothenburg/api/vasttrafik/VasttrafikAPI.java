@@ -11,8 +11,6 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHa
 import com.teamteamname.gotogothenburg.api.vasttrafik.parsers.AutocompleteParser;
 import com.teamteamname.gotogothenburg.api.vasttrafik.parsers.TripParser;
 
-import lombok.Setter;
-
 /**
  * Created by Mattias Ahlstedt on 2015-09-28.
  */
@@ -27,6 +25,8 @@ public class VasttrafikAPI implements IVasttrafikAPI {
     private String trip = "trip";
     private String format = "format=json";
 
+    /*
+    // These aren't needed untill the outcommented methods in the interface are implemented
     @Setter private int walkSpeed;
     @Setter private int maxWalkDist;
     @Setter private int addChangeTime;
@@ -35,6 +35,7 @@ public class VasttrafikAPI implements IVasttrafikAPI {
     @Setter private boolean stroller;
     @Setter private boolean lowFloor;
     @Setter private boolean rampLift;
+    */
 
     private RequestQueue queue;
 
@@ -70,7 +71,7 @@ public class VasttrafikAPI implements IVasttrafikAPI {
     }
 
     @Override
-    public void getCoordinates(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, VasttrafikLocation originLocation, VasttrafikLocation destLocation) {
+    public void getTrip(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, VasttrafikLocation originLocation, VasttrafikLocation destLocation) {
         StringBuilder sb = setupRequest(trip);
         sb.append("needGeo=1&");
         sb.append("originCoordLat=" + originLocation.getLatlng().latitude + "&");
@@ -113,5 +114,4 @@ public class VasttrafikAPI implements IVasttrafikAPI {
         input = input.replaceAll("\\W", "");
         return input;
     }
-
 }

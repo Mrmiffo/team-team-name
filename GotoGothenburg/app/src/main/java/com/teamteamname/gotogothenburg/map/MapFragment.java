@@ -3,7 +3,6 @@ package com.teamteamname.gotogothenburg.map;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.RecommendedDestinations;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
@@ -49,6 +49,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     Marker userSelectionMarker;
     private static final float BUTTON_PRESSED_ALPHA = 1f;
     private static final float BUTTON_UNPRESSED_ALPHA = 0.5f;
+    private List<Marker> tripMarkers = new ArrayList<>();
+    private VasttrafikChange[] currentTrip;
 
     public static MapFragment newInstance(){
         return new MapFragment();
@@ -60,8 +62,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         getMapAsync(this);
 
         LocationServicesAPI.getInstance().registerLocationUpdateListener(new LocationListener() {
@@ -184,6 +185,26 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         }
     };
 
+    public void updateCurrentTrip(boolean cleanMap, VasttrafikChange... newTrip){
+        if(tripMarkers != null && cleanMap) {
+            clearTripMarkers();
+        }
+        this.currentTrip = newTrip;
+        for(VasttrafikChange vc : currentTrip){
+            MarkerOptions marker = new MarkerOptions();
+            marker.title(vc.getStopName());
+            marker.snippet(vc.getTrack());
+            marker.position(vc.getPosition());
+            tripMarkers.add(placeMarker(marker));
+        }
+    }
+
+    private void clearTripMarkers(){
+        for(Marker m : tripMarkers){
+            m.remove();
+        }
+    }
+
     private View.OnClickListener startGuideButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -257,10 +278,12 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(),marker.getPosition().latitude,marker.getPosition().longitude));
                 marker.remove();
                 Toast.makeText(getActivity(), "Destination added", Toast.LENGTH_SHORT).show();
+            } else if(!"Directions".equals(marker.getSnippet())) {
+                return;
             } else {
                 Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
                 if (myLocation != null) {
-                    VasttrafikAPI.getInstance().getCoordinates(
+                    VasttrafikAPI.getInstance().getTrip(
                             (MainActivity) getActivity(),
                             (MainActivity) getActivity(),
                             new VasttrafikLocation("origin", myLocation.getLatitude(), myLocation.getLongitude()),

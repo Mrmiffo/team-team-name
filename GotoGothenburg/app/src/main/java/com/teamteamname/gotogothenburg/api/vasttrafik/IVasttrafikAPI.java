@@ -17,7 +17,7 @@ public interface IVasttrafikAPI {
      * @param originLocation the location from which the coordinates start
      * @param destLocation the destination where the coordinates end
      */
-    void getCoordinates(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, VasttrafikLocation originLocation, VasttrafikLocation destLocation);
+    void getTrip(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, VasttrafikLocation originLocation, VasttrafikLocation destLocation);
 
     /**
      * Sends a list fo autocomplete suggestions to the callback.
@@ -28,6 +28,8 @@ public interface IVasttrafikAPI {
      */
     void getAutocomplete(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback, String input);
 
+    /*
+    These methods are to be implemented at a later stage
     void setWalkSpeed(int walkSpeed);
     void setMaxWalkDist(int maxWalkDist);
     void setAddChangeTime(int addChangeTime);
@@ -36,4 +38,5 @@ public interface IVasttrafikAPI {
     void setStroller(boolean stroller);
     void setLowFloor(boolean lowFloor);
     void setRampLift(boolean rampLiftNeeded);
+    */
 }
