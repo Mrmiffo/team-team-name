@@ -14,7 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * This class is used to handle the guides and routes.
+ * This singleton class is used to handle the guides and routes.
  * Created by Anton on 2015-10-15.
  */
 public class GuideHandler implements IOnWhichBusListener {
