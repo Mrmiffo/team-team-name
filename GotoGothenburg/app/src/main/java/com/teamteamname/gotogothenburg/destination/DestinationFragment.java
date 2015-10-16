@@ -79,10 +79,11 @@ public class DestinationFragment extends Fragment{
                 VasttrafikLocation dest = new VasttrafikLocation(name, destLat, destLng);
 
                 VasttrafikAPI.getInstance().getTrip((MainActivity) getActivity(), (MainActivity) getActivity(), origin, dest);
+                GuideHandler.getInstance().startGuide();
             } else {
                 Toast.makeText(getActivity(), "Device Location not found", Toast.LENGTH_SHORT).show();
             }
-            GuideHandler.getInstance().startGuide();
+
 
         }
 
