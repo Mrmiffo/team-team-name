@@ -18,6 +18,7 @@ public class AndroidGuide extends AbstractGuide {
 
     final private Context context;
     private GuideDialog guideDialog;
+    private UnpluggedHandsfreeDialog unpluggedDialog;
 
     public AndroidGuide(Context context, Route route) {
         super(route);
@@ -41,7 +42,7 @@ public class AndroidGuide extends AbstractGuide {
                 if (api.isHandsfreePluggedIn()) {
                     api.playSound(this, pointOfInterest.getSoundGuide());
                 } else {
-                    final UnpluggedHandsfreeDialog unpluggedDialog = new UnpluggedHandsfreeDialog();
+                    unpluggedDialog = new UnpluggedHandsfreeDialog();
                     unpluggedDialog.show(((Activity) context).getFragmentManager(), "unplugged");
                     soundCouldNotBePlayed();
                 }
@@ -62,6 +63,9 @@ public class AndroidGuide extends AbstractGuide {
     public void soundFinishedPlaying() {
         if (guideDialog != null) {
             guideDialog.dismiss();
+        }
+        if (unpluggedDialog != null) {
+            unpluggedDialog.dismiss();
         }
         guideNextPointOfInterest();
     }
