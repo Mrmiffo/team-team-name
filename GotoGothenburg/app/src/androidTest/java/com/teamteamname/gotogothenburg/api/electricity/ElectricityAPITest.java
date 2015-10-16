@@ -190,12 +190,12 @@ public class ElectricityAPITest extends AndroidTestCase {
 
         JSONArray testNextStopCorrect = new JSONArray();
         try{
-            testNextStopCorrect = new JSONArray("[{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"1\",\"value\":\"Brunnsparken\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"2\",\"value\":\"Lilla Bommen\",\"gatewayId\":\"Vin_Num_001\"}]");
+            testNextStopCorrect = new JSONArray("[{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"1\",\"value\":\"Brunnsparken\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"2\",\"value\":\"Regnb%C3%A5gsgatan\",\"gatewayId\":\"Vin_Num_001\"}]");
         }catch(JSONException e){
             Log.e("TestError","Could not create test JSONArray in NextStop test.");
         }
         parser.onResponse(testNextStopCorrect);
-        final Stops correctStop = Stops.LILLA_BOMMEN;
+        final Stops correctStop = Stops.REGNBÅGSGATAN;
         final Stops response = mHandler.getNextStopResponse();
         assertTrue(response.equals(correctStop));
     }
