@@ -1,5 +1,6 @@
 package com.teamteamname.gotogothenburg.map;
 
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
@@ -257,10 +258,15 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 userSelectionMarker.remove();
             }
             try {
+                List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                String address = "";
+                if (addressList.size() > 0) {
+                    address = addressList.get(0).getAddressLine(0);
+                }
                 userSelectionMarker = placeMarker(new MarkerOptions()
                         .position(latLng)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_drop_black_48dp))
-                        .title(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0).getAddressLine(0))
+                        .title("".equals(address) ? latLng.toString(): address)
                         .snippet("Create Destination"));
             } catch (IOException e) {
                 Toast.makeText(getActivity(),"No network connection",Toast.LENGTH_SHORT).show();
