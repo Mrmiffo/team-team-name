@@ -11,6 +11,7 @@ import com.teamteamname.gotogothenburg.api.electricity.IElectricityAPI;
 import com.teamteamname.gotogothenburg.api.electricity.mock.MockElectricityHandler;
 import com.teamteamname.gotogothenburg.api.electricity.mock.MockRequestQueue;
 import com.teamteamname.gotogothenburg.map.Bus;
+import com.teamteamname.gotogothenburg.route.Stops;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -172,13 +173,31 @@ public class ElectricityAPITest extends AndroidTestCase {
         try {
             testWifiUsersCorrect = new JSONArray("[{\"resourceSpec\":\"Total_Online_Users_Value\",\"timestamp\":\"1\",\"value\":\"1\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Total_Online_Users_Value\",\"timestamp\":\"2\",\"value\":\"100\",\"gatewayId\":\"Vin_Num_001\"}]");
         }catch(JSONException e){
-            Log.e("TestError","Could not create a test JSONArray.");
+            Log.e("TestError","Could not create a test JSONArray in WifiUsers test.");
 
         }
         parser.onResponse(testWifiUsersCorrect);
         final int correctNbrOfUsers = 100;
         final int response = mHandler.getNbrOfUsersResponse();
         assertTrue(response==correctNbrOfUsers);
+    }
+
+    public void testNextStopResponse(){
+        mElevtricityAPI.getNextStop(bus, mHandler);
+
+        final Response.ErrorListener errorListener = mQueue.getErrorListener();
+        final Response.Listener parser = mQueue.getParser();
+
+        JSONArray testNextStopCorrect = new JSONArray();
+        try{
+            testNextStopCorrect = new JSONArray("[{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"1\",\"value\":\"Brunnsparken\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"2\",\"value\":\"Lilla Bommen\",\"gatewayId\":\"Vin_Num_001\"}]");
+        }catch(JSONException e){
+            Log.e("TestError","Could not create test JSONArray in NextStop test.");
+        }
+        parser.onResponse(testNextStopCorrect);
+        final Stops correctStop = Stops.LILLA_BOMMEN;
+        final Stops response = mHandler.getNextStopResponse();
+        assertTrue(response.equals(correctStop));
     }
 
 }

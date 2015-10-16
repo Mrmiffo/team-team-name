@@ -40,12 +40,9 @@ public class NextStopParser extends ElectricityParser implements Response.Listen
         boolean stopExists = false;
 
         try {
-            String value = nextStop.getString("value");
-            String stopName = value.substring(0,value.length()-1).toUpperCase();
-            stopName = stopName.replace(" ", "_");
             for(Stops stop:Stops.values()){
                 //Checks caps to match
-                if (stopName.equals(stop.toString())){
+                if(nextStop.getString("value").toUpperCase().replace(' ','_').equals(stop.toString())){
                     callback.electricityNextStopResponse(stop);
                     stopExists = true;
                 }
