@@ -5,6 +5,7 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
 
 import org.json.JSONArray;
@@ -25,7 +26,12 @@ public class GPSCoordParser extends ElectricityParser implements Response.Listen
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("GPSCoordParser", error.toString());
-        callback.electricityRequestError(error.toString());
+        ElectricityError elecError = new ElectricityError();
+        elecError.setResponseHeaders(error.networkResponse.headers);
+        elecError.setResponseStatusCode(error.networkResponse.statusCode);
+        elecError.setMessage(error.getMessage());
+        elecError.setNetworkTimeMs(error.getNetworkTimeMs());
+        callback.electricityRequestError(elecError);
     }
 
     @Override

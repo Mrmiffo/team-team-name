@@ -5,8 +5,8 @@ package com.teamteamname.gotogothenburg.api.electricity.handlers;
  */
 public interface ElectricityErrorHandler {
     /**
-     * Method for recieving a errormessage.
+     * Method for recieving a error.
      * @param error
      */
-    void electricityRequestError(String error);
+    void electricityRequestError(ElectricityError error);
 }

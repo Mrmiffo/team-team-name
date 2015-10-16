@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
 
 import org.json.JSONArray;
@@ -22,7 +23,12 @@ public class StopPressedParser extends ElectricityParser implements Response.Lis
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("StopPressedParser", error.toString());
-        callback.electricityRequestError(error.toString());
+        ElectricityError elecError = new ElectricityError();
+        elecError.setResponseHeaders(error.networkResponse.headers);
+        elecError.setResponseStatusCode(error.networkResponse.statusCode);
+        elecError.setMessage(error.getMessage());
+        elecError.setNetworkTimeMs(error.getNetworkTimeMs());
+        callback.electricityRequestError(elecError);
     }
 
     @Override
