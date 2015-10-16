@@ -2,6 +2,7 @@ package com.teamteamname.gotogothenburg.api.electricity;
 
 
 import android.content.Context;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -34,6 +35,8 @@ public class ElectricityAPI implements IElectricityAPI {
 
     private RequestQueue queue;
     private static IElectricityAPI instance;
+    //The query time is set to 60sec as this seems to be about the time it takes for the bus to update this value. Still sometimes no value exist.
+    private static final int QUERY_LENGTH = 60;
 
     private static String apiKey;
 
@@ -56,7 +59,7 @@ public class ElectricityAPI implements IElectricityAPI {
     public void getBusLocation(Bus bus, ElectricityGPSHandler callback){
         //Requests data since 5 sec earlier.
         long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * 5);
+        long t1 = t2 - (1000 * QUERY_LENGTH);
 
         // Builds the URI
         String uri = buildURI(bus.getDgw(),"Ericsson$GPS2",null,t1,t2);
@@ -74,8 +77,9 @@ public class ElectricityAPI implements IElectricityAPI {
     @Override
     public void getNextStop(Bus bus, ElectricityNextStopHandler callback) {
         //Requests data since 10 sec earlier.
+        Log.e("System time", String.valueOf(System.currentTimeMillis()));
         long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * 10);
+        long t1 = t2 - (1000 * QUERY_LENGTH);
 
         // Builds the URI
         String uri = buildURI(bus.getDgw(),"Ericsson$Next_Stop",null,t1,t2);
@@ -93,7 +97,7 @@ public class ElectricityAPI implements IElectricityAPI {
     public void getAmbientTemperature(Bus bus, ElectricityTempHandler callback) {
         //Requests data since 10 sec earlier.
         long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * 10);
+        long t1 = t2 - (1000 * QUERY_LENGTH);
 
         // Builds the URI
         String uri = buildURI(bus.getDgw(),"Ericsson$Ambient_Temperature",null,t1,t2);
@@ -147,7 +151,7 @@ public class ElectricityAPI implements IElectricityAPI {
     public void getNbrOfWifiUsers(Bus bus, ElectricityWifiHandler callback) {
         //Requests data since 12 sec earlier.
         long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * 12);
+        long t1 = t2 - (1000 * QUERY_LENGTH);
 
         // Builds the URI
         String uri = buildURI(bus.getDgw(),"Ericsson$Online_Users",null,t1,t2);
