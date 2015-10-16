@@ -31,7 +31,7 @@ public class SavedDestinations {
     }
 
     /**
-     * Used to initialize the singleton.
+     * Used to init the singleton.
      * @param saver the IDestinationSaver to be used to permanently store data. If this object is null
      *              no data will be retained after restarting the application.
      */

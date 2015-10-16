@@ -61,7 +61,7 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
         ElectricityAPI.init(this, queue);
         queue.start();
         ElectriCityWiFiSystemIDAPI.initialize();
-        OnWhichBusIdentifier.initialize();
+        OnWhichBusIdentifier.init();
         AndroidDeviceAPI.initialize(this);
         LocationServicesAPI.init(this);
 

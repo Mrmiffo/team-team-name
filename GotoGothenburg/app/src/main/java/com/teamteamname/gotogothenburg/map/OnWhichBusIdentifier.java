@@ -43,7 +43,7 @@ public class OnWhichBusIdentifier{
      * Initialize method of the singleton class. This method should be run once only when the
      * application is launched.
      */
-    public synchronized static void initialize(){
+    public synchronized static void init(){
         if (instance == null){
             instance = new OnWhichBusIdentifier();
         }

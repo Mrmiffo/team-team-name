@@ -35,7 +35,7 @@ public final class AndroidDeviceAPI implements IDeviceAPI {
     }
 
     /**
-     * A method to initialize the singleton instance of AndroidDeviceAPI. Require and android context
+     * A method to init the singleton instance of AndroidDeviceAPI. Require and android context
      * to setup the instance. All methods will throw nullpointer exception unless this method has
      * been run.
      * @param context
