@@ -170,7 +170,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 for (Marker marker : markers) {
                     marker.remove();
                 }
-                v.setAlpha(BUTTON_PRESSED_ALPHA);
+                v.setAlpha(BUTTON_UNPRESSED_ALPHA);
             } else {
                 for (Destination dest : RecommendedDestinations.getInstance().getRecommendedDestinations()) {
                     MarkerOptions marker = new MarkerOptions();
@@ -180,7 +180,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                     marker.snippet("directions");
                     markers.add(placeMarker(marker));
                 }
-                v.setAlpha(BUTTON_UNPRESSED_ALPHA);
+                v.setAlpha(BUTTON_PRESSED_ALPHA);
             }
             isDisplaying = !isDisplaying;
         }
@@ -230,7 +230,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 for (Marker marker : markers) {
                     marker.remove();
                 }
-                v.setAlpha(BUTTON_PRESSED_ALPHA);
+                v.setAlpha(BUTTON_UNPRESSED_ALPHA);
             } else {
                 for (Destination dest : SavedDestinations.getInstance().getSavedDestinations()) {
                     MarkerOptions marker = new MarkerOptions();
@@ -240,7 +240,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                     markers.add(placeMarker(marker));
                 }
 
-                v.setAlpha(BUTTON_UNPRESSED_ALPHA);
+                v.setAlpha(BUTTON_PRESSED_ALPHA);
             }
             isDisplaying = !isDisplaying;
 
