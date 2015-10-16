@@ -25,7 +25,6 @@ public class NextStopParser extends ElectricityParser implements Response.Listen
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("NextStopParser", error.toString());
         ElectricityError elecError = new ElectricityError();
         if(error.networkResponse != null) {
             elecError.setResponseHeaders(error.networkResponse.headers);
@@ -43,18 +42,15 @@ public class NextStopParser extends ElectricityParser implements Response.Listen
             boolean stopExists = false;
 
             try {
+                //TODO Make cleaner sanitizer
+                String sanetizedString = sanitizeString(nextStop.getString("value"));
+                sanetizedString = sanetizedString.substring(0, sanetizedString.length() - 1).replace(' ','_').replace(".","").toUpperCase();
                 for (Stops stop : Stops.values()) {
                     //Checks caps to match
-                    //TODO Make cleaner sanitizer
-                    String sanetizedString = sanitizeString(nextStop.getString("value"));
-                    sanetizedString = sanetizedString.substring(0, nextStop.length()-1).toUpperCase().replace(' ','_').replace(".","");
                     if (sanetizedString.equals(stop.toString())) {
                         callback.electricityNextStopResponse(stop);
                         stopExists = true;
                     }
-                }
-                if (!stopExists) {
-                    throw new IllegalArgumentException("No stop" + nextStop.getString("value") + "exists");
                 }
             } catch (JSONException e) {
                 Log.e("JSONException", "Error getting values from JSONObject-response");
