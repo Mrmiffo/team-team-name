@@ -13,9 +13,9 @@ public enum Stops {
             PointOfInterest.CHALMERS_CAMPUS_JOHANNEBERG
     ),
     KAPELLPLATSEN(
-            PointOfInterest.LANDALA,
-            PointOfInterest.LANDSHÖVDINGEHUS,
-            PointOfInterest.MILJONPROGRAMMET
+            PointOfInterest.LANDALA
+//            PointOfInterest.LANDSHÖVDINGEHUS,
+//            PointOfInterest.MILJONPROGRAMMET
     ),
     GÖTAPLATSEN(
             PointOfInterest.POSEIDON,
@@ -35,14 +35,14 @@ public enum Stops {
             PointOfInterest.NORDSTAN,
             PointOfInterest.TURISTBYRÅN_NORDSTAND,
             PointOfInterest.ARKADEN,
-            PointOfInterest.NK,
-            PointOfInterest.DOMSTOLEN
+            PointOfInterest.NK
+//            PointOfInterest.DOMSTOLEN
     ),
     LILLA_BOMMEN(
             PointOfInterest.LÄPPSTIFTET
     ),
     FRIHAMNSPORTEN(
-            PointOfInterest.NEW_DEVELOPMENT
+            PointOfInterest.ÄLVSTADEN_FRIHAMNEN
     ),
     PUMPGATAN(),
     REGNBÅGSGATAN(),
