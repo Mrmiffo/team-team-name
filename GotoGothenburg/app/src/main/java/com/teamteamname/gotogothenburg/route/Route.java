@@ -86,10 +86,6 @@ public class Route implements ElectricityNextStopHandler{
 
     @Override
     public void electricityRequestError(ElectricityError error) {
-        if(secondTry) {
-            evaluateStop(Stops.DEFAULT);
-        } else {
-            checkNextStop();
-        }
+
     }
 }
