@@ -148,7 +148,7 @@ public enum PointOfInterest implements Serializable {
         this.soundGuide = soundGuide;
         this.picture = picture;
 
-        if (textGuide == null || !textGuide.exists()) {
+        if (textGuide == null) {
             this.textGuide = new File(getAssetsDir() + "null_text.txt");
         }
 

@@ -6,6 +6,13 @@ package com.teamteamname.gotogothenburg.route;
  */
 public enum Stops {
     //Note that only stops located along line 55 are included in the prototype.
+    CHALMERS_TVÄRGATA(
+
+    ),
+
+    ÅLANDSGATAN(
+
+    ),
     SVEN_HULTINGS_PL(
             PointOfInterest.JOHANNEBERG_SCIENCE_PARK
     ),

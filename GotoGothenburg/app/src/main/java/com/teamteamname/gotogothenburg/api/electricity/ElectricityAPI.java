@@ -77,7 +77,6 @@ public class ElectricityAPI implements IElectricityAPI {
     @Override
     public void getNextStop(Bus bus, ElectricityNextStopHandler callback) {
         //Requests data since 10 sec earlier.
-        Log.e("System time", String.valueOf(System.currentTimeMillis()));
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);
 
