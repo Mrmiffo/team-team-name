@@ -18,6 +18,7 @@ import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
+import com.teamteamname.gotogothenburg.guide.GuideHandler;
 
 /**
  * THe fragment used to display the Destination screen in the application.
@@ -81,6 +82,8 @@ public class DestinationFragment extends Fragment{
             } else {
                 Toast.makeText(getActivity(), "Device Location not found", Toast.LENGTH_SHORT).show();
             }
+            GuideHandler.getInstance().startGuide();
+
         }
 
     };
