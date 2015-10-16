@@ -27,7 +27,9 @@ public class NextStopParser extends ElectricityParser implements Response.Listen
     public void onErrorResponse(VolleyError error) {
         Log.e("NextStopParser", error.toString());
         ElectricityError elecError = new ElectricityError();
-        elecError.setResponseHeaders(error.networkResponse.headers);
+        if(error.networkResponse.headers != null) {
+            elecError.setResponseHeaders(error.networkResponse.headers);
+        }
         elecError.setResponseStatusCode(error.networkResponse.statusCode);
         elecError.setMessage(error.getMessage());
         elecError.setNetworkTimeMs(error.getNetworkTimeMs());
