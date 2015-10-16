@@ -54,7 +54,7 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             //Setup
             LayoutInflater inflater = activity.getLayoutInflater();
@@ -73,6 +73,14 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
         firstLine.setText(destinations.get(position).getName());
         //TODO make second line display time to destination.
         secondLine.setText("Insert time to destination here!");
+
+        convertView.findViewById(R.id.remove_destination).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SavedDestinations.getInstance().removeDestination(destinations.get(position));
+            }
+        });
+
         return convertView;
     }
 

@@ -128,14 +128,23 @@ public class DestinationSaver implements IDestinationSaver{
         AsyncTask thread = new AsyncTask<Object, Void, Void>() {
             @Override
             protected Void doInBackground(Object... params) {
-                String deleteInjection =
+                /*String deleteInjection =
                         "delete from " +
                                 DestinationEntry.TABLE_NAME +
-                                " where " + DestinationEntry.COLUMN_NAME_NAME + "=" + destinationToRemove.getName() +
-                                " and " + DestinationEntry.COLUMN_NAME_LATITUDE + "=" + destinationToRemove.getLatitude() +
-                                " and " + DestinationEntry.COLUMN_NAME_LONGITUDE + "=" + destinationToRemove.getLongitude() +
-                                " and " + DestinationEntry.COLUMN_NAME_VISITED + "=" + destinationToRemove.isVisited();
-                destDBReader.getWritableDatabase().execSQL(deleteInjection);
+                                " where " + DestinationEntry.COLUMN_NAME_NAME + "='" + destinationToRemove.getName() + "'" +
+                                " and " + DestinationEntry.COLUMN_NAME_LATITUDE + "='" + destinationToRemove.getLatitude() + "'" +
+                                " and " + DestinationEntry.COLUMN_NAME_LONGITUDE + "='" + destinationToRemove.getLongitude() + "'" +
+                                " and " + DestinationEntry.COLUMN_NAME_VISITED + "='" + destinationToRemove.isVisited() + "'";*/
+                destDBReader.getWritableDatabase().delete(
+                        DestinationEntry.TABLE_NAME,
+                        DestinationEntry.COLUMN_NAME_NAME + "= ?"/* and "  + DestinationEntry.COLUMN_NAME_LATITUDE + "= ? and "
+                                + DestinationEntry.COLUMN_NAME_LONGITUDE + "= ? and " + DestinationEntry.COLUMN_NAME_VISITED + "= ? "*/,
+                        new String[]{destinationToRemove.getName()/*,
+                                String.valueOf(destinationToRemove.getLatitude()),
+                                String.valueOf(destinationToRemove.getLongitude()),
+                                String.valueOf(destinationToRemove.isVisited())*/});
+                //destDBReader.getWritableDatabase().execSQL(deleteInjection);
+                //destDBReader.close();
                 return null;
             }
         };
