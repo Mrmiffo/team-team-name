@@ -98,6 +98,19 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        LocationServicesAPI.getInstance().disconnect();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocationServicesAPI.getInstance().connect();
+    }
+
+
+    @Override
     public void onStop(){
         super.onStop();
         LocationServicesAPI.getInstance().disconnect();

@@ -43,7 +43,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     private List<LocationListener> locationListeners = new ArrayList<>();
 
     /**
-     * Initialize the api but doesn't connect it.
+     * Initialize the api and connect it.
      * @param activity
      */
     public static void init(Activity activity) {
@@ -65,7 +65,11 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
         connect();
     }
 
-    private void connect() {
+    /**
+     * Unless the api is currently in a state of resolving an error then this method connects
+     * the api
+     */
+    public void connect() {
         if(api == null) {
             api = new GoogleApiClient.Builder(activity)
                     .addOnConnectionFailedListener(this)
