@@ -16,6 +16,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * LocationServicesAPI exposes functionality for accessing the devices' location and registering listeners for
  * updates on when the location changes.
@@ -36,6 +39,8 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     private boolean mResolvingError;
     // Reference to the api
     private GoogleApiClient api;
+    // List of listeners to register when api is connected
+    private List<LocationListener> locationListeners = new ArrayList<>();
 
     /**
      * Initialize the api but doesn't connect it.
@@ -88,6 +93,8 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     public void registerLocationUpdateListener(LocationListener locationListener) {
         if(api.isConnected()) {
             LocationServices.FusedLocationApi.requestLocationUpdates(api, LocationRequest.getLocationRequest(), locationListener);
+        } else {
+            locationListeners.add(locationListener);
         }
     }
 
@@ -112,7 +119,14 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     }
 
     @Override
-    public void onConnected(Bundle bundle) {}
+    public void onConnected(Bundle bundle) {
+        if(locationListeners.size() > 0) {
+            for(LocationListener l : new ArrayList<>(locationListeners)) {
+                registerLocationUpdateListener(l);
+                locationListeners.remove(l);
+            }
+        }
+    }
 
     @Override
     public void onConnectionSuspended(int i) {
