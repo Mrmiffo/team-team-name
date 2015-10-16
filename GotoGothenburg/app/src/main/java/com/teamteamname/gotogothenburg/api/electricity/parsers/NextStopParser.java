@@ -45,8 +45,9 @@ public class NextStopParser extends ElectricityParser implements Response.Listen
             try {
                 for (Stops stop : Stops.values()) {
                     //Checks caps to match
-                    String sanetizedString = sanitizeString(nextStop.getString("value"));
-                    if (sanetizedString.toUpperCase().replace(' ', '_').equals(stop.toString())) {
+                    //TODO Make cleaner sanitizer
+                    String sanetizedString = sanitizeString(nextStop.getString("value")).toUpperCase().replace(' ','_').replace(".","").substring(0,sanetizedString.length()-1);
+                    if (sanetizedString.equals(stop.toString())) {
                         callback.electricityNextStopResponse(stop);
                         stopExists = true;
                     }
