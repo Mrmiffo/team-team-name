@@ -31,6 +31,7 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorH
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
+import com.teamteamname.gotogothenburg.guide.GuideHandler;
 import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
@@ -64,6 +65,8 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
         OnWhichBusIdentifier.init();
         AndroidDeviceAPI.initialize(this);
         LocationServicesAPI.init(this);
+        GuideHandler.init(this);
+
 
         Bus.init();
 

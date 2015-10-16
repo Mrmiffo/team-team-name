@@ -20,25 +20,56 @@ import java.util.TimerTask;
  */
 public class GuideHandler implements IOnWhichBusListener {
 
+    private static GuideHandler instance;
+    private boolean guideHandlerStarted;
     private AbstractGuide guide;
     private boolean hasStartedGuide;
     private Context context;
     private boolean hasShownWifiError;
     private static final int SHOW_ERROR_AGAIN_AFTER = 60;
 
-    public GuideHandler(Context context){
+    private GuideHandler(Context context){
         this.context = context;
 
     }
 
+    public static GuideHandler getInstance(){
+        return instance;
+    }
+
+    public static void init(Context context){
+        if (instance == null){
+            instance = new GuideHandler(context);
+        }
+    }
+
+    /**
+     * A method called to start the guide.
+     */
     public void startGuide(){
-        OnWhichBusIdentifier.getInstance().registerListener(this);
-        OnWhichBusIdentifier.getInstance().start();
+        if (!guideHandlerStarted) {
+            guideHandlerStarted = true;
+            OnWhichBusIdentifier.getInstance().registerListener(this);
+            OnWhichBusIdentifier.getInstance().start();
+        }
+    }
+
+    public void stopGuide() {
+        hasStartedGuide = false;
+        guideHandlerStarted = false;
+        guide.stopGuide();
+        //TODO Kill route.
+        OnWhichBusIdentifier.getInstance().stop();
+        OnWhichBusIdentifier.getInstance().removeListener(this);
+    }
+
+    public boolean isRunning(){
+        return guideHandlerStarted;
     }
 
     @Override
     public void whichBussCallBack(Bus busUserIsOn) {
-        if (!hasStartedGuide){
+        if (!hasStartedGuide && guideHandlerStarted){
             Route routeToStart = new Route(busUserIsOn);
             guide = new AndroidGuide(context,routeToStart);
             guide.startGuide();
@@ -82,13 +113,7 @@ public class GuideHandler implements IOnWhichBusListener {
         }
     }
 
-    public void stopGuide() {
-        guide.stopGuide();
-        //TODO Kill route.
-        hasStartedGuide = !hasStartedGuide;
-        OnWhichBusIdentifier.getInstance().stop();
-        OnWhichBusIdentifier.getInstance().removeListener(this);
-    }
+
 
     @Override
     public void unableToIdentifyBusError() {

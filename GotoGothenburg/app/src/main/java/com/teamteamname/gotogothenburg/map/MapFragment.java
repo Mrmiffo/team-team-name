@@ -174,21 +174,15 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     };
 
     private View.OnClickListener startGuideButtonListener = new View.OnClickListener() {
-        GuideHandler guideStarter;
-        boolean hasBeenPressed;
         @Override
         public void onClick(View v) {
-            if (hasBeenPressed) {
-                guideStarter.stopGuide();
+            if (GuideHandler.getInstance().isRunning()) {
+                GuideHandler.getInstance().stopGuide();
                 v.setAlpha(0.5f);
             } else {
-                if (guideStarter == null){
-                    guideStarter = new GuideHandler(getActivity());
-                }
-                guideStarter.startGuide();
+                GuideHandler.getInstance().startGuide();
                 v.setAlpha(1f);
             }
-            hasBeenPressed = !hasBeenPressed;
         }
     };
     /**
