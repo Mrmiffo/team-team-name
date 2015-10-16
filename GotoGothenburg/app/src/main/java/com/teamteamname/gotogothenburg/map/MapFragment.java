@@ -47,6 +47,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     private List<Polyline> polyline = new ArrayList<>();
     // Marker for where the user clicks on the map
     Marker userSelectionMarker;
+    private static final float BUTTON_PRESSED_ALPHA = 1f;
+    private static final float BUTTON_UNPRESSED_ALPHA = 0.5f;
 
     public static MapFragment newInstance(){
         return new MapFragment();
@@ -88,8 +90,17 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         view.findViewById(R.id.showDestButton).setOnClickListener(destinationPointsListener);
         view.findViewById(R.id.showRecDest).setOnClickListener(showRecommendedDestinations);
         view.findViewById(R.id.startGuideButton).setOnClickListener(startGuideButtonListener);
+        setStartGuideButtonAlpha(view);
 
         return parentView;
+    }
+
+    private void setStartGuideButtonAlpha(View view) {
+        if (GuideHandler.getInstance().isRunning()){
+            view.findViewById(R.id.startGuideButton).setAlpha(BUTTON_PRESSED_ALPHA);
+        } else {
+            view.findViewById(R.id.startGuideButton).setAlpha(BUTTON_UNPRESSED_ALPHA);
+        }
     }
 
     /*
@@ -157,7 +168,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 for (Marker marker : markers) {
                     marker.remove();
                 }
-                v.setAlpha(0.5f);
+                v.setAlpha(BUTTON_PRESSED_ALPHA);
             } else {
                 for (Destination dest : RecommendedDestinations.getInstance().getRecommendedDestinations()) {
                     MarkerOptions marker = new MarkerOptions();
@@ -167,7 +178,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                     marker.snippet("directions");
                     markers.add(placeMarker(marker));
                 }
-                v.setAlpha(1f);
+                v.setAlpha(BUTTON_UNPRESSED_ALPHA);
             }
             isDisplaying = !isDisplaying;
         }
@@ -178,11 +189,10 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         public void onClick(View v) {
             if (GuideHandler.getInstance().isRunning()) {
                 GuideHandler.getInstance().stopGuide();
-                v.setAlpha(0.5f);
             } else {
                 GuideHandler.getInstance().startGuide();
-                v.setAlpha(1f);
             }
+            setStartGuideButtonAlpha(v);
         }
     };
     /**
@@ -198,7 +208,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 for (Marker marker : markers) {
                     marker.remove();
                 }
-                v.setAlpha(0.5f);
+                v.setAlpha(BUTTON_PRESSED_ALPHA);
             } else {
                 for (Destination dest : SavedDestinations.getInstance().getSavedDestinations()) {
                     MarkerOptions marker = new MarkerOptions();
@@ -208,7 +218,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                     markers.add(placeMarker(marker));
                 }
 
-                v.setAlpha(1f);
+                v.setAlpha(BUTTON_UNPRESSED_ALPHA);
             }
             isDisplaying = !isDisplaying;
 
