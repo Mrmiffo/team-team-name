@@ -38,25 +38,27 @@ public class NextStopParser extends ElectricityParser implements Response.Listen
 
     @Override
     public void onResponse(JSONArray response) {
-        JSONObject nextStop = this.getLatestJSONValue("Bus_Stop_Name_Value",response);
-        boolean stopExists = false;
+        if(response.length()>0) {
+            JSONObject nextStop = this.getLatestJSONValue("Bus_Stop_Name_Value", response);
+            boolean stopExists = false;
 
-        try {
-            for(Stops stop:Stops.values()){
-                //Checks caps to match
-                String sanetizedString = sanitizeString(nextStop.getString("value"));
-                if(sanetizedString.toUpperCase().replace(' ','_').equals(stop.toString())){
-                    callback.electricityNextStopResponse(stop);
-                    stopExists = true;
+            try {
+                for (Stops stop : Stops.values()) {
+                    //Checks caps to match
+                    String sanetizedString = sanitizeString(nextStop.getString("value"));
+                    if (sanetizedString.toUpperCase().replace(' ', '_').equals(stop.toString())) {
+                        callback.electricityNextStopResponse(stop);
+                        stopExists = true;
+                    }
                 }
+                if (!stopExists) {
+                    throw new IllegalArgumentException("No stop" + nextStop.getString("value") + "exists");
+                }
+            } catch (JSONException e) {
+                Log.e("JSONException", "Error getting values from JSONObject-response");
+            } catch (NullPointerException e) {
+                Log.e("NullPointer", "Error reading JSONObjects");
             }
-            if(!stopExists){
-                throw new IllegalArgumentException("No stop" + nextStop.getString("value") + "exists");
-            }
-        }catch(JSONException e){
-            Log.e("JSONException","Error getting values from JSONObject-response");
-        }catch(NullPointerException e){
-            Log.e("NullPointer","Error reading JSONObjects");
         }
     }
 }
