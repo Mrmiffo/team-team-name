@@ -55,7 +55,7 @@
     <!-- Preference end-->
 
     <string name="unplugged_handsfree_title">Unplugged Handsfree</string>
-    <string name="unplugged_handsfree_message">For the convenience of your surroundings, this sound will not be played unless handsfree are plugged in.</string>
+    <string name="unplugged_handsfree_message">For the convenience of your surroundings, this sound will not be played unless handsfree is plugged in.</string>
 
     <string name="ok">Ok!</string>
     <string name="cancel">Cancel!</string>
