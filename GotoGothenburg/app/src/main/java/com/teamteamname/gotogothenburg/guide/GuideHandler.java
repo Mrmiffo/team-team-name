@@ -64,7 +64,9 @@ public class GuideHandler implements IOnWhichBusListener {
     }
 
     private void stopGuidedRoute() {
-        guide.stopGuide();
+        if (guide!=null) {
+            guide.stopGuide();
+        }
         //TODO Kill route.
         OnWhichBusIdentifier.getInstance().stop();
         OnWhichBusIdentifier.getInstance().removeListener(this);
