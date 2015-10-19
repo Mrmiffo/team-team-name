@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface VasttrafikErrorHandler {
     /**
-     * Called if any unsuspected error occurs
+     * Called if any unmanageble errors occur
      * @param e The error message
      */
     void vasttrafikRequestError(String e);

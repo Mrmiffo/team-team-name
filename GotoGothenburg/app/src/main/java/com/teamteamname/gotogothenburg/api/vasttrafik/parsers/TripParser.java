@@ -83,7 +83,6 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
             walks.add(walk);
             trips.add(trip);
         }
-
         new GeoManager(tripCallback, errorCallback, queue, ja.length(), urls, trips, walks);
     }
 

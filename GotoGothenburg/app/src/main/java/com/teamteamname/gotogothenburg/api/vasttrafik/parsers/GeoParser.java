@@ -56,7 +56,7 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
                 polylineDone(createPolyline(point));
                 markerDone(trip, point);
             } else {
-                // Null
+                Log.e("Null", "Response from vasttrafik does not contain point");
             }
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
@@ -129,6 +129,9 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
         return polylines;
     }
 
+    /*
+    fills in and removes coordinates from the given list until there's a coordinate every 10-20 meters
+     */
     private List<LatLng> enhance(List<LatLng> polyline) {
         for (int i = 0; i < polyline.size(); i += 2) {
             if (i >= polyline.size() - 1) {
@@ -146,6 +149,9 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
         return polyline;
     }
 
+    /*
+    returns the distance in meters between two given coordinates
+     */
     private double distance(double lat1, double lat2, double lon1, double lon2) {
         final int R = 6371; // Radius of the earth
 

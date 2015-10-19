@@ -9,6 +9,15 @@ import java.util.List;
  * Created by Mattias Ahlstedt on 2015-10-16.
  */
 public interface GeoCallback {
-    public void polylineRequestDone(List<PolylineOptions> polyline);
+    /**
+     * Callback for returning a list of Polylines
+     * @param polylines the polylines
+     */
+    public void polylineRequestDone(List<PolylineOptions> polylines);
+
+    /**
+     * Callback for returning trip information
+     * @param marker the trip information
+     */
     public void markerRequestDone(VasttrafikChange marker);
 }

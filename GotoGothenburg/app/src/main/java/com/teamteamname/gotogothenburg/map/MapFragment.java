@@ -138,8 +138,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     }
 
     /**
-     * Draws a currentPolyline on the map
-     * @param polylines
+     * Draws all the given polylines on the map
+     * @param polylines the polylines which are to be drawn
      */
     public void drawPolyLine(PolylineOptions... polylines){
         if(currentPolyline != null) {
@@ -159,6 +159,11 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         }
     }
 
+
+    /**
+     * Places markers containing the given trip information on the map
+     * @param newTrip The trip information
+     */
     public void updateCurrentTrip(VasttrafikChange... newTrip){
         if(currentTripMarkers != null) {
             clearTripMarkers();

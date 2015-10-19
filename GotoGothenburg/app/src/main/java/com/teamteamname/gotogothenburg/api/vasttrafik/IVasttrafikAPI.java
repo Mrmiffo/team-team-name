@@ -10,7 +10,7 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHa
 public interface IVasttrafikAPI {
 
     /**
-     * Sends a list of coordinates to the callback
+     * Sends a list of coordinates and information regarding the requested trip to the callback
      * The coordinates are a route from originLocation to destLocation
      * @param tripCallback the callback supplied with response
      * @param errorCallback the callback supplied with an eventual error
@@ -20,23 +20,11 @@ public interface IVasttrafikAPI {
     void getTrip(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, VasttrafikLocation originLocation, VasttrafikLocation destLocation);
 
     /**
-     * Sends a list fo autocomplete suggestions to the callback.
+     * Sends a list of autocomplete suggestions to the callback
      * The suggestions are based on the string "input" which is supplied.
      * @param autoCallback  The interface which is to be supplied with the result
      * @param errorCallback The interface which is to be supplied with an eventual error
      * @param input     The input which is the base for the autocomplete suggestions
      */
     void getAutocomplete(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback, String input);
-
-    /*
-    These methods are to be implemented at a later stage
-    void setWalkSpeed(int walkSpeed);
-    void setMaxWalkDist(int maxWalkDist);
-    void setAddChangeTime(int addChangeTime);
-    void setMaxChanges(int maxChanges);
-    void setWheelchair(boolean wheelchair);
-    void setStroller(boolean stroller);
-    void setLowFloor(boolean lowFloor);
-    void setRampLift(boolean rampLiftNeeded);
-    */
 }
