@@ -21,6 +21,7 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
@@ -160,14 +161,9 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
     }
 
     @Override
-    public void vasttrafikRequestDone(boolean newPolyline, LatLng... polyline) {
+    public void vasttrafikRequestDone(VasttrafikChange[] tripInfo, PolylineOptions[] polyline){
         changeTab(1);
-        ((MapFragment) getCurrentTab()).drawPolyLine(newPolyline, polyline);
-    }
-
-    @Override
-    public void vasttrafikRequestDone(boolean newPolyline, VasttrafikChange... tripInfo){
-        changeTab(1);
-        ((MapFragment) getCurrentTab()).updateCurrentTrip(newPolyline, tripInfo);
+        ((MapFragment) getCurrentTab()).updateCurrentTrip(tripInfo);
+        ((MapFragment) getCurrentTab()).drawPolyLine(polyline);
     }
 }

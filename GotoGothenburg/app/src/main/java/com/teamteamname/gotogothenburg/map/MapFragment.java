@@ -44,14 +44,14 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
     // Reference to the map displayed in application
     private GoogleMap map;
-    // The current or lastly drawn polyline
-    private List<Polyline> polyline = new ArrayList<>();
     // Marker for where the user clicks on the map
     Marker userSelectionMarker;
     private static final float BUTTON_PRESSED_ALPHA = 1f;
     private static final float BUTTON_UNPRESSED_ALPHA = 0.5f;
-    private List<Marker> tripMarkers = new ArrayList<>();
-    private VasttrafikChange[] currentTrip;
+
+    private List<Marker> currentTripMarkers = new ArrayList<>();
+    private VasttrafikChange[] currentTripInfo;
+    private List<Polyline> currentPolyline = new ArrayList<>();
 
     public static MapFragment newInstance(){
         return new MapFragment();
@@ -138,25 +138,50 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     }
 
     /**
-     * Draws a polyline on the map
-     * @param coords List of coordinates to connect with a line
+     * Draws a currentPolyline on the map
+     * @param polylines
      */
-    public void drawPolyLine(boolean cleanMap, LatLng... coords){
-        if(polyline != null && cleanMap) {
-            removePolyline();
+    public void drawPolyLine(PolylineOptions... polylines){
+        if(currentPolyline != null) {
+            removeCurrentPolyline();
         }
-        PolylineOptions polyline = new PolylineOptions();
-        polyline.width(5);
-        for(LatLng latlng : coords){
-            polyline.add(latlng);
+
+        for(PolylineOptions p : polylines) {
+            p.width(5);
+            currentPolyline.add(map.addPolyline(p));
+            p.visible(true);
         }
-        this.polyline.add(map.addPolyline(polyline));
-        polyline.visible(true);
     }
 
-    private void removePolyline(){
-        for(Polyline p : polyline){
+    private void removeCurrentPolyline(){
+        for(Polyline p : currentPolyline){
             p.remove();
+        }
+    }
+
+    public void updateCurrentTrip(VasttrafikChange... newTrip){
+        if(currentTripMarkers != null) {
+            clearTripMarkers();
+        }
+
+        currentTripInfo = newTrip;
+
+        for(VasttrafikChange vc : currentTripInfo){
+            MarkerOptions marker = new MarkerOptions();
+            if(vc.getLine().equalsIgnoreCase("Walk")) {
+                marker.title("Walk from: " + vc.getStopName());
+            } else {
+                marker.title("Line: " + vc.getLine());
+                marker.snippet("From: " + vc.getStopName() + ", track " + vc.getTrack());
+            }
+            marker.position(vc.getPosition());
+            currentTripMarkers.add(placeMarker(marker));
+        }
+    }
+
+    private void clearTripMarkers(){
+        for(Marker m : currentTripMarkers){
+            m.remove();
         }
     }
 
@@ -186,26 +211,6 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         }
     };
 
-    public void updateCurrentTrip(boolean cleanMap, VasttrafikChange... newTrip){
-        if(tripMarkers != null && cleanMap) {
-            clearTripMarkers();
-        }
-        this.currentTrip = newTrip;
-        for(VasttrafikChange vc : currentTrip){
-            MarkerOptions marker = new MarkerOptions();
-            marker.title(vc.getStopName());
-            marker.snippet(vc.getTrack());
-            marker.position(vc.getPosition());
-            tripMarkers.add(placeMarker(marker));
-        }
-    }
-
-    private void clearTripMarkers(){
-        for(Marker m : tripMarkers){
-            m.remove();
-        }
-    }
-
     private View.OnClickListener startGuideButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -217,6 +222,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
             setStartGuideButtonAlpha(v);
         }
     };
+
     /**
      * Listener for displaying destinations on the map
      */

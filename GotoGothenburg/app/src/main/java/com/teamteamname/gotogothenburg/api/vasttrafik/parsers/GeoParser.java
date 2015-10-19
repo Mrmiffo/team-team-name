@@ -7,9 +7,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.GeoCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,29 +24,27 @@ import java.util.List;
  */
 public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    private VasttrafikTripHandler tripCallback;
-    private VasttrafikErrorHandler errorCallback;
-    private String uri;
-    private VasttrafikChange trip;
-    private int tripIndex;
-    private boolean newPolyline;
-    private boolean walk;
+    private GeoCallback callback;
     private RequestQueue queue;
 
-    public GeoParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, String uri, VasttrafikChange trip, boolean newPolyline, boolean walk, RequestQueue queue) {
-        this.tripCallback = tripCallback;
-        this.errorCallback = errorCallback;
-        this.newPolyline = newPolyline;
-        this.walk = walk;
-        this.uri = uri;
+    private String url;
+    private VasttrafikChange trip;
+    private boolean walk;
+
+    public GeoParser(GeoCallback callback, RequestQueue queue,
+                     String url, VasttrafikChange trip, boolean walk) {
+
+        this.callback = callback;
         this.queue = queue;
+
+        this.url = url;
         this.trip = trip;
+        this.walk = walk;
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        GeoParser parser = new GeoParser(tripCallback, errorCallback, uri, trip, false, walk, queue);
-        JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
+        JsonObjectRequest request = new JsonObjectRequest(url, null, this, this);
         queue.add(request);
     }
 
@@ -55,20 +54,17 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
             JSONArray point = getPoint(response);
             if (point != null) {
                 polylineDone(createPolyline(point));
-                returnTripInfo(trip, point);
+                markerDone(trip, point);
             } else {
-                errorCallback.vasttrafikRequestError("null response");
+                // Null
             }
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
         }
     }
 
-    private void returnTripInfo(VasttrafikChange vc, JSONArray ja) throws JSONException {
-            tripCallback.vasttrafikRequestDone(newPolyline, new VasttrafikChange(   vc.getLine(),
-                                                                                    vc.getStopName(),
-                                                                                    vc.getTrack(),
-                                                                                    getCoordFromJSON(ja)));
+    private void markerDone(VasttrafikChange vc, JSONArray ja) throws JSONException {
+            callback.markerRequestDone(new VasttrafikChange(vc.getLine(), vc.getStopName(), vc.getTrack(), getCoordFromJSON(ja)));
     }
 
     private LatLng getCoordFromJSON(JSONArray ja) throws JSONException {
@@ -106,25 +102,31 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
     }
 
     private void polylineDone(List<LatLng> polyline) {
-        if (walk) {
-            returnDashed(polyline);
+        List<PolylineOptions> polylines;
+        if(walk) {
+            polylines = returnDashed(polyline);
         } else {
-            LatLng[] polylineArray = polyline.toArray(new LatLng[polyline.size()]);
-            tripCallback.vasttrafikRequestDone(newPolyline, polylineArray);
+            polylines = new ArrayList<>();
+            polylines.add((new PolylineOptions()).add(polyline.toArray(new LatLng[polyline.size()])));
         }
+        callback.polylineRequestDone(polylines);
     }
 
-    private LatLng[] returnDashed(List<LatLng> polyline) {
-        List<LatLng> temp = new ArrayList<>();
+    private List<PolylineOptions> returnDashed(List<LatLng> polyline) {
+        List<LatLng> temp  = new ArrayList<>();
+        List<PolylineOptions> polylines = new ArrayList<>();
+
         polyline = enhance(polyline);
+
         for (int i = 0; i < polyline.size(); i++) {
             temp.add(polyline.get(i));
             if (i % 2 == 0) {
-                tripCallback.vasttrafikRequestDone(newPolyline && i==0, temp.toArray(new LatLng[temp.size()]));
+                polylines.add((new PolylineOptions()).add(temp.toArray(new LatLng[temp.size()])));
                 temp = new ArrayList<>();
             }
         }
-        return polyline.toArray(new LatLng[polyline.size()]);
+
+        return polylines;
     }
 
     private List<LatLng> enhance(List<LatLng> polyline) {
