@@ -72,7 +72,7 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
 
         firstLine.setText(destinations.get(position).getName());
         //TODO make second line display time to destination.
-        secondLine.setText("Insert time to destination here!");
+        //secondLine.setText("Insert time to destination here!");
 
         convertView.findViewById(R.id.remove_destination).setOnClickListener(new View.OnClickListener() {
             @Override
