@@ -44,7 +44,8 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        JsonObjectRequest request = new JsonObjectRequest(url, null, this, this);
+        GeoParser parser = new GeoParser(callback, queue, url, trip, walk);
+        JsonObjectRequest request = new JsonObjectRequest(url, null, parser, parser);
         queue.add(request);
     }
 
@@ -56,7 +57,7 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
                 polylineDone(createPolyline(point));
                 markerDone(trip, point);
             } else {
-                Log.e("Null", "Response from vasttrafik does not contain point");
+                onErrorResponse(new VolleyError());
             }
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
@@ -64,7 +65,12 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
     }
 
     private void markerDone(VasttrafikChange vc, JSONArray ja) throws JSONException {
-            callback.markerRequestDone(new VasttrafikChange(vc.getLine(), vc.getStopName(), vc.getTrack(), getCoordFromJSON(ja)));
+        LatLng temp = getCoordFromJSON(ja);
+        if(temp != null) {
+            callback.markerRequestDone(new VasttrafikChange(vc.getLine(), vc.getStopName(), vc.getTrack(), temp));
+        } else {
+            onErrorResponse(new VolleyError());
+        }
     }
 
     private LatLng getCoordFromJSON(JSONArray ja) throws JSONException {

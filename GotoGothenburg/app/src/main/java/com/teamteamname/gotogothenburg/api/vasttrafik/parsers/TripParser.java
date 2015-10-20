@@ -48,7 +48,7 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
             if(ja != null){
                 createGeoManager(ja);
             } else {
-                errorCallback.vasttrafikRequestError("null response");
+                onErrorResponse(new VolleyError());
             }
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
@@ -76,6 +76,10 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
         for (int i = 0; i < ja.length(); i++) {
             JSONObject temp = (JSONObject)ja.get(i);
             String url = getGeoRefUrl(temp);
+            if(url == null){
+                onErrorResponse(new VolleyError());
+                return;
+            }
             boolean walk = temp.get("type").equals("WALK");
             VasttrafikChange trip = getTripInfo(temp);
 
