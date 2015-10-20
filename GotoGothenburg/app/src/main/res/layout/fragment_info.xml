@@ -15,6 +15,21 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="How to Travel title"
+            android:id="@+id/how_to_travel_title"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/how_to_travel_text"
+            android:padding="5dp" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -29,19 +44,5 @@
             android:id="@+id/ticket_text"
             android:padding="5dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="How to Travel title"
-            android:id="@+id/how_to_travel_title"
-            android:padding="5dp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/how_to_travel_text"
-            android:padding="5dp" />
     </LinearLayout>
 </ScrollView>
