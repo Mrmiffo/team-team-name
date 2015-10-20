@@ -3,6 +3,7 @@ package com.teamteamname.gotogothenburg.guide;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.util.Log;
 
 import com.teamteamname.gotogothenburg.map.Bus;
 import com.teamteamname.gotogothenburg.map.ConnectToWiFiErrorDialog;
@@ -105,18 +106,19 @@ public class GuideHandler implements IOnWhichBusListener {
         //TODO Remove test code
         //Replace code snippets for using specified bus buss without wifi.
         //--TEST CODE--
-        /*
+
         if (!hasStartedGuide) {
             Log.e("GuideHandler test", "Starting test run");
             whichBussCallBack(Bus.getBusBySysId("2501069301"));
         }
         //-TEST CODE END--
-        */
+        /*
         if (hasStartedGuide) {
             stopGuide();
             //TODO Implement reconnect to wifi to restart guide.
         }
         displayWifiError();
+        */
     }
 
     //Method used to display a wifi error. This error will only be display once every 10
