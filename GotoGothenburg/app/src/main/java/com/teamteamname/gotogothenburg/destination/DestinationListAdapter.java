@@ -77,7 +77,8 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
 
         firstLine.setText(destinations.get(position).getName());
         //TODO make second line display time to destination.
-        //secondLine.setText("Insert time to destination here!");
+        // This text has been left empty instead of removing the text field object as the application has been tested and verifgied with the text field in place even if it has not been properly implemented.
+        secondLine.setText(" ");
 
         convertView.findViewById(R.id.remove_destination).setOnClickListener(new View.OnClickListener() {
             @Override
