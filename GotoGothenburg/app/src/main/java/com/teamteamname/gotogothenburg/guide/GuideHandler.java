@@ -106,7 +106,7 @@ public class GuideHandler implements IOnWhichBusListener {
 
     @Override
     public void notConnectedToElectriCityWifiError() {
-        //TODO Remove test code
+        //TODO Remove test code.
         //Replace code snippets for using specified bus buss without wifi.
         //--TEST CODE--
         /*
@@ -119,6 +119,7 @@ public class GuideHandler implements IOnWhichBusListener {
         if (hasStartedGuide) {
             stopGuide();
             //TODO Implement reconnect to wifi to restart guide.
+            // Not implemented in prototype version due to lack of time.
         }
         displayWifiError();
 
