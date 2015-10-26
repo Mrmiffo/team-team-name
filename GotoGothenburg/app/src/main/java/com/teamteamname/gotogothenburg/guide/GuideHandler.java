@@ -3,6 +3,7 @@ package com.teamteamname.gotogothenburg.guide;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.util.Log;
 
 import com.teamteamname.gotogothenburg.Bus;
 import com.teamteamname.gotogothenburg.map.ConnectToWiFiErrorDialog;
@@ -22,6 +23,7 @@ public class GuideHandler implements IOnWhichBusListener {
     private static GuideHandler instance;
     private boolean guideHandlerStarted;
     private AbstractGuide guide;
+    Route routeToStart;
     private boolean hasStartedGuide;
     private Context context;
     private boolean hasShownWifiError;
@@ -67,7 +69,9 @@ public class GuideHandler implements IOnWhichBusListener {
         if (guide!=null) {
             guide.stopGuide();
         }
-        //TODO Kill route.
+        if (routeToStart != null){
+            routeToStart.stopRoute();
+        }
         OnWhichBusIdentifier.getInstance().stop();
         OnWhichBusIdentifier.getInstance().removeListener(this);
     }
@@ -94,7 +98,7 @@ public class GuideHandler implements IOnWhichBusListener {
     }
 
     private void startGuidedRoute(Bus busUserIsOn) {
-        Route routeToStart = new Route(busUserIsOn);
+        routeToStart = new Route(busUserIsOn);
         guide = new AndroidGuide(context,routeToStart);
         guide.startGuide();
         hasStartedGuide = true;
@@ -117,6 +121,7 @@ public class GuideHandler implements IOnWhichBusListener {
             //TODO Implement reconnect to wifi to restart guide.
         }
         displayWifiError();
+
     }
 
     //Method used to display a wifi error. This error will only be display once every 10
