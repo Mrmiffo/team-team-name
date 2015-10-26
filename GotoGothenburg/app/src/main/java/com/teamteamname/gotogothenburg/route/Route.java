@@ -22,7 +22,9 @@ public class Route implements ElectricityNextStopHandler{
     private final List<PointOfInterest> poiQueue;
     private Stops lastStop = Stops.DEFAULT;
     private boolean secondTry;
-    Timer timer;
+    private Timer timer;
+    private boolean timerRunning;
+
 
     /**
      * Creates a route for the given bus.
@@ -40,10 +42,18 @@ public class Route implements ElectricityNextStopHandler{
                 checkNextStop();
             }
         },0, 5000);
+        timerRunning = true;
     }
 
+    /**
+     * Method used to stop the thread running in the Route class. Method should be run prior to
+     * discarding the object to improve performance.
+     */
     public void stopRoute(){
-        timer.cancel();
+        if (timerRunning){
+            timer.cancel();
+        }
+
     }
 
     /**
