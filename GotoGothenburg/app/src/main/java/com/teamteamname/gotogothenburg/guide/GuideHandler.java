@@ -3,10 +3,7 @@ package com.teamteamname.gotogothenburg.guide;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
-
 import com.teamteamname.gotogothenburg.api.Bus;
-import com.teamteamname.gotogothenburg.map.IOnWhichBusListener;
-import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 import com.teamteamname.gotogothenburg.route.Route;
 
 import java.util.Timer;
@@ -20,12 +17,19 @@ public class GuideHandler implements IOnWhichBusListener {
 
     private static GuideHandler instance;
     private boolean guideHandlerStarted;
-    private AbstractGuide guide;
-    Route routeToStart;
-    private boolean hasStartedGuide;
     private Context context;
+
+    //Helper classes
+    private AbstractGuide guide;
+    private Route routeToStart;
+    private OnWhichBusIdentifier onWhichBusIdentifier;
+
+    //Status values
     private boolean hasShownWifiError;
     private Bus prevBus;
+    private boolean hasStartedGuide;
+
+    //Settings
     private static final int SHOW_ERROR_AGAIN_AFTER = 60;
 
     private GuideHandler(Context context){
@@ -49,8 +53,9 @@ public class GuideHandler implements IOnWhichBusListener {
     public void startGuide(){
         if (!guideHandlerStarted) {
             guideHandlerStarted = true;
-            OnWhichBusIdentifier.getInstance().registerListener(this);
-            OnWhichBusIdentifier.getInstance().start();
+            onWhichBusIdentifier = new OnWhichBusIdentifier();
+            onWhichBusIdentifier.registerListener(this);
+            onWhichBusIdentifier.start();
         }
     }
 
@@ -71,8 +76,10 @@ public class GuideHandler implements IOnWhichBusListener {
         if (routeToStart != null){
             routeToStart.stopRoute();
         }
-        OnWhichBusIdentifier.getInstance().stop();
-        OnWhichBusIdentifier.getInstance().removeListener(this);
+        if (onWhichBusIdentifier != null) {
+            onWhichBusIdentifier.stop();
+            onWhichBusIdentifier.removeListener(this);
+        }
     }
 
     /**

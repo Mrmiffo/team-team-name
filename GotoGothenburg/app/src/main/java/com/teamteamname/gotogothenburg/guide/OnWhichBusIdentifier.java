@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.map;
+package com.teamteamname.gotogothenburg.guide;
 
 
 import com.teamteamname.gotogothenburg.api.Bus;
@@ -13,8 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A class that identifies which ElectriCity bus which the user is connected to. This class is a
- * singleton and provides functionality for identifying which bus the user is on.
+ * A class that identifies which ElectriCity bus which the user is connected to.
  * This class has been tested through user tests only. JUnit tests has not been created as the
  * extensive use of singleton classas and reliance of specific Wifi networks makes this all but
  * practically impossible without extensive work.
@@ -23,8 +22,6 @@ import java.util.TimerTask;
  * 2. Start the identifier.
  * 2.a A timer will start that triggers each 5 seconds sending a response to the respective callback methods depending on the result.
  * 3. Stop the timer when a response is no longer requiered.
- * NOTE: If the listener is not removed it may receive a response when some other part of the
- * application is starting the identifier.
  * Created by Anton on 2015-09-24.
  */
 public class OnWhichBusIdentifier{
@@ -36,22 +33,8 @@ public class OnWhichBusIdentifier{
     private static final int QUERY_TIMER_DELAY = 5;
     private volatile boolean queryTimerRunning;
 
-    private OnWhichBusIdentifier(){
+    public OnWhichBusIdentifier(){
         listeners = new ArrayList<>();
-    }
-
-    /**
-     * Initialize method of the singleton class. This method should be run once only when the
-     * application is launched.
-     */
-    public synchronized static void init(){
-        if (instance == null){
-            instance = new OnWhichBusIdentifier();
-        }
-    }
-
-    public synchronized static OnWhichBusIdentifier getInstance(){
-        return instance;
     }
 
     /**

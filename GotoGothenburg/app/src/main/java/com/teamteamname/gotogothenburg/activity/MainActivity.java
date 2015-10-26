@@ -35,7 +35,7 @@ import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
-import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
+import com.teamteamname.gotogothenburg.guide.OnWhichBusIdentifier;
 
 public class MainActivity extends FragmentActivity implements VasttrafikTripHandler, VasttrafikErrorHandler{
 
@@ -64,7 +64,6 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
         ElectricityAPI.init(this, queue);
         queue.start();
         ElectriCityWiFiSystemIDAPI.initialize();
-        OnWhichBusIdentifier.init();
         AndroidDeviceAPI.initialize(this);
         LocationServicesAPI.init(this);
         GuideHandler.init(this);
