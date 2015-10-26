@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.teamteamname.gotogothenburg.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +33,23 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
         destinations = savedDestinations.getSavedDestinations();
         savedDestinations.registerListener(this);
     }
+
+    //TODO Make proper sorting method. Currently using visited, even though this is not yet implemented.
+    //Local method used to sort all the locations by if they are visited or not.
+    private void sort() {
+        ArrayList<Destination> visited = new ArrayList<>();
+        ArrayList<Destination> notVisited = new ArrayList<>();
+        for (Destination dest:destinations){
+            if (dest.isVisited()){
+                visited.add(dest);
+            } else {
+                notVisited.add(dest);
+            }
+        }
+        destinations = new ArrayList<>();
+        destinations.addAll(visited);
+        destinations.addAll(notVisited);
+    }
     @Override
     public int getCount() {
         return destinations.size();
@@ -50,6 +68,7 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
     @Override
     public void notifyDataSetChanged() {
         destinations = savedDestinations.getSavedDestinations();
+        sort();
         super.notifyDataSetChanged();
     }
 

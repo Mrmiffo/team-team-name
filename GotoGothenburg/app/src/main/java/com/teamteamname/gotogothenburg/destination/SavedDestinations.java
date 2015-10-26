@@ -79,7 +79,6 @@ public class SavedDestinations {
     public void addDestination(Destination toAdd){
         savedDestinations.add(toAdd);
         saver.save(toAdd);
-        sort();
         notifyListeners();
     }
 
@@ -112,16 +111,6 @@ public class SavedDestinations {
             }
         }
         return toReturn;
-    }
-
-    //TODO Make propper sorting method. This might even not be useful here. May be it should be moved to the destinationListAdapter.
-    //Local method used to sort all the locations by if they are visited or not.
-    private void sort() {
-        ArrayList<Destination> newSorting = new ArrayList<>();
-        newSorting.addAll(getVisited(false));
-        newSorting.addAll(getVisited(true));
-        savedDestinations = newSorting;
-        notifyListeners();
     }
 
     //Local method to report to all the listeners that a change has been made.
