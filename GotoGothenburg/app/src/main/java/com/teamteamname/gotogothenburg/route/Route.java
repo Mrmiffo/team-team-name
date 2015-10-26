@@ -22,6 +22,7 @@ public class Route implements ElectricityNextStopHandler{
     private final List<PointOfInterest> poiQueue;
     private Stops lastStop = Stops.DEFAULT;
     private boolean secondTry;
+    Timer timer;
 
     /**
      * Creates a route for the given bus.
@@ -31,7 +32,7 @@ public class Route implements ElectricityNextStopHandler{
         this.bus = bus;
         visitedPOIs = new ArrayList<>();
         poiQueue = new ArrayList<>();
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
 
             @Override
@@ -39,6 +40,10 @@ public class Route implements ElectricityNextStopHandler{
                 checkNextStop();
             }
         },0, 5000);
+    }
+
+    public void stopRoute(){
+        timer.cancel();
     }
 
     /**
