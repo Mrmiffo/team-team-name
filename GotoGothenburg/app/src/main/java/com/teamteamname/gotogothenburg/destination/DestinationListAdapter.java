@@ -66,9 +66,14 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
         secondLine = (TextView) convertView.findViewById(R.id.secondLine);
 
         //Change the color of the text of a destination which is visited.
+        int colorToSetToLine;
         if (destinations.get(position).isVisited()){
-            firstLine.setTextColor(Color.argb(90,0,0,0));
+            colorToSetToLine = Color.argb(90, 0, 0, 0);
+        } else {
+            colorToSetToLine = Color.argb(150,0,0,0);
         }
+        firstLine.setTextColor(colorToSetToLine);
+        secondLine.setTextColor(colorToSetToLine);
 
         firstLine.setText(destinations.get(position).getName());
         //TODO make second line display time to destination.
