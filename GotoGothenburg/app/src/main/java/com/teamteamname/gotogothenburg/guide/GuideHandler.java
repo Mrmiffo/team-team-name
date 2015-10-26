@@ -109,7 +109,9 @@ public class GuideHandler implements IOnWhichBusListener {
 
         if (!hasStartedGuide) {
             Log.e("GuideHandler test", "Starting test run");
-            whichBussCallBack(Bus.getBusBySysId("2501069301"));
+            whichBussCallBack(Bus.getBusBySysId("2501069303"));
+            // 2501069758 EPO 131
+            // 2501069303 EOG 606
         }
         //-TEST CODE END--
         /*
