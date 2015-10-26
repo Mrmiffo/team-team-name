@@ -40,6 +40,7 @@ import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 public class MainActivity extends FragmentActivity implements VasttrafikTripHandler, VasttrafikErrorHandler{
 
     private ViewPager viewPager;
+    private boolean guideWasStopped;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,13 +99,28 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
     }
 
     @Override
+    protected void onDestroy(){
+        //Turning off the guide and all it's threads if the application is destroyed. Do not set guideWasStopped as the application itself was killed.
+        GuideHandler.getInstance().stopGuide();
+        super.onDestroy();
+    }
+
+    @Override
     public void onPause() {
+        //Turning off the guide and all it's threads if the application is paused.
+        GuideHandler.getInstance().stopGuide();
+        guideWasStopped = true;
         super.onPause();
         LocationServicesAPI.getInstance().disconnect();
     }
 
     @Override
     public void onResume() {
+        //Restart the guide if it was stopped by the pause.
+        if (guideWasStopped){
+            GuideHandler.getInstance().startGuide();
+            guideWasStopped = false;
+        }
         super.onResume();
         LocationServicesAPI.getInstance().connect();
     }

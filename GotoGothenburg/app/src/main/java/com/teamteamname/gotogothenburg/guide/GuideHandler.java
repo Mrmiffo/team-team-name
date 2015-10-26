@@ -61,6 +61,7 @@ public class GuideHandler implements IOnWhichBusListener {
         stopGuidedRoute();
         hasStartedGuide = false;
         guideHandlerStarted = false;
+        hasShownWifiError = false;
     }
 
     private void stopGuidedRoute() {
