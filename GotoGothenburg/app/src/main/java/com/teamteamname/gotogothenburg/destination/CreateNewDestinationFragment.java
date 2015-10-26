@@ -208,6 +208,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
                 + connectionResult.getErrorCode());
 
         // TODO Check error code and notify the user of error state and resolution.
+        // Not implemented in prototype version as this error has never been encoutered.
         Toast.makeText(getActivity(),
                 "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
                 Toast.LENGTH_SHORT).show();
