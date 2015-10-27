@@ -74,9 +74,10 @@ public class ElectriCityWiFiSystemIDAPI implements IElectriCityWiFiSystemIDAPI {
         }
     }
 
-    private class SystemIDParser extends DefaultHandler{
+    private static class SystemIDParser extends DefaultHandler{
         private IElectriCityWiFiSystemIDAPIHandler handler;
         SystemIDParser(IElectriCityWiFiSystemIDAPIHandler handler){
+
             this.handler = handler;
         }
         private boolean readSystemID;
