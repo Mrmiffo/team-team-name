@@ -12,15 +12,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Olof on 14/10/2015.
  */
-public class NextStopParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
+public class NextStopParser  implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    ElectricityNextStopHandler callback;
+    private ElectricityNextStopHandler callback;
+    private StopsAdapter stopsAdapter;
 
     public NextStopParser(ElectricityNextStopHandler callback){
         this.callback = callback;
+        this.stopsAdapter = new StopsAdapter();
     }
 
     @Override
@@ -37,26 +42,54 @@ public class NextStopParser extends ElectricityParser implements Response.Listen
 
     @Override
     public void onResponse(JSONArray response) {
-        if(response.length()>0) {
-            JSONObject nextStop = this.getLatestJSONValue("Bus_Stop_Name_Value", response);
-            boolean stopExists = false;
+        stopsAdapter.identifyStop(response);
+    }
 
-            try {
-                //TODO Make cleaner sanitizer
-                String sanetizedString = sanitizeString(nextStop.getString("value"));
-                sanetizedString = sanetizedString.substring(0, sanetizedString.length() - 1).replace(' ','_').replace(".","").toUpperCase();
-                for (Stops stop : Stops.values()) {
-                    //Checks caps to match
-                    if (sanetizedString.equals(stop.toString())) {
-                        callback.electricityNextStopResponse(stop);
-                        stopExists = true;
-                    }
+    private class StopsAdapter extends ElectricityParser {
+        private Map<String, Stops> stopNames;
+        public StopsAdapter(){
+            //Create a list of stops where the names are modified to match the API output.
+            stopNames = new HashMap<>();
+            for (Stops stop: Stops.values()){
+                String nameToAdd;
+                if (Stops.KUNGSPORTSPLATSEN == stop){
+                    nameToAdd = "KUNGSPORTSPL";
+                } else if (Stops.SVEN_HULTINS_PLATS == stop){
+                    nameToAdd = "SVEN_HULTINGS_PL";
                 }
-            } catch (JSONException e) {
-                Log.e("JSONException", "Error getting values from JSONObject-response");
-            } catch (NullPointerException e) {
-                Log.e("NullPointer", "Error reading JSONObjects");
+
+                else {
+                    nameToAdd = stop.name();
+                }
+                //Replace _ with a space to match the API input.
+                nameToAdd = nameToAdd.replace('_',' ');
+                stopNames.put(nameToAdd, stop);
+            };
+        }
+        public void identifyStop(JSONArray response){
+            if(response.length()>0) {
+                JSONObject nextStop = this.getLatestJSONValue("Bus_Stop_Name_Value", response);
+                try {
+                    //Sanitize the string to add å,ä,ö instead of UTF code.
+                    String sanetizedString = sanitizeString(nextStop.getString("value"));
+                    //Modify the string to remove the stop track.
+                    sanetizedString = sanetizedString.substring(0, sanetizedString.length() - 1).replace(".","")
+                            //Make the API response to uppercase to match the names.
+                            .toUpperCase();
+                    for (String stop : stopNames.keySet()) {
+                        //Checks caps to match
+                        if (sanetizedString.equals(stop)) {
+                            callback.electricityNextStopResponse(stopNames.get(stop));
+                            break;
+                        }
+                    }
+                } catch (JSONException e) {
+                    Log.e("JSONException", "Error getting values from JSONObject-response");
+                } catch (NullPointerException e) {
+                    Log.e("NullPointer", "Error reading JSONObjects");
+                }
             }
         }
+
     }
 }

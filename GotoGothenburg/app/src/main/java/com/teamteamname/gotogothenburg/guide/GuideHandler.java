@@ -3,6 +3,8 @@ package com.teamteamname.gotogothenburg.guide;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.util.Log;
+
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.route.Route;
 
@@ -128,7 +130,6 @@ public class GuideHandler implements IOnWhichBusListener {
             // Not implemented in prototype version due to lack of time.
         }
         displayWifiError();
-
     }
 
     //Method used to display a wifi error. This error will only be display once every 10

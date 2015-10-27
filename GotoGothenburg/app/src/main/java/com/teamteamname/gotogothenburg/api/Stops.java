@@ -13,7 +13,7 @@ public enum Stops {
     ÅLANDSGATAN(
 
     ),
-    SVEN_HULTINGS_PL(
+    SVEN_HULTINS_PLATS(
             PointOfInterest.JOHANNEBERG_SCIENCE_PARK
     ),
     CHALMERSPLATSEN(
@@ -31,7 +31,7 @@ public enum Stops {
             PointOfInterest.GÖTEBORGS_KONSERTHUS
     ),
     VALAND(),
-    KUNGSPORTSPL(
+    KUNGSPORTSPLATSEN(
             PointOfInterest.KOPPARMÄRRA,
             PointOfInterest.SALUHALLEN,
             PointOfInterest.TURISTBYRÅN_KUNGSPORTSPLATSEN

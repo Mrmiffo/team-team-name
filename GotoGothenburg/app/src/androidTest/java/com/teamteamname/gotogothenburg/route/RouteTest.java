@@ -30,14 +30,14 @@ public class RouteTest extends ActivityInstrumentationTestCase2<MainActivity> {
     }
 
     public void testGetNextPOI() {
-        route.electricityNextStopResponse(Stops.KUNGSPORTSPL);
-        assertTrue(route.getNextPOI() == Stops.KUNGSPORTSPL.getPointOfInterests()[0]); //Make sure the first POI is the first POI
+        route.electricityNextStopResponse(Stops.KUNGSPORTSPLATSEN);
+        assertTrue(route.getNextPOI() == Stops.KUNGSPORTSPLATSEN.getPointOfInterests()[0]); //Make sure the first POI is the first POI
 
 
         route.electricityNextStopResponse(Stops.BRUNNSPARKEN);
 
         final PointOfInterest poi_1 = route.getNextPOI();
-        for (final PointOfInterest kungsportsplatsenPOI: Stops.KUNGSPORTSPL.getPointOfInterests()) {
+        for (final PointOfInterest kungsportsplatsenPOI: Stops.KUNGSPORTSPLATSEN.getPointOfInterests()) {
             assertFalse(poi_1.equals(kungsportsplatsenPOI)); //make sure that POIs from previous stop are not being stored.
         }
         assertTrue("poi_1 was null", poi_1 != null); //make sure a POI is retrived.
