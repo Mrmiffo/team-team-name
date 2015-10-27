@@ -9,6 +9,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.api.IGetAmbientTemp;
+import com.teamteamname.gotogothenburg.api.IGetBusLocation;
+import com.teamteamname.gotogothenburg.api.IGetCabinTemp;
+import com.teamteamname.gotogothenburg.api.IGetNbrOfWifiUsers;
+import com.teamteamname.gotogothenburg.api.IGetNextStop;
+import com.teamteamname.gotogothenburg.api.IGetStopPressed;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
@@ -30,10 +36,10 @@ import java.util.Map;
 /**
  * Created by Olof on 25/09/2015.
  */
-public class ElectricityAPI implements IElectricityAPI {
+public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientTemp,IGetCabinTemp,IGetStopPressed,IGetNbrOfWifiUsers {
 
     private RequestQueue queue;
-    private static IElectricityAPI instance;
+    private static ElectricityAPI instance;
     //The query time is set to 60sec as this seems to be about the time it takes for the bus to update this value. Still sometimes no value exist.
     private static final int QUERY_LENGTH = 60;
 
@@ -50,7 +56,7 @@ public class ElectricityAPI implements IElectricityAPI {
         }
     }
 
-    public static IElectricityAPI getInstance(){
+    public static ElectricityAPI getInstance(){
         return instance;
     }
 
