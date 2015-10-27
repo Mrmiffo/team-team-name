@@ -6,7 +6,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
-import com.teamteamname.gotogothenburg.route.Stops;
+import com.teamteamname.gotogothenburg.api.Stops;
 
 import org.json.JSONArray;
 import org.json.JSONException;

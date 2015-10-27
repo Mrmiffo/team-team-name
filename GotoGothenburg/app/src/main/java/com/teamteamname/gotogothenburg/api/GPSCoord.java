@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg;
+package com.teamteamname.gotogothenburg.api;
 
 
 /**

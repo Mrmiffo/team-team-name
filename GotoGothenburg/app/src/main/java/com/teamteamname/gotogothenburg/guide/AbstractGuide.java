@@ -2,7 +2,7 @@ package com.teamteamname.gotogothenburg.guide;
 
 import com.teamteamname.gotogothenburg.api.IDeviceAPI;
 import com.teamteamname.gotogothenburg.api.ISoundDoneCallback;
-import com.teamteamname.gotogothenburg.route.PointOfInterest;
+import com.teamteamname.gotogothenburg.api.PointOfInterest;
 import com.teamteamname.gotogothenburg.route.Route;
 
 /**

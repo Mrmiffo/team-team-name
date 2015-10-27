@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.route.Route;
+import com.teamteamname.gotogothenburg.utils.AndroidConverter;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,7 +41,7 @@ public class AndroidGuide extends AbstractGuide {
             pointOfInterest = route.getNextPOI();
             if (pointOfInterest != null) {
                 if (api.isHandsfreePluggedIn()) {
-                    api.playSound(this, pointOfInterest.getSoundGuide());
+                    api.playSound(this,  AndroidConverter.fileToRawResourceID(context, pointOfInterest.getSoundGuide()));
                 } else {
                     unpluggedDialog = new UnpluggedHandsfreeDialog();
                     unpluggedDialog.show(((Activity) context).getFragmentManager(), "unplugged");

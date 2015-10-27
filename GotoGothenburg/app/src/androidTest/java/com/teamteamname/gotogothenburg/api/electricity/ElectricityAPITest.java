@@ -4,12 +4,12 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.android.volley.Response;
-import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.api.GPSCoord;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.electricity.mock.MockElectricityHandler;
 import com.teamteamname.gotogothenburg.api.electricity.mock.MockRequestQueue;
 import com.teamteamname.gotogothenburg.api.Bus;
-import com.teamteamname.gotogothenburg.route.Stops;
+import com.teamteamname.gotogothenburg.api.Stops;
 
 import org.json.JSONArray;
 import org.json.JSONException;

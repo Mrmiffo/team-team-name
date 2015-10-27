@@ -1,6 +1,6 @@
 package com.teamteamname.gotogothenburg.api.electricity.handlers;
 
-import com.teamteamname.gotogothenburg.route.Stops;
+import com.teamteamname.gotogothenburg.api.Stops;
 
 /**
  * A interface for recieving the callback response from Electricity's REST API.

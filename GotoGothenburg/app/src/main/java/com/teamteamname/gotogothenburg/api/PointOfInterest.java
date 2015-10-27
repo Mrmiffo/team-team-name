@@ -1,6 +1,6 @@
-package com.teamteamname.gotogothenburg.route;
+package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.api.GPSCoord;
 
 import java.io.File;
 import java.io.Serializable;

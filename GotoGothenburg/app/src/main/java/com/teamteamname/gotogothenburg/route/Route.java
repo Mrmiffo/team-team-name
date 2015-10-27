@@ -1,5 +1,7 @@
 package com.teamteamname.gotogothenburg.route;
 
+import com.teamteamname.gotogothenburg.api.PointOfInterest;
+import com.teamteamname.gotogothenburg.api.Stops;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;

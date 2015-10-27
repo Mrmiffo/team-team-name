@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.route;
+package com.teamteamname.gotogothenburg.api;
 
 /**
  * An enum containing all valid stops for buses, tram etc.

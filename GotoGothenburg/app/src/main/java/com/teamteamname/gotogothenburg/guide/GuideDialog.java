@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.route.PointOfInterest;
+import com.teamteamname.gotogothenburg.api.PointOfInterest;
 import com.teamteamname.gotogothenburg.utils.AndroidConverter;
 
 /**

@@ -1,13 +1,13 @@
 package com.teamteamname.gotogothenburg.api.electricity.mock;
 
-import com.teamteamname.gotogothenburg.GPSCoord;
+import com.teamteamname.gotogothenburg.api.GPSCoord;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityWifiHandler;
-import com.teamteamname.gotogothenburg.route.Stops;
+import com.teamteamname.gotogothenburg.api.Stops;
 
 import lombok.Getter;
 

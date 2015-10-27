@@ -70,12 +70,11 @@ public final class AndroidDeviceAPI implements IDeviceAPI {
     }
 
     @Override
-    public void playSound(final ISoundDoneCallback callback, File sound) {
-        if (sound == null) {
+    public void playSound(final ISoundDoneCallback callback, int soundId) {
+        if (soundId == 0) {
             callback.soundCouldNotBePlayed();
         } else {
-            final int resourceID = AndroidConverter.fileToRawResourceID(context, sound);
-            final MediaPlayer mediaPlayer = MediaPlayer.create(context, resourceID);
+            final MediaPlayer mediaPlayer = MediaPlayer.create(context, soundId);
             mediaPlayer.start();
             final Timer mediaStopper = new Timer();
             mediaStopper.schedule(new TimerTask() {
