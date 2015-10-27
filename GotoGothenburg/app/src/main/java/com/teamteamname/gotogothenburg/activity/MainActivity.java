@@ -20,7 +20,6 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
@@ -34,7 +33,7 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHa
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
-import com.teamteamname.gotogothenburg.map.Bus;
+import com.teamteamname.gotogothenburg.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 

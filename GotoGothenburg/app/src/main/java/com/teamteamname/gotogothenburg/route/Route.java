@@ -1,11 +1,9 @@
 package com.teamteamname.gotogothenburg.route;
 
-import android.util.Log;
-
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
-import com.teamteamname.gotogothenburg.map.Bus;
+import com.teamteamname.gotogothenburg.Bus;
 
 import java.util.ArrayList;
 import java.util.Arrays;

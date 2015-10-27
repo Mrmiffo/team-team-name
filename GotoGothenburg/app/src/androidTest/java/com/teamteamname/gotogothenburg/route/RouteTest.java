@@ -5,7 +5,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.electricity.mock.MockRequestQueue;
-import com.teamteamname.gotogothenburg.map.Bus;
+import com.teamteamname.gotogothenburg.Bus;
 
 /**
  * Created by kakan on 2015-10-08.

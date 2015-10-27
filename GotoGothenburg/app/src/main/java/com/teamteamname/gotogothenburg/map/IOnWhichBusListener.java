@@ -1,5 +1,7 @@
 package com.teamteamname.gotogothenburg.map;
 
+import com.teamteamname.gotogothenburg.Bus;
+
 /**
  * A class that implements this interface may register to
  * listen to the OnWhichBUsIdentifier class and will be called

@@ -18,6 +18,8 @@ import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
 
 /**
@@ -78,7 +80,7 @@ public class DestinationFragment extends Fragment{
                 String name = ((Destination) parent.getItemAtPosition(position)).getName();
                 VasttrafikLocation dest = new VasttrafikLocation(name, destLat, destLng);
 
-                VasttrafikAPI.getInstance().getTrip((MainActivity) getActivity(), (MainActivity) getActivity(), origin, dest);
+                VasttrafikAPI.getInstance().getTrip((VasttrafikTripHandler) getActivity(), (VasttrafikErrorHandler) getActivity(), origin, dest);
                 GuideHandler.getInstance().startGuide();
             } else {
                 Toast.makeText(getActivity(), "Device Location not found", Toast.LENGTH_SHORT).show();

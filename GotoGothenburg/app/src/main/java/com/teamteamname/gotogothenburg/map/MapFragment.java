@@ -26,6 +26,8 @@ import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.RecommendedDestinations;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
@@ -292,7 +294,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         @Override
         public void onInfoWindowClick(Marker marker) {
             if (marker.equals(userSelectionMarker)) {
-                SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(),marker.getPosition().latitude,marker.getPosition().longitude));
+                SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(), marker.getPosition().latitude, marker.getPosition().longitude));
                 marker.remove();
                 Toast.makeText(getActivity(), "Destination added", Toast.LENGTH_SHORT).show();
             } else if(!"Directions".equals(marker.getSnippet())) {
@@ -301,8 +303,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
                 Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
                 if (myLocation != null) {
                     VasttrafikAPI.getInstance().getTrip(
-                            (MainActivity) getActivity(),
-                            (MainActivity) getActivity(),
+                            (VasttrafikTripHandler) getActivity(),
+                            (VasttrafikErrorHandler) getActivity(),
                             new VasttrafikLocation("origin", myLocation.getLatitude(), myLocation.getLongitude()),
                             new VasttrafikLocation(marker.getTitle(), marker.getPosition().latitude, marker.getPosition().longitude));
                 } else {
