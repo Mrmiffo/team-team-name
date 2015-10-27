@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.TempHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,14 +16,14 @@ import org.json.JSONObject;
  */
 public class AmbientTempParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    ElectricityTempHandler callback;
+    TempHandler callback;
 
-    public AmbientTempParser(ElectricityTempHandler callback){ this.callback = callback; }
+    public AmbientTempParser(TempHandler callback){ this.callback = callback; }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("AmbientTempParser", error.toString());
-        ElectricityError elecError = new ElectricityError();
+        ApiRequestError elecError = new ApiRequestError();
         elecError.setResponseHeaders(error.networkResponse.headers);
         elecError.setResponseStatusCode(error.networkResponse.statusCode);
         elecError.setMessage(error.getMessage());

@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.WifiHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,14 +16,14 @@ import org.json.JSONObject;
  */
 public class WifiUsersParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    ElectricityWifiHandler callback;
+    WifiHandler callback;
 
-    public WifiUsersParser(ElectricityWifiHandler callback){ this.callback = callback; }
+    public WifiUsersParser(WifiHandler callback){ this.callback = callback; }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("WifiUsersParser", error.toString());
-        ElectricityError elecError = new ElectricityError();
+        ApiRequestError elecError = new ApiRequestError();
         elecError.setResponseHeaders(error.networkResponse.headers);
         elecError.setResponseStatusCode(error.networkResponse.statusCode);
         elecError.setMessage(error.getMessage());

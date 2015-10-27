@@ -3,8 +3,8 @@ package com.teamteamname.gotogothenburg.route;
 import com.teamteamname.gotogothenburg.api.PointOfInterest;
 import com.teamteamname.gotogothenburg.api.Stops;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
 import com.teamteamname.gotogothenburg.api.Bus;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.TimerTask;
  * A class iterating over, firstly, stops and, secondly, points of interest of the given bus.
  * Created by kakan on 2015-09-25.
  */
-public class Route implements ElectricityNextStopHandler{
+public class Route implements NextStopHandler {
 
     private final Bus bus;
     private final List<PointOfInterest> visitedPOIs;
@@ -100,7 +100,7 @@ public class Route implements ElectricityNextStopHandler{
     }
 
     @Override
-    public void electricityRequestError(ElectricityError error) {
+    public void electricityRequestError(ApiRequestError error) {
 
     }
 }

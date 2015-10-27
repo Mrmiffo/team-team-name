@@ -9,11 +9,17 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.IGetAmbientTemp;
+import com.teamteamname.gotogothenburg.api.IGetBusLocation;
+import com.teamteamname.gotogothenburg.api.IGetCabinTemp;
+import com.teamteamname.gotogothenburg.api.IGetNbrOfWifiUsers;
+import com.teamteamname.gotogothenburg.api.IGetNextStop;
+import com.teamteamname.gotogothenburg.api.IGetStopPressed;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.GPSHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.StopButtonHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.TempHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.WifiHandler;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.AmbientTempParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.CabinTempParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.GPSCoordParser;
@@ -30,10 +36,10 @@ import java.util.Map;
 /**
  * Created by Olof on 25/09/2015.
  */
-public class ElectricityAPI implements IElectricityAPI {
+public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientTemp,IGetCabinTemp,IGetStopPressed,IGetNbrOfWifiUsers {
 
     private RequestQueue queue;
-    private static IElectricityAPI instance;
+    private static ElectricityAPI instance;
     //The query time is set to 60sec as this seems to be about the time it takes for the bus to update this value. Still sometimes no value exist.
     private static final int QUERY_LENGTH = 60;
 
@@ -50,12 +56,12 @@ public class ElectricityAPI implements IElectricityAPI {
         }
     }
 
-    public static IElectricityAPI getInstance(){
+    public static ElectricityAPI getInstance(){
         return instance;
     }
 
     @Override
-    public void getBusLocation(Bus bus, ElectricityGPSHandler callback){
+    public void getBusLocation(Bus bus, GPSHandler callback){
         //Requests data since 5 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);
@@ -74,7 +80,7 @@ public class ElectricityAPI implements IElectricityAPI {
     }
 
     @Override
-    public void getNextStop(Bus bus, ElectricityNextStopHandler callback) {
+    public void getNextStop(Bus bus, NextStopHandler callback) {
         //Requests data since 10 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);
@@ -92,7 +98,7 @@ public class ElectricityAPI implements IElectricityAPI {
     }
 
     @Override
-    public void getAmbientTemperature(Bus bus, ElectricityTempHandler callback) {
+    public void getAmbientTemperature(Bus bus, TempHandler callback) {
         //Requests data since 10 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);
@@ -110,7 +116,7 @@ public class ElectricityAPI implements IElectricityAPI {
     }
 
     @Override
-    public void getCabinTemperature(Bus bus, ElectricityTempHandler callback) {
+    public void getCabinTemperature(Bus bus, TempHandler callback) {
         //Requests data since 2,5 min earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 150);
@@ -128,7 +134,7 @@ public class ElectricityAPI implements IElectricityAPI {
     }
 
     @Override
-    public void getStopPressed(Bus bus, ElectricityStopButtonHandler callback) {
+    public void getStopPressed(Bus bus, StopButtonHandler callback) {
         //Requests data since 2,5 min earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 150);
@@ -146,7 +152,7 @@ public class ElectricityAPI implements IElectricityAPI {
     }
 
     @Override
-    public void getNbrOfWifiUsers(Bus bus, ElectricityWifiHandler callback) {
+    public void getNbrOfWifiUsers(Bus bus, WifiHandler callback) {
         //Requests data since 12 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);

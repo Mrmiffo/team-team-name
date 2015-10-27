@@ -3,7 +3,7 @@ package com.teamteamname.gotogothenburg.api.electricity.handlers;
 /**
  * A interface for recieving the callback response from Electricity's REST API.
  */
-public interface ElectricityTempHandler extends ElectricityErrorHandler {
+public interface TempHandler extends ErrorHandler {
     /**
      * Callback method for the Electricity API.
      * @param temp

@@ -18,7 +18,7 @@ import org.json.JSONException;
  * Created by Olof on 28/09/2015.
  */
 public class ElectricityAPITest extends AndroidTestCase {
-    private IElectricityAPI mElevtricityAPI;
+    private ElectricityAPI mElevtricityAPI;
     private MockRequestQueue mQueue;
 
     private static final String dgw = "Ericsson$100021";

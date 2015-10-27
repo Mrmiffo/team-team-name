@@ -5,8 +5,8 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.teamteamname.gotogothenburg.api.GPSCoord;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.GPSHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,16 +17,16 @@ import org.json.JSONObject;
  */
 public class GPSCoordParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    private ElectricityGPSHandler callback;
+    private GPSHandler callback;
 
-    public GPSCoordParser(ElectricityGPSHandler callback){
+    public GPSCoordParser(GPSHandler callback){
         this.callback = callback;
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("GPSCoordParser", error.toString());
-        ElectricityError elecError = new ElectricityError();
+        ApiRequestError elecError = new ApiRequestError();
         elecError.setResponseHeaders(error.networkResponse.headers);
         elecError.setResponseStatusCode(error.networkResponse.statusCode);
         elecError.setMessage(error.getMessage());
