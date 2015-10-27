@@ -11,15 +11,13 @@ import android.widget.TextView;
 
 import com.teamteamname.gotogothenburg.R;
 
-import java.util.List;
-
 /**
  * Created by Mattias Ahlstedt on 2015-09-30.
  */
 public class AutocompleteAdapter extends CursorAdapter {
 
     private TextView text;
-    private SearchView searchbar;
+    private final SearchView searchbar;
 
     public AutocompleteAdapter(Context context, Cursor c, int flags, SearchView searchbar) {
         super(context, c, flags);
@@ -28,8 +26,8 @@ public class AutocompleteAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.autocomplete, parent, false);
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.autocomplete, parent, false);
         this.text = (TextView) view.findViewById(R.id.autocompleteSuggestion);
 
         return view;

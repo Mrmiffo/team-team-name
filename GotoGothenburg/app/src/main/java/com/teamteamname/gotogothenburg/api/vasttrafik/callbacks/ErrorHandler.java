@@ -8,5 +8,5 @@ public interface ErrorHandler {
      * Called if any unmanageble errors occur
      * @param e The error message
      */
-    void RequestError(String e);
+    void requestError(String e);
 }

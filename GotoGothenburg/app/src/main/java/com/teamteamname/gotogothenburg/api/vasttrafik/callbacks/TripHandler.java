@@ -16,5 +16,5 @@ public interface TripHandler {
      * @param positions
      * @param polyline
      */
-    public void RequestDone(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions, PolylineOptions[] polyline);
+    public void requestDone(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions, PolylineOptions[] polyline);
 }

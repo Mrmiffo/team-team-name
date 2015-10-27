@@ -12,9 +12,6 @@ import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.AutocompleteHandler;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Mattias Ahlstedt on 2015-09-29.
  */

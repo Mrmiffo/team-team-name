@@ -23,7 +23,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     //The names of the Fragments as displayed in the application.
     private final String[] TITLES = { "Destinations", "Map", "Info", "Settings" };
 
-    private SparseArray<Fragment> registeredFragments = new SparseArray<>();
+    private final SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
     public FragmentAdapter(FragmentManager fm){
         super(fm);
@@ -35,7 +35,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        final Fragment fragment = (Fragment) super.instantiateItem(container, position);
         registeredFragments.put(position, fragment);
         return fragment;
     }
@@ -50,7 +50,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         //Returns the available fragments. Hardcoded as these are not intended to be changed very often.
-        Fragment toReturn = null;
+        Fragment toReturn;
+
         if (position == 0){
             toReturn = DestinationScreen.newInstance();
         } else if (position == 1){
@@ -59,9 +60,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             toReturn = InfoScreen.newInstance();
         } else if (position == 3){
             toReturn = new SettingsScreen();
+        } else {
+            return null;
         }
-        return toReturn;
 
+        return toReturn;
     }
 
     @Override

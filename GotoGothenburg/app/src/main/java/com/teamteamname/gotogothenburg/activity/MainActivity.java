@@ -46,18 +46,18 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         setContentView(R.layout.activity_main);
 
         // Initialize the ViewPager and set an adapter
-        ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
+        final ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
         pager.setAdapter(new FragmentAdapter(getFragmentManager()));
         this.viewPager = pager;
 
         // Bind the tabs to the ViewPager
-        PagerSlidingTabStrip pager_title_strip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        pager_title_strip.setViewPager(pager);
+        final PagerSlidingTabStrip pagerTitleStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        pagerTitleStrip.setViewPager(pager);
 
         // Initialize the APIs
-        Cache cache = new DiskBasedCache(getCacheDir(),1024*1024);
-        Network network = new BasicNetwork(new HurlStack());
-        RequestQueue queue = new RequestQueue(cache,network);
+        final Cache cache = new DiskBasedCache(getCacheDir(),1024*1024);
+        final Network network = new BasicNetwork(new HurlStack());
+        final RequestQueue queue = new RequestQueue(cache,network);
         VasttrafikAPI.init(this, queue);
         ElectricityAPI.init(this, queue);
         queue.start();
@@ -67,18 +67,18 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         Bus.init();
 
         // Adding listeners to searchbar
-        SearchView searchBar = (SearchView)findViewById(R.id.searchBar);
+        final SearchView searchBar = (SearchView)findViewById(R.id.searchBar);
         searchBar.setOnQueryTextListener(new SearchbarListener(this, searchBar));
-        SearchManager manager = (SearchManager) getSystemService(Activity.SEARCH_SERVICE);
+        final SearchManager manager = (SearchManager) getSystemService(Activity.SEARCH_SERVICE);
         searchBar.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
 
         //Fill the saved destinations object with data from the database.
         //Create a saver for the SavedDestinations
         final DestinationSaver saver = new DestinationSaver(this);
         SavedDestinations.init(saver);
-        AsyncTask loadDest = new AsyncTask() {
+        final AsyncTask loadDest = new AsyncTask() {
             @Override
-            protected Object doInBackground(Object[] params) {
+            protected Object doInBackground(Object... params) {
                 //Initialize the SavedDestinations with destinations from the database. (This must run in background)
                 SavedDestinations.getInstance().loadDestinations(saver.loadAll());
                 return null;
@@ -89,6 +89,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
                 SavedDestinations.getInstance().notifyListeners();
             }
         };
+        //noinspection unchecked
         loadDest.execute();
     }
 
@@ -131,7 +132,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -164,13 +165,13 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
     }
 
     @Override
-    public void RequestError(String e) {
+    public void requestError(String e) {
         Log.e("VastTrafikError",e);
         Toast.makeText(this, "Error with Vasttrafik: " + e, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void RequestDone(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions, PolylineOptions[] polyline){
+    public void requestDone(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions, PolylineOptions[] polyline){
         changeTab(1);
         ((MapScreen) getCurrentTab()).updateCurrentTrip(lines, stopNames, tracks, positions);
         ((MapScreen) getCurrentTab()).drawPolyLine(polyline);

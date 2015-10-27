@@ -71,7 +71,7 @@ public class GeoManager implements GeoCallback {
                 tracks[i] = markers.get(i).getTrack();
                 positions[i] = markers.get(i).getPosition();
             }
-            tripCallback.RequestDone(lines, stopNames, tracks, positions, temp.toArray(new PolylineOptions[temp.size()]));
+            tripCallback.requestDone(lines, stopNames, tracks, positions, temp.toArray(new PolylineOptions[temp.size()]));
         }
     }
 }
