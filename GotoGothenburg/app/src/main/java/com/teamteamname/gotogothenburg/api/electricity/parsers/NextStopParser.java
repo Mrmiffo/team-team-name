@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -74,7 +75,7 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
                     //Modify the string to remove the stop track.
                     sanetizedString = sanetizedString.substring(0, sanetizedString.length() - 1).replace(".","")
                             //Make the API response to uppercase to match the names.
-                            .toUpperCase();
+                            .toUpperCase(Locale.getDefault());
                     for (Map.Entry stop : stopNames.entrySet()) {
                         //Checks caps to match
                         if (sanetizedString.equals(stop.getKey())) {

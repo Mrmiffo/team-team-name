@@ -2,6 +2,7 @@ package com.teamteamname.gotogothenburg.api;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Locale;
 
 import lombok.Getter;
 
@@ -157,6 +158,6 @@ public enum PointOfInterest implements Serializable {
 
     public String getName() {
         String name = this.toString().replaceAll("_", " "); //replace non-word characters with a space.
-        return name.substring(0, 1).toUpperCase() + name.toString().substring(1).toLowerCase(); //Capitalise first letter only
+        return name.substring(0, 1).toUpperCase(Locale.getDefault()) + name.substring(1).toLowerCase(Locale.getDefault()); //Capitalise first letter only
     }
 }

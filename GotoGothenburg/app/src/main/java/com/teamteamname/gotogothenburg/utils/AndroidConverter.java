@@ -2,6 +2,7 @@ package com.teamteamname.gotogothenburg.utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 /**
  * Created by kakan on 2015-10-02.
  */
-public class AndroidConverter {
+public final class AndroidConverter {
 
     private AndroidConverter() {}
 
@@ -29,7 +30,7 @@ public class AndroidConverter {
             throw new IllegalArgumentException("File must not be null (in fileToResoruceID)");
         }
         final String fileName = file.getName();
-        int index = fileName.lastIndexOf('.');
+        final int index = fileName.lastIndexOf('.');
         return context.getResources().getIdentifier(fileName.substring(0, index), "raw", context.getPackageName());
     }
 
@@ -40,17 +41,17 @@ public class AndroidConverter {
      * @return the contents of the file as a String.
      */
     public static String fileToMessageConverter(Context context, File file) {
-        AssetManager assetManager = context.getAssets();
-        StringBuilder text = new StringBuilder();
+        final AssetManager assetManager = context.getAssets();
+        final StringBuilder text = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(assetManager.open(file.getName()), "UTF-8");
+            final Scanner scanner = new Scanner(assetManager.open(file.getName()), "UTF-8");
             while (scanner.hasNextLine()) {
                 text.append(scanner.nextLine());
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Log.e("FileNotFoundException", e.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("IoException", e.toString());
         }
         return text.toString();
     }
