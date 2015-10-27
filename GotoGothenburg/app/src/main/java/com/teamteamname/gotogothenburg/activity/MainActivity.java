@@ -25,9 +25,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.Bus;
-import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
-import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
+import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
@@ -63,12 +62,8 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         ElectricityAPI.init(this, queue);
         queue.start();
         AndroidDeviceAPI.init(this);
-        ElectriCityWiFiSystemIDAPI.initialize();
-        AndroidDeviceAPI.initialize(this);
         LocationServicesAPI.init(this);
         GuideHandler.init(this);
-
-
         Bus.init();
 
         // Adding listeners to searchbar

@@ -30,14 +30,10 @@ public class ElectriCityWiFiSystemIDAPI implements IElectriCityWiFiSystemIDAPI {
     }
 
     public synchronized static ElectriCityWiFiSystemIDAPI getInstance(){
-        return instance;
-    }
-
-    public static void initialize(){
         if (instance == null){
             instance = new ElectriCityWiFiSystemIDAPI();
         }
-
+        return instance;
     }
 
     @Override
