@@ -34,7 +34,7 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
-import com.teamteamname.gotogothenburg.map.MapFragment;
+import com.teamteamname.gotogothenburg.map.MapScreen;
 
 public class MainActivity extends FragmentActivity implements TripHandler, ErrorHandler {
 
@@ -176,7 +176,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
     @Override
     public void RequestDone(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions, PolylineOptions[] polyline){
         changeTab(1);
-        ((MapFragment) getCurrentTab()).updateCurrentTrip(lines, stopNames, tracks, positions);
-        ((MapFragment) getCurrentTab()).drawPolyLine(polyline);
+        ((MapScreen) getCurrentTab()).updateCurrentTrip(lines, stopNames, tracks, positions);
+        ((MapScreen) getCurrentTab()).drawPolyLine(polyline);
     }
 }

@@ -27,6 +27,7 @@ public class FABListener implements View.OnClickListener {
         } else {
             markerData.addMarkers(map);
             v.getResources().getValue(R.dimen.BUTTON_PRESSED_ALPHA, value, true);
+
         }
         v.setAlpha(value.getFloat());
         isDisplaying = !isDisplaying;

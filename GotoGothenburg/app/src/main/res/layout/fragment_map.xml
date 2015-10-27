@@ -4,7 +4,7 @@
     android:id="@+id/map_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.teamteamname.gotogothenburg.map.MapFragment">
+    tools:context="com.teamteamname.gotogothenburg.map.MapScreen">
 
     <ScrollView
         android:layout_width="87dp"

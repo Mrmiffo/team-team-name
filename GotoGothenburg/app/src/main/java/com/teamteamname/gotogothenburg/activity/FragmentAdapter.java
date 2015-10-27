@@ -7,10 +7,10 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.teamteamname.gotogothenburg.destination.DestinationFragment;
-import com.teamteamname.gotogothenburg.information.InfoFragment;
-import com.teamteamname.gotogothenburg.map.MapFragment;
-import com.teamteamname.gotogothenburg.settings.SettingsFragment;
+import com.teamteamname.gotogothenburg.destination.DestinationScreen;
+import com.teamteamname.gotogothenburg.information.InfoScreen;
+import com.teamteamname.gotogothenburg.map.MapScreen;
+import com.teamteamname.gotogothenburg.settings.SettingsScreen;
 
 
 /**
@@ -52,13 +52,13 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         //Returns the available fragments. Hardcoded as these are not intended to be changed very often.
         Fragment toReturn = null;
         if (position == 0){
-            toReturn = DestinationFragment.newInstance();
+            toReturn = DestinationScreen.newInstance();
         } else if (position == 1){
-            toReturn = MapFragment.newInstance();
+            toReturn = MapScreen.newInstance();
         } else if (position == 2){
-            toReturn = InfoFragment.newInstance();
+            toReturn = InfoScreen.newInstance();
         } else if (position == 3){
-            toReturn = new SettingsFragment();
+            toReturn = new SettingsScreen();
         }
         return toReturn;
 

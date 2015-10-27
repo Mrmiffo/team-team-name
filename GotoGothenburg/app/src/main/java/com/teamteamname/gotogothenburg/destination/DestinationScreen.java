@@ -23,9 +23,9 @@ import com.teamteamname.gotogothenburg.guide.GuideHandler;
  * THe fragment used to display the Destination screen in the application.
  * Created by Anton on 2015-09-21.
  */
-public class DestinationFragment extends Fragment{
+public class DestinationScreen extends Fragment{
 
-    public DestinationFragment() {
+    public DestinationScreen() {
         super();
     }
 
@@ -34,8 +34,8 @@ public class DestinationFragment extends Fragment{
      * will call this method instead of the constructor to create the object.
      * @return a new instance of the object.
      */
-    public static DestinationFragment newInstance(){
-        DestinationFragment toReturn = new DestinationFragment();
+    public static DestinationScreen newInstance(){
+        DestinationScreen toReturn = new DestinationScreen();
         return toReturn;
     }
 

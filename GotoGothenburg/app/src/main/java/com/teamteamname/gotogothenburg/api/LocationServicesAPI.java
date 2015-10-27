@@ -166,7 +166,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     }
 
     /**
-     * Call when dialog has been dismissed. Tells MapFragment that error is no longer being resolved.
+     * Call when dialog has been dismissed. Tells MapScreen that error is no longer being resolved.
      */
     private void onDialogDismissed() {
         mResolvingError = false;

@@ -13,13 +13,13 @@ import com.teamteamname.gotogothenburg.R;
 /**
  * Created by Anton on 2015-09-21.
  */
-public class InfoFragment extends Fragment {
+public class InfoScreen extends Fragment {
     private TextView ticketTitle, ticketText, howToTravelTitle, howToTravelText;
 
-    public InfoFragment() {}
+    public InfoScreen() {}
 
-    public static InfoFragment newInstance(){
-        return new InfoFragment();
+    public static InfoScreen newInstance(){
+        return new InfoScreen();
     }
 
     @Override

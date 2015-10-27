@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context="com.teamteamname.gotogothenburg.information.InfoFragment"
+    tools:context="com.teamteamname.gotogothenburg.information.InfoScreen"
     android:orientation="vertical"
     android:id="@+id/fragment_info"
     android:paddingLeft="5dp"

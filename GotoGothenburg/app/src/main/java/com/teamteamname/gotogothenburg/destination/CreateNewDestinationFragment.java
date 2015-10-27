@@ -122,7 +122,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
     };
 
     /**
-     * Sends the selected information to DestinationFragment
+     * Sends the selected information to DestinationScreen
      */
     private View.OnClickListener createDestinationClickListener = new View.OnClickListener() {
         @Override

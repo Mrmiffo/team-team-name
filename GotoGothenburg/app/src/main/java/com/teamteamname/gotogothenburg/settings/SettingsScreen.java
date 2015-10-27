@@ -16,9 +16,9 @@ import com.teamteamname.gotogothenburg.R;
  * Displays settings through the use of android supplied functionality.
  * TODO If time, consider creating a solution which is not dependant on the android framework for portability
  */
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class SettingsScreen extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
-    public SettingsFragment() {}
+    public SettingsScreen() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

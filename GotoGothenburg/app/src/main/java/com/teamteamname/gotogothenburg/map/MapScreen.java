@@ -30,7 +30,7 @@ import java.util.List;
  * The fragment used to display the map in the application.
  * Created by Anton on 2015-09-21.
  */
-public class MapFragment extends com.google.android.gms.maps.MapFragment implements IMap, OnMapReadyCallback {
+public class MapScreen extends com.google.android.gms.maps.MapFragment implements IMap, OnMapReadyCallback {
 
     // Reference to the map displayed in application
     private GoogleMap map;
@@ -41,8 +41,8 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     private TripInfo[] currentTripInfo;
     private List<Polyline> currentPolyline = new ArrayList<>();
 
-    public static MapFragment newInstance(){
-        return new MapFragment();
+    public static MapScreen newInstance(){
+        return new MapScreen();
     }
 
     @Override
