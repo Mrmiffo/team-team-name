@@ -62,6 +62,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         VasttrafikAPI.init(this, queue);
         ElectricityAPI.init(this, queue);
         queue.start();
+        AndroidDeviceAPI.init(this);
         ElectriCityWiFiSystemIDAPI.initialize();
         AndroidDeviceAPI.initialize(this);
         LocationServicesAPI.init(this);

@@ -37,7 +37,7 @@ public final class AndroidDeviceAPI implements IDeviceAPI {
      * been run.
      * @param context
      */
-    public static void initialize(Context context) {
+    public static void init(Context context) {
         synchronized (AndroidDeviceAPI.class) {
             if (instance == null) {
                 instance = new AndroidDeviceAPI(context);
