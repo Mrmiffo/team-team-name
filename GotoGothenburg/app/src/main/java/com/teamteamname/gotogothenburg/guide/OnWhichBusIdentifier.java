@@ -25,7 +25,6 @@ import java.util.TimerTask;
  * Created by Anton on 2015-09-24.
  */
 public class OnWhichBusIdentifier{
-    private static OnWhichBusIdentifier instance;
     private static final String ELECTRICITY_WIFI_SSID = "ElectriCity";
     private volatile List<IOnWhichBusListener> listeners;
 

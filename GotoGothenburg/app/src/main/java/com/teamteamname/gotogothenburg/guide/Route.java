@@ -23,7 +23,6 @@ public class Route implements NextStopHandler {
     private final List<PointOfInterest> visitedPOIs;
     private final List<PointOfInterest> poiQueue;
     private Stops lastStop = Stops.DEFAULT;
-    private boolean secondTry;
     private Timer timer;
     private boolean timerRunning;
 
@@ -95,7 +94,6 @@ public class Route implements NextStopHandler {
 
     @Override
     public void electricityNextStopResponse(Stops nextStop) {
-        secondTry = false;
         evaluateStop(nextStop);
     }
 

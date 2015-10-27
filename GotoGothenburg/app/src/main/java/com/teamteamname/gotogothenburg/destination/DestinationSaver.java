@@ -21,7 +21,6 @@ import java.util.List;
 public class DestinationSaver implements IDestinationSaver{
     //An instance of the DB reader helper class for destinations. Local class.
     private DestinationDBReaderHelper destDBReader;
-    private Context context;
 
     //Static strings for standardized SQL injections.
     private static final String TEXT_TYPE = " TEXT";
@@ -41,7 +40,6 @@ public class DestinationSaver implements IDestinationSaver{
      */
     public DestinationSaver(Context context){
         destDBReader = new DestinationDBReaderHelper(context);
-        this.context = context;
     }
 
 
@@ -128,23 +126,10 @@ public class DestinationSaver implements IDestinationSaver{
         AsyncTask thread = new AsyncTask<Object, Void, Void>() {
             @Override
             protected Void doInBackground(Object... params) {
-                /*String deleteInjection =
-                        "delete from " +
-                                DestinationEntry.TABLE_NAME +
-                                " where " + DestinationEntry.COLUMN_NAME_NAME + "='" + destinationToRemove.getName() + "'" +
-                                " and " + DestinationEntry.COLUMN_NAME_LATITUDE + "='" + destinationToRemove.getLatitude() + "'" +
-                                " and " + DestinationEntry.COLUMN_NAME_LONGITUDE + "='" + destinationToRemove.getLongitude() + "'" +
-                                " and " + DestinationEntry.COLUMN_NAME_VISITED + "='" + destinationToRemove.isVisited() + "'";*/
                 destDBReader.getWritableDatabase().delete(
                         DestinationEntry.TABLE_NAME,
-                        DestinationEntry.COLUMN_NAME_NAME + "= ?"/* and "  + DestinationEntry.COLUMN_NAME_LATITUDE + "= ? and "
-                                + DestinationEntry.COLUMN_NAME_LONGITUDE + "= ? and " + DestinationEntry.COLUMN_NAME_VISITED + "= ? "*/,
-                        new String[]{destinationToRemove.getName()/*,
-                                String.valueOf(destinationToRemove.getLatitude()),
-                                String.valueOf(destinationToRemove.getLongitude()),
-                                String.valueOf(destinationToRemove.isVisited())*/});
-                //destDBReader.getWritableDatabase().execSQL(deleteInjection);
-                //destDBReader.close();
+                        DestinationEntry.COLUMN_NAME_NAME + "= ?",
+                        new String[]{destinationToRemove.getName()});
                 return null;
             }
         };
@@ -197,7 +182,7 @@ public class DestinationSaver implements IDestinationSaver{
     }
 
     //Local class used to provide and create a read and writable database on the local device.
-    private class DestinationDBReaderHelper extends SQLiteOpenHelper {
+    private static class DestinationDBReaderHelper extends SQLiteOpenHelper {
         // If you change the database schema, you must increment the database version.
         public static final int DATABASE_VERSION = 1;
         public static final String DATABASE_NAME = "SavedDestinations.db";
