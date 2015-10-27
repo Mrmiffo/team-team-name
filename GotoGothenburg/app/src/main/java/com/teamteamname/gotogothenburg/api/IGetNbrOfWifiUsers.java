@@ -1,7 +1,5 @@
 package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.api.electricity.handlers.WifiHandler;
-
 /**
  * Created by Olof on 27/10/2015.
  */

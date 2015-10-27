@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.electricity.handlers;
+package com.teamteamname.gotogothenburg.api;
 
 import java.util.Map;
 

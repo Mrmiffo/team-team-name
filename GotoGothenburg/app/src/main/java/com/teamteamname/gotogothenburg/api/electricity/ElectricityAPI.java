@@ -15,11 +15,11 @@ import com.teamteamname.gotogothenburg.api.IGetCabinTemp;
 import com.teamteamname.gotogothenburg.api.IGetNbrOfWifiUsers;
 import com.teamteamname.gotogothenburg.api.IGetNextStop;
 import com.teamteamname.gotogothenburg.api.IGetStopPressed;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.GPSHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.StopButtonHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.TempHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.WifiHandler;
+import com.teamteamname.gotogothenburg.api.GPSHandler;
+import com.teamteamname.gotogothenburg.api.NextStopHandler;
+import com.teamteamname.gotogothenburg.api.StopButtonHandler;
+import com.teamteamname.gotogothenburg.api.TempHandler;
+import com.teamteamname.gotogothenburg.api.WifiHandler;
 
 import com.teamteamname.gotogothenburg.api.Bus;
 

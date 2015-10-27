@@ -5,8 +5,8 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.teamteamname.gotogothenburg.api.GPSCoord;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.GPSHandler;
+import com.teamteamname.gotogothenburg.api.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.GPSHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;

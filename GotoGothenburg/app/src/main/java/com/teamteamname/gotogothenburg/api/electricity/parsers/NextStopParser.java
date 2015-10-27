@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
+import com.teamteamname.gotogothenburg.api.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.NextStopHandler;
 import com.teamteamname.gotogothenburg.api.Stops;
 
 import org.json.JSONArray;
