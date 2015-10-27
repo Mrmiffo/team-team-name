@@ -1,7 +1,5 @@
 package com.teamteamname.gotogothenburg.api;
 
-import java.io.File;
-
 /**
  * The interface DeviceAPI is used to abstract the model of the program from the device it's
  * implemented on. Each operating system and sometimes operating system version or device type may

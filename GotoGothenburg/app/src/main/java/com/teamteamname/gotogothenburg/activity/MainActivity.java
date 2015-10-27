@@ -23,9 +23,10 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
+import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
-import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
+import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
@@ -33,9 +34,7 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHa
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
-import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
-import com.teamteamname.gotogothenburg.guide.OnWhichBusIdentifier;
 
 public class MainActivity extends FragmentActivity implements VasttrafikTripHandler, VasttrafikErrorHandler{
 

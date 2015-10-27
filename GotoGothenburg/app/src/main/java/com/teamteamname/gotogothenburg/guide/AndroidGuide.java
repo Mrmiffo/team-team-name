@@ -2,7 +2,6 @@ package com.teamteamname.gotogothenburg.guide;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.route.Route;

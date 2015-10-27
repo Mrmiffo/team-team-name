@@ -8,12 +8,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.teamteamname.gotogothenburg.activity.MainActivity;
-import com.teamteamname.gotogothenburg.map.MapFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -36,7 +33,7 @@ public class ResalePoints implements IMapMarkerData{
         AssetManager assetManager = context.getAssets();
         try {
 
-            Scanner scanner = new Scanner(assetManager.open("resale_points.txt"));
+            Scanner scanner = new Scanner(assetManager.open("resale_points.txt"), "UTF-8");
             while (scanner.hasNextLine()) {
                 String[] values = scanner.nextLine().split("\\|");
                 markerOptions.add(
@@ -53,7 +50,7 @@ public class ResalePoints implements IMapMarkerData{
 
 
     @Override
-    public void addMarkers(MapFragment map) {
+    public void addMarkers(IMap map) {
         for (MarkerOptions marker : markerOptions) {
             markers.add(map.placeMarker(marker));
         }

@@ -20,13 +20,15 @@ import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.StopButtonHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.TempHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.WifiHandler;
+
+import com.teamteamname.gotogothenburg.api.Bus;
+
 import com.teamteamname.gotogothenburg.api.electricity.parsers.AmbientTempParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.CabinTempParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.GPSCoordParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.NextStopParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.StopPressedParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.WifiUsersParser;
-import com.teamteamname.gotogothenburg.api.Bus;
 
 import org.json.JSONArray;
 

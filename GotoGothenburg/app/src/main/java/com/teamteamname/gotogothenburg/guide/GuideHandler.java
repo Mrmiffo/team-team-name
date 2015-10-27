@@ -3,7 +3,6 @@ package com.teamteamname.gotogothenburg.guide;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.util.Log;
 
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.route.Route;

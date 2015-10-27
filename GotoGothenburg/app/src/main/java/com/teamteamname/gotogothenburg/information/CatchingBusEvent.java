@@ -9,7 +9,6 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.activity.MainActivity;
 
 /**
  * Created by Olof on 12/10/2015.

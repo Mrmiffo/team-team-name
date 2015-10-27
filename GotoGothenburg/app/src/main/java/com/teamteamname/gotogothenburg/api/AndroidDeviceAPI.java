@@ -6,9 +6,6 @@ import android.media.MediaPlayer;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
-import com.teamteamname.gotogothenburg.utils.AndroidConverter;
-
-import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 

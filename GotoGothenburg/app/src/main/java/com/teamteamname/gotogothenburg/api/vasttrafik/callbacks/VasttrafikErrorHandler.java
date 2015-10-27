@@ -1,9 +1,5 @@
 package com.teamteamname.gotogothenburg.api.vasttrafik.callbacks;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.List;
-
 /**
  * Created by Mattias Ahlstedt on 2015-09-25.
  */

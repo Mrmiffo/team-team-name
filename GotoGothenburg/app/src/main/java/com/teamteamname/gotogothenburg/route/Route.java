@@ -1,11 +1,11 @@
 package com.teamteamname.gotogothenburg.route;
 
+import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.PointOfInterest;
 import com.teamteamname.gotogothenburg.api.Stops;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
-import com.teamteamname.gotogothenburg.api.Bus;
 
 import java.util.ArrayList;
 import java.util.Arrays;

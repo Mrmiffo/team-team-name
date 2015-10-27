@@ -3,8 +3,6 @@ package com.teamteamname.gotogothenburg.destination;
 import android.app.Fragment;
 import android.location.Location;
 import android.os.Bundle;
-
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;

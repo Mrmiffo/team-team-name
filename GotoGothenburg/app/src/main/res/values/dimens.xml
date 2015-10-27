@@ -2,4 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <item name="BUTTON_PRESSED_ALPHA" format="float" type="dimen">1.0</item>
+    <item name="BUTTON_UNPRESSED_ALPHA" format="float" type="dimen">0.5</item>
 </resources>

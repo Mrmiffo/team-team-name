@@ -15,6 +15,9 @@ public class HotelPoints implements IMapMarkerData{
     private ArrayList<Marker> markers = new ArrayList<>();
     private ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
 
+    /**
+     * Creates a new HotelPoints class
+     */
     public HotelPoints(){
         markerOptions.add(new MarkerOptions()
                 .title("Hotel Novotel Göteborg")
@@ -71,7 +74,7 @@ public class HotelPoints implements IMapMarkerData{
     }
 
     @Override
-    public void addMarkers(MapFragment map) {
+    public void addMarkers(IMap map) {
         for (MarkerOptions marker : markerOptions) {
             markers.add((map.placeMarker(marker)));
         }

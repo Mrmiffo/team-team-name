@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.activity.MainActivity;
 
 
 /**

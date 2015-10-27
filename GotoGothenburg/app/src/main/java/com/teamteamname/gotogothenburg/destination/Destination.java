@@ -1,11 +1,7 @@
 package com.teamteamname.gotogothenburg.destination;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 //NOTE! JUnit tests has not been created for this class as all methods are auto-generated setters and getters with no logic. //Anton 2015-09-30
 

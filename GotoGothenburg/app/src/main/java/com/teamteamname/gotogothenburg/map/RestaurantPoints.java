@@ -10,12 +10,15 @@ import java.util.ArrayList;
 /**
  * Created by patrick on 15/10/2015.
  */
-public class ResturantPoints implements IMapMarkerData{
+public class RestaurantPoints implements IMapMarkerData{
 
     private ArrayList<Marker> markers = new ArrayList<>();
     private ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
 
-    public ResturantPoints() {
+    /**
+     * Creates a new RestaurantPoints class and loads the markerOptions
+     */
+    public RestaurantPoints() {
         markerOptions.add(new MarkerOptions()
                 .title("Thörnströms kök")
                 .position(new LatLng(57.694099, 11.977736))
@@ -64,7 +67,7 @@ public class ResturantPoints implements IMapMarkerData{
     }
 
     @Override
-    public void addMarkers(MapFragment map) {
+    public void addMarkers(IMap map) {
         for (MarkerOptions marker : markerOptions) {
             markers.add((map.placeMarker(marker)));
         }

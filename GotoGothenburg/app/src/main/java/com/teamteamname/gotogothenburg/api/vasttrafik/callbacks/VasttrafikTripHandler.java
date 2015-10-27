@@ -1,6 +1,5 @@
 package com.teamteamname.gotogothenburg.api.vasttrafik.callbacks;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 

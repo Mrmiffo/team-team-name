@@ -1,7 +1,5 @@
 package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.api.GPSCoord;
-
 import java.io.File;
 import java.io.Serializable;
 

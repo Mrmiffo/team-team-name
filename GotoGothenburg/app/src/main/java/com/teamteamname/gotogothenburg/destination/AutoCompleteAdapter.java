@@ -14,6 +14,7 @@ package com.teamteamname.gotogothenburg.destination;
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +35,6 @@ import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.teamteamname.gotogothenburg.R;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

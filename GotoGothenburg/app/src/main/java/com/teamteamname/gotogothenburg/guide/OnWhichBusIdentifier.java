@@ -1,8 +1,8 @@
 package com.teamteamname.gotogothenburg.guide;
 
 
-import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
+import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
 import com.teamteamname.gotogothenburg.api.IElectriCityWiFiSystemIDAPIHandler;
 

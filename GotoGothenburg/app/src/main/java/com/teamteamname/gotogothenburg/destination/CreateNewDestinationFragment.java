@@ -14,10 +14,11 @@ package com.teamteamname.gotogothenburg.destination;
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+
+import android.app.Fragment;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.text.Spanned;
@@ -27,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -207,8 +207,6 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
         Log.e("Places API", "onConnectionFailed: ConnectionResult.getErrorCode() = "
                 + connectionResult.getErrorCode());
 
-        // TODO Check error code and notify the user of error state and resolution.
-        // Not implemented in prototype version as this error has never been encoutered.
         Toast.makeText(getActivity(),
                 "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
                 Toast.LENGTH_SHORT).show();
