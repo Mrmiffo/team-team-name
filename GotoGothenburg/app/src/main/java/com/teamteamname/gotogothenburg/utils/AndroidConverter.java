@@ -43,7 +43,7 @@ public class AndroidConverter {
         AssetManager assetManager = context.getAssets();
         StringBuilder text = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(assetManager.open(file.getName()));
+            Scanner scanner = new Scanner(assetManager.open(file.getName()), "UTF-8");
             while (scanner.hasNextLine()) {
                 text.append(scanner.nextLine());
             }
