@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.route;
+package com.teamteamname.gotogothenburg.guide;
 
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.PointOfInterest;

@@ -5,7 +5,6 @@ import android.app.DialogFragment;
 import android.content.Context;
 
 import com.teamteamname.gotogothenburg.api.Bus;
-import com.teamteamname.gotogothenburg.route.Route;
 
 import java.util.Timer;
 import java.util.TimerTask;

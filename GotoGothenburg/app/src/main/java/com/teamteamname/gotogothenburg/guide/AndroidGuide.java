@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
-import com.teamteamname.gotogothenburg.route.Route;
 import com.teamteamname.gotogothenburg.utils.AndroidConverter;
 
 import java.util.Timer;
