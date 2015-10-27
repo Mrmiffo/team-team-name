@@ -75,10 +75,10 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
                     sanetizedString = sanetizedString.substring(0, sanetizedString.length() - 1).replace(".","")
                             //Make the API response to uppercase to match the names.
                             .toUpperCase();
-                    for (String stop : stopNames.keySet()) {
+                    for (Map.Entry stop : stopNames.entrySet()) {
                         //Checks caps to match
-                        if (sanetizedString.equals(stop)) {
-                            callback.electricityNextStopResponse(stopNames.get(stop));
+                        if (sanetizedString.equals(stop.getKey())) {
+                            callback.electricityNextStopResponse((Stops)stop.getValue());
                             break;
                         }
                     }
