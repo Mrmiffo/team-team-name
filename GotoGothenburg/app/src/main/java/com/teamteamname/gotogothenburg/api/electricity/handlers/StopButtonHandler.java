@@ -3,7 +3,7 @@ package com.teamteamname.gotogothenburg.api.electricity.handlers;
 /**
  * A interface for recieving the callback response from Electricity's REST API.
  */
-public interface ElectricityStopButtonHandler extends ElectricityErrorHandler {
+public interface StopButtonHandler extends ErrorHandler {
     /**
      * Callback method for the Electricity API.
      * @param isPressed

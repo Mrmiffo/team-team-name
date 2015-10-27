@@ -1,6 +1,6 @@
 package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.TempHandler;
 
 /**
  * Created by Olof on 27/10/2015.
@@ -17,5 +17,5 @@ public interface IGetAmbientTemp {
      * @param callback
      * A interface for recieving the response.
      */
-    void getAmbientTemperature(Bus bus, ElectricityTempHandler callback);
+    void getAmbientTemperature(Bus bus, TempHandler callback);
 }

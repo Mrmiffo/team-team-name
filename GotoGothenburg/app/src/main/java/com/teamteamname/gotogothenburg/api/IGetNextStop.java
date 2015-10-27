@@ -1,6 +1,6 @@
 package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
 
 /**
  * Created by Olof on 27/10/2015.
@@ -17,5 +17,5 @@ public interface IGetNextStop {
      * @param callback
      * A interface for recieving the response.
      */
-    void getNextStop(Bus bus, ElectricityNextStopHandler callback);
+    void getNextStop(Bus bus, NextStopHandler callback);
 }

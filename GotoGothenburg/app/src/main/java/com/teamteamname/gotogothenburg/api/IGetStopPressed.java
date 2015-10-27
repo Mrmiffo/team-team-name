@@ -1,6 +1,6 @@
 package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.StopButtonHandler;
 
 /**
  * Created by Olof on 27/10/2015.
@@ -17,5 +17,5 @@ public interface IGetStopPressed {
      * @param callback
      * A interface for recieving the response.
      */
-    void getStopPressed(Bus bus, ElectricityStopButtonHandler callback);
+    void getStopPressed(Bus bus, StopButtonHandler callback);
 }

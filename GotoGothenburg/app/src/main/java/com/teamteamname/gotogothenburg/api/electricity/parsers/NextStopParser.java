@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
 import com.teamteamname.gotogothenburg.api.Stops;
 
 import org.json.JSONArray;
@@ -17,15 +17,15 @@ import org.json.JSONObject;
  */
 public class NextStopParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    ElectricityNextStopHandler callback;
+    NextStopHandler callback;
 
-    public NextStopParser(ElectricityNextStopHandler callback){
+    public NextStopParser(NextStopHandler callback){
         this.callback = callback;
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        ElectricityError elecError = new ElectricityError();
+        ApiRequestError elecError = new ApiRequestError();
         if(error.networkResponse != null) {
             elecError.setResponseHeaders(error.networkResponse.headers);
             elecError.setResponseStatusCode(error.networkResponse.statusCode);

@@ -1,6 +1,6 @@
 package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.GPSHandler;
 
 /**
  * Created by Olof on 27/10/2015.
@@ -18,5 +18,5 @@ public interface IGetBusLocation {
      * @param callback
      * A interface for recieving the response.
      */
-    void getBusLocation(Bus bus, ElectricityGPSHandler callback);
+    void getBusLocation(Bus bus, GPSHandler callback);
 }

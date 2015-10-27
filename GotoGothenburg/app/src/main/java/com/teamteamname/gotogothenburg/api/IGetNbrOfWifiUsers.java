@@ -1,6 +1,6 @@
 package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.WifiHandler;
 
 /**
  * Created by Olof on 27/10/2015.
@@ -18,5 +18,5 @@ public interface IGetNbrOfWifiUsers {
      * @param callback
      * A interface for recieving the response.
      */
-    void  getNbrOfWifiUsers(Bus bus, ElectricityWifiHandler callback);
+    void  getNbrOfWifiUsers(Bus bus, WifiHandler callback);
 }

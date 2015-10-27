@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.StopButtonHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,14 +16,14 @@ import org.json.JSONObject;
  */
 public class StopPressedParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    ElectricityStopButtonHandler callback;
+    StopButtonHandler callback;
 
-    public StopPressedParser(ElectricityStopButtonHandler callback){ this.callback = callback; }
+    public StopPressedParser(StopButtonHandler callback){ this.callback = callback; }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("StopPressedParser", error.toString());
-        ElectricityError elecError = new ElectricityError();
+        ApiRequestError elecError = new ApiRequestError();
         elecError.setResponseHeaders(error.networkResponse.headers);
         elecError.setResponseStatusCode(error.networkResponse.statusCode);
         elecError.setMessage(error.getMessage());

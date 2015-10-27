@@ -15,11 +15,11 @@ import com.teamteamname.gotogothenburg.api.IGetCabinTemp;
 import com.teamteamname.gotogothenburg.api.IGetNbrOfWifiUsers;
 import com.teamteamname.gotogothenburg.api.IGetNextStop;
 import com.teamteamname.gotogothenburg.api.IGetStopPressed;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.GPSHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.StopButtonHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.TempHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.WifiHandler;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.AmbientTempParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.CabinTempParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.GPSCoordParser;
@@ -61,7 +61,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     }
 
     @Override
-    public void getBusLocation(Bus bus, ElectricityGPSHandler callback){
+    public void getBusLocation(Bus bus, GPSHandler callback){
         //Requests data since 5 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);
@@ -80,7 +80,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     }
 
     @Override
-    public void getNextStop(Bus bus, ElectricityNextStopHandler callback) {
+    public void getNextStop(Bus bus, NextStopHandler callback) {
         //Requests data since 10 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);
@@ -98,7 +98,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     }
 
     @Override
-    public void getAmbientTemperature(Bus bus, ElectricityTempHandler callback) {
+    public void getAmbientTemperature(Bus bus, TempHandler callback) {
         //Requests data since 10 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);
@@ -116,7 +116,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     }
 
     @Override
-    public void getCabinTemperature(Bus bus, ElectricityTempHandler callback) {
+    public void getCabinTemperature(Bus bus, TempHandler callback) {
         //Requests data since 2,5 min earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 150);
@@ -134,7 +134,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     }
 
     @Override
-    public void getStopPressed(Bus bus, ElectricityStopButtonHandler callback) {
+    public void getStopPressed(Bus bus, StopButtonHandler callback) {
         //Requests data since 2,5 min earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 150);
@@ -152,7 +152,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     }
 
     @Override
-    public void getNbrOfWifiUsers(Bus bus, ElectricityWifiHandler callback) {
+    public void getNbrOfWifiUsers(Bus bus, WifiHandler callback) {
         //Requests data since 12 sec earlier.
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * QUERY_LENGTH);

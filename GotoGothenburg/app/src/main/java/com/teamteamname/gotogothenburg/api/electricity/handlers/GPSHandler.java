@@ -5,7 +5,7 @@ import com.teamteamname.gotogothenburg.api.GPSCoord;
 /**
  * A interface for recieving the callback response from Electricity's REST API.
  */
-public interface ElectricityGPSHandler extends ElectricityErrorHandler {
+public interface GPSHandler extends ErrorHandler {
     /**
      * Callback method for the Electricity API.
      * @param coord

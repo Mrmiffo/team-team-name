@@ -1,12 +1,12 @@
 package com.teamteamname.gotogothenburg.api.electricity.mock;
 
 import com.teamteamname.gotogothenburg.api.GPSCoord;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityError;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityGPSHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextStopHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
-import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityWifiHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.ApiRequestError;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.GPSHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.NextStopHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.StopButtonHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.TempHandler;
+import com.teamteamname.gotogothenburg.api.electricity.handlers.WifiHandler;
 import com.teamteamname.gotogothenburg.api.Stops;
 
 import lombok.Getter;
@@ -14,7 +14,7 @@ import lombok.Getter;
 /**
  * A mockclass of respoonsehandlers for ElectricityAPI. Catches responses. Used to test whether the response is correct.
  */
-public class MockElectricityHandler implements ElectricityWifiHandler, ElectricityStopButtonHandler, ElectricityTempHandler, ElectricityNextStopHandler, ElectricityGPSHandler {
+public class MockElectricityHandler implements WifiHandler, StopButtonHandler, TempHandler, NextStopHandler, GPSHandler {
 
     @Getter private GPSCoord gpsResponse;
     @Getter private Stops nextStopResponse;
@@ -22,7 +22,7 @@ public class MockElectricityHandler implements ElectricityWifiHandler, Electrici
     @Getter private double cabinTempResponse;
     @Getter private boolean isPressedResponse;
     @Getter private int nbrOfUsersResponse;
-    @Getter private ElectricityError errorResponse;
+    @Getter private ApiRequestError errorResponse;
 
     @Override
     public void electricityGPSResponse(GPSCoord coord) {
@@ -55,7 +55,7 @@ public class MockElectricityHandler implements ElectricityWifiHandler, Electrici
     }
 
     @Override
-    public void electricityRequestError(ElectricityError error) {
+    public void electricityRequestError(ApiRequestError error) {
         errorResponse = error;
     }
 }
