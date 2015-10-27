@@ -63,18 +63,15 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
     @Override
     public void RequestDone(Pair<String, LatLng>[] suggestions) {
         MatrixCursor cursor = new MatrixCursor(new String[]{"_id", "suggestion"});
-
         locations = new Pair[suggestions.length];
         for(int i = 0; i < locations.length; i++){
             locations[i] = new Pair<>(suggestions[i].first, suggestions[i].second);
         }
 
-        List<String> temp = new ArrayList<>();
         for(int i = 0; i < locations.length; i++){
             cursor.addRow(new Object[]{i, locations[i].first});
-            temp.add(locations[i].first);
         }
-        AutocompleteAdapter autocompleteAdapter = new AutocompleteAdapter(context, cursor, 0, temp, searchbar);
+        AutocompleteAdapter autocompleteAdapter = new AutocompleteAdapter(context, cursor, 0, searchbar);
         this.searchbar.setSuggestionsAdapter(autocompleteAdapter);
     }
 }

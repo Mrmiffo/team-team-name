@@ -18,13 +18,11 @@ import java.util.List;
  */
 public class AutocompleteAdapter extends CursorAdapter {
 
-    private List<String> items;
     private TextView text;
     private SearchView searchbar;
 
-    public AutocompleteAdapter(Context context, Cursor c, int flags, List<String> items, SearchView searchbar) {
+    public AutocompleteAdapter(Context context, Cursor c, int flags, SearchView searchbar) {
         super(context, c, flags);
-        this.items = items;
         this.searchbar = searchbar;
     }
 
