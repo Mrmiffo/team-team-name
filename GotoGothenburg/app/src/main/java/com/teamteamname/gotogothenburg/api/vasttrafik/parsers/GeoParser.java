@@ -8,7 +8,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.GeoCallback;
 
 import org.json.JSONArray;
@@ -27,11 +26,11 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
     private RequestQueue queue;
 
     private String url;
-    private VasttrafikChange trip;
+    private Change trip;
     private boolean walk;
 
     public GeoParser(GeoCallback callback, RequestQueue queue,
-                     String url, VasttrafikChange trip, boolean walk) {
+                     String url, Change trip, boolean walk) {
 
         this.callback = callback;
         this.queue = queue;
@@ -63,10 +62,10 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
         }
     }
 
-    private void markerDone(VasttrafikChange vc, JSONArray ja) throws JSONException {
+    private void markerDone(Change c, JSONArray ja) throws JSONException {
         LatLng temp = getCoordFromJSON(ja);
         if(temp != null) {
-            callback.markerRequestDone(new VasttrafikChange(vc.getLine(), vc.getStopName(), vc.getTrack(), temp));
+            callback.markerRequestDone(c.getLine(), c.getStopName(), c.getTrack(), temp);
         } else {
             onErrorResponse(new VolleyError());
         }

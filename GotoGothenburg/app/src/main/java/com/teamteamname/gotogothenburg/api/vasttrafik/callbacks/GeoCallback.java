@@ -1,7 +1,7 @@
 package com.teamteamname.gotogothenburg.api.vasttrafik.callbacks;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 
 import java.util.List;
 
@@ -16,8 +16,11 @@ public interface GeoCallback {
     public void polylineRequestDone(List<PolylineOptions> polylines);
 
     /**
-     * Callback for returning trip information
-     * @param marker the trip information
+     *
+     * @param line
+     * @param stopName
+     * @param track
+     * @param position
      */
-    public void markerRequestDone(VasttrafikChange marker);
+    public void markerRequestDone(String line, String stopName, String track, LatLng position);
 }

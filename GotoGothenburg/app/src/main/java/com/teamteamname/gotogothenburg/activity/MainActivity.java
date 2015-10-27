@@ -20,6 +20,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
@@ -28,15 +29,14 @@ import com.teamteamname.gotogothenburg.api.ElectriCityWiFiSystemIDAPI;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 
-public class MainActivity extends FragmentActivity implements VasttrafikTripHandler, VasttrafikErrorHandler{
+public class MainActivity extends FragmentActivity implements TripHandler, ErrorHandler {
 
     private ViewPager viewPager;
     private boolean guideWasStopped;
@@ -168,15 +168,15 @@ public class MainActivity extends FragmentActivity implements VasttrafikTripHand
     }
 
     @Override
-    public void vasttrafikRequestError(String e) {
+    public void RequestError(String e) {
         Log.e("VastTrafikError",e);
         Toast.makeText(this, "Error with Vasttrafik: " + e, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void vasttrafikRequestDone(VasttrafikChange[] tripInfo, PolylineOptions[] polyline){
+    public void RequestDone(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions, PolylineOptions[] polyline){
         changeTab(1);
-        ((MapFragment) getCurrentTab()).updateCurrentTrip(tripInfo);
+        ((MapFragment) getCurrentTab()).updateCurrentTrip(lines, stopNames, tracks, positions);
         ((MapFragment) getCurrentTab()).drawPolyLine(polyline);
     }
 }

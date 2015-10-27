@@ -11,12 +11,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
 
 /**
@@ -70,20 +70,18 @@ public class DestinationFragment extends Fragment{
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
             if (myLocation != null) {
-                VasttrafikLocation origin = new VasttrafikLocation("Me", myLocation.getLatitude(), myLocation.getLongitude());
+                LatLng originCoords = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
 
+                String destName = ((Destination) parent.getItemAtPosition(position)).getName();
                 double destLat = ((Destination) parent.getItemAtPosition(position)).getLatitude();
                 double destLng = ((Destination) parent.getItemAtPosition(position)).getLongitude();
-                String name = ((Destination) parent.getItemAtPosition(position)).getName();
-                VasttrafikLocation dest = new VasttrafikLocation(name, destLat, destLng);
+                LatLng destCoord = new LatLng(destLat, destLng);
 
-                VasttrafikAPI.getInstance().getTrip((VasttrafikTripHandler) getActivity(), (VasttrafikErrorHandler) getActivity(), origin, dest);
+                VasttrafikAPI.getTripInstance().getTrip((TripHandler) getActivity(), (ErrorHandler) getActivity(), "Me", originCoords, destName, destCoord);
                 GuideHandler.getInstance().startGuide();
             } else {
                 Toast.makeText(getActivity(), "Device Location not found", Toast.LENGTH_SHORT).show();
             }
-
-
         }
 
     };

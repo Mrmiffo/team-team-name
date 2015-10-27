@@ -6,9 +6,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,12 +21,12 @@ import java.util.List;
  */
 public class TripParser implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    private VasttrafikTripHandler tripCallback;
-    private VasttrafikErrorHandler errorCallback;
+    private TripHandler tripCallback;
+    private ErrorHandler errorCallback;
     private String url;
     private RequestQueue queue;
 
-    public TripParser(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, String url, RequestQueue queue) {
+    public TripParser(TripHandler tripCallback, ErrorHandler errorCallback, String url, RequestQueue queue) {
         this.tripCallback = tripCallback;
         this.errorCallback = errorCallback;
         this.url = url;
@@ -71,7 +70,7 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
     private void createGeoManager(JSONArray ja) throws JSONException {
         List<String> urls = new ArrayList<>();
         List<Boolean> walks = new ArrayList<>();
-        List<VasttrafikChange> trips = new ArrayList<>();
+        List<Change> trips = new ArrayList<>();
 
         for (int i = 0; i < ja.length(); i++) {
             JSONObject temp = (JSONObject)ja.get(i);
@@ -81,7 +80,7 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
                 return;
             }
             boolean walk = temp.get("type").equals("WALK");
-            VasttrafikChange trip = getTripInfo(temp);
+            Change trip = getTripInfo(temp);
 
             urls.add(url);
             walks.add(walk);
@@ -97,14 +96,14 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
         return null;
     }
 
-    private VasttrafikChange getTripInfo(JSONObject jo) throws JSONException{
+    private Change getTripInfo(JSONObject jo) throws JSONException{
         if(jo.has("Origin")){
             JSONObject temp = (JSONObject) jo.get("Origin");
 
             String line = jo.has("sname") ? (String)jo.get("sname") : "Walk";
             String stopName = temp.has("name") ? (String)temp.get("name") : "Stop name missing";
             String track =  temp.has("track") ? (String)temp.get("track") : "";
-            return new VasttrafikChange(line, stopName, track, null);
+            return new Change(line, stopName, track, null);
         }
         return null;
     }

@@ -18,9 +18,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
     private Marker userMarker;
 
     private List<Marker> currentTripMarkers = new ArrayList<>();
-    private VasttrafikChange[] currentTripInfo;
+    private TripInfo[] currentTripInfo;
     private List<Polyline> currentPolyline = new ArrayList<>();
 
     public static MapFragment newInstance(){
@@ -110,7 +109,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         map.setBuildingsEnabled(true);
         map.setInfoWindowAdapter(new CustomInfoWindowAdapter(getActivity()));
         map.setOnMapLongClickListener(new OnMapLongClickListener(this, getActivity()));
-        map.setOnInfoWindowClickListener(new OnInfoWindowClickListener(this, (VasttrafikTripHandler) getActivity(), (VasttrafikErrorHandler) getActivity(), getActivity()));
+        map.setOnInfoWindowClickListener(new OnInfoWindowClickListener(this, (TripHandler) getActivity(), (ErrorHandler) getActivity(), getActivity()));
     }
 
     private void zoomToLocation(Location location, float zoom){
@@ -143,23 +142,35 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         }
     }
 
-    @Override
-    public void updateCurrentTrip(VasttrafikChange... newTrip){
+    /**
+     * Places markers containing the given trip information on the map
+     * @param lines
+     * @param stopNames
+     * @param tracks
+     * @param positions
+     */
+    public void updateCurrentTrip(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions){
+        TripInfo[] newTrip = new TripInfo[positions.length];
+        for(int i = 0; i < positions.length; i++){
+            newTrip[i] = new TripInfo(lines[i], stopNames[i], tracks[i], positions[i]);
+        }
+
         if(currentTripMarkers != null) {
             clearTripMarkers();
         }
 
         currentTripInfo = newTrip;
 
-        for(VasttrafikChange vc : currentTripInfo){
+        for(TripInfo trip : currentTripInfo){
             MarkerOptions marker = new MarkerOptions();
-            if(vc.getLine().equalsIgnoreCase("Walk")) {
-                marker.title("Walk from: " + vc.getStopName());
+            if(trip.getLine().equalsIgnoreCase("Walk")) {
+                marker.title("Walk from: " + trip.getStopName());
             } else {
-                marker.title("Line: " + vc.getLine());
-                marker.snippet("From: " + vc.getStopName() + ", track " + vc.getTrack());
+                marker.title("Line: " + trip.getLine());
+                marker.snippet("From: " + trip.getStopName() + ", track " + trip.getTrack());
             }
-            marker.position(vc.getPosition());
+
+            marker.position(trip.getPosition());
             currentTripMarkers.add(placeMarker(marker));
         }
     }

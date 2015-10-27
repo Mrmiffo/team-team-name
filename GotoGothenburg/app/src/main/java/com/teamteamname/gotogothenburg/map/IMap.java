@@ -1,9 +1,9 @@
 package com.teamteamname.gotogothenburg.map;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 
 /**
  * Created by patrick on 27/10/2015.
@@ -28,10 +28,12 @@ public interface IMap {
 
     /**
      * Places markers containing the given trip information on the map
-     *
-     * @param newTrip The trip information
+     * @param lines
+     * @param stopNames
+     * @param tracks
+     * @param positions
      */
-    void updateCurrentTrip(VasttrafikChange... newTrip);
+    void updateCurrentTrip(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions);
 
     /**
      * Gets the current user selected location in the form of a marker

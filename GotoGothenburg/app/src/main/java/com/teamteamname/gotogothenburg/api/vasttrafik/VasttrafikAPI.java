@@ -4,19 +4,21 @@ import android.content.Context;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikAutocompleteHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.AutocompleteHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
 import com.teamteamname.gotogothenburg.api.vasttrafik.parsers.AutocompleteParser;
 import com.teamteamname.gotogothenburg.api.vasttrafik.parsers.TripParser;
 
 /**
  * Created by Mattias Ahlstedt on 2015-09-28.
  */
-public class VasttrafikAPI implements IVasttrafikAPI {
+public class VasttrafikAPI  implements ITrip, IAutocomplete {
 
-    private static IVasttrafikAPI instance;
+    private static ITrip tripInstance;
+    private static IAutocomplete autocompleteInstance;
 
     private String baseURL;
     private String apiKey;
@@ -46,15 +48,22 @@ public class VasttrafikAPI implements IVasttrafikAPI {
     }
 
     public static void init(Context context, RequestQueue queue){
-        if(instance == null) {
-            VasttrafikAPI api = new VasttrafikAPI(context, queue);
-            instance = api;
+        VasttrafikAPI api = new VasttrafikAPI(context, queue);
+
+        if(tripInstance == null) {
+            tripInstance = api;
+        }
+
+        if(autocompleteInstance == null) {
+            autocompleteInstance = api;
         }
     }
 
-    public static IVasttrafikAPI getInstance(){
-        return instance;
+    public static ITrip getTripInstance(){
+        return tripInstance;
     }
+
+    public static IAutocomplete getAutocompleteInstance() { return autocompleteInstance; }
 
     /**
      * Setups the first part of the url which is always needed
@@ -71,15 +80,15 @@ public class VasttrafikAPI implements IVasttrafikAPI {
     }
 
     @Override
-    public void getTrip(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback, VasttrafikLocation originLocation, VasttrafikLocation destLocation) {
+    public void getTrip(TripHandler tripCallback, ErrorHandler errorCallback, String originName, LatLng originCoords, String destName, LatLng destCoords) {
         StringBuilder sb = setupRequest(trip);
         sb.append("needGeo=1&");
-        sb.append("originCoordLat=" + originLocation.getLatlng().latitude + "&");
-        sb.append("originCoordLong=" + originLocation.getLatlng().longitude + "&");
-        sb.append("originCoordName=" + sanitize(originLocation.getName()) + "&");
-        sb.append("destCoordLat=" + destLocation.getLatlng().latitude + "&");
-        sb.append("destCoordLong=" + destLocation.getLatlng().longitude + "&");
-        sb.append("destCoordName=" + sanitize(destLocation.getName()));
+        sb.append("originCoordLat=" + originCoords.latitude + "&");
+        sb.append("originCoordLong=" + originCoords.longitude + "&");
+        sb.append("originCoordName=" + sanitize(originName) + "&");
+        sb.append("destCoordLat=" + destCoords.latitude + "&");
+        sb.append("destCoordLong=" + destCoords.longitude + "&");
+        sb.append("destCoordName=" + sanitize(destName));
         String uri = sb.toString();
 
         TripParser parser = new TripParser(tripCallback, errorCallback, uri, queue);
@@ -88,7 +97,7 @@ public class VasttrafikAPI implements IVasttrafikAPI {
     }
 
     @Override
-    public void getAutocomplete(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback, String input) {
+    public void getAutocomplete(AutocompleteHandler autoCallback, ErrorHandler errorCallback, String input) {
 
         String sanitizedInput = sanitize(input);
 

@@ -1,14 +1,15 @@
 package com.teamteamname.gotogothenburg.api.vasttrafik.parsers;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikLocation;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikAutocompleteHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
+import com.google.android.gms.maps.model.LatLng;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.AutocompleteHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,13 +23,13 @@ import java.util.List;
  */
 public class AutocompleteParser implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    private VasttrafikAutocompleteHandler autoCallback;
-    private VasttrafikErrorHandler errorCallback;
-    private List<VasttrafikLocation> locations;
+    private AutocompleteHandler autoCallback;
+    private ErrorHandler errorCallback;
+    private List<Pair<String, LatLng>> locations;
     private String uri;
     private RequestQueue queue;
 
-    public AutocompleteParser(VasttrafikAutocompleteHandler autoCallback, VasttrafikErrorHandler errorCallback, String uri, RequestQueue queue) {
+    public AutocompleteParser(AutocompleteHandler autoCallback, ErrorHandler errorCallback, String uri, RequestQueue queue) {
         this.autoCallback = autoCallback;
         this.errorCallback = errorCallback;
         this.locations = new ArrayList<>();
@@ -55,7 +56,7 @@ public class AutocompleteParser implements Response.Listener<JSONObject>, Respon
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
         }
-        autoCallback.vasttrafikRequestDone(locations.toArray(new VasttrafikLocation[locations.size()]));
+        autoCallback.RequestDone(locations.toArray(new Pair[locations.size()]));
     }
 
     private void addLocations(JSONObject locationList, String has) throws JSONException {
@@ -69,7 +70,8 @@ public class AutocompleteParser implements Response.Listener<JSONObject>, Respon
                     String name = (String) temp.get("name");
                     double lat = Double.valueOf((String) temp.get("lat"));
                     double lng = Double.valueOf((String) temp.get("lon"));
-                    VasttrafikLocation location = new VasttrafikLocation(name, lat, lng);
+                    LatLng coords = new LatLng(lat, lng);
+                    Pair<String, LatLng> location = new Pair(name, coords);
                     this.locations.add(location);
                 }
             }

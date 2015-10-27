@@ -2,11 +2,11 @@ package com.teamteamname.gotogothenburg.api.vasttrafik.parsers;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikChange;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.GeoCallback;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,32 +16,22 @@ import java.util.List;
  */
 public class GeoManager implements GeoCallback {
 
-    private VasttrafikTripHandler tripCallback;
-    private VasttrafikErrorHandler errorCallback;
+    private TripHandler tripCallback;
+    private ErrorHandler errorCallback; //Will be used in future version
 
-    private RequestQueue queue;
     private int nrOfPolylines;
 
-    private List<String> urls;
-    private List<VasttrafikChange> trips;
-    private List<Boolean> walks;
-
     private List<List<PolylineOptions>> polylines = new ArrayList<>();
-    private List<VasttrafikChange> markers = new ArrayList<>();
+    private List<Change> markers = new ArrayList<>();
 
-    public GeoManager(VasttrafikTripHandler tripCallback, VasttrafikErrorHandler errorCallback,
+    public GeoManager(TripHandler tripCallback, ErrorHandler errorCallback,
                       RequestQueue queue, int nrOfPolylines,
-                      List<String> urls, List<VasttrafikChange> trips, List<Boolean> walks){
+                      List<String> urls, List<Change> trips, List<Boolean> walks){
 
         this.tripCallback = tripCallback;
         this.errorCallback = errorCallback;
 
-        this.queue = queue;
         this.nrOfPolylines = nrOfPolylines;
-
-        this.urls = urls;
-        this.trips = trips;
-        this.walks = walks;
 
         for(int i = 0; i < nrOfPolylines; i++){
             GeoParser parser = new GeoParser(this, queue, urls.get(i), trips.get(i), walks.get(i));
@@ -57,8 +47,8 @@ public class GeoManager implements GeoCallback {
     }
 
     @Override
-    public void markerRequestDone(VasttrafikChange trip) {
-        markers.add(trip);
+    public void markerRequestDone(String line, String stopName, String track, LatLng position) {
+        markers.add(new Change(line, stopName, track, position));
         done();
     }
 
@@ -70,8 +60,18 @@ public class GeoManager implements GeoCallback {
                     temp.add(po);
                 }
             }
-            tripCallback.vasttrafikRequestDone( markers.toArray(new VasttrafikChange[markers.size()]),
-                                                temp.toArray(new PolylineOptions[temp.size()]));
+
+            String[] lines = new String[markers.size()];
+            String[] stopNames = new String[markers.size()];
+            String[] tracks = new String[markers.size()];
+            LatLng[] positions = new LatLng[markers.size()];
+            for(int i = 0; i < markers.size(); i++){
+                lines[i] = markers.get(i).getLine();
+                stopNames[i] = markers.get(i).getTrack();
+                tracks[i] = markers.get(i).getTrack();
+                positions[i] = markers.get(i).getPosition();
+            }
+            tripCallback.RequestDone(lines, stopNames, tracks, positions, temp.toArray(new PolylineOptions[temp.size()]));
         }
     }
 }
