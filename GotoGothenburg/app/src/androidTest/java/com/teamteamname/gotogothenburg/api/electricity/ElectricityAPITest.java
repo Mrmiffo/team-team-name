@@ -8,7 +8,7 @@ import com.teamteamname.gotogothenburg.GPSCoord;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.electricity.mock.MockElectricityHandler;
 import com.teamteamname.gotogothenburg.api.electricity.mock.MockRequestQueue;
-import com.teamteamname.gotogothenburg.Bus;
+import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.route.Stops;
 
 import org.json.JSONArray;

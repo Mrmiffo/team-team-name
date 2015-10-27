@@ -5,7 +5,7 @@ import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityNextS
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityStopButtonHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityTempHandler;
 import com.teamteamname.gotogothenburg.api.electricity.handlers.ElectricityWifiHandler;
-import com.teamteamname.gotogothenburg.Bus;
+import com.teamteamname.gotogothenburg.api.Bus;
 
 /**
  * A interface for requesting information from Electricity's REST API.

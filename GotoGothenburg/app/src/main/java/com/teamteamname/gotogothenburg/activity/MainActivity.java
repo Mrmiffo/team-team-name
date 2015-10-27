@@ -33,7 +33,7 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.VasttrafikTripHa
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
-import com.teamteamname.gotogothenburg.Bus;
+import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.map.MapFragment;
 import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 

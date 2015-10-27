@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
 
-import com.teamteamname.gotogothenburg.Bus;
+import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.map.IOnWhichBusListener;
 import com.teamteamname.gotogothenburg.map.OnWhichBusIdentifier;
 import com.teamteamname.gotogothenburg.route.Route;

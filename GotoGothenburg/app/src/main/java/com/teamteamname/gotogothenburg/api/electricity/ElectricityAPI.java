@@ -20,7 +20,7 @@ import com.teamteamname.gotogothenburg.api.electricity.parsers.GPSCoordParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.NextStopParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.StopPressedParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.WifiUsersParser;
-import com.teamteamname.gotogothenburg.Bus;
+import com.teamteamname.gotogothenburg.api.Bus;
 
 import org.json.JSONArray;
 

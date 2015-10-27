@@ -1,6 +1,6 @@
 package com.teamteamname.gotogothenburg.map;
 
-import com.teamteamname.gotogothenburg.Bus;
+import com.teamteamname.gotogothenburg.api.Bus;
 
 /**
  * A class that implements this interface may register to
