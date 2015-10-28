@@ -41,18 +41,14 @@ public class ElectricityAPITest extends AndroidTestCase {
 
         mQueue = new MockRequestQueue();
 
-        ElectricityAPI.init(this.getContext(), mQueue);
-
-        mElevtricityAPI = ElectricityAPI.getInstance();
+        mElevtricityAPI = new ElectricityAPI(this.getContext(), mQueue);
     }
 
     @Override
     protected void tearDown() throws Exception{
         bus = null;
         mHandler = null;
-        
-        ElectricityAPI.resetState();
-
+        mElevtricityAPI = null;
     }
 
     //Test so that ElectricityAPI creates a correct Request(correct URL, correct method, correct Auth header)
