@@ -8,10 +8,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.teamteamname.gotogothenburg.api.Api;
+import com.teamteamname.gotogothenburg.api.ErrorHandler;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
+import com.teamteamname.gotogothenburg.api.TripHandler;
 import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 

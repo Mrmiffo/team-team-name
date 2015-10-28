@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.electricity;
+package com.teamteamname.gotogothenburg.api;
 
 
 import android.content.Context;
@@ -9,27 +9,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.IGetAmbientTemp;
-import com.teamteamname.gotogothenburg.api.IGetBusLocation;
-import com.teamteamname.gotogothenburg.api.IGetCabinTemp;
-import com.teamteamname.gotogothenburg.api.IGetNbrOfWifiUsers;
-import com.teamteamname.gotogothenburg.api.IGetNextStop;
-import com.teamteamname.gotogothenburg.api.IGetStopPressed;
-import com.teamteamname.gotogothenburg.api.GPSHandler;
-import com.teamteamname.gotogothenburg.api.NextStopHandler;
-import com.teamteamname.gotogothenburg.api.StopButtonHandler;
-import com.teamteamname.gotogothenburg.api.TempHandler;
-import com.teamteamname.gotogothenburg.api.WifiHandler;
-
-import com.teamteamname.gotogothenburg.api.Bus;
-
-import com.teamteamname.gotogothenburg.api.electricity.parsers.AmbientTempParser;
-import com.teamteamname.gotogothenburg.api.electricity.parsers.CabinTempParser;
-import com.teamteamname.gotogothenburg.api.electricity.parsers.ElectricityParser;
-import com.teamteamname.gotogothenburg.api.electricity.parsers.GPSCoordParser;
-import com.teamteamname.gotogothenburg.api.electricity.parsers.NextStopParser;
-import com.teamteamname.gotogothenburg.api.electricity.parsers.StopPressedParser;
-import com.teamteamname.gotogothenburg.api.electricity.parsers.WifiUsersParser;
 
 import org.json.JSONArray;
 

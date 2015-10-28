@@ -1,12 +1,9 @@
-package com.teamteamname.gotogothenburg.api.electricity.parsers;
+package com.teamteamname.gotogothenburg.api;
 
 import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.teamteamname.gotogothenburg.api.GPSCoord;
-import com.teamteamname.gotogothenburg.api.ApiRequestError;
-import com.teamteamname.gotogothenburg.api.GPSHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +32,7 @@ public class GPSCoordParser extends ElectricityParser implements Response.Listen
                     error.networkResponse.statusCode,
                     error.getNetworkTimeMs());
         }
-        callback.electricityRequestError(elecError);
+        callback.requestError(elecError);
     }
 
     @Override

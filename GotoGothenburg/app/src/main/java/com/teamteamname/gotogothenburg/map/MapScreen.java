@@ -17,9 +17,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.api.ErrorHandler;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
+import com.teamteamname.gotogothenburg.api.TripHandler;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
 
 import java.util.ArrayList;

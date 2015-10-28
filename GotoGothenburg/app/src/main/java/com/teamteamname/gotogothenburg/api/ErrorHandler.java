@@ -8,5 +8,5 @@ public interface ErrorHandler {
      * Method for recieving a error.
      * @param error
      */
-    void electricityRequestError(ApiRequestError error);
+    void requestError(ApiRequestError error);
 }

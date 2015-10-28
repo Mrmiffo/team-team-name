@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.vasttrafik.callbacks;
+package com.teamteamname.gotogothenburg.api;
 
 import android.util.Pair;
 

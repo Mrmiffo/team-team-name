@@ -55,7 +55,7 @@ public class MockElectricityHandler implements WifiHandler, StopButtonHandler, T
     }
 
     @Override
-    public void electricityRequestError(ApiRequestError error) {
+    public void requestError(ApiRequestError error) {
         errorResponse = error;
     }
 }

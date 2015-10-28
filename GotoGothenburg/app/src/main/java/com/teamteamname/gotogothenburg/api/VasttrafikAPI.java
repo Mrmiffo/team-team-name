@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.vasttrafik;
+package com.teamteamname.gotogothenburg.api;
 
 import android.content.Context;
 
@@ -6,11 +6,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.AutocompleteHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.parsers.AutocompleteParser;
-import com.teamteamname.gotogothenburg.api.vasttrafik.parsers.TripParser;
 
 /**
  * Created by Mattias Ahlstedt on 2015-09-28.

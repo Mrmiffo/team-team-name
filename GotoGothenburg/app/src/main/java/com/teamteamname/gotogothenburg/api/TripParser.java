@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.vasttrafik.parsers;
+package com.teamteamname.gotogothenburg.api;
 
 import android.util.Log;
 
@@ -6,8 +6,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;

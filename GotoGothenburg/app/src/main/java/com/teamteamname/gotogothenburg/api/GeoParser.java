@@ -1,4 +1,4 @@
-package com.teamteamname.gotogothenburg.api.vasttrafik.parsers;
+package com.teamteamname.gotogothenburg.api;
 
 import android.util.Log;
 
@@ -8,7 +8,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.GeoCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;

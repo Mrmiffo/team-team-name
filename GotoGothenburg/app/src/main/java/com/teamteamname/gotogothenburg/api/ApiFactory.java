@@ -8,10 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
-import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.IAutocomplete;
-import com.teamteamname.gotogothenburg.api.vasttrafik.ITrip;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 
 /**
  * Created by Olof on 28/10/2015.

@@ -4,6 +4,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.android.volley.Response;
+import com.teamteamname.gotogothenburg.api.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.GPSCoord;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.electricity.mock.MockElectricityHandler;

@@ -1,7 +1,5 @@
-package com.teamteamname.gotogothenburg.api.vasttrafik;
+package com.teamteamname.gotogothenburg.api;
 
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.AutocompleteHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
 
 /**
  * Created by Mattias Ahlstedt on 2015-10-27.

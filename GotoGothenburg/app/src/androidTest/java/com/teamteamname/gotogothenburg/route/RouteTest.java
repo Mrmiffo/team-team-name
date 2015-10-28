@@ -6,8 +6,6 @@ import com.teamteamname.gotogothenburg.activity.MainActivity;
 import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.PointOfInterest;
 import com.teamteamname.gotogothenburg.api.Stops;
-import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
-import com.teamteamname.gotogothenburg.api.electricity.mock.MockRequestQueue;
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.guide.Route;
 

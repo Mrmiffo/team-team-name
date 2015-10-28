@@ -15,10 +15,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
+import com.teamteamname.gotogothenburg.api.TripHandler;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
+import com.teamteamname.gotogothenburg.api.ErrorHandler;
 
 /**
  * THe fragment used to display the Destination screen in the application.

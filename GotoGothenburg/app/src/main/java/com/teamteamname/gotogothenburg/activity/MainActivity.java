@@ -13,24 +13,17 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.android.volley.Cache;
-import com.android.volley.Network;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
 import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.Api;
+import com.teamteamname.gotogothenburg.api.ApiRequestError;
 import com.teamteamname.gotogothenburg.api.Bus;
-import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.TripHandler;
+import com.teamteamname.gotogothenburg.api.ErrorHandler;
+import com.teamteamname.gotogothenburg.api.TripHandler;
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
@@ -160,9 +153,9 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
     }
 
     @Override
-    public void requestError(String e) {
-        Log.e("VastTrafikError",e);
-        Toast.makeText(this, "Error with Vasttrafik: " + e, Toast.LENGTH_SHORT).show();
+    public void requestError(ApiRequestError error) {
+        Log.e("VastTrafikError",error.getMessage());
+        Toast.makeText(this, "Error with Vasttrafik: " + error.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

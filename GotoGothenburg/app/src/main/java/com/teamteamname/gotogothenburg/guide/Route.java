@@ -4,7 +4,6 @@ import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.PointOfInterest;
 import com.teamteamname.gotogothenburg.api.Stops;
-import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 import com.teamteamname.gotogothenburg.api.ApiRequestError;
 import com.teamteamname.gotogothenburg.api.NextStopHandler;
 
@@ -99,7 +98,7 @@ public class Route implements NextStopHandler {
     }
 
     @Override
-    public void electricityRequestError(ApiRequestError error) {
+    public void requestError(ApiRequestError error) {
 
     }
 }

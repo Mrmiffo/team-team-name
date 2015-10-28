@@ -5,13 +5,11 @@ import android.database.MatrixCursor;
 import android.location.Location;
 import android.util.Pair;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
-import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.AutocompleteHandler;
-import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
+import com.teamteamname.gotogothenburg.api.AutocompleteHandler;
 
 /**
  * Created by Mattias Ahlstedt on 2015-09-29.

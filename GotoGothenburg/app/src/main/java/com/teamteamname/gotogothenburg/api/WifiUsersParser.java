@@ -1,11 +1,9 @@
-package com.teamteamname.gotogothenburg.api.electricity.parsers;
+package com.teamteamname.gotogothenburg.api;
 
 import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.teamteamname.gotogothenburg.api.ApiRequestError;
-import com.teamteamname.gotogothenburg.api.WifiHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +30,7 @@ public class WifiUsersParser extends ElectricityParser implements Response.Liste
                     error.networkResponse.statusCode,
                     error.getNetworkTimeMs());
         }
-        callback.electricityRequestError(elecError);
+        callback.requestError(elecError);
     }
 
     @Override
