@@ -4,19 +4,23 @@ package com.teamteamname.gotogothenburg.api;
  * Created by Olof on 28/10/2015.
  */
 public interface IApiFactory {
-    public IGetBusLocation createIGetBusLocation();
+    IGetBusLocation createIGetBusLocation();
 
-    public IGetNextStop createIGetNextStop();
+    IGetNextStop createIGetNextStop();
 
-    public IGetAmbientTemp createIGetAmbientTemp();
+    IGetAmbientTemp createIGetAmbientTemp();
 
-    public IGetCabinTemp createIGetCabinTemp();
+    IGetCabinTemp createIGetCabinTemp();
 
-    public IGetStopPressed createIGetStopPressed();
+    IGetStopPressed createIGetStopPressed();
 
-    public IGetNbrOfWifiUsers createIGetNbrOfWifiUsers();
+    IGetNbrOfWifiUsers createIGetNbrOfWifiUsers();
 
-    public IAutocomplete createIAutocomplete();
+    IAutocomplete createIAutocomplete();
 
-    public ITrip createITrip();
+    ITrip createITrip();
+
+    ILocationServices createILocationServices();
+
+
 }

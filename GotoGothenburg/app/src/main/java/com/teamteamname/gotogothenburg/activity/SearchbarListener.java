@@ -8,7 +8,6 @@ import android.widget.SearchView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.api.Api;
-import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.AutocompleteHandler;
 
 /**
@@ -31,7 +30,7 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
     public boolean onQueryTextSubmit(String query) {
         for(final Pair<String, LatLng> location : locations){
             if(location.first.equals(query)){
-                Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
+                Location myLocation = Api.getLocationServices().getLastKnownLocation();
                 if (myLocation != null) {
                     final LatLng origin = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                     Api.getTrip((MainActivity) context, (MainActivity) context,

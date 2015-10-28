@@ -25,10 +25,8 @@ import java.util.List;
  *
  * Created by patrick on 06/10/2015.
  */
-public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class LocationServicesAPI implements ILocationServices {
 
-    // The singleton instance
-    private static LocationServicesAPI instance;
     // The activity which is responsible for this api
     private final Activity activity;
     // Request code to use when launching the resolution activity
@@ -36,31 +34,13 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     // Unique tag for the error dialog fragment
     public static final String DIALOG_ERROR = "dialog_error";
     // Bool to track whether the app is already resolving an error
-    private boolean mResolvingError;
+    private static boolean mResolvingError;
     // Reference to the api
     private GoogleApiClient api;
     // List of listeners to register when api is connected
     final private List<LocationListener> locationListeners = new ArrayList<>();
 
-    /**
-     * Initialize the api and connect it.
-     * @param activity
-     */
-    public static void init(Activity activity) {
-        instance = new LocationServicesAPI(activity);
-    }
-
-    /**
-     * Gives a handle to the singleton api.
-     * May return null should the api not be instantiated.
-     *
-     * @return the api instance
-     */
-    public static LocationServicesAPI getInstance() {
-        return instance;
-    }
-
-    private LocationServicesAPI(Activity activity) {
+    public LocationServicesAPI(Activity activity) {
         this.activity = activity;
         connect();
     }
@@ -69,6 +49,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
      * Unless the api is currently in a state of resolving an error then this method connects
      * the api
      */
+    @Override
     public void connect() {
         if(api == null) {
             api = new GoogleApiClient.Builder(activity)
@@ -168,7 +149,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     /**
      * Call when dialog has been dismissed. Tells MapScreen that error is no longer being resolved.
      */
-    private void onDialogDismissed() {
+    private static void onDialogDismissed() {
         mResolvingError = false;
     }
 
@@ -220,7 +201,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
 
         @Override
         public void onDismiss(DialogInterface dialog) {
-            LocationServicesAPI.getInstance().onDialogDismissed();
+            LocationServicesAPI.onDialogDismissed();
         }
     }
 }

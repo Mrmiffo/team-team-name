@@ -55,6 +55,10 @@ public class Api {
 
     public static void getTrip(TripHandler tripCallback, ErrorHandler errorCallback, String originName, LatLng originCoords, String destName, LatLng destCoords){
         ITrip requester = factory.createITrip();
-        requester.getTrip(tripCallback,errorCallback,originName,originCoords,destName,destCoords);
+        requester.getTrip(tripCallback, errorCallback, originName, originCoords, destName, destCoords);
+    }
+
+    public static ILocationServices getLocationServices(){
+        return factory.createILocationServices();
     }
 }

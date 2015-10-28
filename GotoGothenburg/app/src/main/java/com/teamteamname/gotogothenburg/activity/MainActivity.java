@@ -21,8 +21,8 @@ import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.ApiRequestError;
 import com.teamteamname.gotogothenburg.api.Bus;
-import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.ErrorHandler;
+import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.TripHandler;
 import com.teamteamname.gotogothenburg.destination.DestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
@@ -51,7 +51,6 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         // Initialize the APIs
         Api.init(this);
         AndroidDeviceAPI.init(this);
-        LocationServicesAPI.init(this);
         GuideHandler.init(this);
         Bus.init();
 
@@ -94,7 +93,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         GuideHandler.getInstance().stopGuide();
         guideWasStopped = true;
         super.onPause();
-        LocationServicesAPI.getInstance().disconnect();
+        Api.getLocationServices().disconnect();
     }
 
     @Override
@@ -105,14 +104,14 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
             guideWasStopped = false;
         }
         super.onResume();
-        LocationServicesAPI.getInstance().connect();
+        Api.getLocationServices().connect();
     }
 
 
     @Override
     public void onStop(){
         super.onStop();
-        LocationServicesAPI.getInstance().disconnect();
+        Api.getLocationServices().disconnect();
     }
 
     @Override
@@ -133,7 +132,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == LocationServicesAPI.REQUEST_RESOLVE_ERROR) {
-            LocationServicesAPI.getInstance().resolutionResult(resultCode, data);
+            Api.getLocationServices().resolutionResult(resultCode, data);
         }
     }
 

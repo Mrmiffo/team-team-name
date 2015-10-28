@@ -16,6 +16,7 @@ public class ApiFactory implements IApiFactory {
 
     private ElectricityAPI electricityAPI;
     private VasttrafikAPI vasttrafikAPI;
+    private LocationServicesAPI locationServicesAPI;
 
     public ApiFactory(Activity activity){
         // Initialize the APIs
@@ -25,6 +26,8 @@ public class ApiFactory implements IApiFactory {
 
         electricityAPI = new ElectricityAPI(activity.getApplicationContext(),queue);
         vasttrafikAPI = new VasttrafikAPI(activity.getApplicationContext(),queue);
+
+        locationServicesAPI = new LocationServicesAPI(activity);
 
         queue.start();
     }
@@ -67,5 +70,10 @@ public class ApiFactory implements IApiFactory {
     @Override
     public ITrip createITrip() {
         return vasttrafikAPI;
+    }
+
+    @Override
+    public ILocationServices createILocationServices() {
+        return locationServicesAPI;
     }
 }
