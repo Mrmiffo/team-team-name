@@ -9,6 +9,9 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
+import com.teamteamname.gotogothenburg.api.vasttrafik.IAutocomplete;
+import com.teamteamname.gotogothenburg.api.vasttrafik.ITrip;
+import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 
 /**
  * Created by Olof on 28/10/2015.
@@ -16,6 +19,7 @@ import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
 public class ApiFactory implements IApiFactory {
 
     private ElectricityAPI electricityAPI;
+    private VasttrafikAPI vasttrafikAPI;
 
     public ApiFactory(Activity activity){
         // Initialize the APIs
@@ -24,6 +28,7 @@ public class ApiFactory implements IApiFactory {
         final RequestQueue queue = new RequestQueue(cache,network);
 
         electricityAPI = new ElectricityAPI(activity.getApplicationContext(),queue);
+        vasttrafikAPI = new VasttrafikAPI(activity.getApplicationContext(),queue);
     }
 
     @Override
@@ -54,5 +59,15 @@ public class ApiFactory implements IApiFactory {
     @Override
     public IGetNbrOfWifiUsers createIGetNbrOfWifiUsers() {
         return electricityAPI;
+    }
+
+    @Override
+    public IAutocomplete createIAutocomplete() {
+        return vasttrafikAPI;
+    }
+
+    @Override
+    public ITrip createITrip() {
+        return vasttrafikAPI;
     }
 }

@@ -2,6 +2,12 @@ package com.teamteamname.gotogothenburg.api;
 
 import android.app.Activity;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.teamteamname.gotogothenburg.api.vasttrafik.IAutocomplete;
+import com.teamteamname.gotogothenburg.api.vasttrafik.ITrip;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.*;
+import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
+
 /**
  * Created by Olof on 28/10/2015.
  */
@@ -43,6 +49,16 @@ public class Api {
 
     public static void getNbrOfWifiUsers(Bus bus, WifiHandler callback){
         IGetNbrOfWifiUsers requester = factory.createIGetNbrOfWifiUsers();
-        requester.getNbrOfWifiUsers(bus,callback);
+        requester.getNbrOfWifiUsers(bus, callback);
+    }
+
+    public static void getAutocomplete(AutocompleteHandler autoCallback, com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler errorCallback, String input){
+        IAutocomplete requester = factory.createIAutocomplete();
+        requester.getAutocomplete(autoCallback, errorCallback, input);
+    }
+
+    public static void getTrip(TripHandler tripCallback, ErrorHandler errorCallback, String originName, LatLng originCoords, String destName, LatLng destCoords){
+        ITrip requester = factory.createITrip();
+        requester.getTrip(tripCallback,errorCallback,originName,originCoords,destName,destCoords);
     }
 }

@@ -1,5 +1,8 @@
 package com.teamteamname.gotogothenburg.api;
 
+import com.teamteamname.gotogothenburg.api.vasttrafik.IAutocomplete;
+import com.teamteamname.gotogothenburg.api.vasttrafik.ITrip;
+
 /**
  * Created by Olof on 28/10/2015.
  */
@@ -15,4 +18,8 @@ public interface IApiFactory {
     public IGetStopPressed createIGetStopPressed();
 
     public IGetNbrOfWifiUsers createIGetNbrOfWifiUsers();
+
+    public IAutocomplete createIAutocomplete();
+
+    public ITrip createITrip();
 }
