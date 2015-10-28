@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
@@ -51,7 +52,7 @@ class OnInfoWindowClickListener implements GoogleMap.OnInfoWindowClickListener {
             if (myLocation != null) {
                 LatLng originCoord = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                 LatLng destCoord = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
-                VasttrafikAPI.getTripInstance().getTrip(
+                Api.getTrip(
                         tripHandler, errorHandler, "Me", originCoord, marker.getTitle(), destCoord);
             } else {
                 Toast.makeText(context,"Device Location not found",Toast.LENGTH_SHORT).show();

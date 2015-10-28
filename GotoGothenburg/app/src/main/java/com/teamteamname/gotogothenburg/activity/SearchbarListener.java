@@ -8,6 +8,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.AutocompleteHandler;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
@@ -35,7 +36,7 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
                 Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
                 if (myLocation != null) {
                     LatLng origin = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                    VasttrafikAPI.getTripInstance().getTrip(
+                    Api.getTrip(
                             (MainActivity) context, (MainActivity) context,
                             "Me", origin, location.first, location.second);
                     searchbar.clearFocus();
@@ -51,7 +52,7 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
     @Override
     public boolean onQueryTextChange(String input) {
         if(System.currentTimeMillis()-lastCall > 500){
-            VasttrafikAPI.getAutocompleteInstance().getAutocomplete(this, (MainActivity)context, input);
+            Api.getAutocomplete(this, (MainActivity) context, input);
         }
         this.lastCall = System.currentTimeMillis();
         return true;

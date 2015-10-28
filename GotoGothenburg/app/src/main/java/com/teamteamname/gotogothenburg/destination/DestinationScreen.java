@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
+import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 import com.teamteamname.gotogothenburg.api.vasttrafik.callbacks.ErrorHandler;
@@ -77,7 +78,7 @@ public class DestinationScreen extends Fragment{
                 double destLng = ((Destination) parent.getItemAtPosition(position)).getLongitude();
                 LatLng destCoord = new LatLng(destLat, destLng);
 
-                VasttrafikAPI.getTripInstance().getTrip((TripHandler) getActivity(), (ErrorHandler) getActivity(), "Me", originCoords, destName, destCoord);
+                Api.getTrip((TripHandler) getActivity(), (ErrorHandler) getActivity(), "Me", originCoords, destName, destCoord);
                 GuideHandler.getInstance().startGuide();
             } else {
                 Toast.makeText(getActivity(), "Device Location not found", Toast.LENGTH_SHORT).show();
