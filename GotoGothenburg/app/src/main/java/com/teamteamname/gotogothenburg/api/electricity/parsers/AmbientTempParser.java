@@ -16,14 +16,14 @@ import org.json.JSONObject;
  */
 public class AmbientTempParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    TempHandler callback;
+    private TempHandler callback;
 
     public AmbientTempParser(TempHandler callback){ this.callback = callback; }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("AmbientTempParser", error.toString());
-        ApiRequestError elecError = new ApiRequestError(error.getMessage(),
+        final ApiRequestError elecError = new ApiRequestError(error.getMessage(),
                 error.networkResponse.headers,
                 error.networkResponse.statusCode,
                 error.getNetworkTimeMs());
@@ -34,7 +34,7 @@ public class AmbientTempParser extends ElectricityParser implements Response.Lis
     public void onResponse(JSONArray response) {
         Log.i("Response",response.toString());
 
-        JSONObject temperature = getLatestJSONValue("Ambient_Temperature_Value",response);
+        final JSONObject temperature = getLatestJSONValue("Ambient_Temperature_Value",response);
 
         try {
             callback.electricityAmbientTemperatureResponse(temperature.getDouble("value"));

@@ -16,14 +16,14 @@ import org.json.JSONObject;
  */
 public class CabinTempParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    TempHandler callback;
+    private TempHandler callback;
 
     public CabinTempParser(TempHandler callback){ this.callback = callback; }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("CabinTempParser", error.toString());
-        ApiRequestError elecError;
+        final ApiRequestError elecError;
         if(error.networkResponse != null) {
             elecError = new ApiRequestError(error.getMessage(),
                     error.networkResponse.headers,
@@ -39,7 +39,7 @@ public class CabinTempParser extends ElectricityParser implements Response.Liste
     public void onResponse(JSONArray response) {
         Log.i("Response",response.toString());
 
-        JSONObject temperature = getLatestJSONValue("Driver_Cabin_Temperature_Value",response);
+        final JSONObject temperature = getLatestJSONValue("Driver_Cabin_Temperature_Value",response);
 
         try {
             callback.electricityCabinTemperature(temperature.getDouble("value"));

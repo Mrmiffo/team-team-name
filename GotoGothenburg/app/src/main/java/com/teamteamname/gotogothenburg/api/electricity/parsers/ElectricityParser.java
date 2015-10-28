@@ -15,7 +15,7 @@ import java.util.PriorityQueue;
  * Created by Olof on 14/10/2015.
  */
 public class ElectricityParser {
-    private Map<CharSequence,CharSequence> encodings = new HashMap<CharSequence,CharSequence>(6);
+    private final Map<CharSequence,CharSequence> encodings = new HashMap<CharSequence,CharSequence>(6);
 
     public ElectricityParser(){
         encodings.put("Å","%C3%85");
@@ -32,31 +32,28 @@ public class ElectricityParser {
      */
     public JSONObject getLatestJSONValue(String resourceName, JSONArray array){
 
-        PriorityQueue<JSONObject> objectsWithResourceName = new PriorityQueue<JSONObject>(2,new Comparator<JSONObject>(){
-
-            @Override
-            public int compare(JSONObject lhs, JSONObject rhs) {
-                Log.i("ParseLatest", lhs.toString());
-                Log.i("ParseLatest",rhs.toString());
-                try {
-                    return rhs.getInt("timestamp")-lhs.getInt("timestamp");
-                }catch (JSONException e){
-                    Log.e("ParsingError","No timestamp in Object");
-                }
-                return 0;
-            }
-        });
         try{
+            PriorityQueue<JSONObject> objectsWithResourceName = new PriorityQueue<JSONObject>(2,new Comparator<JSONObject>(){
+                @Override
+                public int compare(JSONObject lhs, JSONObject rhs) {
+                    Log.i("ParseLatest", lhs.toString());
+                    Log.i("ParseLatest",rhs.toString());
+                    try {
+                        return rhs.getInt("timestamp")-lhs.getInt("timestamp");
+                    }catch (JSONException e){
+                        Log.e("ParsingError","No timestamp in Object");
+                    }
+                    return 0;
+                }
+            });
+
             for(int i = 0; i < array.length(); i++){
                 JSONObject object = array.getJSONObject(i);
                 if(object.getString("resourceSpec").equals(resourceName)){
                     objectsWithResourceName.add(object);
                 }
-
             }
-
             return objectsWithResourceName.poll();
-
         }catch(JSONException e){
             Log.e("ParsingError", "Not able to find resource in array.");
         }
