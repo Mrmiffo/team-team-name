@@ -1,5 +1,6 @@
 package com.teamteamname.gotogothenburg.guide;
 
+import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.PointOfInterest;
 import com.teamteamname.gotogothenburg.api.Stops;
@@ -61,7 +62,7 @@ public class Route implements NextStopHandler {
      * Makes an request via the API to get the next stop for the given bus.
      */
     private void checkNextStop() {
-        ElectricityAPI.getInstance().getNextStop(bus, this);
+        Api.getNextStop(bus, this);
     }
 
     /**
