@@ -41,25 +41,14 @@ import java.util.Map;
 public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientTemp,IGetCabinTemp,IGetStopPressed,IGetNbrOfWifiUsers {
 
     private RequestQueue queue;
-    private static ElectricityAPI instance;
     //The query time is set to 60sec as this seems to be about the time it takes for the bus to update this value. Still sometimes no value exist.
-    private static final int QUERY_LENGTH = 60;
+    private final int QUERY_LENGTH = 60;
 
-    private static String apiKey;
+    private String apiKey;
 
-    private ElectricityAPI(RequestQueue queue){
+    public ElectricityAPI(Context context, RequestQueue queue){
         this.queue = queue;
-    }
-
-    public static void init(Context context, RequestQueue queue){
-        if(instance == null) {
-            instance = new ElectricityAPI(queue);
-            apiKey = context.getResources().getString(R.string.electricity_api_key);
-        }
-    }
-
-    public static ElectricityAPI getInstance(){
-        return instance;
+        apiKey = context.getResources().getString(R.string.electricity_api_key);
     }
 
     @Override
@@ -170,15 +159,6 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
         RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);
     }
-
-    /**
-     * Method only used in testing, to be able to init the RequestQueue for each test.
-     */
-    public static void resetState(){
-        instance = null;
-    }
-
-    // Help methods:
 
     // sensorSpec and resourceSpec can't be given at the same time.
     private String buildURI(String dgw, String sensorSpec, String resourceSpec, long t1, long t2){
