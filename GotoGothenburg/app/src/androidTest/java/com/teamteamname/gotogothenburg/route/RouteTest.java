@@ -3,6 +3,7 @@ package com.teamteamname.gotogothenburg.route;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.teamteamname.gotogothenburg.activity.MainActivity;
+import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.PointOfInterest;
 import com.teamteamname.gotogothenburg.api.Stops;
 import com.teamteamname.gotogothenburg.api.electricity.ElectricityAPI;
@@ -26,7 +27,7 @@ public class RouteTest extends ActivityInstrumentationTestCase2<MainActivity> {
         super.setUp();
         testBusDwg = "Ericsson$Vin_Num_001";
         Bus.init();
-        ElectricityAPI.init(getActivity(), new MockRequestQueue());
+        Api.init(getActivity());
         route = new Route(Bus.getBusByDgw(testBusDwg));
     }
 
