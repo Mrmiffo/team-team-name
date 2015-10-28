@@ -19,8 +19,8 @@ import java.util.Map;
 /**
  * Created by Olof on 14/10/2015.
  */
-public class NextStopParser  implements Response.Listener<JSONArray>, Response.ErrorListener{
 
+public class NextStopParser extends ElectricityParser{
     final private NextStopHandler callback;
     final private StopsAdapter stopsAdapter;
 
@@ -49,8 +49,9 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
         stopsAdapter.identifyStop(response);
     }
 
-    private class StopsAdapter extends ElectricityParser {
+    private class StopsAdapter{
         final private Map<String, Stops> stopNames;
+
         public StopsAdapter(){
             //Create a list of stops where the names are modified to match the API output.
             stopNames = new HashMap<>();
@@ -72,7 +73,9 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
         }
         public void identifyStop(JSONArray response){
             if(response.length()>0) {
-                final JSONObject nextStop = this.getLatestJSONValue("Bus_Stop_Name_Value", response);
+
+                final JSONObject nextStop = getLatestJSONValue("Bus_Stop_Name_Value", response);
+
                 try {
                     //Sanitize the string to add å,ä,ö instead of UTF code.
                     String sanetizedString = sanitizeString(nextStop.getString("value"));

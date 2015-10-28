@@ -25,6 +25,7 @@ import com.teamteamname.gotogothenburg.api.Bus;
 
 import com.teamteamname.gotogothenburg.api.electricity.parsers.AmbientTempParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.CabinTempParser;
+import com.teamteamname.gotogothenburg.api.electricity.parsers.ElectricityParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.GPSCoordParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.NextStopParser;
 import com.teamteamname.gotogothenburg.api.electricity.parsers.StopPressedParser;
@@ -53,108 +54,64 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
 
     @Override
     public void getBusLocation(Bus bus, GPSHandler callback){
-        //Requests data since 5 sec earlier.
-        final long t2 = System.currentTimeMillis();
-        final long t1 = t2 - (1000 * QUERY_LENGTH);
-
-        // Builds the URI
-        final String uri = buildURI(bus.getDgw(),"Ericsson$GPS2",null,t1,t2);
-
-        Log.i("URI", uri);
-
-        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        final long secondsToQuery = QUERY_LENGTH;
+        final String sensorSpec = "Ericsson$GPS2";
         final GPSCoordParser parser = new GPSCoordParser(callback);
-
-        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
-        queue.add(request);
+        addNewRequest(bus, sensorSpec, null, parser, secondsToQuery);
 
     }
 
     @Override
     public void getNextStop(Bus bus, NextStopHandler callback) {
-        //Requests data since 10 sec earlier.
-        final long t2 = System.currentTimeMillis();
-        final long t1 = t2 - (1000 * QUERY_LENGTH);
-
-        // Builds the URI
-        final String uri = buildURI(bus.getDgw(),"Ericsson$Next_Stop",null,t1,t2);
-
-        Log.i("URI", uri);
-
-        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        final long secondsToQuery = QUERY_LENGTH;
+        final String sensorSpec = "Ericsson$Next_Stop";
         final NextStopParser parser = new NextStopParser(callback);
-
-        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
-        queue.add(request);
+        addNewRequest(bus, sensorSpec, null, parser, secondsToQuery);
     }
 
     @Override
     public void getAmbientTemperature(Bus bus, TempHandler callback) {
-        //Requests data since 10 sec earlier.
-        final long t2 = System.currentTimeMillis();
-        final long t1 = t2 - (1000 * QUERY_LENGTH);
-
-        // Builds the URI
-        final String uri = buildURI(bus.getDgw(),"Ericsson$Ambient_Temperature",null,t1,t2);
-
-        Log.i("URI", uri);
-
-        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        final long secondsToQuery = QUERY_LENGTH;
+        final String sensorSpec = "Ericsson$Ambient_Temperature";
         final AmbientTempParser parser = new AmbientTempParser(callback);
-
-        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
-        queue.add(request);
+        addNewRequest(bus, sensorSpec, null, parser, secondsToQuery);
     }
 
     @Override
     public void getCabinTemperature(Bus bus, TempHandler callback) {
-        //Requests data since 2,5 min earlier.
-        final long t2 = System.currentTimeMillis();
-        final long t1 = t2 - (1000 * 150);
-
-        // Builds the URI
-        final String uri = buildURI(bus.getDgw(),"Ericsson$Driver_Cabin_Temperature",null,t1,t2);
-
-        Log.i("URI", uri);
-
-        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        //Request data since 2,5 min earlier
+        final long secondsToQuery = 150;
+        final String sensorSpec = "Ericsson$Driver_Cabin_Temperature";
         final CabinTempParser parser = new CabinTempParser(callback);
+        addNewRequest(bus, sensorSpec, null, parser, secondsToQuery);
 
-        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
-        queue.add(request);
     }
 
     @Override
     public void getStopPressed(Bus bus, StopButtonHandler callback) {
-        //Requests data since 2,5 min earlier.
-        final long t2 = System.currentTimeMillis();
-        final long t1 = t2 - (1000 * 150);
-
-        // Builds the URI
-        final String uri = buildURI(bus.getDgw(),"Ericsson$Stop_Pressed",null,t1,t2);
-
-        Log.i("URI", uri);
-
-        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
+        //Request data since 2,5 min earlier
+        final long secondsToQuery = 150;
+        final String sensorSpec = "Ericsson$Stop_Pressed";
         final StopPressedParser parser = new StopPressedParser(callback);
-
-        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
-        queue.add(request);
+        addNewRequest(bus, sensorSpec, null, parser, secondsToQuery);
     }
 
     @Override
     public void getNbrOfWifiUsers(Bus bus, WifiHandler callback) {
-        //Requests data since 12 sec earlier.
+        final long secondsToQuery = QUERY_LENGTH;
+        final String sensorSpec = "Ericsson$Online_Users";
+        final WifiUsersParser parser = new WifiUsersParser(callback);
+        addNewRequest(bus,sensorSpec,null,parser,secondsToQuery);
+    }
+
+    private void addNewRequest(Bus bus, String sensorSpec, String resourceSpec, ElectricityParser parser, long querySeconds){
         final long t2 = System.currentTimeMillis();
-        final long t1 = t2 - (1000 * QUERY_LENGTH);
+        final long t1 = t2 - (1000 * querySeconds);
 
         // Builds the URI
-        final String uri = buildURI(bus.getDgw(),"Ericsson$Online_Users",null,t1,t2);
+        final String uri = buildURI(bus.getDgw(),sensorSpec,resourceSpec,t1,t2);
 
         Log.i("URI", uri);
-
-        // Adds a parser for handling the JSONArray and gives it a class to inform when done.
-        final WifiUsersParser parser = new WifiUsersParser(callback);
 
         final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);

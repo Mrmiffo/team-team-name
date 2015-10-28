@@ -2,6 +2,8 @@ package com.teamteamname.gotogothenburg.api.electricity.parsers;
 
 import android.util.Log;
 
+import com.android.volley.Response;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +16,8 @@ import java.util.PriorityQueue;
 /**
  * Created by Olof on 14/10/2015.
  */
-public class ElectricityParser {
+
+public abstract class ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
     private final Map<CharSequence,CharSequence> encodings = new HashMap<CharSequence,CharSequence>(6);
 
     public ElectricityParser(){

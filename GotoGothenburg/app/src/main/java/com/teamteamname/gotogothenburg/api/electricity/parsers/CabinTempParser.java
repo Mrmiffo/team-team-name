@@ -14,7 +14,7 @@ import org.json.JSONObject;
 /**
  * Created by Olof on 14/10/2015.
  */
-public class CabinTempParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
+public class CabinTempParser extends ElectricityParser{
 
     private TempHandler callback;
 
