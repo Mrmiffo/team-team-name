@@ -16,13 +16,13 @@ import java.util.List;
  */
 public class GeoManager implements GeoCallback {
 
-    private TripHandler tripCallback;
+    final private TripHandler tripCallback;
     private ErrorHandler errorCallback; //Will be used in future version
 
-    private int nrOfPolylines;
+    final private int nrOfPolylines;
 
-    private List<List<PolylineOptions>> polylines = new ArrayList<>();
-    private List<Change> markers = new ArrayList<>();
+    final private List<List<PolylineOptions>> polylines = new ArrayList<>();
+    final private List<Change> markers = new ArrayList<>();
 
     public GeoManager(TripHandler tripCallback, ErrorHandler errorCallback,
                       RequestQueue queue, int nrOfPolylines,
@@ -34,8 +34,8 @@ public class GeoManager implements GeoCallback {
         this.nrOfPolylines = nrOfPolylines;
 
         for(int i = 0; i < nrOfPolylines; i++){
-            GeoParser parser = new GeoParser(this, queue, urls.get(i), trips.get(i), walks.get(i));
-            JsonObjectRequest request = new JsonObjectRequest(urls.get(i), null, parser, parser);
+            final GeoParser parser = new GeoParser(this, queue, urls.get(i), trips.get(i), walks.get(i));
+            final JsonObjectRequest request = new JsonObjectRequest(urls.get(i), null, parser, parser);
             queue.add(request);
         }
     }
@@ -54,9 +54,9 @@ public class GeoManager implements GeoCallback {
 
     private void done(){
         if(polylines.size() == nrOfPolylines && markers.size() == nrOfPolylines){
-            List<PolylineOptions> temp = new ArrayList<>();
-            for(List<PolylineOptions> lpo : polylines){
-                for(PolylineOptions po : lpo){
+            final List<PolylineOptions> temp = new ArrayList<>();
+            for(final List<PolylineOptions> lpo : polylines){
+                for(final PolylineOptions po : lpo){
                     temp.add(po);
                 }
             }

@@ -16,7 +16,7 @@ import org.json.JSONObject;
  */
 public class WifiUsersParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    WifiHandler callback;
+    final private WifiHandler callback;
 
     public WifiUsersParser(WifiHandler callback){ this.callback = callback; }
 
@@ -24,13 +24,13 @@ public class WifiUsersParser extends ElectricityParser implements Response.Liste
     public void onErrorResponse(VolleyError error) {
         Log.e("WifiUsersParser", error.toString());
         ApiRequestError elecError;
-        if(error.networkResponse != null) {
+        if(error.networkResponse == null) {
+            elecError = null;
+        } else {
             elecError = new ApiRequestError(error.getMessage(),
                     error.networkResponse.headers,
                     error.networkResponse.statusCode,
                     error.getNetworkTimeMs());
-        } else {
-            elecError = null;
         }
         callback.electricityRequestError(elecError);
     }
@@ -39,7 +39,7 @@ public class WifiUsersParser extends ElectricityParser implements Response.Liste
     public void onResponse(JSONArray response) {
         Log.i("Response", response.toString());
 
-        JSONObject wifiUsers = getLatestJSONValue("Total_Online_Users_Value",response);
+        final JSONObject wifiUsers = getLatestJSONValue("Total_Online_Users_Value",response);
         callback.electricityWifiUsersResponse(30);
         try {
             callback.electricityWifiUsersResponse(wifiUsers.getInt("value"));

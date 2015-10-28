@@ -13,5 +13,5 @@ public interface AutocompleteHandler {
      *
      * @param suggestions
      */
-    public void requestDone(Pair<String, LatLng>... suggestions);
+    void requestDone(Pair<String, LatLng>... suggestions);
 }

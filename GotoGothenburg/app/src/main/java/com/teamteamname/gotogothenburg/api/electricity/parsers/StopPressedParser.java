@@ -16,7 +16,7 @@ import org.json.JSONObject;
  */
 public class StopPressedParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    StopButtonHandler callback;
+    private StopButtonHandler callback;
 
     public StopPressedParser(StopButtonHandler callback){ this.callback = callback; }
 
@@ -24,13 +24,13 @@ public class StopPressedParser extends ElectricityParser implements Response.Lis
     public void onErrorResponse(VolleyError error) {
         Log.e("StopPressedParser", error.toString());
         ApiRequestError elecError;
-        if(error.networkResponse != null) {
+        if(error.networkResponse == null) {
+            elecError = null;
+        } else {
             elecError = new ApiRequestError(error.getMessage(),
                     error.networkResponse.headers,
                     error.networkResponse.statusCode,
                     error.getNetworkTimeMs());
-        } else {
-            elecError = null;
         }
         callback.electricityRequestError(elecError);
     }
@@ -39,7 +39,7 @@ public class StopPressedParser extends ElectricityParser implements Response.Lis
     public void onResponse(JSONArray response) {
         Log.i("Response",response.toString());
 
-        JSONObject stopPressed = getLatestJSONValue("Stop_Pressed_Value",response);
+        final JSONObject stopPressed = getLatestJSONValue("Stop_Pressed_Value",response);
 
         try {
             callback.electricityStopPressedResponse(stopPressed.getBoolean("value"));

@@ -20,8 +20,9 @@ import java.util.Map;
  * Created by Olof on 14/10/2015.
  */
 public class NextStopParser  implements Response.Listener<JSONArray>, Response.ErrorListener{
-    private NextStopHandler callback;
-    private StopsAdapter stopsAdapter;
+
+    final private NextStopHandler callback;
+    final private StopsAdapter stopsAdapter;
 
     public NextStopParser(NextStopHandler callback){
         this.callback = callback;
@@ -32,13 +33,13 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
     public void onErrorResponse(VolleyError error) {
         Log.e("NextStopParser", error.toString());
         ApiRequestError elecError;
-        if(error.networkResponse != null) {
+        if(error.networkResponse == null) {
+            elecError = null;
+        } else {
             elecError = new ApiRequestError(error.getMessage(),
                     error.networkResponse.headers,
                     error.networkResponse.statusCode,
                     error.getNetworkTimeMs());
-        } else {
-            elecError = null;
         }
         callback.electricityRequestError(elecError);
     }
@@ -49,11 +50,11 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
     }
 
     private class StopsAdapter extends ElectricityParser {
-        private Map<String, Stops> stopNames;
+        final private Map<String, Stops> stopNames;
         public StopsAdapter(){
             //Create a list of stops where the names are modified to match the API output.
             stopNames = new HashMap<>();
-            for (Stops stop: Stops.values()){
+            for (final Stops stop: Stops.values()){
                 String nameToAdd;
                 if (Stops.KUNGSPORTSPLATSEN == stop){
                     nameToAdd = "KUNGSPORTSPL";
@@ -67,11 +68,11 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
                 //Replace _ with a space to match the API input.
                 nameToAdd = nameToAdd.replace('_',' ');
                 stopNames.put(nameToAdd, stop);
-            };
+            }
         }
         public void identifyStop(JSONArray response){
             if(response.length()>0) {
-                JSONObject nextStop = this.getLatestJSONValue("Bus_Stop_Name_Value", response);
+                final JSONObject nextStop = this.getLatestJSONValue("Bus_Stop_Name_Value", response);
                 try {
                     //Sanitize the string to add å,ä,ö instead of UTF code.
                     String sanetizedString = sanitizeString(nextStop.getString("value"));
@@ -79,7 +80,7 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
                     sanetizedString = sanetizedString.substring(0, sanetizedString.length() - 1).replace(".","")
                             //Make the API response to uppercase to match the names.
                             .toUpperCase(Locale.getDefault());
-                    for (Map.Entry stop : stopNames.entrySet()) {
+                    for (final Map.Entry stop : stopNames.entrySet()) {
                         //Checks caps to match
                         if (sanetizedString.equals(stop.getKey())) {
                             callback.electricityNextStopResponse((Stops)stop.getValue());

@@ -23,11 +23,11 @@ import java.util.List;
  */
 public class AutocompleteParser implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    private AutocompleteHandler autoCallback;
-    private ErrorHandler errorCallback;
-    private List<Pair<String, LatLng>> locations;
-    private String uri;
-    private RequestQueue queue;
+    final private AutocompleteHandler autoCallback;
+    final private ErrorHandler errorCallback;
+    final private List<Pair<String, LatLng>> locations;
+    final private String uri;
+    final private RequestQueue queue;
 
     public AutocompleteParser(AutocompleteHandler autoCallback, ErrorHandler errorCallback, String uri, RequestQueue queue) {
         this.autoCallback = autoCallback;
@@ -39,8 +39,8 @@ public class AutocompleteParser implements Response.Listener<JSONObject>, Respon
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        AutocompleteParser parser = new AutocompleteParser(autoCallback, errorCallback, uri, queue);
-        JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
+        final AutocompleteParser parser = new AutocompleteParser(autoCallback, errorCallback, uri, queue);
+        final JsonObjectRequest request = new JsonObjectRequest(uri, null, parser, parser);
         queue.add(request);
     }
 
@@ -67,11 +67,11 @@ public class AutocompleteParser implements Response.Listener<JSONObject>, Respon
             for (int i = 0; i < 2; i++) {
                 temp = locations.getJSONObject(i);
                 if (temp.has("name") && temp.has("lon") && temp.has("lat")) {
-                    String name = (String) temp.get("name");
-                    double lat = Double.valueOf((String) temp.get("lat"));
-                    double lng = Double.valueOf((String) temp.get("lon"));
-                    LatLng coords = new LatLng(lat, lng);
-                    Pair<String, LatLng> location = new Pair(name, coords);
+                    final String name = (String) temp.get("name");
+                    final double lat = Double.valueOf((String) temp.get("lat"));
+                    final double lng = Double.valueOf((String) temp.get("lon"));
+                    final LatLng coords = new LatLng(lat, lng);
+                    final Pair<String, LatLng> location = new Pair<>(name, coords);
                     this.locations.add(location);
                 }
             }

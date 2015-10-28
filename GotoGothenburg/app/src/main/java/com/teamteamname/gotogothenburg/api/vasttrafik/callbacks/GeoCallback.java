@@ -13,7 +13,7 @@ public interface GeoCallback {
      * Callback for returning a list of Polylines
      * @param polylines the polylines
      */
-    public void polylineRequestDone(List<PolylineOptions> polylines);
+    void polylineRequestDone(List<PolylineOptions> polylines);
 
     /**
      *
@@ -22,5 +22,5 @@ public interface GeoCallback {
      * @param track
      * @param position
      */
-    public void markerRequestDone(String line, String stopName, String track, LatLng position);
+    void markerRequestDone(String line, String stopName, String track, LatLng position);
 }

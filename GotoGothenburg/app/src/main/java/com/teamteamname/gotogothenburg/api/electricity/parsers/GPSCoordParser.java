@@ -17,7 +17,7 @@ import org.json.JSONObject;
  */
 public class GPSCoordParser extends ElectricityParser implements Response.Listener<JSONArray>, Response.ErrorListener{
 
-    private GPSHandler callback;
+    final private GPSHandler callback;
 
     public GPSCoordParser(GPSHandler callback){
         this.callback = callback;
@@ -27,13 +27,13 @@ public class GPSCoordParser extends ElectricityParser implements Response.Listen
     public void onErrorResponse(VolleyError error) {
         Log.e("GPSCoordParser", error.toString());
         ApiRequestError elecError;
-        if(error.networkResponse != null) {
+        if(error.networkResponse == null) {
+            elecError = null;
+        } else {
             elecError = new ApiRequestError(error.getMessage(),
                     error.networkResponse.headers,
                     error.networkResponse.statusCode,
                     error.getNetworkTimeMs());
-        } else {
-            elecError = null;
         }
         callback.electricityRequestError(elecError);
     }
@@ -42,8 +42,8 @@ public class GPSCoordParser extends ElectricityParser implements Response.Listen
     public void onResponse(JSONArray response) {
         Log.i("Response",response.toString());
 
-        JSONObject lat = getLatestJSONValue("Latitude2_Value",response);
-        JSONObject lng = getLatestJSONValue("Longitude2_Value",response);
+        final JSONObject lat = getLatestJSONValue("Latitude2_Value",response);
+        final JSONObject lng = getLatestJSONValue("Longitude2_Value",response);
 
         try {
             callback.electricityGPSResponse(new GPSCoord((float) lat.getDouble("value"), (float) lng.getDouble("value")));
