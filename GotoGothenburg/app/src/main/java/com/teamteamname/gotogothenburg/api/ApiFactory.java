@@ -29,6 +29,8 @@ public class ApiFactory implements IApiFactory {
 
         electricityAPI = new ElectricityAPI(activity.getApplicationContext(),queue);
         vasttrafikAPI = new VasttrafikAPI(activity.getApplicationContext(),queue);
+
+        queue.start();
     }
 
     @Override
