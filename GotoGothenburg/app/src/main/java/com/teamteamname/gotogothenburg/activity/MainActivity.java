@@ -57,11 +57,6 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
 
         // Initialize the APIs
         Api.init(this);
-
-        final Cache cache = new DiskBasedCache(getCacheDir(),1024*1024);
-        final Network network = new BasicNetwork(new HurlStack());
-        final RequestQueue queue = new RequestQueue(cache,network);
-        queue.start();
         AndroidDeviceAPI.init(this);
         LocationServicesAPI.init(this);
         GuideHandler.init(this);
