@@ -40,7 +40,7 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
     // Reference to the api
     private GoogleApiClient api;
     // List of listeners to register when api is connected
-    private List<LocationListener> locationListeners = new ArrayList<>();
+    final private List<LocationListener> locationListeners = new ArrayList<>();
 
     /**
      * Initialize the api and connect it.
@@ -124,8 +124,8 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
 
     @Override
     public void onConnected(Bundle bundle) {
-        if(locationListeners.size() > 0) {
-            for(LocationListener l : new ArrayList<>(locationListeners)) {
+        if(!locationListeners.isEmpty()) {
+            for(final LocationListener l : new ArrayList<>(locationListeners)) {
                 registerLocationUpdateListener(l);
                 locationListeners.remove(l);
             }
@@ -211,8 +211,6 @@ public class LocationServicesAPI implements GoogleApiClient.OnConnectionFailedLi
      * Dialog which displays the errors from LocationServices to the user.
      */
     public static class ErrorDialogFragment extends DialogFragment {
-        public ErrorDialogFragment() {}
-
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final int errorCode = this.getArguments().getInt(DIALOG_ERROR);

@@ -9,7 +9,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 public interface TripHandler {
 
     /**
-     *
      * @param lines
      * @param stopNames
      * @param tracks

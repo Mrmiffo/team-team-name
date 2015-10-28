@@ -56,7 +56,7 @@ public class AutocompleteParser implements Response.Listener<JSONObject>, Respon
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
         }
-        autoCallback.RequestDone(locations.toArray(new Pair[locations.size()]));
+        autoCallback.requestDone(locations.toArray(new Pair[locations.size()]));
     }
 
     private void addLocations(JSONObject locationList, String has) throws JSONException {

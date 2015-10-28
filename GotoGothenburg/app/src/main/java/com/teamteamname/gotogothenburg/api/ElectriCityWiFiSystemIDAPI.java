@@ -39,15 +39,15 @@ public class ElectriCityWiFiSystemIDAPI implements IElectriCityWiFiSystemIDAPI {
     @Override
     public void getConnectedBusSystemID(IElectriCityWiFiSystemIDAPIHandler handler) {
         try {
-            URL url = new URL(TARGET_URL);
+            final URL url = new URL(TARGET_URL);
             /* Get a SAXParser from the SAXPArserFactory. */
-            SAXParserFactory spf = SAXParserFactory.newInstance();
-            SAXParser sp = spf.newSAXParser();
+            final SAXParserFactory spf = SAXParserFactory.newInstance();
+            final SAXParser sp = spf.newSAXParser();
 
             /* Get the XMLReader of the SAXParser we created. */
-            XMLReader xmlReader = sp.getXMLReader();
+            final XMLReader xmlReader = sp.getXMLReader();
             /* Create a new ContentHandler and apply it to the XML-Reader*/
-            SystemIDParser myHandler = new SystemIDParser(handler);
+            final SystemIDParser myHandler = new SystemIDParser(handler);
             xmlReader.setContentHandler(myHandler);
 
             /* Parse the xml-data from our URL. */
@@ -71,13 +71,13 @@ public class ElectriCityWiFiSystemIDAPI implements IElectriCityWiFiSystemIDAPI {
     }
 
     private static class SystemIDParser extends DefaultHandler{
-        private IElectriCityWiFiSystemIDAPIHandler handler;
-        SystemIDParser(IElectriCityWiFiSystemIDAPIHandler handler){
-
-            this.handler = handler;
-        }
+        private final IElectriCityWiFiSystemIDAPIHandler handler;
         private boolean readSystemID;
         private final static String SYSTEM_ID_XML_QNAME = "system_id";
+
+        private SystemIDParser(IElectriCityWiFiSystemIDAPIHandler handler){
+            this.handler = handler;
+        }
 
         /** Gets be called on the following structure:
          * <tag>characters</tag>
@@ -85,7 +85,7 @@ public class ElectriCityWiFiSystemIDAPI implements IElectriCityWiFiSystemIDAPI {
         @Override
         public void characters(char ch[], int start, int length) {
             if (readSystemID){
-                String xmlText = new String(ch, start, length);
+                final String xmlText = new String(ch, start, length);
                 readSystemID = false;
                 handler.connectedBusSystemIDCallback(xmlText);
             }

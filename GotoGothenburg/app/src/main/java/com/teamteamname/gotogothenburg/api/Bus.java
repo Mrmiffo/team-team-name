@@ -9,13 +9,13 @@ import lombok.Getter;
 /**
  * Created by Mattias Ahlstedt on 2015-09-22.
  */
-public class Bus {
+public final class Bus {
 
     @Getter final private String dgw;
     @Getter final private String vin;
     @Getter final private String regNr;
     @Getter final private String sysId;
-    @Getter private boolean active;
+    @Getter final private boolean active;
     private static List<Bus> buses = new ArrayList<>();
     private static boolean initiated;
 
@@ -41,7 +41,7 @@ public class Bus {
         buses.add(bus);
     }
 
-    public static void init(){
+    public static synchronized void init(){
         if(!initiated) {
             addBus("Ericsson$100020", "YV3U0V222FA100020", "EPO 131", "2501069301", true);
             addBus("Ericsson$100021", "YV3U0V222FA100021", "EPO 136", "2501069758", true);

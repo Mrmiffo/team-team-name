@@ -30,13 +30,16 @@ public class NextStopParser  implements Response.Listener<JSONArray>, Response.E
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        ApiRequestError elecError = new ApiRequestError();
+        Log.e("NextStopParser", error.toString());
+        ApiRequestError elecError;
         if(error.networkResponse != null) {
-            elecError.setResponseHeaders(error.networkResponse.headers);
-            elecError.setResponseStatusCode(error.networkResponse.statusCode);
+            elecError = new ApiRequestError(error.getMessage(),
+                    error.networkResponse.headers,
+                    error.networkResponse.statusCode,
+                    error.getNetworkTimeMs());
+        } else {
+            elecError = null;
         }
-        elecError.setMessage(error.getMessage());
-        elecError.setNetworkTimeMs(error.getNetworkTimeMs());
         callback.electricityRequestError(elecError);
     }
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
  */
 public class SuggestionClickListener implements View.OnClickListener {
 
-    private SearchView searchbar;
+    final private SearchView searchbar;
 
     public SuggestionClickListener(SearchView searchbar){
         this.searchbar = searchbar;
@@ -18,7 +18,7 @@ public class SuggestionClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        TextView text = (TextView) v;
+        final TextView text = (TextView) v;
         this.searchbar.setQuery(text.getText(), true);
     }
 }

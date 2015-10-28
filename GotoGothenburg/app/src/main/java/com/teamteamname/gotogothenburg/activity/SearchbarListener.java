@@ -19,8 +19,8 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.VasttrafikAPI;
 public class SearchbarListener implements SearchView.OnQueryTextListener, AutocompleteHandler {
 
     private long lastCall;
-    private Context context;
-    private SearchView searchbar;
+    final private Context context;
+    final private SearchView searchbar;
     private Pair<String, LatLng>[] locations;
 
     public SearchbarListener(Context context, SearchView searchbar){
@@ -31,18 +31,15 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        for(Pair<String, LatLng> location : locations){
+        for(final Pair<String, LatLng> location : locations){
             if(location.first.equals(query)){
                 Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
                 if (myLocation != null) {
-                    LatLng origin = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                    Api.getTrip(
-                            (MainActivity) context, (MainActivity) context,
+                    final LatLng origin = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                    Api.getTrip((MainActivity) context, (MainActivity) context,
                             "Me", origin, location.first, location.second);
                     searchbar.clearFocus();
                     return true;
-                } else {
-                    Toast.makeText(context, "Device Location not found", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -59,8 +56,8 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
     }
 
     @Override
-    public void RequestDone(Pair<String, LatLng>[] suggestions) {
-        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", "suggestion"});
+    public void requestDone(Pair<String, LatLng>... suggestions) {
+        final MatrixCursor cursor = new MatrixCursor(new String[]{"_id", "suggestion"});
         locations = new Pair[suggestions.length];
         for(int i = 0; i < locations.length; i++){
             locations[i] = new Pair<>(suggestions[i].first, suggestions[i].second);
@@ -69,7 +66,7 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
         for(int i = 0; i < locations.length; i++){
             cursor.addRow(new Object[]{i, locations[i].first});
         }
-        AutocompleteAdapter autocompleteAdapter = new AutocompleteAdapter(context, cursor, 0, searchbar);
+        final AutocompleteAdapter autocompleteAdapter = new AutocompleteAdapter(context, cursor, 0, searchbar);
         this.searchbar.setSuggestionsAdapter(autocompleteAdapter);
     }
 }

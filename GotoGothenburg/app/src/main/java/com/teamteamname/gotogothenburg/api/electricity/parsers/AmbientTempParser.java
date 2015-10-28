@@ -23,11 +23,10 @@ public class AmbientTempParser extends ElectricityParser implements Response.Lis
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("AmbientTempParser", error.toString());
-        ApiRequestError elecError = new ApiRequestError();
-        elecError.setResponseHeaders(error.networkResponse.headers);
-        elecError.setResponseStatusCode(error.networkResponse.statusCode);
-        elecError.setMessage(error.getMessage());
-        elecError.setNetworkTimeMs(error.getNetworkTimeMs());
+        ApiRequestError elecError = new ApiRequestError(error.getMessage(),
+                error.networkResponse.headers,
+                error.networkResponse.statusCode,
+                error.getNetworkTimeMs());
         callback.electricityRequestError(elecError);
     }
 

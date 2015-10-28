@@ -23,11 +23,15 @@ public class WifiUsersParser extends ElectricityParser implements Response.Liste
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("WifiUsersParser", error.toString());
-        ApiRequestError elecError = new ApiRequestError();
-        elecError.setResponseHeaders(error.networkResponse.headers);
-        elecError.setResponseStatusCode(error.networkResponse.statusCode);
-        elecError.setMessage(error.getMessage());
-        elecError.setNetworkTimeMs(error.getNetworkTimeMs());
+        ApiRequestError elecError;
+        if(error.networkResponse != null) {
+            elecError = new ApiRequestError(error.getMessage(),
+                    error.networkResponse.headers,
+                    error.networkResponse.statusCode,
+                    error.getNetworkTimeMs());
+        } else {
+            elecError = null;
+        }
         callback.electricityRequestError(elecError);
     }
 

@@ -40,7 +40,12 @@ import java.util.Map;
  */
 public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientTemp,IGetCabinTemp,IGetStopPressed,IGetNbrOfWifiUsers {
 
+<<<<<<< HEAD
     private RequestQueue queue;
+=======
+    private final RequestQueue queue;
+    private static ElectricityAPI instance;
+>>>>>>> PMD fixes
     //The query time is set to 60sec as this seems to be about the time it takes for the bus to update this value. Still sometimes no value exist.
     private final int QUERY_LENGTH = 60;
 
@@ -54,18 +59,18 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     @Override
     public void getBusLocation(Bus bus, GPSHandler callback){
         //Requests data since 5 sec earlier.
-        long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * QUERY_LENGTH);
+        final long t2 = System.currentTimeMillis();
+        final long t1 = t2 - (1000 * QUERY_LENGTH);
 
         // Builds the URI
-        String uri = buildURI(bus.getDgw(),"Ericsson$GPS2",null,t1,t2);
+        final String uri = buildURI(bus.getDgw(),"Ericsson$GPS2",null,t1,t2);
 
         Log.i("URI", uri);
 
         // Adds a parser for handling the JSONArray and gives it a class to inform when done.
-        GPSCoordParser parser = new GPSCoordParser(callback);
+        final GPSCoordParser parser = new GPSCoordParser(callback);
 
-        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);
 
     }
@@ -73,96 +78,96 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     @Override
     public void getNextStop(Bus bus, NextStopHandler callback) {
         //Requests data since 10 sec earlier.
-        long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * QUERY_LENGTH);
+        final long t2 = System.currentTimeMillis();
+        final long t1 = t2 - (1000 * QUERY_LENGTH);
 
         // Builds the URI
-        String uri = buildURI(bus.getDgw(),"Ericsson$Next_Stop",null,t1,t2);
+        final String uri = buildURI(bus.getDgw(),"Ericsson$Next_Stop",null,t1,t2);
 
         Log.i("URI", uri);
 
         // Adds a parser for handling the JSONArray and gives it a class to inform when done.
-        NextStopParser parser = new NextStopParser(callback);
+        final NextStopParser parser = new NextStopParser(callback);
 
-        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);
     }
 
     @Override
     public void getAmbientTemperature(Bus bus, TempHandler callback) {
         //Requests data since 10 sec earlier.
-        long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * QUERY_LENGTH);
+        final long t2 = System.currentTimeMillis();
+        final long t1 = t2 - (1000 * QUERY_LENGTH);
 
         // Builds the URI
-        String uri = buildURI(bus.getDgw(),"Ericsson$Ambient_Temperature",null,t1,t2);
+        final String uri = buildURI(bus.getDgw(),"Ericsson$Ambient_Temperature",null,t1,t2);
 
         Log.i("URI", uri);
 
         // Adds a parser for handling the JSONArray and gives it a class to inform when done.
-        AmbientTempParser parser = new AmbientTempParser(callback);
+        final AmbientTempParser parser = new AmbientTempParser(callback);
 
-        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);
     }
 
     @Override
     public void getCabinTemperature(Bus bus, TempHandler callback) {
         //Requests data since 2,5 min earlier.
-        long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * 150);
+        final long t2 = System.currentTimeMillis();
+        final long t1 = t2 - (1000 * 150);
 
         // Builds the URI
-        String uri = buildURI(bus.getDgw(),"Ericsson$Driver_Cabin_Temperature",null,t1,t2);
+        final String uri = buildURI(bus.getDgw(),"Ericsson$Driver_Cabin_Temperature",null,t1,t2);
 
         Log.i("URI", uri);
 
         // Adds a parser for handling the JSONArray and gives it a class to inform when done.
-        CabinTempParser parser = new CabinTempParser(callback);
+        final CabinTempParser parser = new CabinTempParser(callback);
 
-        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);
     }
 
     @Override
     public void getStopPressed(Bus bus, StopButtonHandler callback) {
         //Requests data since 2,5 min earlier.
-        long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * 150);
+        final long t2 = System.currentTimeMillis();
+        final long t1 = t2 - (1000 * 150);
 
         // Builds the URI
-        String uri = buildURI(bus.getDgw(),"Ericsson$Stop_Pressed",null,t1,t2);
+        final String uri = buildURI(bus.getDgw(),"Ericsson$Stop_Pressed",null,t1,t2);
 
         Log.i("URI", uri);
 
         // Adds a parser for handling the JSONArray and gives it a class to inform when done.
-        StopPressedParser parser = new StopPressedParser(callback);
+        final StopPressedParser parser = new StopPressedParser(callback);
 
-        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);
     }
 
     @Override
     public void getNbrOfWifiUsers(Bus bus, WifiHandler callback) {
         //Requests data since 12 sec earlier.
-        long t2 = System.currentTimeMillis();
-        long t1 = t2 - (1000 * QUERY_LENGTH);
+        final long t2 = System.currentTimeMillis();
+        final long t1 = t2 - (1000 * QUERY_LENGTH);
 
         // Builds the URI
-        String uri = buildURI(bus.getDgw(),"Ericsson$Online_Users",null,t1,t2);
+        final String uri = buildURI(bus.getDgw(),"Ericsson$Online_Users",null,t1,t2);
 
         Log.i("URI", uri);
 
         // Adds a parser for handling the JSONArray and gives it a class to inform when done.
-        WifiUsersParser parser = new WifiUsersParser(callback);
+        final WifiUsersParser parser = new WifiUsersParser(callback);
 
-        RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
+        final RequestWithBAuth request = new RequestWithBAuth(uri,parser,parser);
         queue.add(request);
     }
 
     // sensorSpec and resourceSpec can't be given at the same time.
     private String buildURI(String dgw, String sensorSpec, String resourceSpec, long t1, long t2){
-        StringBuilder sb = new StringBuilder(47);
+        final StringBuilder sb = new StringBuilder(47);
 
         sb.append("https://ece01.ericsson.net:4443/ecity?");
         if(dgw != null){
@@ -170,7 +175,8 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
         }
         if(sensorSpec != null){
             sb.append("sensorSpec=").append(sensorSpec).append('&');
-        }else if(resourceSpec != null){
+        }
+        if(resourceSpec != null){
             sb.append("resourceSpec=").append(resourceSpec).append('&');
         }
         sb.append("t1=").append(t1).append("&t2=").append(t2);
@@ -179,7 +185,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
     }
 
     private Map<String,String> createBasicAuth(String auth){
-        Map<String,String> headerMap = new HashMap<String,String>();
+        final Map<String,String> headerMap = new HashMap<String,String>();
 
         Log.i("Auth", "Authorization: Basic " + auth);
         headerMap.put("Authorization", "Basic " + auth);
