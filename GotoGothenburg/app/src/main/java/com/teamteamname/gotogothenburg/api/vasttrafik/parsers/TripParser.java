@@ -21,10 +21,10 @@ import java.util.List;
  */
 public class TripParser implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    private TripHandler tripCallback;
-    private ErrorHandler errorCallback;
-    private String url;
-    private RequestQueue queue;
+    final private TripHandler tripCallback;
+    final private ErrorHandler errorCallback;
+    final private String url;
+    final private RequestQueue queue;
 
     public TripParser(TripHandler tripCallback, ErrorHandler errorCallback, String url, RequestQueue queue) {
         this.tripCallback = tripCallback;
@@ -35,19 +35,19 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        TripParser parser = new TripParser(tripCallback, errorCallback, url, queue);
-        JsonObjectRequest request = new JsonObjectRequest(url, null, parser, parser);
+        final TripParser parser = new TripParser(tripCallback, errorCallback, url, queue);
+        final JsonObjectRequest request = new JsonObjectRequest(url, null, parser, parser);
         queue.add(request);
     }
 
     @Override
     public void onResponse(JSONObject response) {
         try {
-            JSONArray ja = getTrip(response);
-            if(ja != null){
-                createGeoManager(ja);
-            } else {
+            final JSONArray ja = getTrip(response);
+            if(ja == null){
                 onErrorResponse(new VolleyError());
+            } else {
+                createGeoManager(ja);
             }
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
@@ -56,9 +56,9 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
 
     private JSONArray getTrip(JSONObject input) throws JSONException {
         if (input.has("TripList")) {
-            JSONObject tripList = (JSONObject) input.get("TripList");
+            final JSONObject tripList = (JSONObject) input.get("TripList");
             if (tripList.has("Trip")) {
-                JSONArray trip = (JSONArray) tripList.get("Trip");
+                final JSONArray trip = (JSONArray) tripList.get("Trip");
                 if (((JSONObject) trip.get(0)).has("Leg")) {
                     return (JSONArray) ((JSONObject) trip.get(0)).get("Leg");
                 }
@@ -68,19 +68,19 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
     }
 
     private void createGeoManager(JSONArray ja) throws JSONException {
-        List<String> urls = new ArrayList<>();
-        List<Boolean> walks = new ArrayList<>();
-        List<Change> trips = new ArrayList<>();
+        final List<String> urls = new ArrayList<>();
+        final List<Boolean> walks = new ArrayList<>();
+        final List<Change> trips = new ArrayList<>();
 
         for (int i = 0; i < ja.length(); i++) {
-            JSONObject temp = (JSONObject)ja.get(i);
-            String url = getGeoRefUrl(temp);
+            final JSONObject temp = (JSONObject)ja.get(i);
+            final String url = getGeoRefUrl(temp);
             if(url == null){
                 onErrorResponse(new VolleyError());
                 return;
             }
-            boolean walk = temp.get("type").equals("WALK");
-            Change trip = getTripInfo(temp);
+            final boolean walk = temp.get("type").equals("WALK");
+            final Change trip = getTripInfo(temp);
 
             urls.add(url);
             walks.add(walk);
@@ -98,11 +98,11 @@ public class TripParser implements Response.Listener<JSONObject>, Response.Error
 
     private Change getTripInfo(JSONObject jo) throws JSONException{
         if(jo.has("Origin")){
-            JSONObject temp = (JSONObject) jo.get("Origin");
+            final JSONObject temp = (JSONObject) jo.get("Origin");
 
-            String line = jo.has("sname") ? (String)jo.get("sname") : "Walk";
-            String stopName = temp.has("name") ? (String)temp.get("name") : "Stop name missing";
-            String track =  temp.has("track") ? (String)temp.get("track") : "";
+            final String line = jo.has("sname") ? (String)jo.get("sname") : "Walk";
+            final String stopName = temp.has("name") ? (String)temp.get("name") : "Stop name missing";
+            final String track =  temp.has("track") ? (String)temp.get("track") : "";
             return new Change(line, stopName, track, null);
         }
         return null;

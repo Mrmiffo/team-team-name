@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class DestinationSaver implements IDestinationSaver{
     //An instance of the DB reader helper class for destinations. Local class.
-    private DestinationDBReaderHelper destDBReader;
+    final private DestinationDBReaderHelper destDBReader;
 
     //Static strings for standardized SQL injections.
     private static final String TEXT_TYPE = " TEXT";
@@ -45,9 +45,9 @@ public class DestinationSaver implements IDestinationSaver{
 
     //Local method used by the save method to put data in the db.
     private void putDestination(Destination dest) {
-        SQLiteDatabase db = destDBReader.getWritableDatabase();
+        final SQLiteDatabase db = destDBReader.getWritableDatabase();
         // Create a new map of values, where column names are the keys
-        ContentValues values = new ContentValues();
+        final ContentValues values = new ContentValues();
         values.put(DestinationEntry.COLUMN_NAME_NAME, dest.getName());
         values.put(DestinationEntry.COLUMN_NAME_LATITUDE, dest.getLatitude());
         values.put(DestinationEntry.COLUMN_NAME_LONGITUDE, dest.getLongitude());
@@ -61,9 +61,9 @@ public class DestinationSaver implements IDestinationSaver{
 
     @Override
     public void saveAll(final List<Destination> destinationsToSave) {
-        AsyncTask thread = new AsyncTask<Object, Void, Void>() {
+       new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Object... params) {
+            protected Void doInBackground(Void... params) {
                 //Drop the table to clean it from all previous destinations.
                 dropTable();
                 for (Destination dest: destinationsToSave) {
@@ -71,39 +71,35 @@ public class DestinationSaver implements IDestinationSaver{
                 }
                 return null;
             }
-        };
-        //noinspection unchecked
-        thread.execute();
+        }.execute();
 
     }
 
     @Override
     public void save(final Destination destinationToSave) {
-        AsyncTask thread = new AsyncTask<Object, Void, Void>() {
+        AsyncTask thread = new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Object... params) {
+            protected Void doInBackground(Void... params) {
                 putDestination(destinationToSave);
                 return null;
             }
-        };
-        //noinspection unchecked
-        thread.execute();
+        }.execute();
     }
 
     @Override
     public List<Destination> loadAll() {
-        List<Destination> toReturn = new ArrayList<>();
-        SQLiteDatabase db = destDBReader.getReadableDatabase();
+        final List<Destination> toReturn = new ArrayList<>();
+        final SQLiteDatabase db = destDBReader.getReadableDatabase();
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
-        String[] projection = {
+        final String[] projection = {
                 DestinationEntry.COLUMN_NAME_NAME,
                 DestinationEntry.COLUMN_NAME_LATITUDE,
                 DestinationEntry.COLUMN_NAME_LONGITUDE,
                 DestinationEntry.COLUMN_NAME_VISITED
         };
 
-        Cursor c = db.query(
+        final Cursor c = db.query(
                 DestinationEntry.TABLE_NAME,                // From
                 projection,                                 // Select
                 null,                                       // Where
@@ -123,50 +119,44 @@ public class DestinationSaver implements IDestinationSaver{
 
     @Override
     public void removeDestination(final Destination destinationToRemove) {
-        AsyncTask thread = new AsyncTask<Object, Void, Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Object... params) {
+            protected Void doInBackground(Void... params) {
                 destDBReader.getWritableDatabase().delete(
                         DestinationEntry.TABLE_NAME,
                         DestinationEntry.COLUMN_NAME_NAME + "= ?",
                         new String[]{destinationToRemove.getName()});
                 return null;
             }
-        };
-        //noinspection unchecked
-        thread.execute();
-
+        }.execute();
     }
 
     @Override
     public void removeAllDestinations() {
-        AsyncTask thread = new AsyncTask<Object, Void, Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Object... params) {
+            protected Void doInBackground(Void... params) {
                 // Drop table
                 dropTable();
                 return null;
             }
-        };
-        //noinspection unchecked
-        thread.execute();
-
+        }.execute();
     }
 
     //Local method used to remove all entries in the database.
     private void dropTable() {
         final String SQL_DELETE_ENTRIES =
                 "delete from " + DestinationEntry.TABLE_NAME;
-        SQLiteDatabase db = destDBReader.getWritableDatabase();
+        final SQLiteDatabase db = destDBReader.getWritableDatabase();
         db.execSQL(SQL_DELETE_ENTRIES);
     }
 
     //Local method used to extract a destination from a CursorQuery.
     private Destination createDestination(Cursor data){
-        String name = data.getString(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_NAME));
-        double lat = data.getDouble(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_LATITUDE));
-        double lon = data.getDouble(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_LONGITUDE));
-        boolean visited = Boolean.parseBoolean(data.getString(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_VISITED)));
+        final String name = data.getString(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_NAME));
+        final double lat = data.getDouble(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_LATITUDE));
+        final double lon = data.getDouble(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_LONGITUDE));
+        final boolean visited = Boolean.parseBoolean(data.getString(data.getColumnIndexOrThrow(DestinationEntry.COLUMN_NAME_VISITED)));
         return new Destination(name, lat, lon, visited);
     }
 

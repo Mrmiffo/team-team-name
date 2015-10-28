@@ -10,8 +10,8 @@ import java.util.List;
  * recommendations from different sources.
  * Created by Anton on 2015-10-15.
  */
-public class RecommendedDestinations {
-    private List<Destination> recommendedDestinations;
+public final class RecommendedDestinations {
+    final private List<Destination> recommendedDestinations;
     private static RecommendedDestinations instance;
 
     private RecommendedDestinations(){
@@ -34,7 +34,7 @@ public class RecommendedDestinations {
     }
 
     public List<Destination> getRecommendedDestinations(){
-        List<Destination> toReturn = new ArrayList<>();
+        final List<Destination> toReturn = new ArrayList<>();
         toReturn.addAll(recommendedDestinations);
         return toReturn;
     }

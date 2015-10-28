@@ -9,10 +9,10 @@ import java.util.List;
  * notified when destinations are added or removed.
  * Created by Anton on 2015-09-30.
  */
-public class SavedDestinations {
+public final class SavedDestinations {
     private List<Destination> savedDestinations;
-    private IDestinationSaver saver;
-    private List<ISavedDestinationListener> listeners;
+    final private IDestinationSaver saver;
+    final private List<ISavedDestinationListener> listeners;
     private static SavedDestinations instance;
 
     //Private constructor used by init method.
@@ -115,7 +115,7 @@ public class SavedDestinations {
 
     //Local method to report to all the listeners that a change has been made.
     public void notifyListeners(){
-        for (ISavedDestinationListener listener: listeners){
+        for (final ISavedDestinationListener listener: listeners){
             listener.update();
         }
     }

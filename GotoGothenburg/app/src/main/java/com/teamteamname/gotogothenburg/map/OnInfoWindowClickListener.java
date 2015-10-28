@@ -19,10 +19,10 @@ import com.teamteamname.gotogothenburg.destination.SavedDestinations;
  * Listener for deciding what should happen when the user clicks on a markers info window
  */
 class OnInfoWindowClickListener implements GoogleMap.OnInfoWindowClickListener {
-    private IMap map;
-    private TripHandler tripHandler;
-    private ErrorHandler errorHandler;
-    private Context context;
+    final private IMap map;
+    final private TripHandler tripHandler;
+    final private ErrorHandler errorHandler;
+    final private Context context;
 
     /**
      * Creates a new OnInfoWindowClick Listener
@@ -45,17 +45,13 @@ class OnInfoWindowClickListener implements GoogleMap.OnInfoWindowClickListener {
             SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(), marker.getPosition().latitude, marker.getPosition().longitude));
             marker.remove();
             Toast.makeText(context, "Destination added", Toast.LENGTH_SHORT).show();
-        } else if(!"Directions".equals(marker.getSnippet())) {
-            return;
-        } else {
-            Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
+        } else if("Directions".equals(marker.getSnippet())) {
+            final Location myLocation = LocationServicesAPI.getInstance().getLastKnownLocation();
             if (myLocation != null) {
-                LatLng originCoord = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                LatLng destCoord = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
+                final LatLng originCoord = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                final LatLng destCoord = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
                 Api.getTrip(
                         tripHandler, errorHandler, "Me", originCoord, marker.getTitle(), destCoord);
-            } else {
-                Toast.makeText(context,"Device Location not found",Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -37,7 +37,9 @@ public class AndroidGuide extends AbstractGuide {
     //It is automatically called when the sound file has finished playing, or after 10 seconds if it could not be played.
         if (isGuiding) {
             pointOfInterest = route.getNextPOI();
-            if (pointOfInterest != null) {
+            if (pointOfInterest == null) {
+                soundCouldNotBePlayed();
+            } else {
                 if (api.isHandsfreePluggedIn()) {
                     api.playSound(this,  AndroidConverter.fileToRawResourceID(context, pointOfInterest.getSoundGuide()));
                 } else {
@@ -47,8 +49,6 @@ public class AndroidGuide extends AbstractGuide {
                 }
                 guideDialog = GuideDialog.newInstance(pointOfInterest);
                 guideDialog.show(((Activity) context).getFragmentManager(), "guide");
-            } else {
-                soundCouldNotBePlayed();
             }
         }
     }

@@ -24,7 +24,7 @@ public class Route implements NextStopHandler {
     private final List<PointOfInterest> visitedPOIs;
     private final List<PointOfInterest> poiQueue;
     private Stops lastStop = Stops.DEFAULT;
-    private Timer timer;
+    final private Timer timer;
     private boolean timerRunning;
 
 
@@ -54,8 +54,8 @@ public class Route implements NextStopHandler {
     public void stopRoute(){
         if (timerRunning){
             timer.cancel();
+            timerRunning = false;
         }
-
     }
 
     /**
@@ -82,7 +82,7 @@ public class Route implements NextStopHandler {
      * @return the next Point of Interest associated with the current stop. Null if no such exists.
      */
     public PointOfInterest getNextPOI() {
-        if (poiQueue.size() > 0) {
+        if (!poiQueue.isEmpty()) {
             final PointOfInterest next = poiQueue.get(0);
             if (!visitedPOIs.contains(next)) {
                 visitedPOIs.add(next);

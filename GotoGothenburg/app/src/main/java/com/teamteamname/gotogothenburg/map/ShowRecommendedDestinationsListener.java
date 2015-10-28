@@ -21,8 +21,8 @@ import java.util.List;
  */
 class ShowRecommendedDestinationsListener implements View.OnClickListener {
 
-    private IMap map;
-    private List<Marker> markers = new ArrayList<>();
+    final private IMap map;
+    final private List<Marker> markers = new ArrayList<>();
     private boolean isDisplaying;
 
     /**
@@ -36,15 +36,15 @@ class ShowRecommendedDestinationsListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        TypedValue value = new TypedValue();
+        final TypedValue value = new TypedValue();
         if (isDisplaying) {
-            for (Marker marker : markers) {
+            for (final Marker marker : markers) {
                 marker.remove();
             }
             v.getResources().getValue(R.dimen.BUTTON_UNPRESSED_ALPHA, value, true);
         } else {
-            for (Destination dest : RecommendedDestinations.getInstance().getRecommendedDestinations()) {
-                MarkerOptions marker = new MarkerOptions();
+            for (final Destination dest : RecommendedDestinations.getInstance().getRecommendedDestinations()) {
+                final MarkerOptions marker = new MarkerOptions();
                 marker.position(new LatLng(dest.getLatitude(), dest.getLongitude()));
                 marker.title(dest.getName());
                 marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));

@@ -19,8 +19,8 @@ import java.util.List;
  */
 class OnMapLongClickListener implements GoogleMap.OnMapLongClickListener {
 
-    private IMap map;
-    private Context context;
+    final private IMap map;
+    final private Context context;
 
     /**
      * Creates a new OnMapLongClick Listener
@@ -35,15 +35,15 @@ class OnMapLongClickListener implements GoogleMap.OnMapLongClickListener {
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        Geocoder geocoder = new Geocoder(context);
+        final Geocoder geocoder = new Geocoder(context);
         if (map.getUserMarker() != null) {
             map.getUserMarker().remove();
         }
 
         try {
-            List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            String address = "";
-            if (addressList.size() > 0) {
+            final List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            String address = null;
+            if (!addressList.isEmpty()) {
                 address = addressList.get(0).getAddressLine(0);
             }
             map.setUserMarker(map.placeMarker(new MarkerOptions()

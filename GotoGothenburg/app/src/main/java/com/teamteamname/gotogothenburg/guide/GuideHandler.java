@@ -13,11 +13,11 @@ import java.util.TimerTask;
  * This singleton class is used to handle the guides and routes.
  * Created by Anton on 2015-10-15.
  */
-public class GuideHandler implements IOnWhichBusListener {
+public final class GuideHandler implements IOnWhichBusListener {
 
     private static GuideHandler instance;
     private boolean guideHandlerStarted;
-    private Context context;
+    final private Context context;
 
     //Helper classes
     private AbstractGuide guide;
@@ -41,7 +41,8 @@ public class GuideHandler implements IOnWhichBusListener {
         return instance;
     }
 
-    public static void init(Context context){
+    public synchronized static void init(Context context){
+
         if (instance == null){
             instance = new GuideHandler(context);
         }
@@ -133,10 +134,10 @@ public class GuideHandler implements IOnWhichBusListener {
     //Method used to display a wifi error. This error will only be display once every 10
     private void displayWifiError() {
         if (!hasShownWifiError) {
-            DialogFragment error = ConnectToWiFiErrorDialog.createInstance(context);
+            final DialogFragment error = ConnectToWiFiErrorDialog.createInstance(context);
             error.show(((Activity) context).getFragmentManager(), "notConnectedToWifi");
             hasShownWifiError = true;
-            Timer resetError = new Timer();
+            final Timer resetError = new Timer();
             resetError.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -145,8 +146,6 @@ public class GuideHandler implements IOnWhichBusListener {
             }, 1000 * SHOW_ERROR_AGAIN_AFTER);
         }
     }
-
-
 
     @Override
     public void unableToIdentifyBusError() {

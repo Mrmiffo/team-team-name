@@ -11,15 +11,16 @@ import com.teamteamname.gotogothenburg.destination.Destination;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Listener for displaying destinations on the map
  */
 class DestinationsPointListener implements View.OnClickListener {
 
-    private IMap map;
-    private boolean isDisplaying = false;
-    private ArrayList<Marker> markers = new ArrayList<>();
+    final private IMap map;
+    private boolean isDisplaying;
+    final private List<Marker> markers = new ArrayList<>();
 
     public DestinationsPointListener(IMap map) {
         this.map = map;
@@ -27,15 +28,15 @@ class DestinationsPointListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        TypedValue value = new TypedValue();
+        final TypedValue value = new TypedValue();
         if (isDisplaying) {
-            for (Marker marker : markers) {
+            for (final Marker marker : markers) {
                 marker.remove();
             }
             v.getResources().getValue(R.dimen.BUTTON_UNPRESSED_ALPHA, value, true);
         } else {
-            for (Destination dest : SavedDestinations.getInstance().getSavedDestinations()) {
-                MarkerOptions marker = new MarkerOptions();
+            for (final Destination dest : SavedDestinations.getInstance().getSavedDestinations()) {
+                final MarkerOptions marker = new MarkerOptions();
                 marker.position(new LatLng(dest.getLatitude(), dest.getLongitude()));
                 marker.title(dest.getName());
                 marker.snippet("Directions");

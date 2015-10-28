@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    private GeoCallback callback;
-    private RequestQueue queue;
+    final private GeoCallback callback;
+    final private RequestQueue queue;
 
-    private String url;
-    private Change trip;
-    private boolean walk;
+    final private String url;
+    final private Change trip;
+    final private boolean walk;
 
     public GeoParser(GeoCallback callback, RequestQueue queue,
                      String url, Change trip, boolean walk) {
@@ -42,20 +42,20 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        GeoParser parser = new GeoParser(callback, queue, url, trip, walk);
-        JsonObjectRequest request = new JsonObjectRequest(url, null, parser, parser);
+        final GeoParser parser = new GeoParser(callback, queue, url, trip, walk);
+        final JsonObjectRequest request = new JsonObjectRequest(url, null, parser, parser);
         queue.add(request);
     }
 
     @Override
     public void onResponse(JSONObject response) {
         try {
-            JSONArray point = getPoint(response);
-            if (point != null) {
+            final JSONArray point = getPoint(response);
+            if (point == null) {
+                onErrorResponse(new VolleyError());
+            } else {
                 polylineDone(createPolyline(point));
                 markerDone(trip, point);
-            } else {
-                onErrorResponse(new VolleyError());
             }
         } catch (JSONException e) {
             Log.e("JSONException", e.toString());
@@ -63,18 +63,18 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
     }
 
     private void markerDone(Change c, JSONArray ja) throws JSONException {
-        LatLng temp = getCoordFromJSON(ja);
-        if(temp != null) {
-            callback.markerRequestDone(c.getLine(), c.getStopName(), c.getTrack(), temp);
-        } else {
+        final LatLng temp = getCoordFromJSON(ja);
+        if(temp == null) {
             onErrorResponse(new VolleyError());
+        } else {
+            callback.markerRequestDone(c.getLine(), c.getStopName(), c.getTrack(), temp);
         }
     }
 
     private LatLng getCoordFromJSON(JSONArray ja) throws JSONException {
         if(((JSONObject)ja.get(0)).has("lat") && ((JSONObject)ja.get(0)).has("lon")){
-            double lat = Double.parseDouble((String) ((JSONObject)ja.get(0)).get("lat"));
-            double lng = Double.parseDouble((String) ((JSONObject)ja.get(0)).get("lon"));
+            final double lat = Double.parseDouble((String) ((JSONObject)ja.get(0)).get("lat"));
+            final double lng = Double.parseDouble((String) ((JSONObject)ja.get(0)).get("lon"));
             return new LatLng(lat, lng);
         }
         return null;
@@ -82,9 +82,9 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
 
     private JSONArray getPoint(JSONObject input) throws JSONException{
         if (input.has("Geometry")) {
-            JSONObject geometry = (JSONObject) input.get("Geometry");
+            final JSONObject geometry = (JSONObject) input.get("Geometry");
             if (geometry.has("Points")) {
-                JSONObject points = (JSONObject) geometry.get("Points");
+                final JSONObject points = (JSONObject) geometry.get("Points");
                 if (points.has("Point")) {
                     return (JSONArray) points.get("Point");
                 }
@@ -94,12 +94,12 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
     }
 
     private List<LatLng> createPolyline(JSONArray ja) throws JSONException {
-        List<LatLng> polyline = new ArrayList<>();
+        final List<LatLng> polyline = new ArrayList<>();
         for (int i = 0; i < ja.length(); i++) {
-            JSONObject temp = (JSONObject) ja.get(i);
-            Double lat = Double.parseDouble((String) temp.get("lat"));
-            Double lng = Double.parseDouble((String) temp.get("lon"));
-            LatLng latlng = new LatLng(lat, lng);
+            final JSONObject temp = (JSONObject) ja.get(i);
+            final Double lat = Double.parseDouble((String) temp.get("lat"));
+            final Double lng = Double.parseDouble((String) temp.get("lon"));
+            final LatLng latlng = new LatLng(lat, lng);
             polyline.add(latlng);
         }
         return polyline;
@@ -111,22 +111,22 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
             polylines = returnDashed(polyline);
         } else {
             polylines = new ArrayList<>();
-            polylines.add((new PolylineOptions()).add(polyline.toArray(new LatLng[polyline.size()])));
+            polylines.add(new PolylineOptions().add(polyline.toArray(new LatLng[polyline.size()])));
         }
         callback.polylineRequestDone(polylines);
     }
 
     private List<PolylineOptions> returnDashed(List<LatLng> polyline) {
-        List<LatLng> temp  = new ArrayList<>();
-        List<PolylineOptions> polylines = new ArrayList<>();
+        final List<LatLng> temp  = new ArrayList<>();
+        final List<PolylineOptions> polylines = new ArrayList<>();
 
         polyline = enhance(polyline);
 
         for (int i = 0; i < polyline.size(); i++) {
             temp.add(polyline.get(i));
             if (i % 2 == 0) {
-                polylines.add((new PolylineOptions()).add(temp.toArray(new LatLng[temp.size()])));
-                temp = new ArrayList<>();
+                polylines.add(new PolylineOptions().add(temp.toArray(new LatLng[temp.size()])));
+                temp.clear();
             }
         }
 
@@ -159,12 +159,12 @@ public class GeoParser implements Response.Listener<JSONObject>, Response.ErrorL
     private double distance(double lat1, double lat2, double lon1, double lon2) {
         final int R = 6371; // Radius of the earth
 
-        Double latDistance = Math.toRadians(lat2 - lat1);
-        Double lonDistance = Math.toRadians(lon2 - lon1);
-        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+        final Double latDistance = Math.toRadians(lat2 - lat1);
+        final Double lonDistance = Math.toRadians(lon2 - lon1);
+        final Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
                 + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        final Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double distance = R * c * 1000; // convert to meters
 
         distance = Math.pow(distance, 2) + Math.pow(0, 2);

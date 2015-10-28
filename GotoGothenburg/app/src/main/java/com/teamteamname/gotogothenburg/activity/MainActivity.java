@@ -72,21 +72,20 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         //Create a saver for the SavedDestinations
         final DestinationSaver saver = new DestinationSaver(this);
         SavedDestinations.init(saver);
-        final AsyncTask loadDest = new AsyncTask() {
+
+        new AsyncTask<Void,Void,Void>()  {
             @Override
-            protected Object doInBackground(Object... params) {
+            protected Void doInBackground(Void... params) {
                 //Initialize the SavedDestinations with destinations from the database. (This must run in background)
                 SavedDestinations.getInstance().loadDestinations(saver.loadAll());
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Object params) {
+            protected void onPostExecute(Void params){
                 SavedDestinations.getInstance().notifyListeners();
             }
-        };
-        //noinspection unchecked
-        loadDest.execute();
+        }.execute();
     }
 
     @Override

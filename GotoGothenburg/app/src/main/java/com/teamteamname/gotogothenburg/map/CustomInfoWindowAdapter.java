@@ -14,7 +14,8 @@ import com.teamteamname.gotogothenburg.R;
  * Uses snippet text for deciding what type of InfoWindow to display
  */
 class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-    private Context context;
+
+    final private Context context;
 
     public CustomInfoWindowAdapter(Context context) {
         this.context = context;
@@ -26,11 +27,11 @@ class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     @Override
     public View getInfoContents(Marker marker) {
         if ("Create Destination".equalsIgnoreCase(marker.getSnippet())) {
-            View v = LayoutInflater.from(context).inflate(R.layout.custom_add_destinations_marker_info_window_layout ,null);
+            final View v = LayoutInflater.from(context).inflate(R.layout.custom_add_destinations_marker_info_window_layout ,null);
             ((Button)v.findViewById(R.id.info_window_button)).setText(marker.getTitle());
             return v;
         } else if ("Directions".equalsIgnoreCase(marker.getSnippet())) {
-            View v = LayoutInflater.from(context).inflate(R.layout.custom_directions_marker_info_window_layout, null);
+            final View v = LayoutInflater.from(context).inflate(R.layout.custom_directions_marker_info_window_layout, null);
             ((Button)v.findViewById(R.id.info_window_button)).setText(marker.getTitle());
             return v;
         } else {

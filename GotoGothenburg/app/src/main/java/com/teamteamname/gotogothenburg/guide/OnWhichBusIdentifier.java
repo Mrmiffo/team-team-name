@@ -63,12 +63,14 @@ public class OnWhichBusIdentifier{
      * the user is on to all listeners.
      * If it's already running nothing will happen.
      */
-    public synchronized void start(){
-        if (!queryTimerRunning){
-            //Create a new timer each time the query is started as it's not possible to relaunch a canceld timer.
-            queryTimer = new Timer();
-            queryTimer.scheduleAtFixedRate(new QueryExecutor(), 0, 1000 * QUERY_TIMER_DELAY);
-            queryTimerRunning = true;
+    public void start(){
+        if (!queryTimerRunning) {
+            //Create a new timer each time the query is started as it's not possible to relaunch a canceled timer.
+            synchronized (this) {
+                queryTimer = new Timer();
+                queryTimer.scheduleAtFixedRate(new QueryExecutor(), 0, 1000 * QUERY_TIMER_DELAY);
+                queryTimerRunning = true;
+            }
         }
     }
 
@@ -77,11 +79,13 @@ public class OnWhichBusIdentifier{
      * Once called the OnWhichBusIdentifier will stop checking which bus the user is on.
      * If it's not running, nothing will happen.
      */
-    public synchronized void stop(){
+    public void stop(){
         if (queryTimerRunning){
-            queryTimer.cancel();
-            queryTimer.purge();
-            queryTimerRunning = false;
+           synchronized (this) {
+               queryTimer.cancel();
+               queryTimer.purge();
+               queryTimerRunning = false;
+           }
         }
     }
 
@@ -89,7 +93,7 @@ public class OnWhichBusIdentifier{
      * A method used to identify if the OnWhichBusIdentifier is running.
      * @return
      */
-    public synchronized boolean isRunning(){
+    public boolean isRunning(){
         return queryTimerRunning;
     }
 

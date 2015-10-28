@@ -20,7 +20,7 @@ public class ConnectToWiFiErrorDialog extends DialogFragment {
     private Context context;
 
     public static ConnectToWiFiErrorDialog createInstance(final Context context){
-        ConnectToWiFiErrorDialog toReturn = new ConnectToWiFiErrorDialog();
+        final ConnectToWiFiErrorDialog toReturn = new ConnectToWiFiErrorDialog();
         toReturn.context = context;
         return toReturn;
     }

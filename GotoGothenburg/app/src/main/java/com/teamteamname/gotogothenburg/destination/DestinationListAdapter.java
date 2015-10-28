@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.teamteamname.gotogothenburg.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +25,9 @@ import java.util.List;
  */
 public class DestinationListAdapter extends BaseAdapter implements ISavedDestinationListener{
 
-    private SavedDestinations savedDestinations;
+    final private SavedDestinations savedDestinations;
     private List<Destination> destinations;
-    private Activity activity;
+    final private Activity activity;
 
     public DestinationListAdapter(Activity activity){
         this.savedDestinations = SavedDestinations.getInstance();
@@ -37,9 +39,9 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
     //TODO Make proper sorting method. Currently using visited, even though this is not yet implemented.
     //Local method used to sort all the locations by if they are visited or not.
     private void sort() {
-        ArrayList<Destination> visited = new ArrayList<>();
-        ArrayList<Destination> notVisited = new ArrayList<>();
-        for (Destination dest:destinations){
+        final ArrayList<Destination> visited = new ArrayList<>();
+        final ArrayList<Destination> notVisited = new ArrayList<>();
+        for (final Destination dest:destinations){
             if (dest.isVisited()){
                 visited.add(dest);
             } else {
@@ -76,13 +78,11 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             //Setup
-            LayoutInflater inflater = activity.getLayoutInflater();
+            final LayoutInflater inflater = activity.getLayoutInflater();
             convertView = inflater.inflate(R.layout.destination_list_component, parent, false);
         }
-        TextView firstLine, secondLine;
-
-        firstLine = (TextView) convertView.findViewById(R.id.firstLine);
-        secondLine = (TextView) convertView.findViewById(R.id.secondLine);
+        TextView firstLine = (TextView) convertView.findViewById(R.id.firstLine);
+        TextView secondLine = (TextView) convertView.findViewById(R.id.secondLine);
 
         //Change the color of the text of a destination which is visited.
         int colorToSetToLine;

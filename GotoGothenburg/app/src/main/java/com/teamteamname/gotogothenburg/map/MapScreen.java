@@ -37,17 +37,12 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
     // Reference to the user selected location on the map in form of a Marker
     private Marker userMarker;
 
-    private List<Marker> currentTripMarkers = new ArrayList<>();
+    final private List<Marker> currentTripMarkers = new ArrayList<>();
     private TripInfo[] currentTripInfo;
-    private List<Polyline> currentPolyline = new ArrayList<>();
+    final private List<Polyline> currentPolyline = new ArrayList<>();
 
     public static MapScreen newInstance(){
         return new MapScreen();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -65,8 +60,8 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
             }
         });
 
-        ViewGroup parentView = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_map, null);
+        final ViewGroup parentView = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
+        final View view = inflater.inflate(R.layout.fragment_map, null);
         parentView.addView(view);
 
         view.findViewById(R.id.centerCameraButton).setOnClickListener(new View.OnClickListener() {
@@ -87,7 +82,7 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
     }
 
     private void setStartGuideButtonAlpha(View view) {
-        TypedValue value = new TypedValue();
+        final TypedValue value = new TypedValue();
         if (GuideHandler.getInstance().isRunning()){
             getResources().getValue(R.dimen.BUTTON_PRESSED_ALPHA,value, true);
         } else {
@@ -125,11 +120,9 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
 
     @Override
     public void drawPolyLine(PolylineOptions... polylines){
-        if(currentPolyline != null) {
-            removeCurrentPolyline();
-        }
+        removeCurrentPolyline();
 
-        for(PolylineOptions p : polylines) {
+        for(final PolylineOptions p : polylines) {
             p.width(5);
             currentPolyline.add(map.addPolyline(p));
             p.visible(true);
@@ -137,7 +130,7 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
     }
 
     private void removeCurrentPolyline(){
-        for(Polyline p : currentPolyline){
+        for(final Polyline p : currentPolyline){
             p.remove();
         }
     }
@@ -150,19 +143,17 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
      * @param positions
      */
     public void updateCurrentTrip(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions){
-        TripInfo[] newTrip = new TripInfo[positions.length];
+        final TripInfo[] newTrip = new TripInfo[positions.length];
         for(int i = 0; i < positions.length; i++){
             newTrip[i] = new TripInfo(lines[i], stopNames[i], tracks[i], positions[i]);
         }
 
-        if(currentTripMarkers != null) {
-            clearTripMarkers();
-        }
+        clearTripMarkers();
 
         currentTripInfo = newTrip;
 
-        for(TripInfo trip : currentTripInfo){
-            MarkerOptions marker = new MarkerOptions();
+        for(final TripInfo trip : currentTripInfo){
+            final MarkerOptions marker = new MarkerOptions();
             if(trip.getLine().equalsIgnoreCase("Walk")) {
                 marker.title("Walk from: " + trip.getStopName());
             } else {
@@ -186,12 +177,12 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
     }
 
     private void clearTripMarkers(){
-        for(Marker m : currentTripMarkers){
+        for (final Marker m : currentTripMarkers){
             m.remove();
         }
     }
 
-    private View.OnClickListener startGuideButtonListener = new View.OnClickListener() {
+    final private View.OnClickListener startGuideButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (GuideHandler.getInstance().isRunning()) {

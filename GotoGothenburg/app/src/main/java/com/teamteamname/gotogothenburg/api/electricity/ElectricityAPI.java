@@ -40,12 +40,7 @@ import java.util.Map;
  */
 public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientTemp,IGetCabinTemp,IGetStopPressed,IGetNbrOfWifiUsers {
 
-<<<<<<< HEAD
-    private RequestQueue queue;
-=======
-    private final RequestQueue queue;
-    private static ElectricityAPI instance;
->>>>>>> PMD fixes
+    final private RequestQueue queue;
     //The query time is set to 60sec as this seems to be about the time it takes for the bus to update this value. Still sometimes no value exist.
     private final int QUERY_LENGTH = 60;
 

@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
 
-    private ArrayList<AutocompletePrediction> results;
-    private GoogleApiClient placesAPI;
-    private LatLngBounds bounds;
-    private AutocompleteFilter placeFilter;
+    private List<AutocompletePrediction> results;
+    final private GoogleApiClient placesAPI;
+    final private LatLngBounds bounds;
+    final private AutocompleteFilter placeFilter;
 
 
     public AutoCompleteAdapter(Context context, GoogleApiClient apiClient,AutocompleteFilter filter) {
@@ -69,23 +70,21 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        View row = super.getView(position, convertView, parent);
+        final View row = super.getView(position, convertView, parent);
 
         // Sets the primary and secondary text for a row.
         // Note that getPrimaryText() and getSecondaryText() return a CharSequence that may contain
         // styling based on the given CharacterStyle.
 
-        AutocompletePrediction item = getItem(position);
+        final AutocompletePrediction item = getItem(position);
 
-        TextView textView1 = (TextView) row.findViewById(android.R.id.text1);
+        final TextView textView1 = (TextView) row.findViewById(android.R.id.text1);
         if(item.getDescription().indexOf(',') == -1) {
             textView1.setText(item.getDescription());
 
         } else {
             textView1.setText(item.getDescription().substring(0, item.getDescription().indexOf(',')));
-
         }
-
         return row;
     }
 
@@ -94,7 +93,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults filterResults = new FilterResults();
+                final FilterResults filterResults = new FilterResults();
                 // Skip the autocomplete query if no constraints are given.
                 if (constraint != null) {
                     // Query the autocomplete API for the (constraint) search string.
@@ -133,20 +132,19 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
         };
     }
 
-    private ArrayList<AutocompletePrediction> getAutocomplete(CharSequence constraint) {
+    private List<AutocompletePrediction> getAutocomplete(CharSequence constraint) {
         if (placesAPI.isConnected()) {
-            Log.i("AutoCompleteAdapter", "Starting autocomplete query for: " + constraint);
 
             // Submit the query to the autocomplete API and retrieve a PendingResult that will
             // contain the results when the query completes.
-            PendingResult<AutocompletePredictionBuffer> results =
+            final PendingResult<AutocompletePredictionBuffer> results =
                     Places.GeoDataApi
                             .getAutocompletePredictions(placesAPI, constraint.toString(),
                                     bounds, placeFilter);
 
             // This method should have been called off the main UI thread. Block and wait for at most 60s
             // for a result from the API.
-            AutocompletePredictionBuffer autocompletePredictions = results
+            final AutocompletePredictionBuffer autocompletePredictions = results
                     .await(60, TimeUnit.SECONDS);
 
             // Confirm that the query completed successfully, otherwise return null

@@ -67,12 +67,10 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
      * @return The created CreateNewDestinationFragment
      */
     public static CreateNewDestinationFragment newInstance() {
-        CreateNewDestinationFragment instance = new CreateNewDestinationFragment();
+        final CreateNewDestinationFragment instance = new CreateNewDestinationFragment();
         instance.savedDestinations = SavedDestinations.getInstance();
         return instance;
     }
-
-    public CreateNewDestinationFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -87,7 +85,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_new_destination, container, false);
+        final View view = inflater.inflate(R.layout.fragment_create_new_destination, container, false);
 
         adapter = new AutoCompleteAdapter(getActivity(), locationsAPI, null);
 
@@ -99,7 +97,6 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
         autoCompleteTextView.setAdapter(adapter);
 
         view.findViewById(R.id.cancelDestination).setOnClickListener(cancelDestinationListener);
-
         view.findViewById(R.id.createDestinationButton).setOnClickListener(createDestinationClickListener);
 
         return view;
@@ -114,7 +111,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
     /**
      * Listener that hides the CreateNewDestinationFragment and lets the user return to the program.
      */
-    private View.OnClickListener cancelDestinationListener = new View.OnClickListener() {
+    final private View.OnClickListener cancelDestinationListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down).remove(CreateNewDestinationFragment.this).commit();
@@ -124,7 +121,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
     /**
      * Sends the selected information to DestinationScreen
      */
-    private View.OnClickListener createDestinationClickListener = new View.OnClickListener() {
+    final private View.OnClickListener createDestinationClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             savedDestinations.addDestination(new Destination(selectedPlaceName, selectedPlacePos.latitude, selectedPlacePos.longitude));
@@ -141,7 +138,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
      * @see com.google.android.gms.location.places.GeoDataApi#getPlaceById(com.google.android.gms.common.api.GoogleApiClient,
      * String...)
      */
-    private AdapterView.OnItemClickListener autocompleteClickListener
+    final private AdapterView.OnItemClickListener autocompleteClickListener
             = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -152,7 +149,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
              Issue a request to the Places Geo Data API to retrieve a Place object with additional
              details about the place.
               */
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+            final PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
                     .getPlaceById(locationsAPI, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
         }
@@ -162,7 +159,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
      * Callback for results from a Places Geo Data API query that shows the first place result in
      * the details view on screen.
      */
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+    final private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(PlaceBuffer places) {

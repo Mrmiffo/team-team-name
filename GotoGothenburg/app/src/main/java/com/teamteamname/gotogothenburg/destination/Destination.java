@@ -18,11 +18,11 @@ import lombok.Getter;
 public final class Destination{
 
     @Getter
-    private String name;
+    final private String name;
     @Getter
-    private double latitude;
+    final private double latitude;
     @Getter
-    private double longitude;
+    final private double longitude;
     @Getter
     private boolean visited;
 

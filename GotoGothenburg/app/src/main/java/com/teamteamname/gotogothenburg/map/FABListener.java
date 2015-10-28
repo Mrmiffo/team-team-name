@@ -9,9 +9,9 @@ import com.teamteamname.gotogothenburg.R;
  * Created by patrick on 15/10/2015.
  */
 public class FABListener implements View.OnClickListener {
-    private IMap map;
-    private IMapMarkerData markerData;
-    private boolean isDisplaying = false;
+    final private IMap map;
+    final private IMapMarkerData markerData;
+    private boolean isDisplaying;
 
     public FABListener(IMapMarkerData markerData, IMap map) {
         this.markerData = markerData;
@@ -20,7 +20,7 @@ public class FABListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        TypedValue value = new TypedValue();
+        final TypedValue value = new TypedValue();
         if (isDisplaying) {
             markerData.removeMarkers();
             v.getResources().getValue(R.dimen.BUTTON_UNPRESSED_ALPHA, value, true);
