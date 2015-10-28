@@ -22,5 +22,8 @@ public interface IApiFactory {
 
     ILocationServices createILocationServices();
 
+    IElectriCityWiFiSystemIDAPI createIWiFiSystemSystemIDAPI();
+
+    IDeviceAPI createDeviceAPI();
 
 }

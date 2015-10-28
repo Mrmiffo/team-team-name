@@ -22,19 +22,7 @@ import javax.xml.parsers.SAXParserFactory;
  * Created by Anton on 2015-10-01.
  */
 public class ElectriCityWiFiSystemIDAPI implements IElectriCityWiFiSystemIDAPI {
-    private static ElectriCityWiFiSystemIDAPI instance;
     private static final String TARGET_URL= "http://www.ombord.info/api/xml/system/";
-
-    private ElectriCityWiFiSystemIDAPI(){
-
-    }
-
-    public synchronized static ElectriCityWiFiSystemIDAPI getInstance(){
-        if (instance == null){
-            instance = new ElectriCityWiFiSystemIDAPI();
-        }
-        return instance;
-    }
 
     @Override
     public void getConnectedBusSystemID(IElectriCityWiFiSystemIDAPIHandler handler) {

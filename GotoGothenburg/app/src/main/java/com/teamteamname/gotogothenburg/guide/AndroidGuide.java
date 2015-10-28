@@ -3,7 +3,7 @@ package com.teamteamname.gotogothenburg.guide;
 import android.app.Activity;
 import android.content.Context;
 
-import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
+import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.utils.AndroidConverter;
 
 import java.util.Timer;
@@ -21,7 +21,7 @@ public class AndroidGuide extends AbstractGuide {
 
     public AndroidGuide(Context context, Route route) {
         super(route);
-        api = AndroidDeviceAPI.getInstance();
+        api = Api.getIDeviceAPI();
         this.context = context;
     }
 

@@ -61,4 +61,12 @@ public class Api {
     public static ILocationServices getLocationServices(){
         return factory.createILocationServices();
     }
+
+    public static IElectriCityWiFiSystemIDAPI getWiFiSystemIdentifier(){
+        return factory.createIWiFiSystemSystemIDAPI();
+    }
+
+    public static IDeviceAPI getIDeviceAPI(){
+        return factory.createDeviceAPI();
+    }
 }

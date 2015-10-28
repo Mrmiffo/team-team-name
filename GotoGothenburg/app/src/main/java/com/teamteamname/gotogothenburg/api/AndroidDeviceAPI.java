@@ -14,35 +14,16 @@ import java.util.TimerTask;
  * Created by Anton on 2015-09-23.
  */
 public final class AndroidDeviceAPI implements IDeviceAPI {
-    private static AndroidDeviceAPI instance;
     final private WifiInfo wifiInfo;
     final private Context context;
 
     /**
      * Constructor require a context in order to connect the API to the device.
      */
-    private AndroidDeviceAPI(Context context){
+    public AndroidDeviceAPI(Context context){
         this.context = context;
         final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         wifiInfo = wifiManager.getConnectionInfo();
-    }
-
-    public static AndroidDeviceAPI getInstance() {
-        return instance;
-    }
-
-    /**
-     * A method to init the singleton instance of AndroidDeviceAPI. Require and android context
-     * to setup the instance. All methods will throw nullpointer exception unless this method has
-     * been run.
-     * @param context
-     */
-    public static void init(Context context) {
-        synchronized (AndroidDeviceAPI.class) {
-            if (instance == null) {
-                instance = new AndroidDeviceAPI(context);
-            }
-        }
     }
 
     /**

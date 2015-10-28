@@ -17,6 +17,8 @@ public class ApiFactory implements IApiFactory {
     private ElectricityAPI electricityAPI;
     private VasttrafikAPI vasttrafikAPI;
     private LocationServicesAPI locationServicesAPI;
+    private ElectriCityWiFiSystemIDAPI electriCityWiFiSystemIDAPI;
+    private AndroidDeviceAPI androidDeviceAPI;
 
     public ApiFactory(Activity activity){
         // Initialize the APIs
@@ -28,6 +30,10 @@ public class ApiFactory implements IApiFactory {
         vasttrafikAPI = new VasttrafikAPI(activity.getApplicationContext(),queue);
 
         locationServicesAPI = new LocationServicesAPI(activity);
+
+        electriCityWiFiSystemIDAPI = new ElectriCityWiFiSystemIDAPI();
+
+        androidDeviceAPI = new AndroidDeviceAPI(activity.getApplicationContext());
 
         queue.start();
     }
@@ -75,5 +81,15 @@ public class ApiFactory implements IApiFactory {
     @Override
     public ILocationServices createILocationServices() {
         return locationServicesAPI;
+    }
+
+    @Override
+    public IElectriCityWiFiSystemIDAPI createIWiFiSystemSystemIDAPI() {
+        return electriCityWiFiSystemIDAPI;
+    }
+
+    @Override
+    public IDeviceAPI createDeviceAPI() {
+        return androidDeviceAPI;
     }
 }

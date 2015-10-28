@@ -17,7 +17,6 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.AndroidDeviceAPI;
 import com.teamteamname.gotogothenburg.api.Api;
 import com.teamteamname.gotogothenburg.api.ApiRequestError;
 import com.teamteamname.gotogothenburg.api.Bus;
@@ -50,7 +49,6 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
 
         // Initialize the APIs
         Api.init(this);
-        AndroidDeviceAPI.init(this);
         GuideHandler.init(this);
         Bus.init();
 
