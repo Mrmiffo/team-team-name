@@ -17,9 +17,6 @@ import com.teamteamname.gotogothenburg.api.vasttrafik.parsers.TripParser;
  */
 public class VasttrafikAPI  implements ITrip, IAutocomplete {
 
-    private static ITrip tripInstance;
-    private static IAutocomplete autocompleteInstance;
-
     private String baseURL;
     private String apiKey;
 
@@ -41,29 +38,11 @@ public class VasttrafikAPI  implements ITrip, IAutocomplete {
 
     private RequestQueue queue;
 
-    private VasttrafikAPI(Context context, RequestQueue queue){
+    public VasttrafikAPI(Context context, RequestQueue queue){
         this.queue = queue;
         this.baseURL = context.getResources().getString(R.string.vasttrafik_base_url);
         this.apiKey = context.getResources().getString(R.string.vasttrafik_api_key);
     }
-
-    public static void init(Context context, RequestQueue queue){
-        VasttrafikAPI api = new VasttrafikAPI(context, queue);
-
-        if(tripInstance == null) {
-            tripInstance = api;
-        }
-
-        if(autocompleteInstance == null) {
-            autocompleteInstance = api;
-        }
-    }
-
-    public static ITrip getTripInstance(){
-        return tripInstance;
-    }
-
-    public static IAutocomplete getAutocompleteInstance() { return autocompleteInstance; }
 
     /**
      * Setups the first part of the url which is always needed
