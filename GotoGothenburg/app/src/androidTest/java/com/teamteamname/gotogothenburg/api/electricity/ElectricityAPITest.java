@@ -48,7 +48,7 @@ public class ElectricityAPITest extends AndroidTestCase {
     }
 
     //Test so that ElectricityAPI creates a correct Request(correct URL, correct method, correct Auth header)
-    public void testGPSRequest(){
+    public void testGPSRequestCreation(){
         mElectricityAPI.getBusLocation(bus, mHandler);
 
         final String mockURI = "https://ece01.ericsson.net:4443/ecity?dgw=" + bus.getDgw() + "&" + "sensorSpec=Ericsson$GPS2";
@@ -61,7 +61,7 @@ public class ElectricityAPITest extends AndroidTestCase {
 
     }
 
-    public void testGPSResponse(){
+    public void testGPSResponseParsing(){
         mElectricityAPI.getBusLocation(bus, mHandler);
 
         final Response.Listener parser = mQueue.getParser();
@@ -79,7 +79,7 @@ public class ElectricityAPITest extends AndroidTestCase {
 
     }
 
-    public void testStopPressedResponse(){
+    public void testStopPressedResponseParsing(){
         mElectricityAPI.getStopPressed(bus, mHandler);
 
         final Response.Listener parser = mQueue.getParser();
@@ -97,7 +97,7 @@ public class ElectricityAPITest extends AndroidTestCase {
         assertTrue(mHandler.isPressedResponse()==correctStopPressed);
     }
 
-    public void testCabinTempResponse(){
+    public void testCabinTempResponseParsing(){
         mElectricityAPI.getCabinTemperature(bus, mHandler);
 
         final Response.Listener parser = mQueue.getParser();
@@ -115,7 +115,7 @@ public class ElectricityAPITest extends AndroidTestCase {
         assertTrue(mHandler.getCabinTempResponse()==correctTemp);
     }
 
-    public void testAmbientTempResponse(){
+    public void testAmbientTempResponseParsing(){
         mElectricityAPI.getAmbientTemperature(bus, mHandler);
 
         final Response.Listener parser = mQueue.getParser();
@@ -133,7 +133,7 @@ public class ElectricityAPITest extends AndroidTestCase {
         assertTrue(mHandler.getAmbientTempResponse()==correctTemp);
     }
 
-    public void testWifiUsersResponse(){
+    public void testWifiUsersResponseParsing(){
         mElectricityAPI.getNbrOfWifiUsers(bus, mHandler);
 
         final Response.Listener parser = mQueue.getParser();
@@ -152,7 +152,7 @@ public class ElectricityAPITest extends AndroidTestCase {
         assertTrue(response==correctNbrOfUsers);
     }
 
-    public void testNextStopResponse(){
+    public void testNextStopResponseParsing(){
         mElectricityAPI.getNextStop(bus, mHandler);
 
         final Response.Listener parser = mQueue.getParser();
