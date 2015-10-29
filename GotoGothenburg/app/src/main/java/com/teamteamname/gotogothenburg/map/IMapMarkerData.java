@@ -2,7 +2,7 @@ package com.teamteamname.gotogothenburg.map;
 
 /**
  * Created by patrick on 15/10/2015.
- * Interface used by FAB listener when user wants to draw markers on the map
+ * Interface for listeners which responds to when the user wants to draw markers on the map
  */
 public interface IMapMarkerData {
 
