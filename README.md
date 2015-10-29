@@ -7,7 +7,7 @@
 ### Building
 - Requires google play services
 - Requires atleast an API level of 16
+- gradle(w) assembleDebug to create apk
 
 ### Generating reports
-- gradle checkAll
-- gradlew checkAll
+- gradle(w) checkAll
