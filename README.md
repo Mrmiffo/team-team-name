@@ -1,8 +1,8 @@
 # Go to Gothenburg
 
 ### Project presentation
-- Prototype description video: https://youtu.be/i62b1AeuqJ4
 - Koncept video: https://youtu.be/gyeLVLknYcM
+- Prototype description video: https://youtu.be/i62b1AeuqJ4
 
 ### Building
 - Requires google play services
