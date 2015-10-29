@@ -19,17 +19,12 @@ import org.json.JSONException;
  * Created by Olof on 28/09/2015.
  */
 public class ElectricityAPITest extends AndroidTestCase {
-    private ElectricityAPI mElevtricityAPI;
+    private ElectricityAPI mElectricityAPI;
     private MockRequestQueue mQueue;
 
     private static final String dgw = "Ericsson$100021";
     private Bus bus;
     private MockElectricityHandler mHandler;
-
-
-    // Mock JSONArrays that is used to test the API's parsing of responses.
-    //TODO: Make tests for empty responses.
-    private final JSONArray testEmptyResponse = new JSONArray();
 
     @Override
     protected void setUp() throws Exception{
@@ -42,19 +37,19 @@ public class ElectricityAPITest extends AndroidTestCase {
 
         mQueue = new MockRequestQueue();
 
-        mElevtricityAPI = new ElectricityAPI(this.getContext(), mQueue);
+        mElectricityAPI = new ElectricityAPI(this.getContext(), mQueue);
     }
 
     @Override
     protected void tearDown() throws Exception{
         bus = null;
         mHandler = null;
-        mElevtricityAPI = null;
+        mElectricityAPI = null;
     }
 
     //Test so that ElectricityAPI creates a correct Request(correct URL, correct method, correct Auth header)
     public void testGPSRequest(){
-        mElevtricityAPI.getBusLocation(bus, mHandler);
+        mElectricityAPI.getBusLocation(bus, mHandler);
 
         final String mockURI = "https://ece01.ericsson.net:4443/ecity?dgw=" + bus.getDgw() + "&" + "sensorSpec=Ericsson$GPS2";
         //Removes the times, which is inpossible to predict.
@@ -67,13 +62,9 @@ public class ElectricityAPITest extends AndroidTestCase {
     }
 
     public void testGPSResponse(){
-        mElevtricityAPI.getBusLocation(bus, mHandler);
+        mElectricityAPI.getBusLocation(bus, mHandler);
 
-        final Response.ErrorListener errorListener = mQueue.getErrorListener();
         final Response.Listener parser = mQueue.getParser();
-
-        //Tests parse on empty response
-        parser.onResponse(testEmptyResponse);
 
         //Tests if it returns, in a correct format, the latest one of 2 GPSCoords in a response.
         JSONArray testGPSCoord = new JSONArray();
@@ -89,13 +80,9 @@ public class ElectricityAPITest extends AndroidTestCase {
     }
 
     public void testStopPressedResponse(){
-        mElevtricityAPI.getStopPressed(bus, mHandler);
+        mElectricityAPI.getStopPressed(bus, mHandler);
 
-        final Response.ErrorListener errorListener = mQueue.getErrorListener();
         final Response.Listener parser = mQueue.getParser();
-
-        //Tests parse on empty respponse
-        parser.onResponse(testEmptyResponse);
 
         //Test if it returns in a correct format the latest of 2 StopPressed events.
         JSONArray testStopPressedCorrect = new JSONArray();
@@ -111,13 +98,9 @@ public class ElectricityAPITest extends AndroidTestCase {
     }
 
     public void testCabinTempResponse(){
-        mElevtricityAPI.getCabinTemperature(bus, mHandler);
+        mElectricityAPI.getCabinTemperature(bus, mHandler);
 
-        final Response.ErrorListener errorListener = mQueue.getErrorListener();
         final Response.Listener parser = mQueue.getParser();
-
-        //Tests parse on empty respponse
-        parser.onResponse(testEmptyResponse);
 
         //Test if it returns in a correct format the latest of 2 logged temperatures.
         JSONArray testCabinTempCorrect = new JSONArray();
@@ -133,13 +116,9 @@ public class ElectricityAPITest extends AndroidTestCase {
     }
 
     public void testAmbientTempResponse(){
-        mElevtricityAPI.getAmbientTemperature(bus, mHandler);
+        mElectricityAPI.getAmbientTemperature(bus, mHandler);
 
-        final Response.ErrorListener errorListener = mQueue.getErrorListener();
         final Response.Listener parser = mQueue.getParser();
-
-        //Tests parse on empty respponse
-        parser.onResponse(testEmptyResponse);
 
         //Test if it returns in a correct format the latest of 2 logged temperatures.
         JSONArray testAmbientTempCorrect = new JSONArray();
@@ -155,13 +134,9 @@ public class ElectricityAPITest extends AndroidTestCase {
     }
 
     public void testWifiUsersResponse(){
-        mElevtricityAPI.getNbrOfWifiUsers(bus, mHandler);
+        mElectricityAPI.getNbrOfWifiUsers(bus, mHandler);
 
-        final Response.ErrorListener errorListener = mQueue.getErrorListener();
         final Response.Listener parser = mQueue.getParser();
-
-        //Tests parse on empty respponse
-        //parser.onResponse(testEmptyResponse);
 
         //Test if it returns in a correct format the latest of 2 logged temperatures.
         JSONArray testWifiUsersCorrect = new JSONArray();
@@ -178,14 +153,13 @@ public class ElectricityAPITest extends AndroidTestCase {
     }
 
     public void testNextStopResponse(){
-        mElevtricityAPI.getNextStop(bus, mHandler);
+        mElectricityAPI.getNextStop(bus, mHandler);
 
-        final Response.ErrorListener errorListener = mQueue.getErrorListener();
         final Response.Listener parser = mQueue.getParser();
 
         JSONArray testNextStopCorrect = new JSONArray();
         try{
-            testNextStopCorrect = new JSONArray("[{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"1\",\"value\":\"Brunnsparken\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"2\",\"value\":\"Regnb%C3%A5gsgatan\",\"gatewayId\":\"Vin_Num_001\"}]");
+            testNextStopCorrect = new JSONArray("[{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"1\",\"value\":\"BrunnsparkenA\",\"gatewayId\":\"Vin_Num_001\"},{\"resourceSpec\":\"Bus_Stop_Name_Value\",\"timestamp\":\"2\",\"value\":\"RegnbågsgatanA\",\"gatewayId\":\"Vin_Num_001\"}]");
         }catch(JSONException e){
             Log.e("TestError","Could not create test JSONArray in NextStop test.");
         }
