@@ -137,10 +137,10 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
 
     /**
      * Places markers containing the given trip information on the map
-     * @param lines
-     * @param stopNames
-     * @param tracks
-     * @param positions
+     * @param lines     Buslines
+     * @param stopNames Stopnames
+     * @param tracks    Tracks
+     * @param positions Coordinates
      */
     public void updateCurrentTrip(String[] lines, String[] stopNames, String[] tracks, LatLng[] positions){
         final TripInfo[] newTrip = new TripInfo[positions.length];
