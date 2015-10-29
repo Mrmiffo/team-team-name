@@ -1,7 +1,7 @@
 package com.teamteamname.gotogothenburg.guide;
 
 
-import com.teamteamname.gotogothenburg.api.Api;
+import com.teamteamname.gotogothenburg.api.ApiFactory;
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.IElectriCityWiFiSystemIDAPIHandler;
 
@@ -110,10 +110,10 @@ public class OnWhichBusIdentifier{
         //Run the query
         private void startQuery() {
             //First check if the user is on an Electricity wifi
-            if (Api.getIDeviceAPI().connectedToWifi(ELECTRICITY_WIFI_SSID)) {
+            if (ApiFactory.getInstance().createDeviceAPI().connectedToWifi(ELECTRICITY_WIFI_SSID)) {
                 //If so, query the Wifi for the system id. Call back will come through the
                 // connectedBusSystemIDCallback method, or the connectedBusErrorCallback method.
-                Api.getWiFiSystemIdentifier().getConnectedBusSystemID(this);
+                ApiFactory.getInstance().createIWiFiSystemSystemIDAPI().getConnectedBusSystemID(this);
             } else {
                 for (final IOnWhichBusListener listener: listeners){
                     listener.notConnectedToElectriCityWifiError();

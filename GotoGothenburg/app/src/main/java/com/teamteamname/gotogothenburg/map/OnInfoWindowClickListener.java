@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.teamteamname.gotogothenburg.api.Api;
+import com.teamteamname.gotogothenburg.api.ApiFactory;
 import com.teamteamname.gotogothenburg.api.ErrorHandler;
 import com.teamteamname.gotogothenburg.api.TripHandler;
 import com.teamteamname.gotogothenburg.destination.Destination;
@@ -44,11 +44,11 @@ class OnInfoWindowClickListener implements GoogleMap.OnInfoWindowClickListener {
             marker.remove();
             Toast.makeText(context, "Destination added", Toast.LENGTH_SHORT).show();
         } else if("Directions".equals(marker.getSnippet())) {
-            final Location myLocation = Api.getLocationServices().getLastKnownLocation();
+            final Location myLocation = ApiFactory.getInstance().createILocationServices().getLastKnownLocation();
             if (myLocation != null) {
                 final LatLng originCoord = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                 final LatLng destCoord = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
-                Api.getTrip(
+                ApiFactory.getInstance().createITrip().getTrip(
                         tripHandler, errorHandler, "Me", originCoord, marker.getTitle(), destCoord);
             }
         }

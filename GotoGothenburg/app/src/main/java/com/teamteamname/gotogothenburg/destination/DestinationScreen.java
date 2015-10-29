@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.Api;
+import com.teamteamname.gotogothenburg.api.ApiFactory;
 import com.teamteamname.gotogothenburg.api.TripHandler;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
 import com.teamteamname.gotogothenburg.api.ErrorHandler;
@@ -60,7 +60,7 @@ public class DestinationScreen extends Fragment{
     final private OnItemClickListener destinationClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final Location myLocation = Api.getLocationServices().getLastKnownLocation();
+            final Location myLocation = ApiFactory.getInstance().createILocationServices().getLastKnownLocation();
             if (myLocation == null) {
                 Toast.makeText(getActivity(), "Device Location not found", Toast.LENGTH_SHORT).show();
             } else {
@@ -71,7 +71,7 @@ public class DestinationScreen extends Fragment{
                 final double destLng = ((Destination) parent.getItemAtPosition(position)).getLongitude();
                 final LatLng destCoord = new LatLng(destLat, destLng);
 
-                Api.getTrip((TripHandler) getActivity(), (ErrorHandler) getActivity(), "Me", originCoords, destName, destCoord);
+                ApiFactory.getInstance().createITrip().getTrip((TripHandler) getActivity(), (ErrorHandler) getActivity(), "Me", originCoords, destName, destCoord);
                 GuideHandler.getInstance().startGuide();
             }
         }

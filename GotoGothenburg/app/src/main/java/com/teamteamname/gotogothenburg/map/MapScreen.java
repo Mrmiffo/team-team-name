@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.Api;
+import com.teamteamname.gotogothenburg.api.ApiFactory;
 import com.teamteamname.gotogothenburg.api.ErrorHandler;
 import com.teamteamname.gotogothenburg.api.TripHandler;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
@@ -50,12 +50,12 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
         getMapAsync(this);
 
         // Make the map zoom in on the user
-        Api.getLocationServices().registerLocationUpdateListener(new LocationListener() {
+        ApiFactory.getInstance().createILocationServices().registerLocationUpdateListener(new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 if (location != null) {
                     zoomToLocation(location, 15);
-                    Api.getLocationServices().removeLocationUpdateListener(this);
+                    ApiFactory.getInstance().createILocationServices().removeLocationUpdateListener(this);
                 }
             }
         });
@@ -67,7 +67,7 @@ public class MapScreen extends com.google.android.gms.maps.MapFragment implement
         view.findViewById(R.id.centerCameraButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zoomToLocation(Api.getLocationServices().getLastKnownLocation(), 15);
+                zoomToLocation(ApiFactory.getInstance().createILocationServices().getLastKnownLocation(), 15);
             }
         });
         view.findViewById(R.id.resalePointsButton).setOnClickListener(new FABListener(new ResalePoints(getActivity()), this));

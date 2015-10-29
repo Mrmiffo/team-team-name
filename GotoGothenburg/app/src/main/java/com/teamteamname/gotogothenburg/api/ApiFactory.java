@@ -14,13 +14,15 @@ import com.android.volley.toolbox.HurlStack;
  */
 public class ApiFactory implements IApiFactory {
 
+    private static IApiFactory instance;
+
     private ElectricityAPI electricityAPI;
     private VasttrafikAPI vasttrafikAPI;
     private LocationServicesAPI locationServicesAPI;
     private ElectriCityWiFiSystemIDAPI electriCityWiFiSystemIDAPI;
     private AndroidDeviceAPI androidDeviceAPI;
 
-    public ApiFactory(Activity activity){
+    private ApiFactory(Activity activity){
         // Initialize the APIs
         final Cache cache = new DiskBasedCache(activity.getCacheDir(),1024*1024);
         final Network network = new BasicNetwork(new HurlStack());
@@ -36,6 +38,16 @@ public class ApiFactory implements IApiFactory {
         androidDeviceAPI = new AndroidDeviceAPI(activity.getApplicationContext());
 
         queue.start();
+    }
+
+    public static void init(Activity activity){
+        if(instance == null){
+            instance = new ApiFactory(activity);
+        }
+    }
+
+    public static IApiFactory getInstance(){
+        return instance;
     }
 
     @Override

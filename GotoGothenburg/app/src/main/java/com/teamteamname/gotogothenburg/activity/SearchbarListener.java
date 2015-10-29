@@ -7,7 +7,7 @@ import android.util.Pair;
 import android.widget.SearchView;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.teamteamname.gotogothenburg.api.Api;
+import com.teamteamname.gotogothenburg.api.ApiFactory;
 import com.teamteamname.gotogothenburg.api.AutocompleteHandler;
 
 /**
@@ -30,10 +30,10 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
     public boolean onQueryTextSubmit(String query) {
         for(final Pair<String, LatLng> location : locations){
             if(location.first.equals(query)){
-                Location myLocation = Api.getLocationServices().getLastKnownLocation();
+                Location myLocation = ApiFactory.getInstance().createILocationServices().getLastKnownLocation();
                 if (myLocation != null) {
                     final LatLng origin = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                    Api.getTrip((MainActivity) context, (MainActivity) context,
+                    ApiFactory.getInstance().createITrip().getTrip((MainActivity) context, (MainActivity) context,
                             "Me", origin, location.first, location.second);
                     searchbar.clearFocus();
                     return true;
@@ -46,7 +46,7 @@ public class SearchbarListener implements SearchView.OnQueryTextListener, Autoco
     @Override
     public boolean onQueryTextChange(String input) {
         if(System.currentTimeMillis()-lastCall > 500){
-            Api.getAutocomplete(this, (MainActivity) context, input);
+            ApiFactory.getInstance().createIAutocomplete().getAutocomplete(this, (MainActivity) context, input);
         }
         this.lastCall = System.currentTimeMillis();
         return true;

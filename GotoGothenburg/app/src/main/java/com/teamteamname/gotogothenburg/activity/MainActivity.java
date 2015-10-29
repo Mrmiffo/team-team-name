@@ -17,7 +17,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.teamteamname.gotogothenburg.R;
-import com.teamteamname.gotogothenburg.api.Api;
+import com.teamteamname.gotogothenburg.api.ApiFactory;
 import com.teamteamname.gotogothenburg.api.ApiRequestError;
 import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.ErrorHandler;
@@ -48,7 +48,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         pagerTitleStrip.setViewPager(pager);
 
         // Initialize the APIs
-        Api.init(this);
+        ApiFactory.init(this);
         GuideHandler.init(this);
         Bus.init();
 
@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
         GuideHandler.getInstance().stopGuide();
         guideWasStopped = true;
         super.onPause();
-        Api.getLocationServices().disconnect();
+        ApiFactory.getInstance().createILocationServices().disconnect();
     }
 
     @Override
@@ -102,14 +102,14 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
             guideWasStopped = false;
         }
         super.onResume();
-        Api.getLocationServices().connect();
+        ApiFactory.getInstance().createILocationServices().connect();
     }
 
 
     @Override
     public void onStop(){
         super.onStop();
-        Api.getLocationServices().disconnect();
+        ApiFactory.getInstance().createILocationServices().disconnect();
     }
 
     @Override
@@ -130,7 +130,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == LocationServicesAPI.REQUEST_RESOLVE_ERROR) {
-            Api.getLocationServices().resolutionResult(resultCode, data);
+            ApiFactory.getInstance().createILocationServices().resolutionResult(resultCode, data);
         }
     }
 
