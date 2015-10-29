@@ -1,6 +1,7 @@
 package com.teamteamname.gotogothenburg.api;
 
 /**
+ * A interface defining which API-interfaces possible to ask for. Returns interfaces defining possible interactions with the APIs.
  * Created by Olof on 28/10/2015.
  */
 public interface IApiFactory {

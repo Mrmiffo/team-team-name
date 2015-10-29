@@ -83,6 +83,15 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
         addNewRequest(bus,sensorSpec,null,parser,secondsToQuery);
     }
 
+    /**
+     * Helper method that creates a new RequestsWithBAuth and sends it to the requestqueue.
+     * @param bus
+     * @param sensorSpec
+     * @param resourceSpec
+     * @param parser
+     * @param querySeconds
+     * Amount of seconds from which to query for data.
+     */
     private void addNewRequest(Bus bus, String sensorSpec, String resourceSpec, ElectricityParser parser, long querySeconds){
         final long t2 = System.currentTimeMillis();
         final long t1 = t2 - (1000 * querySeconds);
@@ -96,7 +105,16 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
         queue.add(request);
     }
 
-    // sensorSpec and resourceSpec can't be given at the same time.
+    /**
+     * Builds the URI for electricity's API using the given parameters.
+     * sensorSpec and resourceSpec should not both be given a value (one of them must be null).
+     * @param dgw
+     * @param sensorSpec
+     * @param resourceSpec
+     * @param t1
+     * @param t2
+     * @return
+     */
     private String buildURI(String dgw, String sensorSpec, String resourceSpec, long t1, long t2){
         final StringBuilder sb = new StringBuilder(47);
 
@@ -115,6 +133,11 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
         return sb.toString();
     }
 
+    /**
+     * Creates a header using the given string as Basic Authorization.
+     * @param auth
+     * @return
+     */
     private Map<String,String> createBasicAuth(String auth){
         final Map<String,String> headerMap = new HashMap<String,String>();
 
@@ -124,7 +147,9 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
         return headerMap;
     }
 
-    // A JSONArray-GET-request with our Basic Authorization as header.
+    /**
+     * A request with Basic Authorization
+     */
     private class RequestWithBAuth extends JsonArrayRequest{
 
         public RequestWithBAuth(String uri, Response.Listener<JSONArray> listener, Response.ErrorListener errorListener){
