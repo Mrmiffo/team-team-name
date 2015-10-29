@@ -12,25 +12,19 @@ import lombok.Getter;
  */
 public enum PointOfInterest implements Serializable {
     JOHANNEBERG_SCIENCE_PARK(new GPSCoord(57.684747f, 11.977967f),
-
             new File(getAssetsDir() + "johanneberg_science_park_text.txt"),
             null,
             null),
 
     CHALMERS_CAMPUS_JOHANNEBERG(new GPSCoord(57.689167f, 11.973611f),
-
             new File(getAssetsDir() + "chalmers_campus_johanneberg_text.txt"),
             new File(getResDir() +  "chalmers_campus_johanneberg_sound.mp3"),
             new File(getResDir() + "chalmers_campus_johanneberg_picture.jpg")),
 
     LANDALA(new GPSCoord(57.693319f, 11.970892f),
-
             new File(getAssetsDir() + "landala_text.txt"),
             null,
             null),
-
-//    LANDSHÖVDINGEHUS(new GPSCoord(), null, null, null),
-//    MILJONPROGRAMMET(new GPSCoord(), null, null, null),
 
     POSEIDON(new GPSCoord(57.697206f, 11.979561f),
             new File(getAssetsDir() + "poseidon_text.txt"),
@@ -47,7 +41,10 @@ public enum PointOfInterest implements Serializable {
             null,
             null),
 
-    GÖTEBORGS_KONSERTHUS(new GPSCoord(57.696694f, 11.978583f), null, null, null),
+    GÖTEBORGS_KONSERTHUS(new GPSCoord(57.696694f, 11.978583f),
+            null,
+            null,
+            null),
 
     KOPPARMÄRRA(new GPSCoord(57.704503f, 11.969636f),
             new File(getAssetsDir() + "kopparmarra_text.txt"),
@@ -94,20 +91,25 @@ public enum PointOfInterest implements Serializable {
             null,
             null),
 
-//    DOMSTOLEN(new GPSCoord(), null, null, null),
     LÄPPSTIFTET(new GPSCoord(57.713197f, 11.967481f),
-        new File(getAssetsDir() + "lappstiftet_text.txt"),
-        null,
-        null),
+            new File(getAssetsDir() + "lappstiftet_text.txt"),
+            null,
+            null),
 
     ÄLVSTADEN_FRIHAMNEN(new GPSCoord(57.718058f, 11.959366f),
             new File(getAssetsDir() + "alvstaden_frihamnen_text.txt"),
             null,
             null),
 
-    CHALMERS_CAMPUS_LINDHOLMEN(new GPSCoord(57.706588f, 11.936651f), null, null, null),
+    CHALMERS_CAMPUS_LINDHOLMEN(new GPSCoord(57.706588f, 11.936651f),
+            null,
+            null,
+            null),
 
-    KUGGEN(new GPSCoord(57.706786f, 11.938908f), null, null, null),
+    KUGGEN(new GPSCoord(57.706786f, 11.938908f),
+            null,
+            null,
+            null),
 
     LINDHOLMEN_SCIENCE_PARK(new GPSCoord(57.707f, 11.94f),
             new File(getAssetsDir() + "lindholmen_science_park_text.txt"),
