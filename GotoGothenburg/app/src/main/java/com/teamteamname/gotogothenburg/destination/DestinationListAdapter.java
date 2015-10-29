@@ -52,6 +52,7 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
         destinations.addAll(visited);
         destinations.addAll(notVisited);
     }
+
     @Override
     public int getCount() {
         return destinations.size();
@@ -81,6 +82,7 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
             final LayoutInflater inflater = activity.getLayoutInflater();
             convertView = inflater.inflate(R.layout.destination_list_component, parent, false);
         }
+
         TextView firstLine = (TextView) convertView.findViewById(R.id.firstLine);
         TextView secondLine = (TextView) convertView.findViewById(R.id.secondLine);
 
@@ -96,7 +98,8 @@ public class DestinationListAdapter extends BaseAdapter implements ISavedDestina
 
         firstLine.setText(destinations.get(position).getName());
         //TODO make second line display time to destination.
-        // This text has been left empty instead of removing the text field object as the application has been tested and verifgied with the text field in place even if it has not been properly implemented.
+        // This text has been left empty instead of removing the text field object as the application has been tested
+        // and verifgied with the text field in place even if it has not been properly implemented.
         secondLine.setText(" ");
 
         convertView.findViewById(R.id.remove_destination).setOnClickListener(new View.OnClickListener() {

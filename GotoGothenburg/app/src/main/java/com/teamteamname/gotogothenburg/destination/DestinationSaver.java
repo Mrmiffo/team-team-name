@@ -42,7 +42,6 @@ public class DestinationSaver implements IDestinationSaver{
         destDBReader = new DestinationDBReaderHelper(context);
     }
 
-
     //Local method used by the save method to put data in the db.
     private void putDestination(Destination dest) {
         final SQLiteDatabase db = destDBReader.getWritableDatabase();
@@ -52,12 +51,8 @@ public class DestinationSaver implements IDestinationSaver{
         values.put(DestinationEntry.COLUMN_NAME_LATITUDE, dest.getLatitude());
         values.put(DestinationEntry.COLUMN_NAME_LONGITUDE, dest.getLongitude());
         values.put(DestinationEntry.COLUMN_NAME_VISITED, dest.isVisited());
-        db.insert(
-                DestinationEntry.TABLE_NAME,
-                null,
-                values);
-        }
-
+        db.insert(DestinationEntry.TABLE_NAME, null, values);
+    }
 
     @Override
     public void saveAll(final List<Destination> destinationsToSave) {
@@ -72,12 +67,11 @@ public class DestinationSaver implements IDestinationSaver{
                 return null;
             }
         }.execute();
-
     }
 
     @Override
     public void save(final Destination destinationToSave) {
-        AsyncTask thread = new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 putDestination(destinationToSave);
@@ -90,6 +84,7 @@ public class DestinationSaver implements IDestinationSaver{
     public List<Destination> loadAll() {
         final List<Destination> toReturn = new ArrayList<>();
         final SQLiteDatabase db = destDBReader.getReadableDatabase();
+
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         final String[] projection = {
@@ -108,6 +103,7 @@ public class DestinationSaver implements IDestinationSaver{
                 null,                                       // Having
                 null                                        // Order by
         );
+
         if (c.moveToFirst()) {
             toReturn.add(createDestination(c));
             while (c.moveToNext()) {
@@ -145,8 +141,7 @@ public class DestinationSaver implements IDestinationSaver{
 
     //Local method used to remove all entries in the database.
     private void dropTable() {
-        final String SQL_DELETE_ENTRIES =
-                "delete from " + DestinationEntry.TABLE_NAME;
+        final String SQL_DELETE_ENTRIES = "delete from " + DestinationEntry.TABLE_NAME;
         final SQLiteDatabase db = destDBReader.getWritableDatabase();
         db.execSQL(SQL_DELETE_ENTRIES);
     }
@@ -168,7 +163,6 @@ public class DestinationSaver implements IDestinationSaver{
         public static final String COLUMN_NAME_LATITUDE = "latitude";
         public static final String COLUMN_NAME_LONGITUDE = "longitude";
         public static final String COLUMN_NAME_VISITED = "visited";
-
     }
 
     //Local class used to provide and create a read and writable database on the local device.

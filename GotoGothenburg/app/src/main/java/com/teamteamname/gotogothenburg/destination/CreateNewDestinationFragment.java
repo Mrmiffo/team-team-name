@@ -42,19 +42,10 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.teamteamname.gotogothenburg.R;
 
-/**
- * A fragment for creating new Destinations.
- *
- * Most of code is from the Google Reference example but, of course, tailored to fit the current
- * situation.
- */
 public class CreateNewDestinationFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
 
-    /*
-    Callback for creating the new Destination
-     */
     private GoogleApiClient locationsAPI;
-    private AutoCompleteAdapter adapter;
+    private AutocompleteAdapter adapter;
     private TextView destinationDetails;
     private TextView destinationAttribution;
     private String selectedPlaceName;
@@ -62,7 +53,8 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
     private SavedDestinations savedDestinations;
 
     /**
-     * Creates a new instance of CreateNewDestinationFragment unless an existing Fragment already exists
+     * Creates a new instance of CreateNewDestinationFragment
+     * unless an existing Fragment already exists
      *
      * @return The created CreateNewDestinationFragment
      */
@@ -87,7 +79,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_create_new_destination, container, false);
 
-        adapter = new AutoCompleteAdapter(getActivity(), locationsAPI, null);
+        adapter = new AutocompleteAdapter(getActivity(), locationsAPI, null);
 
         destinationDetails = (TextView) view.findViewById(R.id.destinationDetails);
         destinationAttribution = (TextView) view.findViewById(R.id.destinationAttribution);
@@ -168,7 +160,8 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
         @Override
         public void onResult(PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
-                Log.e("NewDestinationFragment", "Place query did not complete. Error: " + places.getStatus().toString());
+                Log.e("NewDestinationFragment",
+                        "Place query did not complete. Error: " + places.getStatus().toString());
                 places.release();
                 return;
             }

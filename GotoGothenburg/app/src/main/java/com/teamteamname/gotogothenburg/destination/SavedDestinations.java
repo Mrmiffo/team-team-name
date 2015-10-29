@@ -139,6 +139,5 @@ public final class SavedDestinations {
         if (listeners.contains(listener)){
             listeners.add(listener);
         }
-
     }
 }

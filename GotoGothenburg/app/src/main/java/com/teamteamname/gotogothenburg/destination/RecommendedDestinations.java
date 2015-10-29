@@ -38,6 +38,4 @@ public final class RecommendedDestinations {
         toReturn.addAll(recommendedDestinations);
         return toReturn;
     }
-
-
 }
