@@ -5,6 +5,8 @@ package com.teamteamname.gotogothenburg.api;
  */
 public interface IGetCabinTemp {
     /**
+     * This method is implemented but isn't used in the current applications version. It still exists in the code for use in further development.
+     *
      * Requests the temperature inside the DRIVER'S cabin of a specific bus. The response is sent back to the
      * requester using the callback parameter in the form of a double.
      *

@@ -6,6 +6,8 @@ package com.teamteamname.gotogothenburg.api;
 public interface IGetBusLocation {
 
     /**
+     * This method is implemented but isn't used in the current applications version. It still exists in the code for use in further development.
+     *
      * Requests the GPS location of a specific bus. The response is sent back to a requester using the
      * callback parameter in the form of a GPSCoord.
      *
