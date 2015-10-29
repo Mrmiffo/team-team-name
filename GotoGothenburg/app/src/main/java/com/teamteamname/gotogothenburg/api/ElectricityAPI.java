@@ -22,7 +22,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
 
     final private RequestQueue queue;
     //The query time is set to 60sec as this seems to be about the time it takes for the bus to update this value. Still sometimes no value exist.
-    private final int QUERY_LENGTH = 60;
+    private final int queryLength = 60;
 
     private String apiKey;
 
@@ -33,7 +33,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
 
     @Override
     public void getBusLocation(Bus bus, GPSHandler callback){
-        final long secondsToQuery = QUERY_LENGTH;
+        final long secondsToQuery = queryLength;
         final String sensorSpec = "Ericsson$GPS2";
         final GPSCoordParser parser = new GPSCoordParser(callback);
         addNewRequest(bus, sensorSpec, null, parser, secondsToQuery);
@@ -42,7 +42,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
 
     @Override
     public void getNextStop(Bus bus, NextStopHandler callback) {
-        final long secondsToQuery = QUERY_LENGTH;
+        final long secondsToQuery = queryLength;
         final String sensorSpec = "Ericsson$Next_Stop";
         final NextStopParser parser = new NextStopParser(callback);
         addNewRequest(bus, sensorSpec, null, parser, secondsToQuery);
@@ -50,7 +50,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
 
     @Override
     public void getAmbientTemperature(Bus bus, TempHandler callback) {
-        final long secondsToQuery = QUERY_LENGTH;
+        final long secondsToQuery = queryLength;
         final String sensorSpec = "Ericsson$Ambient_Temperature";
         final AmbientTempParser parser = new AmbientTempParser(callback);
         addNewRequest(bus, sensorSpec, null, parser, secondsToQuery);
@@ -77,7 +77,7 @@ public class ElectricityAPI implements IGetBusLocation,IGetNextStop,IGetAmbientT
 
     @Override
     public void getNbrOfWifiUsers(Bus bus, WifiHandler callback) {
-        final long secondsToQuery = QUERY_LENGTH;
+        final long secondsToQuery = queryLength;
         final String sensorSpec = "Ericsson$Online_Users";
         final WifiUsersParser parser = new WifiUsersParser(callback);
         addNewRequest(bus,sensorSpec,null,parser,secondsToQuery);

@@ -12,15 +12,15 @@ import com.android.volley.toolbox.HurlStack;
 /**
  * Created by Olof on 28/10/2015.
  */
-public class ApiFactory implements IApiFactory {
+public final class ApiFactory implements IApiFactory {
 
     private static IApiFactory instance;
 
-    private ElectricityAPI electricityAPI;
-    private VasttrafikAPI vasttrafikAPI;
-    private LocationServicesAPI locationServicesAPI;
-    private ElectriCityWiFiSystemIDAPI electriCityWiFiSystemIDAPI;
-    private AndroidDeviceAPI androidDeviceAPI;
+    private final ElectricityAPI electricityAPI;
+    private final VasttrafikAPI vasttrafikAPI;
+    private final LocationServicesAPI locationServicesAPI;
+    private final ElectriCityWiFiSystemIDAPI electriCityWiFiSystemIDAPI;
+    private final AndroidDeviceAPI androidDeviceAPI;
 
     private ApiFactory(Activity activity){
         // Initialize the APIs
@@ -40,7 +40,7 @@ public class ApiFactory implements IApiFactory {
         queue.start();
     }
 
-    public static void init(Activity activity){
+    public static synchronized void init(Activity activity){
         if(instance == null){
             instance = new ApiFactory(activity);
         }

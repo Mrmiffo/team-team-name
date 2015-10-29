@@ -34,7 +34,7 @@ public class LocationServicesAPI implements ILocationServices {
     // Unique tag for the error dialog fragment
     public static final String DIALOG_ERROR = "dialog_error";
     // Bool to track whether the app is already resolving an error
-    private static boolean mResolvingError;
+    private boolean mResolvingError;
     // Reference to the api
     private GoogleApiClient api;
     // List of listeners to register when api is connected
@@ -139,7 +139,7 @@ public class LocationServicesAPI implements ILocationServices {
     }
 
     private void showErrorDialog(int errorCode) {
-        final ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
+        final ErrorDialogFragment dialogFragment = ErrorDialogFragment.newInstance(this);
         final Bundle bundle = new Bundle();
         bundle.putInt(DIALOG_ERROR, errorCode);
         dialogFragment.setArguments(bundle);
@@ -149,7 +149,7 @@ public class LocationServicesAPI implements ILocationServices {
     /**
      * Call when dialog has been dismissed. Tells MapScreen that error is no longer being resolved.
      */
-    private static void onDialogDismissed() {
+    private void onDialogDismissed() {
         mResolvingError = false;
     }
 
@@ -192,6 +192,12 @@ public class LocationServicesAPI implements ILocationServices {
      * Dialog which displays the errors from LocationServices to the user.
      */
     public static class ErrorDialogFragment extends DialogFragment {
+        LocationServicesAPI api;
+        public static ErrorDialogFragment newInstance(LocationServicesAPI api) {
+            ErrorDialogFragment e = new ErrorDialogFragment();
+            e.api = api;
+            return e;
+        }
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final int errorCode = this.getArguments().getInt(DIALOG_ERROR);
@@ -201,7 +207,7 @@ public class LocationServicesAPI implements ILocationServices {
 
         @Override
         public void onDismiss(DialogInterface dialog) {
-            LocationServicesAPI.onDialogDismissed();
+            api.onDialogDismissed();
         }
     }
 }
