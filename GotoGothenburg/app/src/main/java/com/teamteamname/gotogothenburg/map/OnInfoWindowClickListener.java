@@ -15,6 +15,7 @@ import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 
 /**
  * Listener for deciding what should happen when the user clicks on a markers info window
+ * Created by patrick
  */
 class OnInfoWindowClickListener implements GoogleMap.OnInfoWindowClickListener {
     final private IMap map;

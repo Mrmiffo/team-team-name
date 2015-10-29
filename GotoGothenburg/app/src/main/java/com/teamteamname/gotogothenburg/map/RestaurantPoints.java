@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A hardcoded list of recommended restaurants.
+ * Potential development: Use data from API instead of hardcoded samples.
  * Created by patrick on 15/10/2015.
  */
 public class RestaurantPoints implements IMapMarkerData{

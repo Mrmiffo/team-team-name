@@ -37,12 +37,19 @@ public final class GuideHandler implements IOnWhichBusListener {
 
     }
 
+    /**
+     * Get the instance of the guide handler
+     * @return return the singleton instance of GuideHandler, return null if the init method has not been called.
+     */
     public static GuideHandler getInstance(){
         return instance;
     }
-
+    
+    /**
+     * Method must be called prior to any get instance calls in order to create the singleton.
+     * @param context
+     */
     public synchronized static void init(Context context){
-
         if (instance == null){
             instance = new GuideHandler(context);
         }
@@ -115,6 +122,7 @@ public final class GuideHandler implements IOnWhichBusListener {
     public void notConnectedToElectriCityWifiError() {
         //TODO Remove test code.
         //Replace code snippets for using specified bus buss without wifi.
+        //This code is kept as an easy way to test the live version of the application with a simulated bus.
         //--TEST CODE--
         /*
         if (!hasStartedGuide) {
@@ -131,7 +139,7 @@ public final class GuideHandler implements IOnWhichBusListener {
         displayWifiError();
     }
 
-    //Method used to display a wifi error. This error will only be display once every 10
+    //Method used to display a wifi error. This error will only be displayd once every 10
     private void displayWifiError() {
         if (!hasShownWifiError) {
             final DialogFragment error = ConnectToWiFiErrorDialog.createInstance(context);

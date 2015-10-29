@@ -15,9 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *
  * Loads ticket resale points from textfile and stores them as MarkerOptions
- *
  * Created by patrick on 08/10/2015.
  */
 public class ResalePoints implements IMapMarkerData{

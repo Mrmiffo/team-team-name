@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.teamteamname.gotogothenburg.R;
 
 /**
+ * A simpler dialog message to be displayed
  * Created by kakan on 2015-09-23.
  */
 public class UnpluggedHandsfreeDialog extends DialogFragment {

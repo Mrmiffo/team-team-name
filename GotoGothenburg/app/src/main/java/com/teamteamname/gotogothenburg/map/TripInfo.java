@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 import lombok.Getter;
 
 /**
+ * Used for markers in map to gather all necessary information.
  * Created by Mattias Ahlstedt on 2015-10-27.
  */
 public class TripInfo {

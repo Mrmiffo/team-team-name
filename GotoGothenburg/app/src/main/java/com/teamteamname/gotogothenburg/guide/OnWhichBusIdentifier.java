@@ -14,13 +14,14 @@ import java.util.TimerTask;
 /**
  * A class that identifies which ElectriCity bus which the user is connected to.
  * This class has been tested through user tests only. JUnit tests has not been created as the
- * extensive use of singleton classas and reliance of specific Wifi networks makes this all but
+ * extensive use of singleton classes and reliance of specific Wifi networks makes this all but
  * practically impossible without extensive work.
  * How to use:
  * 1. Register a listener to the identifier.
  * 2. Start the identifier.
  * 2.a A timer will start that triggers each 5 seconds sending a response to the respective callback methods depending on the result.
  * 3. Stop the timer when a response is no longer requiered.
+ * NOTE: This class only work with the ElectriCity WiFi network!
  * Created by Anton on 2015-09-24.
  */
 public class OnWhichBusIdentifier{
@@ -141,6 +142,7 @@ public class OnWhichBusIdentifier{
 
         @Override
         public void connectedBusErrorCallback(Exception e) {
+            //Got error from the bus. Report to listeners.
             if (e instanceof IOException) {
                 for (final IOnWhichBusListener listener : listeners) {
                     listener.unableToIdentifyBusError();

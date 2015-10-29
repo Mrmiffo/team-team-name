@@ -19,6 +19,11 @@ import com.teamteamname.gotogothenburg.R;
 public class ConnectToWiFiErrorDialog extends DialogFragment {
     private Context context;
 
+    /**
+     * This method is used by android to create an instance of the pop-up-. The constructor is not used.
+     * @param context used to activate the show WiFi settings button.
+     * @return a new instance of the dialog
+     */
     public static ConnectToWiFiErrorDialog createInstance(final Context context){
         final ConnectToWiFiErrorDialog toReturn = new ConnectToWiFiErrorDialog();
         toReturn.context = context;

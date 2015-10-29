@@ -16,6 +16,11 @@ import com.teamteamname.gotogothenburg.utils.AndroidConverter;
  */
 public class GuideDialog extends DialogFragment {
 
+    /**
+     * A method called in order to provide an instance of the dialog. Constructors for dialogs are not used by android.
+     * @param poi The poi to display in the dialog
+     * @return the dialog
+     */
     public static GuideDialog newInstance(PointOfInterest poi) {
         final GuideDialog frag = new GuideDialog();
         final Bundle args = new Bundle();

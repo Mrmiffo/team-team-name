@@ -33,7 +33,6 @@ public class AndroidGuide extends AbstractGuide {
 
     @Override
     protected void guideNextPointOfInterest() {
-    //Please note that the user will not be able to call this method in any way.
     //It is automatically called when the sound file has finished playing, or after 10 seconds if it could not be played.
         if (isGuiding) {
             pointOfInterest = route.getNextPOI();

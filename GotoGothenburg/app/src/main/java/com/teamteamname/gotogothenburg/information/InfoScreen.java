@@ -11,11 +11,10 @@ import com.teamteamname.gotogothenburg.R;
 
 
 /**
+ * This class represents the Info screen and simply provides the 4 text fields with data.
  * Created by Anton on 2015-09-21.
  */
 public class InfoScreen extends Fragment {
-
-    public InfoScreen() {}
 
     public static InfoScreen newInstance(){
         return new InfoScreen();

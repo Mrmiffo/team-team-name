@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * Listener for displaying a marker where the user clicks on the map
+ * Created by patrick
  */
 class OnMapLongClickListener implements GoogleMap.OnMapLongClickListener {
 
@@ -24,7 +25,6 @@ class OnMapLongClickListener implements GoogleMap.OnMapLongClickListener {
 
     /**
      * Creates a new OnMapLongClick Listener
-     *
      * @param map Map on which marker will be drawn
      * @param context Context for which toast will be displayed when no internet connection is found
      */
