@@ -124,8 +124,12 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
     final private View.OnClickListener createDestinationClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            savedDestinations.addDestination(new Destination(selectedPlaceName, selectedPlacePos.latitude, selectedPlacePos.longitude));
-            getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down).remove(CreateNewDestinationFragment.this).commit();
+            if(selectedPlaceName != null) {
+                savedDestinations.addDestination(new Destination(selectedPlaceName, selectedPlacePos.latitude, selectedPlacePos.longitude));
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down).remove(CreateNewDestinationFragment.this).commit();
+            } else {
+                Toast.makeText(getActivity(),"Please choose a destination from the list of destinations",Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
