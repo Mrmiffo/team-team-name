@@ -45,7 +45,7 @@ import com.teamteamname.gotogothenburg.R;
 public class CreateNewDestinationFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
 
     private GoogleApiClient locationsAPI;
-    private AutocompleteAdapter adapter;
+    private AutoCompleteAdapter adapter;
     private TextView destinationDetails;
     private TextView destinationAttribution;
     private String selectedPlaceName;
@@ -79,7 +79,7 @@ public class CreateNewDestinationFragment extends Fragment implements GoogleApiC
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_create_new_destination, container, false);
 
-        adapter = new AutocompleteAdapter(getActivity(), locationsAPI, null);
+        adapter = new AutoCompleteAdapter(getActivity(), locationsAPI, null);
 
         destinationDetails = (TextView) view.findViewById(R.id.destinationDetails);
         destinationAttribution = (TextView) view.findViewById(R.id.destinationAttribution);

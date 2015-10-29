@@ -44,13 +44,15 @@ class OnInfoWindowClickListener implements GoogleMap.OnInfoWindowClickListener {
             SavedDestinations.getInstance().addDestination(new Destination(marker.getTitle(), marker.getPosition().latitude, marker.getPosition().longitude));
             marker.remove();
             Toast.makeText(context, "Destination added", Toast.LENGTH_SHORT).show();
-        } else if("Directions".equals(marker.getSnippet())) {
+        } else if("Directions".equalsIgnoreCase(marker.getSnippet())) {
             final Location myLocation = ApiFactory.getInstance().createILocationServices().getLastKnownLocation();
             if (myLocation != null) {
                 final LatLng originCoord = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                 final LatLng destCoord = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
                 ApiFactory.getInstance().createITrip().getTrip(
                         tripHandler, errorHandler, "Me", originCoord, marker.getTitle(), destCoord);
+            } else {
+                Toast.makeText(context,"Device Location not found",Toast.LENGTH_SHORT).show();
             }
         }
     }

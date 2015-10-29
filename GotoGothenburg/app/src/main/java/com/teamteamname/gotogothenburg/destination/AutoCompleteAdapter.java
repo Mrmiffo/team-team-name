@@ -43,14 +43,14 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by patrick on 02/10/2015.
  */
-public class AutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
+public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
 
     private List<AutocompletePrediction> results;
     final private GoogleApiClient placesAPI;
     final private LatLngBounds bounds;
     final private AutocompleteFilter placeFilter;
 
-    public AutocompleteAdapter(Context context, GoogleApiClient apiClient, AutocompleteFilter filter) {
+    public AutoCompleteAdapter(Context context, GoogleApiClient apiClient, AutocompleteFilter filter) {
         super(context, android.R.layout.simple_expandable_list_item_1, android.R.id.text1);
         placesAPI = apiClient;
         placeFilter = filter;
