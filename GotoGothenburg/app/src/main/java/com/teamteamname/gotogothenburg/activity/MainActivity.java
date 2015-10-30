@@ -23,7 +23,7 @@ import com.teamteamname.gotogothenburg.api.Bus;
 import com.teamteamname.gotogothenburg.api.ErrorHandler;
 import com.teamteamname.gotogothenburg.api.LocationServicesAPI;
 import com.teamteamname.gotogothenburg.api.TripHandler;
-import com.teamteamname.gotogothenburg.destination.DestinationSaver;
+import com.teamteamname.gotogothenburg.destination.AndroidDestinationSaver;
 import com.teamteamname.gotogothenburg.destination.SavedDestinations;
 import com.teamteamname.gotogothenburg.guide.GuideHandler;
 import com.teamteamname.gotogothenburg.map.MapScreen;
@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity implements TripHandler, Error
 
         //Fill the saved destinations object with data from the database.
         //Create a saver for the SavedDestinations
-        final DestinationSaver saver = new DestinationSaver(this);
+        final AndroidDestinationSaver saver = new AndroidDestinationSaver(this);
         SavedDestinations.init(saver);
 
         new AsyncTask<Void,Void,Void>()  {

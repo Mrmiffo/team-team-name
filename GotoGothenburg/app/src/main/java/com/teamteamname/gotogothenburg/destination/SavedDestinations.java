@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A singleton class which contains all the destinations that the user has saved. This class use a
- * DestinationSaver in order to save the data. Register a listener to this class in order to get
+ * A singleton class which contains all the destinations that the user has saved. This class use an
+ * IDestinationSaver in order to save the data. Register a listener to this class in order to get
  * notified when destinations are added or removed.
  * Created by Anton on 2015-09-30.
  */

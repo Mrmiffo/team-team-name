@@ -18,7 +18,7 @@ import java.util.List;
  * +1 IN ORDER TO UPDATE THE DATABASE ON THE DEVICE
  * Created by Anton on 2015-10-06.
  */
-public class DestinationSaver implements IDestinationSaver{
+public class AndroidDestinationSaver implements IDestinationSaver{
     //An instance of the DB reader helper class for destinations. Local class.
     final private DestinationDBReaderHelper destDBReader;
 
@@ -38,7 +38,7 @@ public class DestinationSaver implements IDestinationSaver{
      * Default constructor require a context in order to access the DB stored in the local device allocated to the app.
      * @param context of the application.
      */
-    public DestinationSaver(Context context){
+    public AndroidDestinationSaver(Context context){
         destDBReader = new DestinationDBReaderHelper(context);
     }
 
