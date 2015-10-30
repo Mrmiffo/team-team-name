@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This document describes the settings displayed in the settings tab -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="tours"
+        android:title="Tours">
+
+        <CheckBoxPreference
+            android:key="always_guided_tours"
+            android:title="Always do a guided tour"
+            android:summary=""
+            android:defaultValue="false"/>
+
+        <CheckBoxPreference
+            android:key="always_directions"
+            android:title="Always directions"
+            android:summary=""
+            android:defaultValue="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="directions"
+        android:title="Directions">
+
+            <CheckBoxPreference
+                android:key="no_transfers"
+                android:title="No transfers"
+                android:summary=""
+                android:defaultValue="false" />
+
+            <ListPreference
+                android:key="transfer_time"
+                android:title="Minimum transfer time"
+                android:entries="@array/min_transfer_time_entries"
+                android:entryValues="@array/min_transfer_time_values"
+                android:dialogTitle="Minimum time"
+                android:defaultValue="5 min"
+                />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Language">
+
+        <ListPreference
+        android:key="spoken_language"
+        android:title="Spoken language"
+        android:entries="@array/spoken_language_entries"
+        android:entryValues="@array/spoken_language_values"
+        android:dialogTitle="Language"
+        android:defaultValue="english"
+        />
+
+        <ListPreference
+            android:key="text_language"
+            android:title="Text language"
+            android:entries="@array/text_language_entries"
+            android:entryValues="@array/text_language_values"
+            android:dialogTitle="Language"
+            android:defaultValue="english"
+            />
+
+    </PreferenceCategory>
+</PreferenceScreen>

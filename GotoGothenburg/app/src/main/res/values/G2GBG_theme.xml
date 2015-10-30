@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#000</color>
+    <color name="white">#ffffff</color>
+
+    <!-- Shades of blue -->
+    <color name="lightestBlue">#4DADCF</color>
+    <color name="lighterBlue">#5BCDF6</color>
+    <color name="mainBlue">#56C2E9</color>
+    <color name="darkerBlue">#3E8DA9</color>
+    <color name="darkestBlue">#275869</color>
+
+
+    <style name="G2GBG_theme" parent="Theme.AppCompat.Light">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/white</item>
+
+        <item name="android:checkboxStyle">@style/checkboxStyle</item>
+        <item name="android:listSeparatorTextViewStyle">@style/PreferenceListHeader</item>
+        <item name="android:listViewStyle">@style/listViewStyle</item>
+        <item name="android:buttonStyle">@style/buttonStyle</item>
+    </style>
+
+    <style name="checkboxStyle">
+        <item name="android:button">@drawable/check_box</item>
+    </style>
+    <style name="PreferenceListHeader" >
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textColor">@color/darkerBlue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/bottom_border</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">-10dp</item>
+    </style>
+    <style name="listViewStyle" parent="Widget.AppCompat.ListView">
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:divider">@color/white</item>
+    </style>
+    <style name="buttonStyle" parent="Widget.AppCompat.Button">
+
+    </style>
+
+
+</resources>

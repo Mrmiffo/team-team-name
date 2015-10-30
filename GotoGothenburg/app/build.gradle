@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+    defaultConfig {
+        applicationId "com.teamteamname.gotogothenburg"
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:support-v13:+'
+    compile 'com.google.android.gms:play-services:7.8.0'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    provided 'org.projectlombok:lombok:1.12.6'
+}
+
+apply plugin: 'findbugs'
+task findbugs(type: FindBugs, dependsOn: assembleDebug) {
+
+    description 'Run findbugs'
+    group 'verification'
+
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = 'low'
+
+    excludeFilter = file("${project.rootDir}/findbugs/findbugs-filter.xml")
+    classes = files("${project.rootDir}/app/build/intermediates/classes")
+    source = fileTree('src/main/java/')
+    classpath = files()
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        html {
+            destination "build/outputs/findbugs/findbugs-output.html"
+        }
+    }
+}
+
+apply plugin: 'pmd'
+task pmd(type: Pmd, dependsOn: assembleDebug) {
+
+    description 'Run Pmd'
+    group 'verification'
+
+    ignoreFailures = true
+    source 'src'
+
+    include '**/*.java'
+    exclude '**/gen/**'
+    ruleSets = ["java-android", "java-basic", "java-braces", "java-strings", "java-design", "java-unusedcode"]
+    ruleSetFiles = files("${project.rootDir}/PMD/pmd-rules.xml")
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        html {
+            destination 'build/outputs/Pmd/pmd-output.html'
+        }
+    }
+
+}
+
+// TODO write properly
+task checkAll() {}
+tasks.getByName("checkAll").dependsOn(tasks.getByName("findbugs"))
+tasks.getByName("checkAll").dependsOn(tasks.getByName("pmd"))
+tasks.getByName("checkAll").dependsOn(tasks.getByName("check"))
